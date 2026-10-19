@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CHALECHAT GH VOICE DELETE 🇬🇭🎤</title>
+<title>CHALECHAT NICE POPUP 🇬🇭</title>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
@@ -17,8 +17,7 @@ body{background:#0f1115;color:#fff;height:100vh;display:flex;flex-direction:colu
 .chat{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
 .msg{background:#1e2a1e;border-radius:18px;padding:12px 14px;max-width:88%;align-self:flex-start;border:1px solid rgba(255,255,255,.1)}
 .msg.me{align-self:flex-end;background:#2a3a2a;border:1px solid #ffcc00}
-.trans{margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,.1);color:#8fdb8f;font-size:13px}
-.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(to bottom, #ce1126 33%, #ffcc00 33%, #ffcc00 66%, #006b3f 66%);display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:12px;border:2px solid #fff}
+.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(to bottom,#ce1126 33%,#ffcc00 33%,#ffcc00 66%,#006b3f 66%);display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:12px;border:2px solid #fff}
 .inputBar{display:flex;gap:8px;padding:12px;background:#1a1d25;align-items:center;position:sticky;bottom:0}
 .inputBar input{flex:1;padding:14px;border-radius:24px;border:none;background:#2a2e3a;color:#fff;outline:none}
 .btnMic{width:48px;height:48px;border-radius:50%;border:none;background:#2a2e3a;font-size:20px;cursor:pointer}
@@ -28,10 +27,23 @@ body{background:#0f1115;color:#fff;height:100vh;display:flex;flex-direction:colu
 .authCard input{padding:12px;border-radius:10px;border:none;background:#2a2e3a;color:#fff}
 .btnYellow{padding:12px;border-radius:10px;border:none;background:#ffcc00;font-weight:700;cursor:pointer}
 .btnGhost{padding:12px;border-radius:10px;background:transparent;border:1px solid #444;color:#fff;cursor:pointer}
-#recStatus{display:none;text-align:center;padding:8px;background:#ce1126;color:#fff;font-size:13px;animation:blink 1s infinite}
-@keyframes blink{0%{opacity:1}50%{opacity:.6}100%{opacity:1}}
+#recStatus{display:none;text-align:center;padding:8px;background:#ce1126;color:#fff;font-size:13px}
+.trans{margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,.1);color:#8fdb8f;font-size:13px}
 .delBtn{margin-top:8px;background:#ce1126;color:#fff;border:none;padding:5px 10px;border-radius:8px;font-size:11px;cursor:pointer}
-.delBtn:hover{background:#ff0000}
+
+/* NICE POPUP GHANA STYLE */
+#niceModal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:999;backdrop-filter:blur(6px)}
+#niceModal.show{display:flex}
+.modalBox{background:#1e212b;border:1px solid rgba(255,204,0,.3);border-radius:24px;padding:24px;width:90%;max-width:320px;text-align:center;animation:pop .25s ease}
+@keyframes pop{0%{transform:scale(.8);opacity:0}100%{transform:scale(1);opacity:1}}
+.modalIcon{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#ce1126,#ffcc00);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px}
+.modalTitle{font-weight:900;font-size:18px;margin-bottom:8px}
+.modalSub{opacity:.7;font-size:13px;margin-bottom:20px;line-height:1.4}
+.modalBtns{display:flex;gap:10px}
+.mBtn{flex:1;padding:12px;border-radius:12px;border:none;font-weight:700;cursor:pointer}
+.mCancel{background:#2a2e3a;color:#fff}
+.mDelete{background:#ce1126;color:#fff}
+.mDelete:hover{background:#ff0000}
 </style>
 </head>
 <body>
@@ -41,22 +53,35 @@ body{background:#0f1115;color:#fff;height:100vh;display:flex;flex-direction:colu
 <button class="tab" data-lang="tw">🇬🇭 Twi</button>
 <button class="tab" data-lang="pcm">🇳🇬 Pidgin</button>
 <button class="tab" data-lang="fr">🇫🇷 FR</button>
-<button class="tab" data-lang="yo">🇳🇬 Yoruba</button>
 </div>
-<div id="recStatus">🔴 Recording voice... tap ⏹️ to stop & send</div>
+<div id="recStatus">🔴 Recording...</div>
 <div id="chat" class="chat"></div>
 <div class="inputBar">
 <button id="micBtn" class="btnMic">🎤</button>
 <input id="msgInput" placeholder="Type or hold mic for voice...">
 <button id="sendBtn" class="btnSend">➤</button>
 </div>
+
 <div id="authBox"><div class="authCard">
-<h2>CHALECHAT 🇬🇭🎤</h2><p style="opacity:.6;font-size:13px">Voice + Delete + GH Flag</p>
+<h2>CHALECHAT 🇬🇭🎤</h2>
 <input id="email" placeholder="Email"><input id="password" type="password" placeholder="Password">
 <button class="btnYellow" id="signupBtn">Create Account 🔥</button><button class="btnGhost" id="loginBtn">Login</button><p id="err" style="color:#ff6b6b;font-size:12px"></p>
 </div></div>
+
+<!-- NICE GHANA POPUP -->
+<div id="niceModal">
+<div class="modalBox">
+<div class="modalIcon">🗑️</div>
+<div class="modalTitle">Delete this?</div>
+<div class="modalSub">This voice note / message go delete forever. You sure? 🇬🇭</div>
+<div class="modalBtns">
+<button class="mBtn mCancel" onclick="closeModal()">Cancel</button>
+<button class="mBtn mDelete" id="confirmDelBtn">Delete 🔥</button>
+</div>
+</div>
+</div>
+
 <script>
-// === FIREBASE - YOUR KEY ===
 const firebaseConfig = {
   apiKey: "AIzaSyB0s8MwwApN2Y3nbuD9z3sujFYLUyrIB14",
   authDomain: "chalechat-aa1b8.firebaseapp.com",
@@ -67,22 +92,10 @@ const firebaseConfig = {
 };
 try{firebase.initializeApp(firebaseConfig);}catch(e){}
 const auth=firebase.auth(); const db=firebase.firestore();
-
-// === DICTS ===
-const DICTS={
-tw:{"how are you":"Wo ho te sɛn?","i am fine":"Me ho yɛ","good morning":"Maakye","thank you":"Medaase","i love you":"Me dɔ wo","welcome":"Akwaaba"},
-pcm:{"how are you":"How you dey?","i am fine":"I dey fine","good morning":"Morning o","thank you":"Thank you o","where are you":"Where you dey?","please":"Abeg"},
-fr:{"how are you":"Comment ça va?","i am fine":"Je vais bien"},
-yo:{"how are you":"Bawo ni?","good morning":"E kaaro","thank you":"E se"}
-};
+const DICTS={tw:{"how are you":"Wo ho te sɛn?"},pcm:{"how are you":"How you dey?"},fr:{"how are you":"Comment ça va?"}};
 function getCorrect(t,lang){let l=t.toLowerCase().trim();if(DICTS[lang]&&DICTS[lang][l])return DICTS[lang][l];return null;}
-async function translate(text,target){
-if(target==="en")return text;
-let fix=getCorrect(text,target);if(fix)return fix;
-try{let tt=target==="tw"?"ak":target;let url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${tt}`;let r=await fetch(url);let j=await r.json();if(j.responseData&&j.responseData.translatedText)return j.responseData.translatedText;}catch(e){}
-return text;
-}
-let currentLang="en"; let currentUser=null;
+async function translate(text,target){if(target==="en")return text;let fix=getCorrect(text,target);if(fix)return fix;try{let tt=target==="tw"?"ak":target;let url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${tt}`;let r=await fetch(url);let j=await r.json();if(j.responseData&&j.responseData.translatedText)return j.responseData.translatedText;}catch(e){}return text;}
+let currentLang="en"; let currentUser=null; let pendingDeleteId=null;
 document.querySelectorAll(".tab").forEach(b=>{b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");currentLang=b.dataset.lang;load();};});
 auth.onAuthStateChanged(u=>{if(u){currentUser=u;document.getElementById("authBox").style.display="none";load();}else{document.getElementById("authBox").style.display="flex";}});
 document.getElementById("signupBtn").onclick=async()=>{try{await auth.createUserWithEmailAndPassword(email.value,password.value);}catch(e){err.textContent=e.message;}};
@@ -100,54 +113,45 @@ mediaRecorder.ondataavailable=e=>audioChunks.push(e.data);
 mediaRecorder.onstop=async()=>{
 let blob=new Blob(audioChunks,{type:"audio/webm"});
 let reader=new FileReader();
-reader.onloadend=async()=>{
-let base64=reader.result;
-await db.collection("messages").add({text:"🎤 Voice note",audio:base64,displayName:currentUser.email.split("@")[0],uid:currentUser.uid,timestamp:firebase.firestore.FieldValue.serverTimestamp()});
-};
+reader.onloadend=async()=>{let base64=reader.result;await db.collection("messages").add({text:"🎤 Voice note",audio:base64,displayName:currentUser.email.split("@")[0],uid:currentUser.uid,timestamp:firebase.firestore.FieldValue.serverTimestamp()});};
 reader.readAsDataURL(blob);
 };
-mediaRecorder.start(); isRecording=true;
-micBtn.textContent="⏹️"; micBtn.style.background="#ce1126"; recStatus.style.display="block";
-}catch(e){alert("Allow mic: "+e.message);}
-}else{
-mediaRecorder.stop(); isRecording=false;
-micBtn.textContent="🎤"; micBtn.style.background="#2a2e3a"; recStatus.style.display="none";
-}
+mediaRecorder.start(); isRecording=true; micBtn.textContent="⏹️"; micBtn.style.background="#ce1126"; recStatus.style.display="block";
+}catch(e){alert("Allow mic");}
+}else{mediaRecorder.stop(); isRecording=false; micBtn.textContent="🎤"; micBtn.style.background="#2a2e3a"; recStatus.style.display="none";}
 };
 
-// DELETE FUNCTION
-async function deleteMsg(id){
-if(confirm("Delete this audio/message? 🗑️")){
-await db.collection("messages").doc(id).delete();
-}
-}
-window.deleteMsg = deleteMsg;
+// NICE MODAL LOGIC
+const niceModal=document.getElementById("niceModal");
+function openModal(id){pendingDeleteId=id;niceModal.classList.add("show");}
+function closeModal(){niceModal.classList.remove("show");pendingDeleteId=null;}
+window.closeModal=closeModal;
+document.getElementById("confirmDelBtn").onclick=async()=>{
+if(pendingDeleteId){await db.collection("messages").doc(pendingDeleteId).delete();closeModal();}
+};
+niceModal.onclick=(e)=>{if(e.target===niceModal)closeModal();};
 
-// LOAD WITH DELETE BUTTON
+function deleteMsg(id){openModal(id);}
+window.deleteMsg=deleteMsg;
+
 let unsub=null;
 function load(){
 if(unsub)unsub();
 unsub=db.collection("messages").orderBy("timestamp","asc").limit(100).onSnapshot(async snap=>{
 let chat=document.getElementById("chat"); chat.innerHTML="";
 for(let doc of snap.docs){
-let d=doc.data(); let transHtml="";
-if(currentLang!=="en"){let tt=await translate(d.text,currentLang); if(tt!==d.text) transHtml=`<div class="trans">↳ ${tt} [${currentLang}]</div>`;}
+let d=doc.data(); let transHtml=""; if(currentLang!=="en"){let tt=await translate(d.text,currentLang); if(tt!==d.text) transHtml=`<div class="trans">↳ ${tt} [${currentLang}]</div>`;}
 let audioHtml=d.audio?`<audio controls src="${d.audio}" style="width:100%;margin-top:8px"></audio>`:"";
-let isMe = d.uid===currentUser?.uid;
-let delBtn = isMe ? `<button class="delBtn" onclick="deleteMsg('${doc.id}')">🗑️ Delete</button>` : "";
-let div=document.createElement("div"); div.className="msg"+(isMe?" me":"");
-let initial=(d.displayName||"U")[0].toUpperCase();
+let isMe=d.uid===currentUser?.uid;
+let delBtn=isMe?`<button class="delBtn" onclick="deleteMsg('${doc.id}')">🗑️ Delete</button>`:"";
+let div=document.createElement("div"); div.className="msg"+(isMe?" me":""); let initial=(d.displayName||"U")[0].toUpperCase();
 div.innerHTML=`<div style="display:flex;gap:8px;align-items:center;margin-bottom:6px"><div class="avatar">${initial}</div><div style="font-size:11px;opacity:.7">${d.displayName} • 🇬🇭</div></div><div>${d.text}</div>${transHtml}${audioHtml}<div>${delBtn}</div>`;
 chat.appendChild(div);
 }
 chat.scrollTop=chat.scrollHeight;
 });
 }
-document.getElementById("sendBtn").onclick=async()=>{
-let t=document.getElementById("msgInput").value.trim(); if(!t||!currentUser) return;
-document.getElementById("msgInput").value="";
-await db.collection("messages").add({text:t,displayName:currentUser.email.split("@")[0],uid:currentUser.uid,timestamp:firebase.firestore.FieldValue.serverTimestamp()});
-};
+document.getElementById("sendBtn").onclick=async()=>{let t=document.getElementById("msgInput").value.trim(); if(!t||!currentUser)return; document.getElementById("msgInput").value=""; await db.collection("messages").add({text:t,displayName:currentUser.email.split("@")[0],uid:currentUser.uid,timestamp:firebase.firestore.FieldValue.serverTimestamp()});};
 document.getElementById("msgInput").onkeydown=e=>{if(e.key==="Enter")document.getElementById("sendBtn").click();};
 </script>
 </body>
