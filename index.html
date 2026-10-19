@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CHALECHAT GH VOICE 🇬🇭🎤</title>
+<title>CHALECHAT GH VOICE DELETE 🇬🇭🎤</title>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
@@ -15,7 +15,7 @@ body{background:#0f1115;color:#fff;height:100vh;display:flex;flex-direction:colu
 .tab{padding:8px 14px;border-radius:20px;border:none;cursor:pointer;background:#2a2e3a;color:#ccc;white-space:nowrap}
 .tab.active{background:#ffcc00;color:#000;font-weight:700}
 .chat{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
-.msg{background:#1e2a1e;border-radius:18px;padding:12px 14px;max-width:88%;align-self:flex-start}
+.msg{background:#1e2a1e;border-radius:18px;padding:12px 14px;max-width:88%;align-self:flex-start;border:1px solid rgba(255,255,255,.1)}
 .msg.me{align-self:flex-end;background:#2a3a2a;border:1px solid #ffcc00}
 .trans{margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,.1);color:#8fdb8f;font-size:13px}
 .avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(to bottom, #ce1126 33%, #ffcc00 33%, #ffcc00 66%, #006b3f 66%);display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:12px;border:2px solid #fff}
@@ -30,6 +30,8 @@ body{background:#0f1115;color:#fff;height:100vh;display:flex;flex-direction:colu
 .btnGhost{padding:12px;border-radius:10px;background:transparent;border:1px solid #444;color:#fff;cursor:pointer}
 #recStatus{display:none;text-align:center;padding:8px;background:#ce1126;color:#fff;font-size:13px;animation:blink 1s infinite}
 @keyframes blink{0%{opacity:1}50%{opacity:.6}100%{opacity:1}}
+.delBtn{margin-top:8px;background:#ce1126;color:#fff;border:none;padding:5px 10px;border-radius:8px;font-size:11px;cursor:pointer}
+.delBtn:hover{background:#ff0000}
 </style>
 </head>
 <body>
@@ -49,12 +51,12 @@ body{background:#0f1115;color:#fff;height:100vh;display:flex;flex-direction:colu
 <button id="sendBtn" class="btnSend">➤</button>
 </div>
 <div id="authBox"><div class="authCard">
-<h2>CHALECHAT 🇬🇭🎤</h2><p style="opacity:.6;font-size:13px">Voice + GH Flag Avatars + Correct Twi</p>
+<h2>CHALECHAT 🇬🇭🎤</h2><p style="opacity:.6;font-size:13px">Voice + Delete + GH Flag</p>
 <input id="email" placeholder="Email"><input id="password" type="password" placeholder="Password">
 <button class="btnYellow" id="signupBtn">Create Account 🔥</button><button class="btnGhost" id="loginBtn">Login</button><p id="err" style="color:#ff6b6b;font-size:12px"></p>
 </div></div>
 <script>
-// === FIREBASE - YOUR KEY INSERTED ===
+// === FIREBASE - YOUR KEY ===
 const firebaseConfig = {
   apiKey: "AIzaSyB0s8MwwApN2Y3nbuD9z3sujFYLUyrIB14",
   authDomain: "chalechat-aa1b8.firebaseapp.com",
@@ -66,20 +68,18 @@ const firebaseConfig = {
 try{firebase.initializeApp(firebaseConfig);}catch(e){}
 const auth=firebase.auth(); const db=firebase.firestore();
 
-// === CORRECT TWI + 234 PIDGIN + YORUBA ===
+// === DICTS ===
 const DICTS={
-tw:{
-"how are you":"Wo ho te sɛn?","i am fine":"Me ho yɛ","good morning":"Maakye","good afternoon":"Maaha","good evening":"Maadwo","thank you":"Medaase","i love you":"Me dɔ wo","i love ghana":"Me dɔ Ghana","where are you":"Wo wɔ he?","welcome":"Akwaaba","yes":"Aane","no":"Daabi","money":"Sika","food":"Aduane","god bless you":"Nyame nhyira wo","beautiful":"Ahoɔfɛ","how much":"Yɛ sɛn?"},
-pcm:{
-"how are you":"How you dey?","i am fine":"I dey fine","good morning":"Morning o","thank you":"Thank you o","where are you":"Where you dey?","i am coming":"I dey come","please":"Abeg","food":"Chop","how much":"How much be this?","i love you":"I love you die","yes":"Yes o","no":"No be so","how you dey":"How you dey?","i dey come":"I dey come","abeg":"Abeg"},
-fr:{"how are you":"Comment ça va?","i am fine":"Je vais bien","good morning":"Bonjour","thank you":"Merci"},
-yo:{"how are you":"Bawo ni?","good morning":"E kaaro","thank you":"E se","i love you":"Mo nife re","welcome":"Kaabo"}
+tw:{"how are you":"Wo ho te sɛn?","i am fine":"Me ho yɛ","good morning":"Maakye","thank you":"Medaase","i love you":"Me dɔ wo","welcome":"Akwaaba"},
+pcm:{"how are you":"How you dey?","i am fine":"I dey fine","good morning":"Morning o","thank you":"Thank you o","where are you":"Where you dey?","please":"Abeg"},
+fr:{"how are you":"Comment ça va?","i am fine":"Je vais bien"},
+yo:{"how are you":"Bawo ni?","good morning":"E kaaro","thank you":"E se"}
 };
 function getCorrect(t,lang){let l=t.toLowerCase().trim();if(DICTS[lang]&&DICTS[lang][l])return DICTS[lang][l];return null;}
 async function translate(text,target){
 if(target==="en")return text;
 let fix=getCorrect(text,target);if(fix)return fix;
-try{let tt=target==="tw"?"ak":target==="yo"?"yo":target;let url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${tt}`;let r=await fetch(url);let j=await r.json();if(j.responseData&&j.responseData.translatedText)return j.responseData.translatedText;}catch(e){}
+try{let tt=target==="tw"?"ak":target;let url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${tt}`;let r=await fetch(url);let j=await r.json();if(j.responseData&&j.responseData.translatedText)return j.responseData.translatedText;}catch(e){}
 return text;
 }
 let currentLang="en"; let currentUser=null;
@@ -88,7 +88,7 @@ auth.onAuthStateChanged(u=>{if(u){currentUser=u;document.getElementById("authBox
 document.getElementById("signupBtn").onclick=async()=>{try{await auth.createUserWithEmailAndPassword(email.value,password.value);}catch(e){err.textContent=e.message;}};
 document.getElementById("loginBtn").onclick=async()=>{try{await auth.signInWithEmailAndPassword(email.value,password.value);}catch(e){err.textContent=e.message;}};
 
-// VOICE NOTE LOGIC
+// VOICE
 let mediaRecorder, audioChunks=[], isRecording=false;
 const micBtn=document.getElementById("micBtn"); const recStatus=document.getElementById("recStatus");
 micBtn.onclick=async()=>{
@@ -115,6 +115,15 @@ micBtn.textContent="🎤"; micBtn.style.background="#2a2e3a"; recStatus.style.di
 }
 };
 
+// DELETE FUNCTION
+async function deleteMsg(id){
+if(confirm("Delete this audio/message? 🗑️")){
+await db.collection("messages").doc(id).delete();
+}
+}
+window.deleteMsg = deleteMsg;
+
+// LOAD WITH DELETE BUTTON
 let unsub=null;
 function load(){
 if(unsub)unsub();
@@ -124,9 +133,11 @@ for(let doc of snap.docs){
 let d=doc.data(); let transHtml="";
 if(currentLang!=="en"){let tt=await translate(d.text,currentLang); if(tt!==d.text) transHtml=`<div class="trans">↳ ${tt} [${currentLang}]</div>`;}
 let audioHtml=d.audio?`<audio controls src="${d.audio}" style="width:100%;margin-top:8px"></audio>`:"";
-let div=document.createElement("div"); div.className="msg"+(d.uid===currentUser?.uid?" me":"");
+let isMe = d.uid===currentUser?.uid;
+let delBtn = isMe ? `<button class="delBtn" onclick="deleteMsg('${doc.id}')">🗑️ Delete</button>` : "";
+let div=document.createElement("div"); div.className="msg"+(isMe?" me":"");
 let initial=(d.displayName||"U")[0].toUpperCase();
-div.innerHTML=`<div style="display:flex;gap:8px;align-items:center;margin-bottom:6px"><div class="avatar">${initial}</div><div style="font-size:11px;opacity:.7">${d.displayName} • 🇬🇭</div></div><div>${d.text}</div>${transHtml}${audioHtml}`;
+div.innerHTML=`<div style="display:flex;gap:8px;align-items:center;margin-bottom:6px"><div class="avatar">${initial}</div><div style="font-size:11px;opacity:.7">${d.displayName} • 🇬🇭</div></div><div>${d.text}</div>${transHtml}${audioHtml}<div>${delBtn}</div>`;
 chat.appendChild(div);
 }
 chat.scrollTop=chat.scrollHeight;
