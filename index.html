@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CHALECHAT EDIT REPLY 🇬🇭</title>
+<title>CHALECHAT CLEAN 🇬🇭</title>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
@@ -15,8 +15,9 @@ body{background:#0f1115;color:#fff;height:100vh;display:flex;flex-direction:colu
 .tab{padding:8px 14px;border-radius:20px;border:none;cursor:pointer;background:#2a2e3a;color:#ccc;white-space:nowrap}
 .tab.active{background:#ffcc00;color:#000;font-weight:700}
 .chat{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
-.msg{background:#1e2a1e;border-radius:18px;padding:12px 14px;max-width:88%;align-self:flex-start;border:1px solid rgba(255,255,255,.1);position:relative}
+.msg{background:#1e2a1e;border-radius:18px;padding:12px 14px;max-width:88%;align-self:flex-start;border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:.15s}
 .msg.me{align-self:flex-end;background:#2a3a2a;border:1px solid #ffcc00}
+.msg:active{transform:scale(.97)}
 .avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(to bottom,#ce1126 33%,#ffcc00 33%,#ffcc00 66%,#006b3f 66%);display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:12px;border:2px solid #fff}
 .replyQuote{background:rgba(255,204,0,.15);border-left:3px solid #ffcc00;padding:6px 8px;border-radius:8px;margin-bottom:6px;font-size:12px;opacity:.8}
 .inputBar{display:flex;gap:8px;padding:12px;background:#1a1d25;align-items:center;position:sticky;bottom:0}
@@ -30,8 +31,11 @@ body{background:#0f1115;color:#fff;height:100vh;display:flex;flex-direction:colu
 .btnGhost{padding:12px;border-radius:10px;background:transparent;border:1px solid #444;color:#fff;cursor:pointer}
 #recStatus{display:none;text-align:center;padding:8px;background:#ce1126;color:#fff;font-size:13px}
 .trans{margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,.1);color:#8fdb8f;font-size:13px}
-.actBtns{display:flex;gap:6px;margin-top:8px}
-.smallBtn{background:#2a2e3a;color:#fff;border:none;padding:4px 8px;border-radius:8px;font-size:11px;cursor:pointer}
+/* HIDDEN MENU LOGIC */
+.actBtns{display:none;gap:6px;margin-top:8px;animation:fadeIn .2s ease}
+.msg.showMenu .actBtns{display:flex}
+@keyframes fadeIn{0%{opacity:0;transform:translateY(-5px)}100%{opacity:1;transform:translateY(0)}}
+.smallBtn{background:#2a2e3a;color:#fff;border:none;padding:6px 10px;border-radius:8px;font-size:11px;cursor:pointer}
 .smallBtn.del{background:#ce1126}
 #replyPreview{display:none;background:#1a1d25;border-left:4px solid #ffcc00;padding:8px 12px;margin:0 12px;border-radius:8px;align-items:center;justify-content:space-between}
 #editModal,#niceModal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:999;backdrop-filter:blur(6px)}
@@ -47,10 +51,11 @@ body{background:#0f1115;color:#fff;height:100vh;display:flex;flex-direction:colu
 .mDelete{background:#ce1126;color:#fff}
 .mSave{background:#ffcc00;color:#000}
 .modalInput{width:100%;padding:12px;border-radius:12px;border:none;background:#2a2e3a;color:#fff;margin-bottom:16px;outline:none}
+.hint{font-size:10px;opacity:.5;text-align:center;padding:4px}
 </style>
 </head>
 <body>
-<div class="header"><div>CHALECHAT 🌍 EDIT+REPLY</div><div>GHANA #1</div></div>
+<div class="header"><div>CHALECHAT 🌍 CLEAN</div><div>GHANA #1</div></div>
 <div class="tabs">
 <button class="tab active" data-lang="en">🇬🇧 EN</button>
 <button class="tab" data-lang="tw">🇬🇭 Twi</button>
@@ -58,41 +63,33 @@ body{background:#0f1115;color:#fff;height:100vh;display:flex;flex-direction:colu
 <button class="tab" data-lang="fr">🇫🇷 FR</button>
 </div>
 <div id="recStatus">🔴 Recording...</div>
+<div class="hint">💡 Tap any message to show Reply / Edit / Delete</div>
 <div id="chat" class="chat"></div>
-
 <div id="replyPreview">
 <div><div style="font-size:11px;color:#ffcc00;font-weight:700" id="replyName">Replying to</div><div style="font-size:12px;opacity:.8" id="replyText"></div></div>
 <button onclick="cancelReply()" style="background:none;border:none;color:#fff;font-size:18px;cursor:pointer">✕</button>
 </div>
-
 <div class="inputBar">
 <button id="micBtn" class="btnMic">🎤</button>
 <input id="msgInput" placeholder="Type or hold mic...">
 <button id="sendBtn" class="btnSend">➤</button>
 </div>
-
 <div id="authBox"><div class="authCard">
 <h2>CHALECHAT 🇬🇭</h2>
 <input id="email" placeholder="Email"><input id="password" type="password" placeholder="Password">
 <button class="btnYellow" id="signupBtn">Create Account 🔥</button><button class="btnGhost" id="loginBtn">Login</button><p id="err" style="color:#ff6b6b;font-size:12px"></p>
 </div></div>
-
 <div id="niceModal"><div class="modalBox"><div class="modalIcon">🗑️</div><div class="modalTitle">Delete this?</div><div class="modalSub">This go delete forever. You sure? 🇬🇭</div><div class="modalBtns"><button class="mBtn mCancel" onclick="closeModal()">Cancel</button><button class="mBtn mDelete" id="confirmDelBtn">Delete 🔥</button></div></div></div>
-
-<div id="editModal"><div class="modalBox"><div class="modalIcon" style="background:linear-gradient(135deg,#ffcc00,#006b3f)">✏️</div><div class="modalTitle">Edit message</div><input id="editInput" class="modalInput" placeholder="Edit your message..."><div class="modalBtns"><button class="mBtn mCancel" onclick="closeEdit()">Cancel</button><button class="mBtn mSave" id="confirmEditBtn">Save ✅</button></div></div></div>
-
+<div id="editModal"><div class="modalBox"><div class="modalIcon" style="background:linear-gradient(135deg,#ffcc00,#006b3f)">✏️</div><div class="modalTitle">Edit message</div><input id="editInput" class="modalInput"><div class="modalBtns"><button class="mBtn mCancel" onclick="closeEdit()">Cancel</button><button class="mBtn mSave" id="confirmEditBtn">Save ✅</button></div></div></div>
 <script>
 const firebaseConfig={apiKey:"AIzaSyB0s8MwwApN2Y3nbuD9z3sujFYLUyrIB14",authDomain:"chalechat-aa1b8.firebaseapp.com",projectId:"chalechat-aa1b8",storageBucket:"chalechat-aa1b8.appspot.com",messagingSenderId:"123456789",appId:"1:123456789:web:abc123"};
 try{firebase.initializeApp(firebaseConfig);}catch(e){}
 const auth=firebase.auth();const db=firebase.firestore();
-async function translate(t,lg){return t;}
-let currentLang="en";let currentUser=null;let pendingDeleteId=null;let pendingEditId=null;let replyTo=null;
-document.querySelectorAll(".tab").forEach(b=>{b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");currentLang=b.dataset.lang;load();};});
+let currentUser=null;let pendingDeleteId=null;let pendingEditId=null;let replyTo=null;
+document.querySelectorAll(".tab").forEach(b=>{b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");load();};});
 auth.onAuthStateChanged(u=>{if(u){currentUser=u;document.getElementById("authBox").style.display="none";load();}else{document.getElementById("authBox").style.display="flex";}});
 document.getElementById("signupBtn").onclick=async()=>{try{await auth.createUserWithEmailAndPassword(email.value,password.value);}catch(e){err.textContent=e.message;}};
 document.getElementById("loginBtn").onclick=async()=>{try{await auth.signInWithEmailAndPassword(email.value,password.value);}catch(e){err.textContent=e.message;}};
-
-// VOICE
 let mediaRecorder,audioChunks=[],isRecording=false;
 const micBtn=document.getElementById("micBtn");const recStatus=document.getElementById("recStatus");
 micBtn.onclick=async()=>{
@@ -111,8 +108,6 @@ mediaRecorder.start();isRecording=true;micBtn.textContent="⏹️";micBtn.style.
 }catch(e){alert("Allow mic");}
 }else{mediaRecorder.stop();isRecording=false;micBtn.textContent="🎤";micBtn.style.background="#2a2e3a";recStatus.style.display="none";}
 };
-
-// MODALS
 const niceModal=document.getElementById("niceModal");const editModal=document.getElementById("editModal");
 function closeModal(){niceModal.classList.remove("show");pendingDeleteId=null;}
 function closeEdit(){editModal.classList.remove("show");pendingEditId=null;}
@@ -122,13 +117,9 @@ document.getElementById("confirmEditBtn").onclick=async()=>{let nt=document.getE
 niceModal.onclick=e=>{if(e.target===niceModal)closeModal();};editModal.onclick=e=>{if(e.target===editModal)closeEdit();};
 function deleteMsg(id){pendingDeleteId=id;niceModal.classList.add("show");}
 function editMsg(id,oldText){pendingEditId=id;document.getElementById("editInput").value=oldText.replace(" (edited)","");editModal.classList.add("show");}
-window.deleteMsg=deleteMsg;window.editMsg=editMsg;
-
-// REPLY
 function startReply(name,text){replyTo={name,text};document.getElementById("replyName").textContent="Replying to "+name;document.getElementById("replyText").textContent=text.substring(0,40);document.getElementById("replyPreview").style.display="flex";document.getElementById("msgInput").focus();}
 function cancelReply(){replyTo=null;document.getElementById("replyPreview").style.display="none";}
-window.startReply=startReply;window.cancelReply=cancelReply;
-
+window.deleteMsg=deleteMsg;window.editMsg=editMsg;window.startReply=startReply;window.cancelReply=cancelReply;
 let unsub=null;
 function load(){
 if(unsub)unsub();
@@ -139,9 +130,16 @@ let d=doc.data();
 let audioHtml=d.audio?`<audio controls src="${d.audio}" style="width:100%;margin-top:8px"></audio>`:"";
 let replyHtml=d.replyToText?`<div class="replyQuote"><b>${d.replyToName}</b><br>${d.replyToText}</div>`:"";
 let isMe=d.uid===currentUser?.uid;
-let delBtn=isMe?`<button class="smallBtn del" onclick="deleteMsg('${doc.id}')">🗑️</button><button class="smallBtn" onclick="editMsg('${doc.id}','${d.text.replace(/'/g,"\\'")}')">✏️ Edit</button>`:"";
-let repBtn=`<button class="smallBtn" onclick="startReply('${(d.displayName||'').replace(/'/g,"\\'")}','${d.text.replace(/'/g,"\\'")}')">↩️ Reply</button>`;
-let div=document.createElement("div");div.className="msg"+(isMe?" me":"");let initial=(d.displayName||"U")[0].toUpperCase();
+let delBtn=isMe?`<button class="smallBtn del" onclick="event.stopPropagation();deleteMsg('${doc.id}')">🗑️</button><button class="smallBtn" onclick="event.stopPropagation();editMsg('${doc.id}','${d.text.replace(/'/g,"\\'")}')">✏️ Edit</button>`:"";
+let repBtn=`<button class="smallBtn" onclick="event.stopPropagation();startReply('${(d.displayName||'').replace(/'/g,"\\'")}','${d.text.replace(/'/g,"\\'")}')">↩️ Reply</button>`;
+let div=document.createElement("div");div.className="msg"+(isMe?" me":"");
+// TAP TO TOGGLE
+div.onclick=()=>{
+let isOpen=div.classList.contains("showMenu");
+document.querySelectorAll(".msg").forEach(m=>m.classList.remove("showMenu"));
+if(!isOpen) div.classList.add("showMenu");
+};
+let initial=(d.displayName||"U")[0].toUpperCase();
 div.innerHTML=`<div style="display:flex;gap:8px;align-items:center;margin-bottom:6px"><div class="avatar">${initial}</div><div style="font-size:11px;opacity:.7">${d.displayName} • 🇬🇭</div></div>${replyHtml}<div>${d.text}</div>${audioHtml}<div class="actBtns">${repBtn}${delBtn}</div>`;
 chat.appendChild(div);
 });
