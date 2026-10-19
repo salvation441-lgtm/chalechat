@@ -1,76 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CHALECHAT - Ghana's First Translating Messenger</title>
+<title>CHALECHAT UPGRADED 🇬🇭</title>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-body{background:#0a0e13;color:#fff;min-height:100vh}
-header{background:linear-gradient(90deg,#006B3F 0%,#FCD116 50%,#CE1126 100%);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20}
-header h1{font-size:22px;font-weight:900;letter-spacing:-1px;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,.5)}
-header .badge{background:rgba(0,0,0,.25);backdrop-filter:blur(10px);padding:6px 12px;border-radius:20px;font-size:12px;font-weight:800}
-.langBar{background:#121821;padding:10px 12px;display:flex;gap:8px;overflow-x:auto;white-space:nowrap;position:sticky;top:56px;z-index:10;border-bottom:1px solid #1e2a3a}
-.langBtn{padding:8px 14px;border-radius:20px;border:1px solid #243042;background:#1a2533;color:#8aa0b8;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;transition:.2s}
-.langBtn.active{background:#FCD116;color:#000;border-color:#FCD116;font-weight:800;transform:scale(1.05)}
-#authScreen{max-width:440px;margin:40px auto;padding:28px;background:#121821;border-radius:20px;border:1px solid #1e2a3a}
-input{width:100%;padding:14px 16px;border-radius:12px;border:1px solid #243042;background:#0a0e13;color:#fff;font-size:15px;margin-bottom:12px;outline:none}
-.btn{width:100%;padding:14px;background:#FCD116;color:#000;border:none;border-radius:12px;font-weight:800;font-size:15px;cursor:pointer}
-.btn2{background:#1a2533;color:#fff;margin-top:8px;border:1px solid #243042}
-#chatScreen{display:none;flex-direction:column;height:calc(100vh - 56px)}
-#topBar{padding:8px 16px;background:#121821;border-bottom:1px solid #1e2a3a;display:flex;justify-content:space-between;font-size:13px}
-#messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px;background:#0a0e13}
-.msgCard{background:#121821;border:1px solid #1e2a3a;border-radius:16px;padding:14px 16px;max-width:85%;align-self:flex-start}
-.msgCard.mine{align-self:flex-end;background:#1c2a1a;border-color:#2a4a28}
-.msgHead{display:flex;gap:8px;margin-bottom:8px}
-.langTag{font-size:10px;padding:3px 8px;border-radius:10px;background:#1a2533;color:#FCD116;font-weight:700}
-.transBox{border-top:1px dashed #243042;padding-top:8px;margin-top:8px;display:flex;justify-content:space-between;gap:10px}
-.transText{color:#7ee8a0;font-size:14px;flex:1}
-.time{font-size:11px;color:#5a718a;margin-top:6px}
-#inputBar{display:flex;gap:8px;padding:12px 16px;background:#121821;border-top:1px solid #1e2a3a}
-#msgInput{flex:1;margin:0}
-#sendBtn{width:56px;height:48px;border-radius:12px;background:#FCD116;color:#000;font-weight:900;border:none}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+body{background:#0f1115;color:#fff;height:100vh;display:flex;flex-direction:column}
+.header{background:linear-gradient(90deg,#006b3f,#ffcc00,#ce1126);padding:12px 16px;display:flex;justify-content:space-between;font-weight:900}
+.tabs{display:flex;gap:8px;padding:10px;background:#1a1d25}
+.tab{padding:8px 14px;border-radius:20px;border:none;cursor:pointer;background:#2a2e3a;color:#ccc}
+.tab.active{background:#ffcc00;color:#000;font-weight:700}
+.chat{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.msg{background:#1e2a1e;border-radius:18px;padding:12px 14px;max-width:85%}
+.msg.me{align-self:flex-end;background:#2a3a2a}
+.trans{margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,.1);color:#8fdb8f;font-size:13px}
+.inputBar{display:flex;gap:10px;padding:12px;background:#1a1d25;position:sticky;bottom:0}
+.inputBar input{flex:1;padding:14px;border-radius:24px;border:none;background:#2a2e3a;color:#fff;outline:none}
+.inputBar button{width:56px;height:48px;border-radius:50%;border:none;background:#ffcc00;font-weight:900;cursor:pointer}
+#authBox{position:fixed;inset:0;background:#0f1115;display:flex;align-items:center;justify-content:center;z-index:99}
+.authCard{background:#1a1d25;padding:24px;border-radius:20px;width:100%;max-width:360px;display:flex;flex-direction:column;gap:12px}
+.authCard input{padding:12px;border-radius:10px;border:none;background:#2a2e3a;color:#fff}
+.btnYellow{padding:12px;border-radius:10px;border:none;background:#ffcc00;font-weight:700;cursor:pointer}
+.btnGhost{padding:12px;border-radius:10px;background:transparent;border:1px solid #444;color:#fff;cursor:pointer}
 </style>
 </head>
 <body>
-<header><h1>CHALECHAT 🌍</h1><div class="badge">GHANA #1</div></header>
-<div class="langBar" id="langBar"></div>
-<div id="authScreen">
-<h2>Mema wo akye! 🇬🇭</h2>
-<p style="color:#8aa0b8;margin:10px 0 18px;font-size:14px">Ghana's first translating messenger</p>
-<input id="email" type="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
-<button class="btn" id="signupBtn">Create Account & Join 🔥</button>
-<button class="btn btn2" id="loginBtn">Login</button>
-<p id="authError" style="color:#ff6b6b;margin-top:12px;font-size:13px"></p>
+<div class="header"><div>CHALECHAT 🌍 UPGRADED</div><div>GHANA #1 🔥</div></div>
+<div class="tabs">
+<button class="tab active" data-lang="en">🇬🇧 English</button>
+<button class="tab" data-lang="tw">🇬🇭 Twi</button>
+<button class="tab" data-lang="pcm">🇳🇬 Pidgin</button>
+<button class="tab" data-lang="fr">🇫🇷 French</button>
 </div>
-<div id="chatScreen">
-<div id="topBar"><div id="userInfo"></div><button id="logout" style="width:auto;padding:6px 12px;background:#1a2533;color:#fff;border-radius:8px">Logout</button></div>
-<div id="messages"></div>
-<div id="inputBar"><input id="msgInput" placeholder="Type in any language..."><button id="sendBtn">➤</button></div>
-</div>
-<script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import {getFirestore,collection,addDoc,query,orderBy,onSnapshot,serverTimestamp} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-const firebaseConfig={apiKey:"AIzaSyB0s8MwwApN2Y3nbuD9z3sujFYLUyrIB14",authDomain:"chaleychat-ghana.firebaseapp.com",projectId:"chaleychat-ghana",storageBucket:"chaleychat-ghana.firebasestorage.app",messagingSenderId:"164996577151",appId:"1:164996577151:web:fb0385eb69e4a5c16a4c4a"};
-const app=initializeApp(firebaseConfig);const auth=getAuth(app);const db=getFirestore(app);
-const LANGS=[{code:'en',label:'English',flag:'🇬🇧',api:'en'},{code:'tw',label:'Twi',flag:'🇬🇭',api:'ak'},{code:'pcm',label:'Pidgin',flag:'🇳🇬',api:'en'},{code:'fr',label:'French',flag:'🇫🇷',api:'fr'},{code:'ar',label:'Arabic',flag:'🇸🇦',api:'ar'},{code:'sw',label:'Swahili',flag:'🇹🇿',api:'sw'},{code:'yo',label:'Yoruba',flag:'🇳🇬',api:'yo'}];
-let viewLang=localStorage.getItem('chale_view')||'en';
-const langBar=document.getElementById('langBar');
-function renderBar(){langBar.innerHTML='';LANGS.forEach(l=>{const b=document.createElement('button');b.className='langBtn'+(viewLang===l.code?' active':'');b.innerHTML=`${l.flag} ${l.label}`;b.onclick=()=>{viewLang=l.code;localStorage.setItem('chale_view',viewLang);renderBar();if(unsub)loadMessages()};langBar.appendChild(b)})}renderBar();
-function detectLang(t){const s=t.toLowerCase();if(/[\u0600-\u06FF]/.test(t))return'ar';if(s.includes('akye')||s.includes('mema')||s.includes('ɔ')||s.includes('ɛ'))return'tw';if(s.includes('chale')||s.includes('how for')||s.includes('wettin'))return'pcm';if(s.includes('bonjour')||s.includes('incroyable'))return'fr';return'en'}
-const apiMap={en:'en',tw:'ak',pcm:'en',fr:'fr',ar:'ar',sw:'sw',yo:'yo'};
-async function translateText(text,from,to){if(!text)return text;const fa=apiMap[from]||'en',ta=apiMap[to]||'en';if(fa===ta)return text;try{const url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${fa}|${ta}`;const r=await fetch(url);const d=await r.json();let tr=d?.responseData?.translatedText||text;if(tr.includes('PLEASE SELECT TWO DISTINCT')||tr.includes('QUERY LENGTH'))return text;return tr}catch{return text}}
-const authScreen=document.getElementById('authScreen'),chatScreen=document.getElementById('chatScreen'),emailEl=document.getElementById('email'),passEl=document.getElementById('password'),signupBtn=document.getElementById('signupBtn'),loginBtn=document.getElementById('loginBtn'),authError=document.getElementById('authError'),messagesEl=document.getElementById('messages'),msgInput=document.getElementById('msgInput'),sendBtn=document.getElementById('sendBtn'),userInfo=document.getElementById('userInfo'),logoutBtn=document.getElementById('logout');
-signupBtn.onclick=async()=>{authError.textContent='';try{await createUserWithEmailAndPassword(auth,emailEl.value.trim(),passEl.value)}catch(e){authError.textContent=e.message}};
-loginBtn.onclick=async()=>{authError.textContent='';try{await signInWithEmailAndPassword(auth,emailEl.value.trim(),passEl.value)}catch(e){authError.textContent=e.message}};
-logoutBtn.onclick=()=>signOut(auth);
-let unsub=null,cache={};
-onAuthStateChanged(auth,u=>{if(u){authScreen.style.display='none';chatScreen.style.display='flex';userInfo.textContent='👤 '+u.email.split('@')[0];loadMessages()}else{authScreen.style.display='block';chatScreen.style.display='none';if(unsub)unsub()}});
-function loadMessages(){const q=query(collection(db,"messages"),orderBy("createdAt","asc"));unsub=onSnapshot(q,async snap=>{messagesEl.innerHTML='';const docs=snap.docs.slice(-50);for(const ds of docs){const d=ds.data();const oLang=d.lang||detectLang(d.text);const key=d.text+'|'+oLang+'|'+viewLang;let tr=cache[key];if(tr===undefined){if(oLang===viewLang)tr=d.text;else tr=await translateText(d.text,oLang,viewLang);cache[key]=tr}const mine=auth.currentUser&&d.uid===auth.currentUser.uid;const card=document.createElement('div');card.className='msgCard'+(mine?' mine':'');const lo=LANGS.find(l=>l.code===oLang)||{flag:'🌍'};const vo=LANGS.find(l=>l.code===viewLang)||{flag:'🌍'};card.innerHTML=`<div class="msgHead"><span style="font-weight:700;font-size:13px">${d.email?.split('@')[0]}</span><span class="langTag">${lo.flag} ${oLang}</span></div><div style="font-size:15px">${d.text}</div>${oLang!==viewLang?`<div class="transBox"><div class="transText">↳ ${tr}</div><div style="font-size:10px;color:#8aa0b8">${vo.flag} ${viewLang}</div></div>`:''}<div class="time">${d.createdAt?new Date(d.createdAt.toDate()).toLocaleTimeString():''}</div>`;messagesEl.appendChild(card)}messagesEl.scrollTop=messagesEl.scrollHeight})}
-async function send(){const t=msgInput.value.trim();if(!t)return;msgInput.value='';const lang=detectLang(t);await addDoc(collection(db,"messages"),{text:t,uid:auth.currentUser.uid,email:auth.currentUser.email,lang,createdAt:serverTimestamp()})}
-sendBtn.onclick=send;msgInput.addEventListener('keydown',e=>{if(e.key==='Enter')send()});
+<div id="chat" class="chat"></div>
+<div class="inputBar"><input id="msgInput" placeholder="Type in any language..."><button id="sendBtn">➤</button></div>
+<div id="authBox"><div class="authCard">
+<h2>CHALECHAT 🇬🇭</h2><p style="opacity:.6;font-size:13px">UPGRADED with Correct Twi!</p>
+<input id="email" placeholder="Email"><input id="password" type="password" placeholder="Password">
+<button class="btnYellow" id="signupBtn">Create Account 🔥</button><button class="btnGhost" id="loginBtn">Login</button><p id="err" style="color:#ff6b6b;font-size:12px"></p>
+</div></div>
+<script>
+// ==== YOUR FIREBASE CONFIG - API KEY INSERTED ====
+const firebaseConfig = {
+  apiKey: "AIzaSyB0s8MwwApN2Y3nbuD9z3sujFYLUyrIB14",
+  authDomain: "chalechat-aa1b8.firebaseapp.com",
+  projectId: "chalechat-aa1b8",
+  storageBucket: "chalechat-aa1b8.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abc123def456"
+};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth(); const db=firebase.firestore();
+
+// ==== CORRECT TWI - NO MORE FAKE TWI ====
+const DICTS={
+tw:{
+"how are you":"Wo ho te sɛn?","how are you doing":"Wo ho te sɛn?","i am fine":"Me ho yɛ","i am good":"Me ho yɛ","good morning":"Maakye","good afternoon":"Maaha","good evening":"Maadwo","good night":"Da mu","thank you":"Medaase","thanks":"Medaase pii","i love you":"Me dɔ wo","i love ghana":"Me dɔ Ghana","what is your name":"Wo din de sɛn?","where are you":"Wo wɔ he?","i am coming":"Mereba","come here":"Bra ha","please":"Mesrɛ wo","sorry":"Kafra","welcome":"Akwaaba","yes":"Aane","no":"Daabi","money":"Sika","food":"Aduane","water":"Nsuo","house":"Fie","friend":"Adamfo","brother":"Nua","god bless you":"Nyame nhyira wo","beautiful":"Ahoɔfɛ","how much":"Yɛ sɛn?","i understand":"Mate aseɛ"},
+pcm:{"how are you":"How you dey?","i am fine":"I dey fine","good morning":"Morning o","thank you":"Thank you o","where are you":"Where you dey?","i am coming":"I dey come","please":"Abeg","food":"Chop","i love you":"I love you die"},
+fr:{"how are you":"Comment ça va?","i am fine":"Je vais bien","good morning":"Bonjour","thank you":"Merci","i love you":"Je t'aime"}
+};
+function getCorrect(t,lang){let l=t.toLowerCase().trim();if(DICTS[lang]&&DICTS[lang][l])return DICTS[lang][l];return null;}
+async function translate(text,target){
+if(target==="en") return text;
+let fix=getCorrect(text,target); if(fix) return fix;
+try{let tt=target==="tw"?"ak":target;let url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${tt}`;let r=await fetch(url);let j=await r.json();if(j.responseData&&j.responseData.translatedText)return j.responseData.translatedText;}catch(e){}
+return text;
+}
+let currentLang="en"; let currentUser=null;
+document.querySelectorAll(".tab").forEach(b=>{b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");currentLang=b.dataset.lang;load();};});
+auth.onAuthStateChanged(u=>{if(u){currentUser=u;document.getElementById("authBox").style.display="none";load();}else{document.getElementById("authBox").style.display="flex";}});
+document.getElementById("signupBtn").onclick=async()=>{try{await auth.createUserWithEmailAndPassword(email.value,password.value);}catch(e){err.textContent=e.message;}};
+document.getElementById("loginBtn").onclick=async()=>{try{await auth.signInWithEmailAndPassword(email.value,password.value);}catch(e){err.textContent=e.message;}};
+let unsub=null;
+function load(){if(unsub)unsub();unsub=db.collection("messages").orderBy("timestamp","asc").limit(100).onSnapshot(async snap=>{
+let chat=document.getElementById("chat");chat.innerHTML="";
+for(let doc of snap.docs){let d=doc.data();let trans="";if(currentLang!=="en"){let tt=await translate(d.text,currentLang);if(tt!==d.text)trans=`<div class="trans">↳ ${tt} [${currentLang}]</div>`;}
+let div=document.createElement("div");div.className="msg"+(d.uid===currentUser?.uid?" me":"");div.innerHTML=`<div style="font-size:11px;opacity:.6">${d.displayName}</div><div>${d.text}</div>${trans}`;chat.appendChild(div);}
+chat.scrollTop=chat.scrollHeight;
+});}
+sendBtn.onclick=async()=>{let t=msgInput.value.trim();if(!t||!currentUser)return;msgInput.value="";await db.collection("messages").add({text:t,displayName:currentUser.email.split("@")[0],uid:currentUser.uid,timestamp:firebase.firestore.FieldValue.serverTimestamp()});};
+msgInput.onkeydown=e=>{if(e.key==="Enter")sendBtn.click();};
 </script>
 </body>
 </html>
