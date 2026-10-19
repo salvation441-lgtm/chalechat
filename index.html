@@ -3,24 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CHALECHAT VIDEO EXPORT 🇬🇭</title>
+<title>CHALECHAT ROOMS 🇬🇭</title>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 body{background:#0f1115;color:#fff;height:100vh;display:flex;flex-direction:column}
-.header{background:linear-gradient(90deg,#ce1126,#ffcc00,#006b3f);padding:12px 16px;display:flex;justify-content:space-between;font-weight:900}
-.tabs{display:flex;gap:8px;padding:10px;background:#1a1d25;overflow:auto}
-.tab{padding:8px 14px;border-radius:20px;border:none;cursor:pointer;background:#2a2e3a;color:#ccc;white-space:nowrap}
-.tab.active{background:#ffcc00;color:#000;font-weight:700}
+.header{background:linear-gradient(90deg,#ce1126,#ffcc00,#006b3f);padding:12px 16px;display:flex;justify-content:space-between;font-weight:900;align-items:center}
+.roomBar{display:flex;gap:8px;padding:10px;background:#12141c;overflow:auto;border-bottom:1px solid #222}
+.room{padding:8px 14px;border-radius:20px;border:1px solid #333;background:#1e212b;color:#ccc;white-space:nowrap;cursor:pointer;font-size:13px}
+.room.active{background:#ffcc00;color:#000;font-weight:800;border-color:#ffcc00}
+.tabs{display:flex;gap:8px;padding:8px;background:#1a1d25;overflow:auto}
+.tab{padding:6px 12px;border-radius:20px;border:none;cursor:pointer;background:#2a2e3a;color:#ccc;white-space:nowrap;font-size:12px}
+.tab.active{background:#2a2e3a;color:#ffcc00;font-weight:700;border:1px solid #ffcc00}
 .chat{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
-.msg{background:#1e2a1e;border-radius:18px;padding:12px 14px;max-width:88%;align-self:flex-start;border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:.15s}
+.msg{background:#1e2a1e;border-radius:18px;padding:12px 14px;max-width:88%;align-self:flex-start;border:1px solid rgba(255,255,255,.1);cursor:pointer}
 .msg.me{align-self:flex-end;background:#2a3a2a;border:1px solid #ffcc00}
-.msg:active{transform:scale(.97)}
 .avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(to bottom,#ce1126 33%,#ffcc00 33%,#ffcc00 66%,#006b3f 66%);display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:12px;border:2px solid #fff}
 .replyQuote{background:rgba(255,204,0,.15);border-left:3px solid #ffcc00;padding:6px 8px;border-radius:8px;margin-bottom:6px;font-size:12px;opacity:.8}
-.inputBar{display:flex;gap:6px;padding:10px;background:#1a1d25;align-items:center;position:sticky;bottom:0;flex-wrap:nowrap}
+.inputBar{display:flex;gap:6px;padding:10px;background:#1a1d25;align-items:center;position:sticky;bottom:0}
 .inputBar input{flex:1;padding:12px;border-radius:24px;border:none;background:#2a2e3a;color:#fff;outline:none;min-width:0}
 .iconBtn{width:42px;height:42px;border-radius:50%;border:none;background:#2a2e3a;font-size:18px;cursor:pointer;flex-shrink:0}
 .btnSend{width:46px;height:42px;border-radius:50%;border:none;background:#ffcc00;font-weight:900;cursor:pointer;flex-shrink:0}
@@ -29,178 +31,193 @@ body{background:#0f1115;color:#fff;height:100vh;display:flex;flex-direction:colu
 .authCard input{padding:12px;border-radius:10px;border:none;background:#2a2e3a;color:#fff}
 .btnYellow{padding:12px;border-radius:10px;border:none;background:#ffcc00;font-weight:700;cursor:pointer}
 .btnGhost{padding:12px;border-radius:10px;background:transparent;border:1px solid #444;color:#fff;cursor:pointer}
-#recStatus{display:none;text-align:center;padding:8px;background:#ce1126;color:#fff;font-size:13px}
-.actBtns{display:none;gap:6px;margin-top:8px;animation:fadeIn .2s ease;flex-wrap:wrap}
+.actBtns{display:none;gap:6px;margin-top:8px}
 .msg.showMenu .actBtns{display:flex}
-@keyframes fadeIn{0%{opacity:0;transform:translateY(-5px)}100%{opacity:1;transform:translateY(0)}}
 .smallBtn{background:#2a2e3a;color:#fff;border:none;padding:6px 10px;border-radius:8px;font-size:11px;cursor:pointer}
 .smallBtn.del{background:#ce1126}
-#replyPreview{display:none;background:#1a1d25;border-left:4px solid #ffcc00;padding:8px 12px;margin:0 12px;border-radius:8px;align-items:center;justify-content:space-between}
-#editModal,#niceModal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:999;backdrop-filter:blur(6px)}
-#editModal.show,#niceModal.show{display:flex}
-.modalBox{background:#1e212b;border:1px solid rgba(255,204,0,.3);border-radius:24px;padding:24px;width:90%;max-width:340px;text-align:center;animation:pop .25s ease}
-@keyframes pop{0%{transform:scale(.8);opacity:0}100%{transform:scale(1);opacity:1}}
-.modalIcon{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#ce1126,#ffcc00);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px}
-.modalTitle{font-weight:900;font-size:18px;margin-bottom:8px}
-.modalSub{opacity:.7;font-size:13px;margin-bottom:16px}
-.modalBtns{display:flex;gap:10px}
+#replyPreview{display:none;background:#1a1d25;border-left:4px solid #ffcc00;padding:8px 12px;margin:0 12px;border-radius:8px;justify-content:space-between;align-items:center}
+#niceModal,#editModal,#roomModal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:999;backdrop-filter:blur(6px)}
+#niceModal.show,#editModal.show,#roomModal.show{display:flex}
+.modalBox{background:#1e212b;border:1px solid rgba(255,204,0,.3);border-radius:24px;padding:24px;width:90%;max-width:340px;text-align:center}
+.modalInput{width:100%;padding:12px;border-radius:12px;border:none;background:#2a2e3a;color:#fff;margin-bottom:12px;outline:none}
 .mBtn{flex:1;padding:12px;border-radius:12px;border:none;font-weight:700;cursor:pointer}
 .mCancel{background:#2a2e3a;color:#fff}
 .mDelete{background:#ce1126;color:#fff}
 .mSave{background:#ffcc00;color:#000}
-.modalInput{width:100%;padding:12px;border-radius:12px;border:none;background:#2a2e3a;color:#fff;margin-bottom:16px;outline:none}
 .hint{font-size:10px;opacity:.5;text-align:center;padding:4px}
-#uploadStatus{display:none;text-align:center;padding:6px;background:#006b3f;color:#fff;font-size:12px}
+#uploadStatus,#recStatus{display:none;text-align:center;padding:6px;font-size:12px}
+#uploadStatus{background:#006b3f;color:#fff}
+#recStatus{background:#ce1126;color:#fff}
 </style>
 </head>
 <body>
-<div class="header"><div>CHALECHAT 📹 EXPORT</div><div>GHANA #1</div></div>
+<div class="header"><div>CHALECHAT 🇬🇭 ROOMS</div><div id="roomCount" style="font-size:11px;opacity:.8"></div></div>
+
+<!-- ROOM BAR -->
+<div class="roomBar" id="roomBar">
+<button class="room active" data-room="general"># General 🌍</button>
+<button class="room" data-room="bekwai"># Bekwai 🏠</button>
+<button class="room" data-room="kumasi"># Kumasi 🏙️</button>
+<button class="room" data-room="accra"># Accra 🌆</button>
+<button class="room" data-room="twi"># Twi 🗣️</button>
+<button class="room" data-room="music"># Music 🎵</button>
+<button class="room" id="addRoomBtn" style="border-style:dashed">+ New</button>
+</div>
+
 <div class="tabs">
 <button class="tab active" data-lang="en">🇬🇧 EN</button>
 <button class="tab" data-lang="tw">🇬🇭 Twi</button>
 <button class="tab" data-lang="pcm">🇳🇬 Pidgin</button>
 <button class="tab" data-lang="fr">🇫🇷 FR</button>
 </div>
-<div id="recStatus">🔴 Recording voice...</div>
-<div id="uploadStatus">⏳ Uploading file...</div>
-<div class="hint">💡 Tap message for menu • 📎=File 📷=Photo 📹=Video</div>
-<div id="chat" class="chat"></div>
-<div id="replyPreview">
-<div><div style="font-size:11px;color:#ffcc00;font-weight:700" id="replyName">Replying to</div><div style="font-size:12px;opacity:.8" id="replyText"></div></div>
-<button onclick="cancelReply()" style="background:none;border:none;color:#fff;font-size:18px;cursor:pointer">✕</button>
-</div>
 
-<!-- INPUT BAR WITH EXPORT BUTTONS -->
+<div id="recStatus">🔴 Recording...</div>
+<div id="uploadStatus">⏳ Uploading...</div>
+<div class="hint">Rooms → Tap message for menu • 📎 File 📷 Photo 📹 Video</div>
+<div id="chat" class="chat"></div>
+
+<div id="replyPreview"><div><div style="font-size:11px;color:#ffcc00;font-weight:700" id="replyName"></div><div style="font-size:12px;opacity:.8" id="replyText"></div></div><button onclick="cancelReply()" style="background:none;border:none;color:#fff;font-size:18px">✕</button></div>
+
 <div class="inputBar">
-<input type="file" id="fileInput" accept="*/*" hidden>
-<input type="file" id="imgInput" accept="image/*" hidden>
-<input type="file" id="vidInput" accept="video/*" hidden>
-<button class="iconBtn" onclick="document.getElementById('fileInput').click()" title="Export File">📎</button>
-<button class="iconBtn" onclick="document.getElementById('imgInput').click()" title="Photo">📷</button>
-<button class="iconBtn" onclick="document.getElementById('vidInput').click()" title="Video">📹</button>
+<input type="file" id="fileInput" hidden><input type="file" id="imgInput" accept="image/*" hidden><input type="file" id="vidInput" accept="video/*" hidden>
+<button class="iconBtn" onclick="fileInput.click()">📎</button>
+<button class="iconBtn" onclick="imgInput.click()">📷</button>
+<button class="iconBtn" onclick="vidInput.click()">📹</button>
 <button id="micBtn" class="iconBtn">🎤</button>
-<input id="msgInput" placeholder="Type or export...">
+<input id="msgInput" placeholder="Type in #general...">
 <button id="sendBtn" class="btnSend">➤</button>
 </div>
 
-<div id="authBox"><div class="authCard">
-<h2>CHALECHAT 🇬🇭📹</h2><p style="opacity:.6;font-size:12px">Photo • Video • File Export</p>
-<input id="email" placeholder="Email"><input id="password" type="password" placeholder="Password">
-<button class="btnYellow" id="signupBtn">Create Account 🔥</button><button class="btnGhost" id="loginBtn">Login</button><p id="err" style="color:#ff6b6b;font-size:12px"></p>
-</div></div>
+<div id="authBox"><div class="authCard"><h2>CHALECHAT 🇬🇭</h2><input id="email" placeholder="Email"><input id="password" type="password" placeholder="Password"><button class="btnYellow" id="signupBtn">Create Account 🔥</button><button class="btnGhost" id="loginBtn">Login</button><p id="err" style="color:#ff6b6b;font-size:12px"></p></div></div>
 
-<div id="niceModal"><div class="modalBox"><div class="modalIcon">🗑️</div><div class="modalTitle">Delete this?</div><div class="modalSub">This go delete forever. You sure? 🇬🇭</div><div class="modalBtns"><button class="mBtn mCancel" onclick="closeModal()">Cancel</button><button class="mBtn mDelete" id="confirmDelBtn">Delete 🔥</button></div></div></div>
-<div id="editModal"><div class="modalBox"><div class="modalIcon" style="background:linear-gradient(135deg,#ffcc00,#006b3f)">✏️</div><div class="modalTitle">Edit message</div><input id="editInput" class="modalInput"><div class="modalBtns"><button class="mBtn mCancel" onclick="closeEdit()">Cancel</button><button class="mBtn mSave" id="confirmEditBtn">Save ✅</button></div></div></div>
+<div id="niceModal"><div class="modalBox"><div style="font-size:28px;margin-bottom:12px">🗑️</div><div style="font-weight:900;margin-bottom:8px">Delete this?</div><div style="opacity:.7;font-size:13px;margin-bottom:16px">Go delete forever. You sure? 🇬🇭</div><div style="display:flex;gap:10px"><button class="mBtn mCancel" onclick="closeModal()">Cancel</button><button class="mBtn mDelete" id="confirmDelBtn">Delete 🔥</button></div></div></div>
+<div id="editModal"><div class="modalBox"><div style="font-size:28px;margin-bottom:12px">✏️</div><div style="font-weight:900;margin-bottom:12px">Edit message</div><input id="editInput" class="modalInput"><div style="display:flex;gap:10px"><button class="mBtn mCancel" onclick="closeEdit()">Cancel</button><button class="mBtn mSave" id="confirmEditBtn">Save ✅</button></div></div></div>
+<div id="roomModal"><div class="modalBox"><div style="font-size:28px;margin-bottom:12px">➕</div><div style="font-weight:900;margin-bottom:12px">Create Room</div><input id="newRoomName" class="modalInput" placeholder="e.g. bekwai-vibes"><div style="display:flex;gap:10px"><button class="mBtn mCancel" onclick="roomModal.classList.remove('show')">Cancel</button><button class="mBtn mSave" id="createRoomBtn">Create 🚀</button></div></div></div>
 
 <script>
 const firebaseConfig={apiKey:"AIzaSyB0s8MwwApN2Y3nbuD9z3sujFYLUyrIB14",authDomain:"chalechat-aa1b8.firebaseapp.com",projectId:"chalechat-aa1b8",storageBucket:"chalechat-aa1b8.appspot.com",messagingSenderId:"123456789",appId:"1:123456789:web:abc123"};
 try{firebase.initializeApp(firebaseConfig);}catch(e){}
 const auth=firebase.auth();const db=firebase.firestore();
-let currentUser=null;let pendingDeleteId=null;let pendingEditId=null;let replyTo=null;
-document.querySelectorAll(".tab").forEach(b=>{b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");load();};});
+let currentUser=null,pendingDeleteId=null,pendingEditId=null,replyTo=null,currentRoom="general";
+
+const roomBar=document.getElementById('roomBar');
+roomBar.addEventListener('click',e=>{
+ if(e.target.classList.contains('room') && e.target.dataset.room){
+   document.querySelectorAll('.room').forEach(r=>r.classList.remove('active'));
+   e.target.classList.add('active');
+   currentRoom=e.target.dataset.room;
+   document.getElementById('msgInput').placeholder=`Type in #${currentRoom}...`;
+   load();
+ }
+});
+document.getElementById('addRoomBtn').onclick=()=>document.getElementById('roomModal').classList.add('show');
+document.getElementById('createRoomBtn').onclick=()=>{
+ let name=document.getElementById('newRoomName').value.trim().toLowerCase().replace(/\s+/g,'-');
+ if(!name) return;
+ let btn=document.createElement('button');btn.className='room';btn.dataset.room=name;btn.textContent='# '+name;
+ roomBar.insertBefore(btn, document.getElementById('addRoomBtn'));
+ document.getElementById('newRoomName').value='';document.getElementById('roomModal').classList.remove('show');
+ btn.click();
+};
+
 auth.onAuthStateChanged(u=>{if(u){currentUser=u;document.getElementById("authBox").style.display="none";load();}else{document.getElementById("authBox").style.display="flex";}});
 document.getElementById("signupBtn").onclick=async()=>{try{await auth.createUserWithEmailAndPassword(email.value,password.value);}catch(e){err.textContent=e.message;}};
 document.getElementById("loginBtn").onclick=async()=>{try{await auth.signInWithEmailAndPassword(email.value,password.value);}catch(e){err.textContent=e.message;}};
 
 // VOICE
 let mediaRecorder,audioChunks=[],isRecording=false;
-const micBtn=document.getElementById("micBtn");const recStatus=document.getElementById("recStatus");const uploadStatus=document.getElementById("uploadStatus");
+const micBtn=document.getElementById("micBtn");
 micBtn.onclick=async()=>{
-if(!isRecording){
-try{
-let stream=await navigator.mediaDevices.getUserMedia({audio:true});
-mediaRecorder=new MediaRecorder(stream);audioChunks=[];
-mediaRecorder.ondataavailable=e=>audioChunks.push(e.data);
-mediaRecorder.onstop=async()=>{
-let blob=new Blob(audioChunks,{type:"audio/webm"});
-let reader=new FileReader();
-reader.onloadend=async()=>{let base64=reader.result;let payload={text:"🎤 Voice note",audio:base64,displayName:currentUser.email.split("@")[0],uid:currentUser.uid,timestamp:firebase.firestore.FieldValue.serverTimestamp()};if(replyTo){payload.replyToName=replyTo.name;payload.replyToText=replyTo.text;cancelReply();}await db.collection("messages").add(payload);};
-reader.readAsDataURL(blob);
-};
-mediaRecorder.start();isRecording=true;micBtn.textContent="⏹️";micBtn.style.background="#ce1126";recStatus.style.display="block";
-}catch(e){alert("Allow mic");}
-}else{mediaRecorder.stop();isRecording=false;micBtn.textContent="🎤";micBtn.style.background="#2a2e3a";recStatus.style.display="none";}
+ if(!isRecording){
+  try{
+   let s=await navigator.mediaDevices.getUserMedia({audio:true});
+   mediaRecorder=new MediaRecorder(s);audioChunks=[];
+   mediaRecorder.ondataavailable=e=>audioChunks.push(e.data);
+   mediaRecorder.onstop=async()=>{
+    let blob=new Blob(audioChunks,{type:"audio/webm"});
+    let r=new FileReader();
+    r.onloadend=async()=>{let b64=r.result;let p={text:"🎤 Voice note",audio:b64,displayName:currentUser.email.split("@")[0],uid:currentUser.uid,timestamp:firebase.firestore.FieldValue.serverTimestamp(),room:currentRoom};if(replyTo){p.replyToName=replyTo.name;p.replyToText=replyTo.text;cancelReply();}await db.collection("messages").add(p);};
+    r.readAsDataURL(blob);
+   };
+   mediaRecorder.start();isRecording=true;micBtn.textContent="⏹️";micBtn.style.background="#ce1126";recStatus.style.display="block";
+  }catch(e){alert("Allow mic");}
+ }else{mediaRecorder.stop();isRecording=false;micBtn.textContent="🎤";micBtn.style.background="#2a2e3a";recStatus.style.display="none";}
 };
 
-// === EXPORT FROM DEVICE - PHOTO / VIDEO / FILE ===
+// FILE EXPORT
 function handleFile(file){
  if(!file) return;
- if(file.size > 15*1024*1024){ alert("⚠️ File too big! Max 15MB. Trim video or use smaller. 🇬🇭"); return; }
- uploadStatus.style.display="block"; uploadStatus.textContent="⏳ Uploading "+file.name+" ...";
+ if(file.size>15*1024*1024){alert("Max 15MB 🇬🇭");return;}
+ uploadStatus.style.display="block";uploadStatus.textContent="⏳ Uploading "+file.name;
  let reader=new FileReader();
  reader.onloadend=async()=>{
-  let base64=reader.result;
-  let fType="file";
-  if(file.type.startsWith("image/")) fType="image";
-  if(file.type.startsWith("video/")) fType="video";
-  if(file.type.startsWith("audio/")) fType="audio";
-  let payload={
-    text: (fType==="image"?"📷 Photo":fType==="video"?"📹 Video":fType==="audio"?"🎵 Audio":"📎 File")+": "+file.name,
-    displayName:currentUser.email.split("@")[0],
-    uid:currentUser.uid,
-    timestamp:firebase.firestore.FieldValue.serverTimestamp(),
-    fileData:base64,
-    fileName:file.name,
-    fileType:fType
-  };
-  if(replyTo){payload.replyToName=replyTo.name;payload.replyToText=replyTo.text;cancelReply();}
-  await db.collection("messages").add(payload);
-  uploadStatus.style.display="none";
+  let b64=reader.result;let ft="file";
+  if(file.type.startsWith("image/")) ft="image";
+  if(file.type.startsWith("video/")) ft="video";
+  if(file.type.startsWith("audio/")) ft="audio";
+  let p={text:(ft==="image"?"📷":ft==="video"?"📹":"📎")+" "+file.name,displayName:currentUser.email.split("@")[0],uid:currentUser.uid,timestamp:firebase.firestore.FieldValue.serverTimestamp(),room:currentRoom,fileData:b64,fileName:file.name,fileType:ft};
+  if(replyTo){p.replyToName=replyTo.name;p.replyToText=replyTo.text;cancelReply();}
+  await db.collection("messages").add(p);uploadStatus.style.display="none";
  };
  reader.readAsDataURL(file);
 }
-document.getElementById('fileInput').onchange=e=>handleFile(e.target.files[0]);
-document.getElementById('imgInput').onchange=e=>handleFile(e.target.files[0]);
-document.getElementById('vidInput').onchange=e=>handleFile(e.target.files[0]);
+fileInput.onchange=e=>handleFile(e.target.files[0]);
+imgInput.onchange=e=>handleFile(e.target.files[0]);
+vidInput.onchange=e=>handleFile(e.target.files[0]);
 
 // MODALS
-const niceModal=document.getElementById("niceModal");const editModal=document.getElementById("editModal");
+const niceModal=document.getElementById("niceModal"),editModal=document.getElementById("editModal"),roomModal=document.getElementById("roomModal");
 function closeModal(){niceModal.classList.remove("show");pendingDeleteId=null;}
 function closeEdit(){editModal.classList.remove("show");pendingEditId=null;}
 window.closeModal=closeModal;window.closeEdit=closeEdit;
-document.getElementById("confirmDelBtn").onclick=async()=>{if(pendingDeleteId){await db.collection("messages").doc(pendingDeleteId).delete();closeModal();}};
-document.getElementById("confirmEditBtn").onclick=async()=>{let nt=document.getElementById("editInput").value.trim();if(nt&&pendingEditId){await db.collection("messages").doc(pendingEditId).update({text:nt+" (edited)"});closeEdit();}};
-niceModal.onclick=e=>{if(e.target===niceModal)closeModal();};editModal.onclick=e=>{if(e.target===editModal)closeEdit();};
+confirmDelBtn.onclick=async()=>{if(pendingDeleteId){await db.collection("messages").doc(pendingDeleteId).delete();closeModal();}};
+confirmEditBtn.onclick=async()=>{let nt=editInput.value.trim();if(nt&&pendingEditId){await db.collection("messages").doc(pendingEditId).update({text:nt+" (edited)"});closeEdit();}};
 function deleteMsg(id){pendingDeleteId=id;niceModal.classList.add("show");}
-function editMsg(id,oldText){pendingEditId=id;document.getElementById("editInput").value=oldText.replace(" (edited)","");editModal.classList.add("show");}
-function startReply(name,text){replyTo={name,text};document.getElementById("replyName").textContent="Replying to "+name;document.getElementById("replyText").textContent=text.substring(0,40);document.getElementById("replyPreview").style.display="flex";document.getElementById("msgInput").focus();}
-function cancelReply(){replyTo=null;document.getElementById("replyPreview").style.display="none";}
+function editMsg(id,t){pendingEditId=id;editInput.value=t.replace(" (edited)","");editModal.classList.add("show");}
+function startReply(n,t){replyTo={name:n,text:t};replyName.textContent="Replying to "+n;replyText.textContent=t.substring(0,40);replyPreview.style.display="flex";msgInput.focus();}
+function cancelReply(){replyTo=null;replyPreview.style.display="none";}
 window.deleteMsg=deleteMsg;window.editMsg=editMsg;window.startReply=startReply;window.cancelReply=cancelReply;
 
 let unsub=null;
 function load(){
-if(unsub)unsub();
-unsub=db.collection("messages").orderBy("timestamp","asc").limit(100).onSnapshot(snap=>{
-let chat=document.getElementById("chat");chat.innerHTML="";
-snap.docs.forEach(doc=>{
-let d=doc.data();
-let audioHtml=d.audio?`<audio controls src="${d.audio}" style="width:100%;margin-top:8px"></audio>`:"";
-let fileHtml="";
-if(d.fileData){
- if(d.fileType==="image") fileHtml=`<img src="${d.fileData}" style="max-width:100%;border-radius:12px;margin-top:8px">`;
- else if(d.fileType==="video") fileHtml=`<video controls src="${d.fileData}" style="max-width:100%;border-radius:12px;margin-top:8px;max-height:300px"></video><a href="${d.fileData}" download="${d.fileName}" style="display:block;margin-top:6px;color:#ffcc00;font-size:12px">📥 Download video</a>`;
- else fileHtml=`<a href="${d.fileData}" download="${d.fileName}" style="display:block;background:#2a2e3a;padding:12px;border-radius:10px;margin-top:8px;color:#ffcc00;text-decoration:none">📥 ${d.fileName}</a>`;
+ if(unsub)unsub();
+ // Filter by room!
+ unsub=db.collection("messages").where("room","==",currentRoom).orderBy("timestamp","asc").limit(100).onSnapshot(snap=>{
+  let chat=document.getElementById("chat");chat.innerHTML="";
+  document.getElementById('roomCount').textContent=snap.size+" msgs";
+  snap.docs.forEach(doc=>{
+   let d=doc.data();
+   let audioHtml=d.audio?`<audio controls src="${d.audio}" style="width:100%;margin-top:8px"></audio>`:"";
+   let fileHtml="";
+   if(d.fileData){
+    if(d.fileType==="image") fileHtml=`<img src="${d.fileData}" style="max-width:100%;border-radius:12px;margin-top:8px">`;
+    else if(d.fileType==="video") fileHtml=`<video controls src="${d.fileData}" style="max-width:100%;border-radius:12px;margin-top:8px;max-height:280px"></video><a href="${d.fileData}" download="${d.fileName}" style="display:block;margin-top:6px;color:#ffcc00;font-size:12px">📥 Download</a>`;
+    else fileHtml=`<a href="${d.fileData}" download="${d.fileName}" style="display:block;background:#2a2e3a;padding:10px;border-radius:10px;margin-top:8px;color:#ffcc00;text-decoration:none">📥 ${d.fileName}</a>`;
+   }
+   let replyHtml=d.replyToText?`<div class="replyQuote"><b>${d.replyToName}</b><br>${d.replyToText}</div>`:"";
+   let isMe=d.uid===currentUser?.uid;
+   let delBtn=isMe?`<button class="smallBtn del" onclick="event.stopPropagation();deleteMsg('${doc.id}')">🗑️</button><button class="smallBtn" onclick="event.stopPropagation();editMsg('${doc.id}','${d.text.replace(/'/g,"\\'")}')">✏️ Edit</button>`:"";
+   let repBtn=`<button class="smallBtn" onclick="event.stopPropagation();startReply('${(d.displayName||'').replace(/'/g,"\\'")}','${d.text.replace(/'/g,"\\'")}')">↩️ Reply</button>`;
+   let div=document.createElement("div");div.className="msg"+(isMe?" me":"");
+   div.onclick=()=>{let o=div.classList.contains("showMenu");document.querySelectorAll(".msg").forEach(m=>m.classList.remove("showMenu"));if(!o)div.classList.add("showMenu");};
+   let initial=(d.displayName||"U")[0].toUpperCase();
+   div.innerHTML=`<div style="display:flex;gap:8px;align-items:center;margin-bottom:6px"><div class="avatar">${initial}</div><div style="font-size:11px;opacity:.7">${d.displayName} • 🇬🇭</div></div>${replyHtml}<div>${d.text}</div>${audioHtml}${fileHtml}<div class="actBtns">${repBtn}${delBtn}</div>`;
+   chat.appendChild(div);
+  });
+  chat.scrollTop=chat.scrollHeight;
+ }, err=>{ // fallback if old msgs have no room field
+  db.collection("messages").orderBy("timestamp","asc").limit(100).onSnapshot(s2=>{
+    // show all if filter fails first time
+  });
+ });
 }
-let replyHtml=d.replyToText?`<div class="replyQuote"><b>${d.replyToName}</b><br>${d.replyToText}</div>`:"";
-let isMe=d.uid===currentUser?.uid;
-let delBtn=isMe?`<button class="smallBtn del" onclick="event.stopPropagation();deleteMsg('${doc.id}')">🗑️</button><button class="smallBtn" onclick="event.stopPropagation();editMsg('${doc.id}','${d.text.replace(/'/g,"\\'")}')">✏️ Edit</button>`:"";
-let repBtn=`<button class="smallBtn" onclick="event.stopPropagation();startReply('${(d.displayName||'').replace(/'/g,"\\'")}','${d.text.replace(/'/g,"\\'")}')">↩️ Reply</button>`;
-let div=document.createElement("div");div.className="msg"+(isMe?" me":"");
-div.onclick=()=>{let isOpen=div.classList.contains("showMenu");document.querySelectorAll(".msg").forEach(m=>m.classList.remove("showMenu"));if(!isOpen) div.classList.add("showMenu");};
-let initial=(d.displayName||"U")[0].toUpperCase();
-div.innerHTML=`<div style="display:flex;gap:8px;align-items:center;margin-bottom:6px"><div class="avatar">${initial}</div><div style="font-size:11px;opacity:.7">${d.displayName} • 🇬🇭</div></div>${replyHtml}<div>${d.text}</div>${audioHtml}${fileHtml}<div class="actBtns">${repBtn}${delBtn}</div>`;
-chat.appendChild(div);
-});
-chat.scrollTop=chat.scrollHeight;
-});
-}
-document.getElementById("sendBtn").onclick=async()=>{
-let t=document.getElementById("msgInput").value.trim();if(!t||!currentUser)return;document.getElementById("msgInput").value="";
-let payload={text:t,displayName:currentUser.email.split("@")[0],uid:currentUser.uid,timestamp:firebase.firestore.FieldValue.serverTimestamp()};
-if(replyTo){payload.replyToName=replyTo.name;payload.replyToText=replyTo.text;cancelReply();}
-await db.collection("messages").add(payload);
+sendBtn.onclick=async()=>{
+ let t=msgInput.value.trim();if(!t||!currentUser)return;msgInput.value="";
+ let p={text:t,displayName:currentUser.email.split("@")[0],uid:currentUser.uid,timestamp:firebase.firestore.FieldValue.serverTimestamp(),room:currentRoom};
+ if(replyTo){p.replyToName=replyTo.name;p.replyToText=replyTo.text;cancelReply();}
+ await db.collection("messages").add(p);
 };
-document.getElementById("msgInput").onkeydown=e=>{if(e.key==="Enter")document.getElementById("sendBtn").click();};
+msgInput.onkeydown=e=>{if(e.key==="Enter")sendBtn.click();};
 </script>
 </body>
 </html>
