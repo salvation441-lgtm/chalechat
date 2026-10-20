@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ChaleChat — by Salvation Tech Ghana</title>
+<meta name="description" content="Ghana's chat app — 16 languages, voice, video, file sharing">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <style>
@@ -25,6 +26,7 @@ body{font-family:'Inter',system-ui;color:#fff;display:flex;flex-direction:column
 .me .avatar{background:#000}
 .bubble{flex:1;min-width:0;overflow:hidden}
 .bubble b{font-size:11px;opacity:.6;display:block}
+.reply-quote{font-size:11px;background:rgba(0,0,0,.12);border-left:3px solid #CE1126;padding:4px 8px;border-radius:8px;margin-bottom:6px}
 .time{position:absolute;bottom:3px;right:10px;font-size:9px;opacity:.5;font-weight:600}
 .del{display:none;position:absolute;top:-8px;right:-8px;background:#ff3b30;color:#fff;border-radius:50%;width:20px;height:20px;font-size:14px;align-items:center;justify-content:center;border:2px solid #000;cursor:pointer}
 .m.show-del .del{display:flex}
@@ -51,7 +53,7 @@ img.chatImg{max-width:160px;border-radius:12px;margin-top:4px}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);z-index:100;align-items:center;justify-content:center;padding:20px}
 .modal.show{display:flex}
-.box{background:#151515;border:1px solid var(--border);border-radius:20px;padding:20px;width:100%;max-width:340px}
+.box{background:#151515;border:1px solid var(--border);border-radius:20px;padding:20px;width:100%;max-width:360px;max-height:80vh;overflow:auto}
 .box h3{margin:0 0 12px;font-size:16px;font-weight:800}
 .box input,.box select{width:100%;background:#1e1e1e;border:1px solid var(--border);color:#fff;border-radius:12px;padding:12px;outline:none;margin-bottom:12px}
 .btnRow{display:flex;gap:10px;justify-content:flex-end}
@@ -61,8 +63,7 @@ img.chatImg{max-width:160px;border-radius:12px;margin-top:4px}
 .btnDel{background:#ff3b30;color:#fff}
 #videos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 #videos video{width:100%;background:#0f0f0f;border-radius:14px;height:35vh;object-fit:cover}
-.footer{flex-shrink:0;background:#000;border-top:1px solid #111;padding:8px 10px calc(8px + env(safe-area-inset-bottom));text-align:center;font-size:10px;color:#555;letter-spacing:.5px;line-height:1.4}
-.footer b{color:#777;font-weight:800}
+.footer{flex-shrink:0;background:#000;border-top:1px solid #111;padding:8px 10px calc(8px + env(safe-area-inset-bottom));text-align:center;font-size:10px;color:#555;line-height:1.4}
 .footer span{color:var(--yellow);font-weight:900}
 </style>
 </head>
@@ -74,16 +75,35 @@ img.chatImg{max-width:160px;border-radius:12px;margin-top:4px}
 
 <div class="barWrap">
 <div id="emojiPanel"><span>😂</span><span>❤️</span><span>🔥</span><span>🇬🇭</span><span>😭</span><span>🙏</span><span>😅</span><span>💛</span><span>👏</span><span>😎</span><span>🥺</span><span>💀</span><span>⚡</span><span>✨</span><span>🎉</span><span>🤣</span><span>😍</span><span>🫡</span></div>
-<div id="recBar"><div class="recDot"></div><span id="recTime">0:00</span><span style="flex:1;font-size:12px;color:#aaa">Recording... tap ✓ to send</span><button id="stopRec" class="iconBtn" style="background:#FCD116;color:#000">✓</button><button id="cancelRec" class="iconBtn">✕</button></div>
+<div id="recBar"><div class="recDot"></div><span id="recTime">0:00</span><span style="flex:1;font-size:12px;color:#aaa">Recording... ✓ to send</span><button id="stopRec" class="iconBtn" style="background:#FCD116;color:#000">✓</button><button id="cancelRec" class="iconBtn">✕</button></div>
 <div class="bar"><button id="emojiBtn" class="iconBtn">😊</button><button id="fileBtn" class="iconBtn">📎</button><input type="file" id="fileInput" hidden accept="image/*,.pdf"><input id="i" class="msg" placeholder="Type a message..."><button id="micBtn" class="iconBtn">🎙️</button><button class="send" id="b">➤</button></div>
 </div>
 
-<div class="footer"><b>POWERED BY</b> <span>SALVATION TECH - GHANA</span> 🇬🇭 • BUILT IN ACCRA • 2026<br><span style="font-size:9px;color:#444">Fast • Secure • Made for Ghana</span></div>
+<div class="footer"><b>POWERED BY</b> <span>SALVATION TECH - GHANA</span> 🇬🇭 • 16 LANGUAGES • BUILT IN ACCRA 2026<br><span style="font-size:9px;color:#444">Fast • Secure • Made for Ghana • Global</span></div>
 
-<div id="nameModal" class="modal"><div class="box"><h3>Edit name</h3><input id="nameInput"><div class="btnRow"><button class="btn btnCancel" id="cancelName">Cancel</button><button class="btn btnOk" id="okName">Save</button></div></div></div>
-<div id="langModal" class="modal"><div class="box"><h3>🌍 Language</h3><select id="langSelect"><option value="en">English</option><option value="pidgin">Ghana Pidgin</option><option value="twi">Twi</option><option value="ga">Ga</option></select><div class="btnRow"><button class="btn btnCancel" id="cancelLang">Cancel</button><button class="btn btnOk" id="okLang">Save</button></div></div></div>
-<div id="delModal" class="modal"><div class="box"><h3>Delete?</h3><p style="color:#888;font-size:13px">Delete forever.</p><div class="btnRow"><button class="btn btnCancel" id="cancelDel">Cancel</button><button class="btn btnDel" id="okDel">Delete</button></div></div></div>
-<div id="callModal" class="modal"><div class="box"><h3>📹 Video Call</h3><input id="callInput" value="all"><div class="btnRow"><button class="btn btnCancel" id="cancelCall">Cancel</button><button class="btn btnOk" id="okCall">Call</button></div></div></div>
+<div id="nameModal" class="modal"><div class="box"><h3 id="t_name">Edit name</h3><input id="nameInput"><div class="btnRow"><button class="btn btnCancel" id="cancelName">Cancel</button><button class="btn btnOk" id="okName">Save</button></div></div></div>
+<div id="langModal" class="modal"><div class="box"><h3>🌍 Choose Language / Kasa</h3>
+<select id="langSelect" style="max-height:320px">
+<option value="en">🇬🇧 English</option>
+<option value="pidgin">🇬🇭 Ghana Pidgin</option>
+<option value="twi">🇬🇭 Twi - Akan</option>
+<option value="fante">🇬🇭 Fante</option>
+<option value="ga">🇬🇭 Ga</option>
+<option value="ewe">🇬🇭 Ewe</option>
+<option value="dagbani">🇬🇭 Dagbani</option>
+<option value="hausa">🇬🇭 Hausa</option>
+<option value="french">🇫🇷 Français</option>
+<option value="spanish">🇪🇸 Español</option>
+<option value="portuguese">🇵🇹 Português</option>
+<option value="yoruba">🇳🇬 Yoruba</option>
+<option value="igbo">🇳🇬 Igbo</option>
+<option value="arabic">🇸🇦 العربية</option>
+<option value="chinese">🇨🇳 中文</option>
+<option value="hindi">🇮🇳 Hindi</option>
+</select>
+<div class="btnRow"><button class="btn btnCancel" id="cancelLang">Cancel</button><button class="btn btnOk" id="okLang">Save</button></div></div></div>
+<div id="delModal" class="modal"><div class="box"><h3 id="t_del">Delete?</h3><p id="t_del2" style="color:#888;font-size:13px">Delete forever.</p><div class="btnRow"><button class="btn btnCancel" id="cancelDel">Cancel</button><button class="btn btnDel" id="okDel">Delete</button></div></div></div>
+<div id="callModal" class="modal"><div class="box"><h3 id="t_call">Video Call</h3><input id="callInput" value="all" placeholder='Name or "all"'><div class="btnRow"><button class="btn btnCancel" id="cancelCall">Cancel</button><button class="btn btnOk" id="okCall">Call</button></div></div></div>
 <div id="incomingModal" class="modal"><div class="box"><h3 id="incomingText">📹 Incoming call...</h3><div class="btnRow"><button class="btn btnCancel" id="declineCall">Decline</button><button class="btn btnOk" id="acceptCall">Accept</button></div></div></div>
 <div id="videoModal" class="modal"><div class="box" style="max-width:95vw"><h3>📹 Live Call</h3><div id="videos"><video id="localV" autoplay muted playsinline></video><video id="remoteV" autoplay playsinline></video></div><p id="videoStatus" style="color:#888;font-size:12px;margin:10px 0">Connecting...</p><div class="btnRow"><button class="btn btnDel" id="endCall">End</button><button class="btn btnCancel" id="closeVideo">Close</button></div></div></div>
 
@@ -92,8 +112,37 @@ const sb = supabase.createClient('https://gmdtjtznwsimcseurntt.supabase.co','eyJ
 let myName = localStorage.getItem('chale_name') || 'salvation';
 let lang = localStorage.getItem('chale_lang') || 'en';
 let pendingDelId=null, replyTo=null, mediaRecorder=null, recChunks=[], recTimer=null, recStart=0, localStream=null;
-const dict={en:{type:"Type a message..."},pidgin:{type:"Type wey you wan talk..."},twi:{type:"Kyerɛw asɛm..."},ga:{type:"Ŋmɛ wɔ sani..."}};
-function applyLang(){ document.getElementById('i').placeholder=(dict[lang]||dict.en).type; document.getElementById('statText').textContent=`Live • ${myName}`; }
+const dict={
+ en:{type:"Type a message...",reply:"Reply",del:"Delete message?",del2:"Delete forever for everyone.",cancel:"Cancel",save:"Save",delete:"Delete",live:"Live",call:"Video Call"},
+ pidgin:{type:"Type wey you wan talk...",reply:"Reply",del:"You go delete am?",del2:"E go comot forever.",cancel:"Cancel",save:"Save",delete:"Delete",live:"Live",call:"Video Call"},
+ twi:{type:"Kyerɛw asɛm...",reply:"Bua",del:"Wobɛpepa?",del2:"Ɛbɛyera daa.",cancel:"Gyae",save:"Kora",delete:"Pepa",live:"Live",call:"Frɛ video"},
+ fante:{type:"Kyerɛw nsɛm...",reply:"Bua",del:"Iropopa?",del2:"Ɔbɛyew daa.",cancel:"Gyae",save:"Kora",delete:"Popa",live:"Live",call:"Frɛ video"},
+ ga:{type:"Ŋmɛ wɔ sani...",reply:"Toi hee",del:"O baa shwie?",del2:"E baa jee daa.",cancel:"Foy",save:"Kwa",delete:"Shwie",live:"Live",call:"Video frɛ"},
+ ewe:{type:"Ŋlɔ nya...",reply:"ɖo eŋu",del:"Àɖe le?",del2:"Abuu tegbee.",cancel:"Dzudzɔ",save:"Dzra",delete:"Ɖe ɖa",live:"Live",call:"Yɔ video"},
+ dagbani:{type:"Sabmi yɛltɔɣa...",reply:"Labsi",del:"A yɛn zaŋli?",del2:"Di yɛn bɔri saha.",cancel:"Chɛ",save:"Sɔɣi",delete:"Zaŋli",live:"Live",call:"Bɔ video"},
+ hausa:{type:"Rubuta sako...",reply:"Amsa",del:"Za ka goge?",del2:"Zai goge har abada.",cancel:"Soke",save:"Ajiye",delete:"Goge",live:"Live",call:"Kiran video"},
+ french:{type:"Tapez un message...",reply:"Répondre",del:"Supprimer?",del2:"Supprimer pour toujours.",cancel:"Annuler",save:"Sauver",delete:"Supprimer",live:"En direct",call:"Appel vidéo"},
+ spanish:{type:"Escribe un mensaje...",reply:"Responder",del:"¿Eliminar?",del2:"Eliminar para siempre.",cancel:"Cancelar",save:"Guardar",delete:"Eliminar",live:"En vivo",call:"Videollamada"},
+ portuguese:{type:"Digite uma mensagem...",reply:"Responder",del:"Apagar?",del2:"Apagar para sempre.",cancel:"Cancelar",save:"Salvar",delete:"Apagar",live:"Ao vivo",call:"Chamada de vídeo"},
+ yoruba:{type:"Kọ ifiranṣẹ...",reply:"Dahun",del:"Pa rẹ?",del2:"Pa rẹ lailai.",cancel:"Fagile",save:"Fipamọ",delete:"Pa",live:"Live",call:"Ipe fidio"},
+ igbo:{type:"Pịnye ozi...",reply:"Zaghachi",del:"Ihichapụ?",del2:"Hichapụ ruo mgbe ebighị ebi.",cancel:"Kagbuo",save:"Chekwa",delete:"Hichapụ",live:"Live",call:"Oku vidiyo"},
+ arabic:{type:"اكتب رسالة...",reply:"رد",del:"حذف؟",del2:"حذف للأبد.",cancel:"إلغاء",save:"حفظ",delete:"حذف",live:"مباشر",call:"مكالمة فيديو"},
+ chinese:{type:"输入消息...",reply:"回复",del:"删除？",del2:"永久删除。",cancel:"取消",save:"保存",delete:"删除",live:"直播",call:"视频通话"},
+ hindi:{type:"संदेश लिखें...",reply:"जवाब",del:"हटाएं?",del2:"हमेशा के लिए हटाएं.",cancel:"रद्द",save:"सहेजें",delete:"हटाएं",live:"लाइव",call:"वीडियो कॉल"}
+};
+function applyLang(){
+ const d=dict[lang]||dict.en;
+ document.getElementById('i').placeholder=d.type;
+ document.getElementById('t_del').textContent=d.del;
+ document.getElementById('t_del2').textContent=d.del2;
+ document.getElementById('t_call').textContent=d.call;
+ document.getElementById('t_name').textContent=d.type.includes('Kyerɛw')?'Sesa wo din':(d.type.includes('Ŋmɛ')?'Tsake o gbɛi':'Edit name');
+ document.getElementById('cancelName').textContent=d.cancel; document.getElementById('okName').textContent=d.save;
+ document.getElementById('cancelLang').textContent=d.cancel; document.getElementById('okLang').textContent=d.save;
+ document.getElementById('cancelDel').textContent=d.cancel; document.getElementById('okDel').textContent=d.delete;
+ document.getElementById('cancelCall').textContent=d.cancel; document.getElementById('okCall').textContent=d.call;
+ document.getElementById('statText').textContent=`${d.live} • ${myName}`;
+}
 const chatEl=document.getElementById('chat'), typingEl=document.getElementById('typing'), inputEl=document.getElementById('i');
 const recBar=document.getElementById('recBar'), recTime=document.getElementById('recTime');
 function fmt(d){try{return new Date(d).toLocaleTimeString('en-GH',{hour:'numeric',minute:'2-digit'})}catch{return''}}
@@ -110,7 +159,7 @@ async function load(){
   if(content.startsWith('[AUDIO:')){ const src=content.match(/^\[AUDIO:(.*?)\]/)?.[1]; extra=`<div class="audioWrap"><audio controls preload="metadata" src="${src}"></audio></div>`; content=''; }
   else if(content.startsWith('[IMG:')){ const src=content.match(/^\[IMG:(.*?)\]/)?.[1]; extra=`<img class="chatImg" src="${src}" onclick="window.open('${src}')">`; content=''; }
   else if(content.startsWith('[FILE:')){ const f=content.match(/^\[FILE:(.*?)\|(.*?)\]/); if(f) extra=`<a href="${f[2]}" download="${f[1]}" style="color:inherit;text-decoration:none;background:rgba(0,0,0,.12);padding:6px 10px;border-radius:10px;display:inline-block;font-weight:600">📄 ${f[1]}</a>`; content=''; }
-  div.innerHTML=`<div class="avatar">${av(m.username)}</div><div class="bubble"><b>${m.username}</b>${replyHtml}<div style="font-size:14px;line-height:1.3;word-break:break-word">${content}</div>${extra}<span class="time">${fmt(m.created_at)} ${isMe?'✓✓':''}</span></div>${isMe?`<button class="del" onclick="event.stopPropagation();askDel('${m.id}')">×</button>`:''}<div class="menu"><button onclick="event.stopPropagation();doReply('${m.username.replace(/'/g,"\\'")}','${content.replace(/'/g,"\\'").substring(0,60)}')">Reply</button></div>`;
+  div.innerHTML=`<div class="avatar">${av(m.username)}</div><div class="bubble"><b>${m.username}</b>${replyHtml}<div style="font-size:14px;line-height:1.3;word-break:break-word">${content}</div>${extra}<span class="time">${fmt(m.created_at)} ${isMe?'✓✓':''}</span></div>${isMe?`<button class="del" onclick="event.stopPropagation();askDel('${m.id}')">×</button>`:''}<div class="menu"><button onclick="event.stopPropagation();doReply('${m.username.replace(/'/g,"\\'")}','${content.replace(/'/g,"\\'").substring(0,60)}')">${(dict[lang]||dict.en).reply}</button></div>`;
   div.onclick=()=>{ document.querySelectorAll('.m.show-del,.m.show-menu').forEach(b=>{ if(b!==div) b.classList.remove('show-del','show-menu') }); if(div.classList.contains('show-menu')) div.classList.remove('show-menu','show-del'); else { div.classList.add('show-menu'); if(isMe) div.classList.add('show-del') } };
   chatEl.appendChild(div);
  });
@@ -120,8 +169,8 @@ window.askDel=(id)=>{ pendingDelId=id; document.getElementById('delModal').class
 window.doReply=(u,c)=>{ replyTo={user:u,content:c}; document.getElementById('replyWho').textContent=u; document.getElementById('replyText').textContent=c.substring(0,60); document.getElementById('replyBar').classList.add('show'); inputEl.focus(); }
 window.cancelReply=()=>{ replyTo=null; document.getElementById('replyBar').classList.remove('show'); }
 load();
-sb.channel('chale-v11').on('postgres_changes',{event:'*',schema:'public',table:'messages'},load).subscribe();
-const typeChannel = sb.channel('typing-v11');
+sb.channel('chale-v12').on('postgres_changes',{event:'*',schema:'public',table:'messages'},load).subscribe();
+const typeChannel = sb.channel('typing-v12');
 typeChannel.on('broadcast',{event:'typing'},p=>{ if(p.payload.user!==myName){ typingEl.textContent=`${p.payload.user} is typing...`; setTimeout(()=>typingEl.textContent='',2000); } }).subscribe();
 inputEl.addEventListener('input',()=>{ typeChannel.send({type:'broadcast',event:'typing',payload:{user:myName}}); });
 document.getElementById('emojiBtn').onclick=()=>document.getElementById('emojiPanel').classList.toggle('show');
@@ -156,7 +205,7 @@ document.getElementById('micBtn').onclick=async()=>{
 function stopRec(send=true){ if(mediaRecorder){ if(!send) recChunks=[]; mediaRecorder.stop(); recBar.classList.remove('show'); clearInterval(recTimer); mediaRecorder=null; } }
 document.getElementById('stopRec').onclick=()=>stopRec(true);
 document.getElementById('cancelRec').onclick=()=>stopRec(false);
-const videoChannel=sb.channel('video-v11');
+const videoChannel=sb.channel('video-v12');
 videoChannel.on('broadcast',{event:'call'},p=>{
  if((p.payload.to===myName || p.payload.to==='all' || p.payload.to.toLowerCase()===myName.toLowerCase()) && p.payload.from!==myName){
   document.getElementById('incomingText').textContent=`📹 ${p.payload.from} is calling...`;
@@ -177,7 +226,7 @@ document.getElementById('langBtn').onclick=()=>{ document.getElementById('langSe
 document.getElementById('cancelName').onclick=()=>document.getElementById('nameModal').classList.remove('show');
 document.getElementById('okName').onclick=()=>{ const n=document.getElementById('nameInput').value.trim(); if(n){ myName=n; localStorage.setItem('chale_name',myName); } document.getElementById('nameModal').classList.remove('show'); load(); };
 document.getElementById('cancelLang').onclick=()=>document.getElementById('langModal').classList.remove('show');
-document.getElementById('okLang').onclick=()=>{ lang=document.getElementById('langSelect').value; localStorage.setItem('chale_lang',lang); applyLang(); document.getElementById('langModal').classList.remove('show'); };
+document.getElementById('okLang').onclick=()=>{ lang=document.getElementById('langSelect').value; localStorage.setItem('chale_lang',lang); applyLang(); document.getElementById('langModal').classList.remove('show'); load(); };
 document.getElementById('cancelDel').onclick=()=>{ document.getElementById('delModal').classList.remove('show'); pendingDelId=null; };
 document.getElementById('okDel').onclick=async()=>{ if(pendingDelId) await sb.from('messages').delete().eq('id',pendingDelId); document.getElementById('delModal').classList.remove('show'); pendingDelId=null; };
 async function send(){ let t=inputEl.value.trim(); if(!t) return; if(replyTo){ t=`[REPLY:${replyTo.user}|${replyTo.content}]\n${t}`; cancelReply(); } inputEl.value=''; await sb.from('messages').insert({username:myName,content:t}); }
@@ -186,4 +235,4 @@ inputEl.addEventListener('keydown',e=>{if(e.key==='Enter')send()});
 applyLang();
 </script>
 </body>
- </html>
+                                                                              </html>
