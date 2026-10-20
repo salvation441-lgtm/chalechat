@@ -11,17 +11,34 @@ body{margin:0;background:#000;color:#fff;font-family:system-ui;height:100vh;heig
 .top{padding:12px 14px;background:linear-gradient(90deg,#CE1126,#FCD116,#006B3F);color:#000;font-weight:900;display:flex;justify-content:space-between;align-items:center}
 #stat{font-size:11px;background:#000;color:#FCD116;padding:6px 12px;border-radius:20px;cursor:pointer}
 #chat{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
-.m{max-width:78%;padding:10px 12px 20px;border-radius:18px;position:relative;word-break:break-word;user-select:none;cursor:pointer}
-.me{align-self:flex-end;background:#FCD116;color:#000;border-bottom-right-radius:4px}
+.m{max-width:82%;padding:8px 12px 22px;border-radius:18px;position:relative;word-break:break-word;user-select:none;cursor:pointer;display:flex;gap:8px}
+.me{align-self:flex-end;background:#FCD116;color:#000;border-bottom-right-radius:4px;flex-direction:row-reverse}
 .other{align-self:flex-start;background:#1e1e1e;color:#fff;border-bottom-left-radius:4px;border:1px solid #2a2a2a}
-.m b{font-size:11px;opacity:.7;display:block}
-.time{position:absolute;bottom:3px;right:10px;font-size:9px;opacity:.6}
-.del{display:none;position:absolute;top:-8px;right:-8px;background:#ff3b30;color:#fff;border-radius:50%;width:22px;height:22px;font-size:14px;align-items:center;justify-content:center;cursor:pointer;border:2px solid #000}
-.m.me.show-del .del{display:flex}
+.avatar{width:28px;height:28px;border-radius:50%;background:#333;color:#FCD116;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex-shrink:0}
+.me .avatar{background:#000;color:#FCD116}
+.reply-quote{font-size:11px;background:rgba(0,0,0,.15);border-left:3px solid #CE1126;padding:4px 6px;border-radius:6px;margin-bottom:4px;opacity:.8}
+.time{position:absolute;bottom:3px;right:10px;font-size:9px;opacity:.6;display:flex;gap:3px;align-items:center}
+.del{display:none;position:absolute;top:-8px;right:-8px;background:#ff3b30;color:#fff;border-radius:50%;width:22px;height:22px;font-size:14px;align-items:center;justify-content:center;cursor:pointer;border:2px solid #000;z-index:2}
+.m.show-del .del{display:flex}
+.m.show-menu .menu{display:flex}
+.menu{display:none;position:absolute;top:-35px;left:50%;transform:translateX(-50%);background:#222;border:1px solid #333;border-radius:20px;padding:4px;gap:4px;z-index:3}
+.menu button{background:#333;border:0;color:#fff;padding:6px 12px;border-radius:14px;font-size:12px;cursor:pointer}
 #typing{padding:0 14px 6px;font-size:12px;color:#FCD116;height:16px}
-.bar{display:flex;gap:8px;padding:10px;background:#0f0f0f;border-top:1px solid #222}
+#replyBar{display:none;background:#111;border-left:3px solid #FCD116;padding:8px 12px;margin:0 10px;border-radius:8px;justify-content:space-between}
+#replyBar.show{display:flex}
+#replyText{font-size:12px;color:#aaa;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar{display:flex;gap:6px;padding:10px;background:#0f0f0f;border-top:1px solid #222;align-items:center}
+.iconBtn{background:#222;border:1px solid #333;width:42px;height:42px;border-radius:50%;font-size:18px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+#emojiPanel{display:none;position:absolute;bottom:70px;left:10px;background:#1a1a1a;border:1px solid #333;border-radius:16px;padding:10px;grid-template-columns:repeat(6,1fr);gap:6px;z-index:10;width:220px}
+#emojiPanel.show{display:grid}
+#emojiPanel span{font-size:22px;padding:6px;text-align:center;cursor:pointer;border-radius:8px}
 input.msg{flex:1;background:#222;border:1px solid #333;color:#fff;border-radius:24px;padding:14px 18px;outline:none}
-button.send{border:0;border-radius:50%;width:50px;height:50px;background:#FCD116;font-size:22px;cursor:pointer}
+button.send{border:0;border-radius:50%;width:50px;height:50px;background:#FCD116;font-size:20px;cursor:pointer;flex-shrink:0}
+#recBar{display:none;background:#111;padding:10px;align-items:center;gap:10px;border-top:1px solid #222}
+#recBar.show{display:flex}
+.recDot{width:10px;height:10px;background:#ff3b30;border-radius:50%;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+audio{max-width:180px;height:32px;margin-top:4px}
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99;align-items:center;justify-content:center;padding:20px}
 .modal.show{display:flex}
 .box{background:#151515;border:1px solid #333;border-radius:16px;padding:20px;width:100%;max-width:320px}
@@ -39,75 +56,118 @@ button.send{border:0;border-radius:50%;width:50px;height:50px;background:#FCD116
 <div class="top"><b>CHALECHAT 🇬🇭</b><span id="stat">Live • salvation</span></div>
 <div id="chat"></div>
 <div id="typing"></div>
-<div class="bar"><input id="i" class="msg" placeholder="Type message..."><button class="send" id="b">➤</button></div>
+<div id="replyBar"><div><b id="replyWho" style="font-size:11px;color:#FCD116"></b><div id="replyText"></div></div><button onclick="cancelReply()" style="background:none;border:0;color:#fff;font-size:18px;cursor:pointer">×</button></div>
 
-<div id="nameModal" class="modal"><div class="box"><h3>Change your name</h3><input id="nameInput" placeholder="Enter new name"><div><button class="btnCancel" id="cancelName">Cancel</button><button class="btnOk" id="okName">Save</button></div></div></div>
+<div style="position:relative">
+<div id="emojiPanel"><span>😂</span><span>❤️</span><span>🔥</span><span>🇬🇭</span><span>😭</span><span>🙏</span><span>😅</span><span>💛</span><span>👏</span><span>😎</span><span>🥺</span><span>💀</span><span>⚡</span><span>✨</span><span>🎉</span><span>🤣</span><span>😍</span><span>🫡</span></div>
+<div id="recBar"><div class="recDot"></div><span id="recTime">0:00</span><span style="flex:1;font-size:12px;color:#aaa">Recording... tap stop to send</span><button id="stopRec" class="iconBtn" style="background:#ff3b30;border:0">■</button></div>
+<div class="bar"><button id="emojiBtn" class="iconBtn">😊</button><input id="i" class="msg" placeholder="Type message..."><button id="micBtn" class="iconBtn">🎙️</button><button class="send" id="b">➤</button></div>
+</div>
 
-<div id="delModal" class="modal"><div class="box"><h3>Delete message?</h3><p>This go delete am forever.</p><div><button class="btnCancel" id="cancelDel">Cancel</button><button class="btnDel" id="okDel">Delete</button></div></div></div>
+<div id="nameModal" class="modal"><div class="box"><h3>Change your name</h3><input id="nameInput"><div><button class="btnCancel" id="cancelName">Cancel</button><button class="btnOk" id="okName">Save</button></div></div></div>
+<div id="delModal" class="modal"><div class="box"><h3>Delete?</h3><p>Delete forever.</p><div><button class="btnCancel" id="cancelDel">Cancel</button><button class="btnDel" id="okDel">Delete</button></div></div></div>
 
 <script>
 const sb = supabase.createClient('https://gmdtjtznwsimcseurntt.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdtZHRqdHpud3NpbWNzZXVybnR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIzMjgyMzUsImV4cCI6MjEwNzkwNDIzNX0.Atz_aml41ZXiAYSG0UFLpQLRqRpMsdVzauMpSuw-L8A');
 let myName = localStorage.getItem('chale_name') || 'salvation';
-let pendingDelId=null;
+let pendingDelId=null, replyTo=null, mediaRecorder=null, recChunks=[], recStart=0, recTimer=null;
 const chatEl=document.getElementById('chat'), statEl=document.getElementById('stat'), typingEl=document.getElementById('typing'), inputEl=document.getElementById('i');
 const nameModal=document.getElementById('nameModal'), delModal=document.getElementById('delModal'), nameInput=document.getElementById('nameInput');
+const replyBar=document.getElementById('replyBar'), replyWho=document.getElementById('replyWho'), replyText=document.getElementById('replyText');
+const emojiBtn=document.getElementById('emojiBtn'), emojiPanel=document.getElementById('emojiPanel'), micBtn=document.getElementById('micBtn'), recBar=document.getElementById('recBar'), recTime=document.getElementById('recTime');
 
 function fmt(d){try{return new Date(d).toLocaleTimeString('en-GH',{hour:'numeric',minute:'2-digit'})}catch{return''}}
+function avatarChar(n){return (n||'?')[0].toUpperCase()}
 
 async function load(){
  const {data}=await sb.from('messages').select('*').order('created_at',{ascending:true}).limit(200);
  chatEl.innerHTML='';
  data.forEach(m=>{
-  const div=document.createElement('div'); 
-  div.className='m '+(m.username===myName?'me':'other');
-  div.innerHTML=`<b>${m.username}</b>${m.content}<span class="time">${fmt(m.created_at)}</span>${m.username===myName?`<button class="del" onclick="askDel('${m.id}')">×</button>`:''}`;
+  const isMe=m.username.trim().toLowerCase()===myName.trim().toLowerCase();
+  const div=document.createElement('div'); div.className='m '+(isMe?'me':'other');
+  let replyHtml='', content=m.content, audioHtml='';
+  const rMatch=content.match(/^\[REPLY:(.*?)\|(.*?)\]\n(.*)$/s);
+  if(rMatch){ replyHtml=`<div class="reply-quote"><b>${rMatch[1]}</b> ${rMatch[2]}</div>`; content=rMatch[3]; }
+  const aMatch=content.match(/^\[AUDIO:(.*?)\]/);
+  if(aMatch){ audioHtml=`<audio controls src="${aMatch[1]}"></audio>`; content=''; }
+  else if(content.startsWith('[AUDIO:')){ content='🎙️ Voice note'; }
+  div.innerHTML=`
+   <div class="avatar">${avatarChar(m.username)}</div>
+   <div style="flex:1"><b>${m.username}</b>${replyHtml}<div>${audioHtml||content}</div><span class="time">${fmt(m.created_at)} ${isMe?'✓✓':''}</span></div>
+   ${isMe?`<button class="del" onclick="event.stopPropagation();askDel('${m.id}')">×</button>`:''}
+   <div class="menu"><button onclick="event.stopPropagation();doReply('${m.id}','${m.username.replace(/'/g,"\\'")}','${content.replace(/'/g,"\\'").substring(0,50)}')">Reply</button></div>`;
+  div.onclick=()=>{
+   document.querySelectorAll('.m.show-del,.m.show-menu').forEach(b=>{ if(b!==div) b.classList.remove('show-del','show-menu') });
+   if(div.classList.contains('show-menu')) div.classList.remove('show-menu','show-del'); else { div.classList.add('show-menu'); if(isMe) div.classList.add('show-del') }
+  };
   chatEl.appendChild(div);
  });
  chatEl.scrollTop=chatEl.scrollHeight;
- // FIXED: No more fake "2 online" - just show you are live
  statEl.textContent=`Live • ${myName} ✏️`;
 }
 window.askDel=(id)=>{ pendingDelId=id; delModal.classList.add('show'); }
-load();
-sb.channel('chale-final4').on('postgres_changes',{event:'*',schema:'public',table:'messages'},load).subscribe();
+window.doReply=(id,user,content)=>{
+ replyTo={user,content:content.substring(0,60)};
+ replyWho.textContent=user; replyText.textContent=content.substring(0,60);
+ replyBar.classList.add('show'); inputEl.focus();
+ document.querySelectorAll('.m.show-menu,.m.show-del').forEach(b=>b.classList.remove('show-menu','show-del'));
+}
+window.cancelReply=()=>{ replyTo=null; replyBar.classList.remove('show'); }
 
-// Typing - proper
-const typeChannel = sb.channel('typing-chale4');
+load();
+sb.channel('chale-v6').on('postgres_changes',{event:'*',schema:'public',table:'messages'},load).subscribe();
+const typeChannel = sb.channel('typing-v6');
 typeChannel.on('broadcast',{event:'typing'},p=>{ if(p.payload.user!==myName){ typingEl.textContent=`${p.payload.user} is typing...`; setTimeout(()=>typingEl.textContent='',2000); } }).subscribe();
 inputEl.addEventListener('input',()=>{ typeChannel.send({type:'broadcast',event:'typing',payload:{user:myName}}); });
 
-// Tap bubble to show X - like WhatsApp
-chatEl.addEventListener('click',e=>{
- const bubble=e.target.closest('.m.me');
- if(e.target.classList.contains('del')) return;
- if(!bubble){ document.querySelectorAll('.m.show-del').forEach(b=>b.classList.remove('show-del')); return; }
- const isShowing=bubble.classList.contains('show-del');
- document.querySelectorAll('.m.show-del').forEach(b=>b.classList.remove('show-del'));
- if(!isShowing) bubble.classList.add('show-del');
-});
-
-// Modals - no browser popup
+// Modals
 statEl.onclick=()=>{ nameInput.value=myName; nameModal.classList.add('show'); nameInput.focus(); };
 document.getElementById('cancelName').onclick=()=>nameModal.classList.remove('show');
-document.getElementById('okName').onclick=()=>{
- const n=nameInput.value.trim(); if(n){ myName=n; localStorage.setItem('chale_name',myName); load(); } nameModal.classList.remove('show');
-};
+document.getElementById('okName').onclick=()=>{ const n=nameInput.value.trim(); if(n){ myName=n; localStorage.setItem('chale_name',myName); load(); } nameModal.classList.remove('show'); };
 document.getElementById('cancelDel').onclick=()=>{ delModal.classList.remove('show'); pendingDelId=null; };
-document.getElementById('okDel').onclick=async()=>{
- if(pendingDelId){ await sb.from('messages').delete().eq('id',pendingDelId); pendingDelId=null; }
- delModal.classList.remove('show');
+document.getElementById('okDel').onclick=async()=>{ if(pendingDelId){ await sb.from('messages').delete().eq('id',pendingDelId); pendingDelId=null; } delModal.classList.remove('show'); };
+
+// Emoji
+emojiBtn.onclick=()=>emojiPanel.classList.toggle('show');
+emojiPanel.querySelectorAll('span').forEach(s=>s.onclick=()=>{ inputEl.value+=s.textContent; inputEl.focus(); emojiPanel.classList.remove('show'); });
+
+// VOICE NOTE LOGIC
+micBtn.onclick=async()=>{
+ if(mediaRecorder && mediaRecorder.state==='recording'){ stopRecording(); return; }
+ try{
+  const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+  recChunks=[]; mediaRecorder=new MediaRecorder(stream,{mimeType:'audio/webm'});
+  mediaRecorder.ondataavailable=e=>{ if(e.data.size>0) recChunks.push(e.data); };
+  mediaRecorder.onstop=async()=>{
+   const blob=new Blob(recChunks,{type:'audio/webm'});
+   const reader=new FileReader();
+   reader.onloadend=async()=>{
+    const base64=reader.result;
+    let msg=base64;
+    if(replyTo){ msg=`[REPLY:${replyTo.user}|${replyTo.content}]\n[AUDIO:${base64}]`; cancelReply(); } else { msg=`[AUDIO:${base64}]`; }
+    await sb.from('messages').insert({username:myName,content:msg});
+    stream.getTracks().forEach(t=>t.stop());
+   };
+   reader.readAsDataURL(blob);
+  };
+  mediaRecorder.start();
+  recBar.classList.add('show'); recStart=Date.now();
+  recTimer=setInterval(()=>{ const s=Math.floor((Date.now()-recStart)/1000); recTime.textContent=`${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`; },500);
+ }catch(err){ alert('Mic no work - allow microphone in browser settings'); }
 };
-nameModal.onclick=e=>{ if(e.target===nameModal) nameModal.classList.remove('show'); };
-delModal.onclick=e=>{ if(e.target===delModal){ delModal.classList.remove('show'); pendingDelId=null; } };
+function stopRecording(){
+ if(mediaRecorder){ mediaRecorder.stop(); recBar.classList.remove('show'); clearInterval(recTimer); recTime.textContent='0:00'; mediaRecorder=null; }
+}
+document.getElementById('stopRec').onclick=stopRecording;
 
 async function send(){
- const t=inputEl.value.trim(); if(!t) return;
+ let t=inputEl.value.trim(); if(!t) return;
+ if(replyTo){ t=`[REPLY:${replyTo.user}|${replyTo.content}]\n${t}`; cancelReply(); }
  inputEl.value='';
  await sb.from('messages').insert({username:myName,content:t});
 }
 document.getElementById('b').onclick=send;
 inputEl.addEventListener('keydown',e=>{if(e.key==='Enter')send()});
 </script>
-<!-- vFINAL4 - CLEAN -->
 </body>
 </html>
