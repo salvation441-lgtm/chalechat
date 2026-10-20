@@ -19,19 +19,35 @@ body{margin:0;background:#000;color:#fff;font-family:system-ui;height:100vh;heig
 .del{position:absolute;top:-6px;right:-6px;background:#ff3b30;color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:0}
 #typing{padding:0 14px 6px;font-size:12px;color:#FCD116;height:16px}
 .bar{display:flex;gap:8px;padding:10px;background:#0f0f0f;border-top:1px solid #222}
-input{flex:1;background:#222;border:1px solid #333;color:#fff;border-radius:24px;padding:14px 18px;outline:none}
+input.msg{flex:1;background:#222;border:1px solid #333;color:#fff;border-radius:24px;padding:14px 18px;outline:none}
 button.send{border:0;border-radius:50%;width:50px;height:50px;background:#FCD116;font-size:22px;cursor:pointer}
+/* Fine name modal */
+#nameModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99;align-items:center;justify-content:center;padding:20px}
+#nameModal.show{display:flex}
+.box{background:#151515;border:1px solid #333;border-radius:16px;padding:20px;width:100%;max-width:320px}
+.box h3{margin:0 0 12px;font-size:16px}
+.box input{width:100%;background:#222;border:1px solid #333;color:#fff;border-radius:10px;padding:12px;outline:none;margin-bottom:12px}
+.box div{display:flex;gap:10px;justify-content:flex-end}
+.box button{padding:10px 18px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+.btnCancel{background:#222;color:#fff}
+.btnOk{background:#FCD116;color:#000}
 </style>
 </head>
 <body>
-<div class="top"><b>CHALECHAT 🇬🇭</b><span id="stat" title="Click to change name">Live</span></div>
+<div class="top"><b>CHALECHAT 🇬🇭</b><span id="stat">Live</span></div>
 <div id="chat"></div>
 <div id="typing"></div>
-<div class="bar"><input id="i" placeholder="Type message..."><button class="send" id="b">➤</button></div>
+<div class="bar"><input id="i" class="msg" placeholder="Type message..."><button class="send" id="b">➤</button></div>
+
+<!-- Custom name box - no browser popup -->
+<div id="nameModal"><div class="box"><h3>Change your name</h3><input id="nameInput" placeholder="Enter new name"><div><button class="btnCancel" id="cancelName">Cancel</button><button class="btnOk" id="okName">Save</button></div></div></div>
+
 <script>
 const sb = supabase.createClient('https://gmdtjtznwsimcseurntt.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdtZHRqdHpud3NpbWNzZXVybnR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIzMjgyMzUsImV4cCI6MjEwNzkwNDIzNX0.Atz_aml41ZXiAYSG0UFLpQLRqRpMsdVzauMpSuw-L8A');
 let myName = localStorage.getItem('chale_name') || 'salvation';
 const chatEl=document.getElementById('chat'), statEl=document.getElementById('stat'), typingEl=document.getElementById('typing'), inputEl=document.getElementById('i');
+const modal=document.getElementById('nameModal'), nameInput=document.getElementById('nameInput');
+
 function fmt(d){try{return new Date(d).toLocaleTimeString('en-GH',{hour:'numeric',minute:'2-digit'})}catch{return''}}
 function updateStat(c){statEl.textContent=`Live • ${c} • ${myName} ✏️`}
 async function load(){
@@ -45,24 +61,23 @@ async function load(){
  chatEl.scrollTop=chatEl.scrollHeight;
  updateStat(data.length);
 }
-window.delMsg=async(id)=>{ if(confirm('Delete?')) await sb.from('messages').delete().eq('id',id); }
+window.delMsg=async(id)=>{ if(confirm('Delete this message?')) await sb.from('messages').delete().eq('id',id); }
 load();
-sb.channel('chale-final').on('postgres_changes',{event:'*',schema:'public',table:'messages'},load).subscribe();
+sb.channel('chale-final2').on('postgres_changes',{event:'*',schema:'public',table:'messages'},load).subscribe();
 
-// Typing
-const typeChannel = sb.channel('typing-chale');
+const typeChannel = sb.channel('typing-chale2');
 typeChannel.on('broadcast',{event:'typing'},p=>{ if(p.payload.user!==myName){ typingEl.textContent=`${p.payload.user} is typing...`; setTimeout(()=>typingEl.textContent='',2000); } }).subscribe();
-let typingTimeout;
-inputEl.addEventListener('input',()=>{
- clearTimeout(typingTimeout);
- typeChannel.send({type:'broadcast',event:'typing',payload:{user:myName}});
- typingTimeout=setTimeout(()=>{},1000);
-});
+inputEl.addEventListener('input',()=>{ typeChannel.send({type:'broadcast',event:'typing',payload:{user:myName}}); });
 
-// Change name
-statEl.onclick=()=>{
- const n=prompt('New name:',myName); if(n){ myName=n.trim(); localStorage.setItem('chale_name',myName); load(); }
+// Custom modal - no bad browser popup
+function openModal(){ nameInput.value=myName; modal.classList.add('show'); nameInput.focus(); }
+function closeModal(){ modal.classList.remove('show'); }
+statEl.onclick=openModal;
+document.getElementById('cancelName').onclick=closeModal;
+document.getElementById('okName').onclick=()=>{
+ const n=nameInput.value.trim(); if(n){ myName=n; localStorage.setItem('chale_name',myName); load(); } closeModal();
 };
+modal.onclick=e=>{ if(e.target===modal) closeModal(); }
 
 async function send(){
  const t=inputEl.value.trim(); if(!t) return;
@@ -72,6 +87,6 @@ async function send(){
 document.getElementById('b').onclick=send;
 inputEl.addEventListener('keydown',e=>{if(e.key==='Enter')send()});
 </script>
-<!-- vFINAL -->
+<!-- vFINAL2 - NO PROMPT -->
 </body>
 </html>
