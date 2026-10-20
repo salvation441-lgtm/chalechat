@@ -1,27 +1,66 @@
 <!doctype html>
-<html><head><meta charset="utf-8">
+<html>
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CHALECHAT</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>body{margin:0;background:#000;color:#fff;font-family:system-ui;display:flex;flex-direction:column;height:100vh}.top{padding:12px;background:linear-gradient(90deg,#CE1126,#FCD116,#006B3F);color:#000;font-weight:900;display:flex;justify-content:space-between}.bar{display:flex;gap:8px;padding:10px;background:#111}input{flex:1;background:#222;border:0;color:#fff;border-radius:20px;padding:12px}button{border:0;border-radius:50%;width:44px;height:44px;background:#FCD116;font-weight:900}#chat{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px}.m{max-width:78%;padding:10px;border-radius:16px;font-size:14px}.me{margin-left:auto;background:#FCD116;color:#000}.other{background:#222}</style>
-</head><body>
-<div class=top><span>CHALECHAT 🇬🇭</span><span id=s>Connecting...</span></div>
-<div id=chat></div>
-<div class=bar><input id=i placeholder="Type message"><button id=b>➤</button></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<style>
+body{margin:0;background:#000;color:#fff;font-family:system-ui;display:flex;flex-direction:column;height:100vh;height:100dvh}
+.top{padding:12px 14px;background:linear-gradient(90deg,#CE1126,#FCD116,#006B3F);color:#000;font-weight:900;display:flex;justify-content:space-between;align-items:center}
+#chat{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.m{max-width:78%;padding:10px 12px;border-radius:18px;font-size:14px;word-break:break-word}
+.me{margin-left:auto;background:#FCD116;color:#000;border-bottom-right-radius:4px}
+.other{background:#222;color:#fff;border-bottom-left-radius:4px}
+.bar{display:flex;gap:8px;padding:10px;background:#111;border-top:1px solid #222}
+input{flex:1;background:#222;border:0;color:#fff;border-radius:22px;padding:13px 16px;outline:none;font-size:15px}
+button{border:0;border-radius:50%;width:46px;height:46px;background:#FCD116;font-weight:900;font-size:20px;cursor:pointer}
+#s{font-size:11px;background:#000;padding:4px 8px;border-radius:10px}
+</style>
+</head>
+<body>
+<div class="top"><span>CHALECHAT 🇬🇭</span><span id="s">Connecting...</span></div>
+<div id="chat"></div>
+<div class="bar"><input id="i" placeholder="Type message..." autocomplete="off"><button id="b">➤</button></div>
 <script>
-const URL='https://gmdtjtznwsimcseurntt.supabase.co';
-const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdtZHRqdHpud3NpbWNzZXVybnR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIzMjgyMzUsImV4cCI6MjEwNzkwNDIzNX0.Atz_aml41ZXiAYSG0UFLpQLRqRpMsdVzauMpSuw-L8A';
-const sb=supabase.createClient(URL,KEY);
-let name=localStorage.getItem('n')||prompt('Your name?')||'User'+Math.floor(Math.random()*90+10);
-localStorage.setItem('n',name);
-async function load(){
- let {data,error}=await sb.from('messages').select('*').order('created_at',{ascending:true}).limit(100);
- if(error){document.getElementById('s').textContent='Error:'+error.message;return;}
- let c=document.getElementById('chat');c.innerHTML='';
- data.forEach(m=>{let d=document.createElement('div');d.className='m '+(m.username===name?'me':'other');d.innerHTML='<b style=font-size:10px>'+m.username+'</b><br>'+m.content;c.appendChild(d);});
- c.scrollTop=c.scrollHeight;document.getElementById('s').textContent='Live • '+data.length+' msgs • '+name;
+const SUPA_URL='https://gmdtjtznwsimcseurntt.supabase.co';
+const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdtZHRqdHpud3NpbWNzZXVybnR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIzMjgyMzUsImV4cCI6MjEwNzkwNDIzNX0.Atz_aml41ZXiAYSG0UFLpQLRqRpMsdVzauMpSuw-L8A';
+const sb = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+let myName = localStorage.getItem('chale_name') || prompt('Enter your name:') || ('User'+Math.floor(Math.random()*100));
+localStorage.setItem('chale_name', myName);
+
+const chatEl = document.getElementById('chat');
+const statusEl = document.getElementById('s');
+
+async function loadMessages(){
+  try{
+    const {data, error} = await sb.from('messages').select('*').order('created_at',{ascending:true}).limit(200);
+    if(error){ statusEl.textContent='DB Error: '+error.message; console.error(error); return; }
+    chatEl.innerHTML='';
+    data.forEach(m=>{
+      const d=document.createElement('div');
+      d.className='m '+(m.username===myName?'me':'other');
+      d.innerHTML='<b style="font-size:10px;opacity:0.7">'+(m.username||'Anon')+'</b><br>'+(m.content||'');
+      chatEl.appendChild(d);
+    });
+    chatEl.scrollTop=chatEl.scrollHeight;
+    statusEl.textContent='Live • '+data.length+' • '+myName;
+  }catch(e){ statusEl.textContent='JS Error: '+e.message; }
 }
-load();sb.channel('ch').on('postgres_changes',{event:'INSERT',schema:'public',table:'messages'},load).subscribe();
-async function send(){let t=document.getElementById('i').value.trim();if(!t)return;document.getElementById('i').value='';await sb.from('messages').insert({username:name,content:t});}
-document.getElementById('b').onclick=send;document.getElementById('i').onkeydown=e=>{if(e.key==='Enter')send();};
-</script></body></html>
+loadMessages();
+sb.channel('chale-v1').on('postgres_changes',{event:'INSERT',schema:'public',table:'messages'},()=>loadMessages()).subscribe();
+
+async function send(){
+  const inp=document.getElementById('i');
+  const txt=inp.value.trim();
+  if(!txt) return;
+  inp.value='';
+  const {error}=await sb.from('messages').insert({username:myName, content:txt});
+  if(error) alert('Send failed: '+error.message);
+}
+document.getElementById('b').onclick=send;
+document.getElementById('i').addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
+</script>
+<!-- vFINAL-2026-10-20 -->
+</body>
+</html>
