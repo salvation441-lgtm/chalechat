@@ -1,6 +1,6 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ChaleChat V32 - No user_id</title>
+<title>ChaleChat V33 - ALL FEATURES</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <style>
@@ -9,9 +9,11 @@ body{margin:0;background:#000;color:#fff;font-family:'Inter',system-ui;display:f
 .top{height:56px;padding:0 8px;background:#151515;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .brand{font-weight:900} .brand span{color:var(--yellow)}
 .iconTop{width:36px;height:36px;border-radius:50%;background:#1e1e1e;border:1px solid var(--border);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.iconTop.contactsBtn{background:var(--yellow);color:#000;font-weight:900}
 #statusBar{display:flex;gap:14px;padding:12px;background:#0f0f0f;overflow-x:auto;flex-shrink:0;border-bottom:1px solid #1a1a1a}
 .statusItem{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:68px;cursor:pointer;padding:4px;border-radius:12px}
 .statusRing{width:62px;height:62px;border-radius:50%;padding:3px;background:conic-gradient(#FCD116,#CE1126,#00d26a,#FCD116);display:flex;align-items:center;justify-content:center;position:relative}
+.statusRing.seen{background:#444}
 .statusRing.addRing{background:#222;border:2px dashed #FCD116}
 .statusAv{width:56px;height:56px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;border:2px solid #000}
 .plusBadge{position:absolute;bottom:-2px;right:-2px;background:var(--yellow);color:#000;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;border:2px solid #000}
@@ -32,6 +34,7 @@ button.send{border:0;border-radius:50%;width:44px;height:44px;background:var(--y
 .btn{padding:10px 16px;border-radius:12px;border:0;font-weight:700;cursor:pointer}
 .btnCancel{background:#1e1e1e;color:#fff;border:1px solid var(--border)}
 .btnOk{background:var(--yellow);color:#000}
+.btnDanger{background:#CE1126;color:#fff}
 .picCircle{width:90px;height:90px;border-radius:50%;background:#222;border:3px solid var(--yellow);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:var(--yellow);overflow:hidden;cursor:pointer}
 .picCircle img{width:100%;height:100%;object-fit:cover}
 .statusView{position:relative;width:100%;max-width:400px;height:85vh;background:#000;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;border:1px solid #333}
@@ -44,30 +47,47 @@ button.send{border:0;border-radius:50%;width:44px;height:44px;background:var(--y
 .previewBox{display:none;border:3px solid #00d26a;border-radius:16px;overflow:hidden;background:#000;margin-top:10px}
 .previewBox.show{display:block}
 .fileVisible{width:100%;padding:14px;background:#222;border:2px dashed var(--yellow);border-radius:12px;color:#fff;font-weight:700;margin-bottom:8px}
+.contactRow{display:flex;gap:12px;padding:12px;background:#1e1e1e;border:1px solid #2a2a2a;border-radius:12px;margin-bottom:8px;align-items:center;cursor:pointer}
+.contactRow:active{background:#222}
 </style>
 </head>
 <body>
-<div class="top"><div style="display:flex;gap:6px;align-items:center"><div style="width:8px;height:8px;background:#00d26a;border-radius:50%"></div><div class="brand">CHALE<span>CHAT</span></div></div><div style="display:flex;gap:4px"><button id="profileBtn" class="iconTop"><span id="topAvatarLetter">S</span></button><button id="usersBtn" class="iconTop">👥</button></div></div>
+<div class="top"><div style="display:flex;gap:6px;align-items:center"><div style="width:8px;height:8px;background:#00d26a;border-radius:50%"></div><div class="brand">CHALE<span>CHAT</span></div></div><div style="display:flex;gap:4px"><button id="contactsBtn" class="iconTop contactsBtn">📇</button><button id="profileBtn" class="iconTop"><span id="topAvatarLetter">S</span></button><button id="usersBtn" class="iconTop">👥</button></div></div>
 <div id="statusBar"></div>
 <div id="chat"></div>
 <div class="barWrap"><div class="bar"><input id="i" class="msg" placeholder="Type..."><button class="send" id="b">➤</button></div></div>
 
-<div id="statusCreateModal" class="modal"><div class="box"><h3>📸 Add Status V32 — NO user_id ERROR FIX</h3>
+<!-- ADD STATUS -->
+<div id="statusCreateModal" class="modal"><div class="box"><h3>📸 Add Status V33 ALL</h3>
 <button id="tabText" class="bigTab active" onclick="showTab('text')">📝 Text Status</button>
 <div id="panelText"><textarea id="statusTextInput" placeholder="What dey happen? 24hrs..." rows="4"></textarea><div style="display:flex;gap:8px;margin:8px 0"><div style="width:36px;height:36px;border-radius:50%;background:#FCD116;border:2px solid #fff;cursor:pointer" onclick="setStatusBg('#FCD116','#000')"></div><div style="width:36px;height:36px;border-radius:50%;background:#CE1126;border:2px solid #fff;cursor:pointer" onclick="setStatusBg('#CE1126','#fff')"></div><div style="width:36px;height:36px;border-radius:50%;background:#00d26a;border:2px solid #fff;cursor:pointer" onclick="setStatusBg('#00d26a','#000')"></div><div style="width:36px;height:36px;border-radius:50%;background:#000;border:2px solid #fff;cursor:pointer" onclick="setStatusBg('#000','#fff')"></div></div></div>
 <button id="tabPhoto" class="bigTab" onclick="showTab('photo')">🖼️ Photo Status</button>
-<div id="panelPhoto" style="display:none"><input type="file" id="statusImageInput" accept="image/*" class="fileVisible"><div id="statusImagePreview" class="previewBox"><img id="statusPreviewImg" style="width:100%;max-height:300px;object-fit:contain;display:block;background:#000"><div style="background:#00d26a;color:#000;padding:6px;text-align:center;font-weight:900;font-size:12px" id="photoSizeInfo">✅ PREVIEW</div></div><input id="statusCaption" placeholder="Add caption..." style="margin-top:10px"></div>
+<div id="panelPhoto" style="display:none"><input type="file" id="statusImageInput" accept="image/*" class="fileVisible"><div id="statusImagePreview" class="previewBox"><img id="statusPreviewImg" style="width:100%;max-height:300px;object-fit:contain;display:block;background:#000"><div style="background:#00d26a;color:#000;padding:6px;text-align:center;font-weight:900;font-size:12px">✅ PREVIEW</div></div><input id="statusCaption" placeholder="Add caption..." style="margin-top:10px"></div>
 <button id="tabVideo" class="bigTab" onclick="showTab('video')">🎬 Video Status — Max 5MB</button>
-<div id="panelVideo" style="display:none"><input type="file" id="statusVideoInput" accept="video/*" class="fileVisible"><div id="statusVideoPreview" class="previewBox"><video id="statusPreviewVideo" controls playsinline style="width:100%;max-height:300px;background:#000;display:block"></video><div style="background:#00d26a;color:#000;padding:6px;text-align:center;font-weight:900;font-size:12px" id="videoSizeInfo">✅ VIDEO PREVIEW</div></div><input id="statusVideoCaption" placeholder="Video caption..." style="margin-top:10px"></div>
+<div id="panelVideo" style="display:none"><input type="file" id="statusVideoInput" accept="video/*" class="fileVisible"><div id="statusVideoPreview" class="previewBox"><video id="statusPreviewVideo" controls playsinline style="width:100%;max-height:300px;background:#000;display:block"></video><div style="background:#00d26a;color:#000;padding:6px;text-align:center;font-weight:900;font-size:12px">✅ VIDEO PREVIEW</div></div><input id="statusVideoCaption" placeholder="Video caption..." style="margin-top:10px"></div>
 <div class="btnRow" style="margin-top:16px"><button class="btn btnCancel" id="cancelStatus">Cancel</button><button class="btn btnOk" id="postStatus">✓ Post Status</button></div>
-<div id="debugLog" style="background:#111;color:#0f0;padding:8px;border-radius:8px;font-size:10px;margin-top:10px;max-height:100px;overflow:auto">Debug log: Ready...</div>
+<div id="debugLog" style="background:#111;color:#0f0;padding:8px;border-radius:8px;font-size:10px;margin-top:10px;max-height:80px;overflow:auto">Ready V33...</div>
 </div></div>
 
+<!-- VIEW STATUS WITH DELETE + DOWNLOAD -->
 <div id="statusViewModal" class="modal" style="background:#000"><div class="statusView">
 <div class="statusProgress" id="statusProgress"></div>
 <div class="statusViewTop"><div style="display:flex;align-items:center;gap:10px"><div id="viewStatusAv" style="width:40px;height:40px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;border:2px solid #fff"></div><div><div id="viewStatusName" style="font-weight:800;font-size:14px;color:#fff"></div><div id="viewStatusTime" style="font-size:11px;color:#ccc"></div></div></div><button onclick="closeStatusView()" style="background:rgba(255,255,255,.2);border:0;color:#fff;width:36px;height:36px;border-radius:50%;font-size:18px">✕</button></div>
 <div id="viewStatusContent" style="flex:1;display:flex;align-items:center;justify-content:center;padding:0;overflow:auto;background:#000;margin-top:60px"></div>
-<div style="padding:12px;background:#111;display:flex;gap:8px;justify-content:center"><button onclick="closeStatusView()" class="btn btnCancel" style="flex:1">✕ Close</button><button onclick="nextStatus()" class="btn btnOk" style="flex:1">Next →</button></div>
+<div style="padding:10px;background:#111;display:flex;gap:6px;justify-content:center;flex-wrap:wrap">
+<button id="downloadStatusBtn" class="btn btnOk" style="flex:1;min-width:80px">⬇️ Download</button>
+<button id="deleteStatusBtn" class="btn btnDanger" style="flex:1;min-width:80px;display:none">🗑️ Delete</button>
+<button onclick="closeStatusView()" class="btn btnCancel" style="flex:1;min-width:60px">✕</button>
+<button onclick="nextStatus()" class="btn btnOk" style="flex:1;min-width:60px">Next →</button>
+</div>
+</div></div>
+
+<!-- CONTACTS MODAL BACK! -->
+<div id="contactsModal" class="modal"><div class="box"><h3>📇 Contacts — V33</h3>
+<input id="contactSearch" placeholder="🔍 Search contacts..." oninput="filterContacts()">
+<div style="display:flex;gap:8px;margin-bottom:12px"><input id="newContactName" placeholder="Add contact name" style="flex:1;margin-bottom:0"><button id="addContactBtn" class="btn btnOk" style="padding:10px">+ Add</button></div>
+<div id="contactsList" style="max-height:50vh;overflow:auto"></div>
+<div class="btnRow" style="margin-top:12px"><button class="btn btnOk" id="closeContacts">Close</button></div>
 </div></div>
 
 <div id="nameModal" class="modal"><div class="box"><h3>👤 Setup</h3><div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:16px"><div class="picCircle" id="picCircle" onclick="document.getElementById('avatarInput').click()"><span id="picLetter">S</span></div><input type="file" id="avatarInput" hidden accept="image/*"></div><input id="nameInput" placeholder="Your name"><div class="btnRow"><button class="btn btnOk" id="okName">Save & Join</button></div></div></div>
@@ -78,28 +98,33 @@ button.send{border:0;border-radius:50%;width:44px;height:44px;background:var(--y
 const sb = supabase.createClient('https://gmdtjtznwsimcseurntt.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdtZHRqdHpud3NpbWNzZXVybnR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIzMjgyMzUsImV4cCI6MjEwNzkwNDIzNX0.Atz_aml41ZXiAYSG0UFLpQLRqRpMsdVzauMpSuw-L8A');
 let userId=localStorage.getItem('chale_id')||'user_'+Math.random().toString(36).substr(2,9); localStorage.setItem('chale_id',userId);
 let myName=localStorage.getItem('chale_name')||''; let myAvatar=localStorage.getItem('chale_avatar')||'';
-let onlineUsers={}, statuses=[], seenStatus=JSON.parse(localStorage.getItem('seen_status')||'[]'), currentTab='text', currentStatusUser=null, currentStatusIdx=0;
+let onlineUsers={}, statuses=[], seenStatus=JSON.parse(localStorage.getItem('seen_status')||'[]'), currentTab='text', currentStatusUser=null, currentStatusIdx=0, currentStatusId=null, contacts=JSON.parse(localStorage.getItem('chale_contacts')||'[]');
 function log(msg){ const d=document.getElementById('debugLog'); if(d){ d.innerHTML+=msg+'<br>'; d.scrollTop=d.scrollHeight; } console.log(msg); }
-function compressTiny(dataUrl,cb){ const img=new Image(); img.onload=()=>{ const c=document.createElement('canvas'); let max=400; let w=img.width,h=img.height; if(w>max||h>max){ if(w>h){ h*=max/w; w=max; } else { w*=max/h; h=max; } } c.width=w; c.height=h; c.getContext('2d').drawImage(img,0,0,w,h); const tiny=c.toDataURL('image/jpeg',0.5); log('Compressed '+Math.round(dataUrl.length/1024)+'KB -> '+Math.round(tiny.length/1024)+'KB'); cb(tiny); }; img.onerror=()=>{ cb(dataUrl); }; img.src=dataUrl; }
+function compressTiny(dataUrl,cb){ const img=new Image(); img.onload=()=>{ const c=document.createElement('canvas'); let max=400; let w=img.width,h=img.height; if(w>max||h>max){ if(w>h){ h*=max/w; w=max; } else { w*=max/h; h=max; } } c.width=w; c.height=h; c.getContext('2d').drawImage(img,0,0,w,h); const tiny=c.toDataURL('image/jpeg',0.5); cb(tiny); }; img.onerror=()=>{ cb(dataUrl); }; img.src=dataUrl; }
 function updateAvatarUI(){ const l=(myName||'S')[0].toUpperCase(); document.getElementById('picLetter').textContent=l; document.getElementById('profilePicLetter').textContent=l; const topEl=document.getElementById('topAvatarLetter'); if(topEl) topEl.textContent=l; if(myAvatar){ document.getElementById('picCircle').innerHTML=`<img src="${myAvatar}">`; document.getElementById('profilePicCircle').innerHTML=`<img src="${myAvatar}">`; if(topEl) topEl.innerHTML=`<img src="${myAvatar}">`; } }
 window.setStatusBg=(bg,color)=>{ const ta=document.getElementById('statusTextInput'); ta.style.background=bg; ta.style.color=color; ta.dataset.bg=bg; ta.dataset.color=color; }
 window.showTab=(which)=>{ currentTab=which; document.getElementById('tabText').classList.toggle('active', which==='text'); document.getElementById('tabPhoto').classList.toggle('active', which==='photo'); document.getElementById('tabVideo').classList.toggle('active', which==='video'); document.getElementById('panelText').style.display=which==='text'?'block':'none'; document.getElementById('panelPhoto').style.display=which==='photo'?'block':'none'; document.getElementById('panelVideo').style.display=which==='video'?'block':'none'; };
 window.closeStatusView=()=>{ document.getElementById('statusViewModal').classList.remove('show'); };
-window.nextStatus=()=>{ const group=statuses.filter(s=> (s.user_id===currentStatusUser) || (s.username===currentStatusUser)); if(currentStatusIdx+1<group.length){ viewStatus(currentStatusUser, currentStatusIdx+1); } else { closeStatusView(); } };
+window.nextStatus=()=>{ const group=statuses.filter(s=> s.username===currentStatusUser); if(currentStatusIdx+1<group.length){ viewStatus(currentStatusUser, currentStatusIdx+1); } else { closeStatusView(); } };
+window.filterContacts=()=>{ const q=document.getElementById('contactSearch').value.toLowerCase(); renderContacts(q); };
+function saveContacts(){ localStorage.setItem('chale_contacts', JSON.stringify(contacts)); }
+function renderContacts(filter=''){ const list=document.getElementById('contactsList'); list.innerHTML=''; let filtered=contacts; if(filter){ filtered=contacts.filter(c=>c.toLowerCase().includes(filter)); } if(filtered.length===0 && contacts.length===0){ list.innerHTML='<div style="text-align:center;color:#666;padding:20px">No contacts yet — Add one above or chat with someone and they go auto-add!</div>'; } filtered.forEach((name, idx)=>{ const row=document.createElement('div'); row.className='contactRow'; row.innerHTML=`<div style="width:44px;height:44px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-weight:800">${name[0].toUpperCase()}</div><div style="flex:1"><b>${name}</b><div style="font-size:11px;color:#888">Tap to chat</div></div><button onclick="event.stopPropagation(); deleteContact(${idx})" style="background:#CE1126;border:0;color:#fff;width:32px;height:32px;border-radius:50%">✕</button>`; row.onclick=()=>{ document.getElementById('contactsModal').classList.remove('show'); document.getElementById('i').value='@'+name+' '; document.getElementById('i').focus(); }; list.appendChild(row); }); }
+window.deleteContact=(idx)=>{ if(confirm('Delete contact '+contacts[idx]+'?')){ contacts.splice(idx,1); saveContacts(); renderContacts(); } };
 const chatEl=document.getElementById('chat');
 async function loadMessages(){ 
- const {data, error}=await sb.from('messages').select('*').order('created_at',{ascending:true}).limit(200); 
- if(error){ log('Chat load error: '+error.message); return; }
- chatEl.innerHTML=''; 
- data.forEach(m=>{ if(m.content.startsWith('[STATUS:')) return; const isMe=m.username===myName; const div=document.createElement('div'); div.className='m '+(isMe?'me':'other'); let content=m.content; if(content.startsWith('[IMG:')){ const src=content.match(/^\[IMG:(.*?)\]/)?.[1]; content=`<img style="max-width:150px;border-radius:12px" src="${src}">`; } div.innerHTML=`<div class="avatar">${(m.username[0]||'?').toUpperCase()}</div><div style="flex:1"><b style="font-size:11px;opacity:.6">${m.username}</b><div style="font-size:14px;word-break:break-word">${content}</div></div>`; chatEl.appendChild(div); }); 
+ const {data, error}=await sb.from('messages').select('*').order('created_at',{ascending:true}).limit(300); 
+ if(error){ log('Chat error: '+error.message); return; }
+ chatEl.innerHTML=''; const usernames=new Set(contacts);
+ data.forEach(m=>{ if(m.content.startsWith('[STATUS:')) return; if(m.username && m.username!==myName){ usernames.add(m.username); } const isMe=m.username===myName; const div=document.createElement('div'); div.className='m '+(isMe?'me':'other'); let content=m.content; if(content.startsWith('[IMG:')){ const src=content.match(/^\[IMG:(.*?)\]/)?.[1]; content=`<img style="max-width:150px;border-radius:12px" src="${src}">`; } div.innerHTML=`<div class="avatar">${(m.username[0]||'?').toUpperCase()}</div><div style="flex:1"><b style="font-size:11px;opacity:.6">${m.username}</b><div style="font-size:14px;word-break:break-word">${content}</div></div>`; chatEl.appendChild(div); }); 
+ if(usernames.size!==contacts.length){ contacts=Array.from(usernames); saveContacts(); }
  chatEl.scrollTop=chatEl.scrollHeight; 
 }
 async function loadStatuses(){ 
- const {data, error}=await sb.from('messages').select('*').order('created_at',{ascending:false}).limit(200); 
+ const {data, error}=await sb.from('messages').select('*').order('created_at',{ascending:false}).limit(300); 
  if(error){ log('Status load error: '+error.message); return; }
  const now=Date.now(); 
- statuses=(data||[]).filter(m=>m.content.startsWith('[STATUS:')).filter(m=>(now-new Date(m.created_at).getTime())<24*60*60*1000).map(m=>{ try{ const j=m.content.replace('[STATUS:','').slice(0,-1); const o=JSON.parse(j); return {id:m.id, username:m.username, user_id:o.user_id||o.username||m.username, created_at:m.created_at, ...o}; }catch(e){ log('Parse error'); return null;} }).filter(Boolean); 
- log('Statuses loaded: '+statuses.length);
+ statuses=(data||[]).filter(m=>m.content.startsWith('[STATUS:')).filter(m=>(now-new Date(m.created_at).getTime())<24*60*60*1000).map(m=>{ try{ const j=m.content.replace('[STATUS:','').slice(0,-1); const o=JSON.parse(j); return {id:m.id, username:m.username, user_id:o.username||m.username, created_at:m.created_at, ...o}; }catch(e){ return null;} }).filter(Boolean); 
+ log('Statuses: '+statuses.length);
  renderStatusBar(); 
 }
 function renderStatusBar(){ 
@@ -107,57 +132,51 @@ function renderStatusBar(){
  const addItem=document.createElement('div'); addItem.className='statusItem'; addItem.onclick=()=>{ document.getElementById('statusCreateModal').classList.add('show'); showTab('text'); }; addItem.innerHTML=`<div class="statusRing addRing"><div class="statusAv">${myAvatar?`<img src="${myAvatar}">`: (myName[0]||'+').toUpperCase()}<div class="plusBadge">+</div></div></div><div class="statusName">Add Status</div>`; bar.appendChild(addItem); 
  const myGroup=grouped[myName]||[]; 
  if(myGroup.length>0){ 
-  const myItem=document.createElement('div'); myItem.className='statusItem'; myItem.onclick=()=>{ log('My Status clicked: '+myName); viewStatus(myName,0); }; 
+  const myItem=document.createElement('div'); myItem.className='statusItem'; myItem.onclick=()=>{ viewStatus(myName,0); }; 
   myItem.innerHTML=`<div class="statusRing"><div class="statusAv">${myAvatar?`<img src="${myAvatar}">`: (myName[0]||'M').toUpperCase()}</div></div><div class="statusName">My Status (${myGroup.length})</div>`; 
   bar.appendChild(myItem); 
  } 
  Object.keys(grouped).forEach(key=>{ if(key===myName) return; const g=grouped[key]; const latest=g[0]; const isSeen=seenStatus.includes(latest.id); const it=document.createElement('div'); it.className='statusItem'; it.onclick=()=>viewStatus(key,0); let icon=''; if(latest.type==='video') icon='🎬 '; else if(latest.type==='image') icon='🖼️ '; it.innerHTML=`<div class="statusRing ${isSeen?'seen':''}"><div class="statusAv">${latest.avatar?`<img src="${latest.avatar}">`: (latest.username[0]||'?').toUpperCase()}</div></div><div class="statusName">${icon}${latest.username}</div>`; bar.appendChild(it); }); 
 }
 function viewStatus(keyView, idx){
- log('viewStatus: key='+keyView+' idx='+idx+' total='+statuses.length);
- const group=statuses.filter(s=> s.username===keyView || s.user_id===keyView); 
- log('Group found: '+group.length);
- if(!group.length){ alert('❌ No status! Total in DB: '+statuses.length+'\nGrouped keys: '+Object.keys(groupedKeys())); return; }
- function groupedKeys(){ const g={}; statuses.forEach(s=>{ g[s.username]=1; }); return Object.keys(g).join(', '); }
- currentStatusUser=keyView; currentStatusIdx=idx;
+ const group=statuses.filter(s=> s.username===keyView); 
+ if(!group.length){ alert('No status!'); return; }
+ currentStatusUser=keyView; currentStatusIdx=idx; currentStatusId=group[idx].id;
  const s=group[idx]; 
- if(!s){ alert('Index not found'); return; }
  document.getElementById('viewStatusName').textContent=s.username; 
  document.getElementById('viewStatusTime').textContent=new Date(s.created_at).toLocaleString(); 
  document.getElementById('viewStatusAv').innerHTML=s.avatar?`<img src="${s.avatar}">`: (s.username[0]||'?').toUpperCase(); 
  const c=document.getElementById('viewStatusContent'); 
  if(s.type==='text'){ c.innerHTML=`<div style="background:${s.bg||'#FCD116'};color:${s.color||'#000'};padding:40px;border-radius:24px;font-size:26px;font-weight:900;text-align:center;max-width:90%;min-height:200px;display:flex;align-items:center;justify-content:center">${s.text}</div>`; } 
- else if(s.type==='image'){ c.innerHTML=`<div style="text-align:center;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center"><img src="${s.image}" style="max-width:100%;max-height:65vh;border-radius:16px;object-fit:contain"><div style="margin-top:16px;background:rgba(255,255,255,.15);padding:10px 16px;border-radius:12px;color:#fff;font-size:14px;max-width:90%">${s.caption||''}</div></div>`; } 
- else if(s.type==='video'){ c.innerHTML=`<div style="text-align:center;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center"><video src="${s.video}" controls autoplay playsinline style="width:100%;max-width:100%;max-height:65vh;border-radius:16px;background:#000"></video><div style="margin-top:16px;background:rgba(255,255,255,.15);padding:10px 16px;border-radius:12px;color:#fff;font-size:14px;max-width:90%">${s.caption||''}</div></div>`; } 
+ else if(s.type==='image'){ c.innerHTML=`<div style="text-align:center;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center"><img id="currentStatusMedia" src="${s.image}" style="max-width:100%;max-height:65vh;border-radius:16px;object-fit:contain"><div style="margin-top:16px;background:rgba(255,255,255,.15);padding:10px 16px;border-radius:12px;color:#fff;font-size:14px;max-width:90%">${s.caption||''}</div></div>`; } 
+ else if(s.type==='video'){ c.innerHTML=`<div style="text-align:center;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center"><video id="currentStatusMedia" src="${s.video}" controls autoplay playsinline style="width:100%;max-width:100%;max-height:65vh;border-radius:16px;background:#000"></video><div style="margin-top:16px;background:rgba(255,255,255,.15);padding:10px 16px;border-radius:12px;color:#fff;font-size:14px;max-width:90%">${s.caption||''}</div></div>`; } 
  const prog=document.getElementById('statusProgress'); prog.innerHTML=''; group.forEach((_,i)=>{ const d=document.createElement('div'); d.className=i===idx?'active':''; prog.appendChild(d); }); 
  if(!seenStatus.includes(s.id)){ seenStatus.push(s.id); localStorage.setItem('seen_status',JSON.stringify(seenStatus)); } 
+ // SHOW/HIDE DELETE BUTTON — only for my status
+ const delBtn=document.getElementById('deleteStatusBtn');
+ if(s.username===myName){ delBtn.style.display='block'; } else { delBtn.style.display='none'; }
  document.getElementById('statusViewModal').classList.add('show');
- log('View opened SUCCESS: '+s.type);
  if(s.type!=='video'){ setTimeout(()=>{ if(document.getElementById('statusViewModal').classList.contains('show')&&currentStatusUser===keyView && currentStatusIdx===idx){ if(idx+1<group.length) viewStatus(keyView,idx+1); else closeStatusView(); } },6000); }
 }
 loadMessages(); loadStatuses();
-sb.channel('chale-v32').on('postgres_changes',{event:'*',schema:'public',table:'messages'},()=>{ log('DB change'); loadMessages(); loadStatuses(); }).subscribe();
-const presenceChannel=sb.channel('presence-v32',{config:{presence:{key:userId}}});
+sb.channel('chale-v33').on('postgres_changes',{event:'*',schema:'public',table:'messages'},()=>{ loadMessages(); loadStatuses(); }).subscribe();
+const presenceChannel=sb.channel('presence-v33',{config:{presence:{key:userId}}});
 presenceChannel.on('presence',{event:'sync'},()=>{ const state=presenceChannel.presenceState(); onlineUsers={}; Object.values(state).forEach(ps=>{ ps.forEach(p=>{ onlineUsers[p.userId]=p; }) }); const listEl=document.getElementById('onlineList'); listEl.innerHTML=''; Object.values(onlineUsers).forEach(u=>{ const row=document.createElement('div'); row.style.cssText='display:flex;gap:10px;padding:12px;background:#1a1a1a;border-radius:12px;margin-bottom:8px'; row.innerHTML=`<div style="width:44px;height:44px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center">${(u.name[0]||'?').toUpperCase()}</div><div><b>${u.name}</b><div style="font-size:11px;color:#00d26a">Online</div></div>`; listEl.appendChild(row); }); }).subscribe(async()=>{ if(myName){ await presenceChannel.track({userId, name:myName, avatar:myAvatar}); } });
 
 document.getElementById('statusImageInput').addEventListener('change', function(e){
  const f=e.target.files[0]; if(!f) return;
- log('Photo picked: '+f.name+' '+(f.size/1024).toFixed(0)+'KB');
  const reader=new FileReader();
  reader.onload=function(){
   const img=document.getElementById('statusPreviewImg');
   const box=document.getElementById('statusImagePreview');
-  const info=document.getElementById('photoSizeInfo');
   img.src=reader.result; img.dataset.raw=reader.result; box.classList.add('show');
-  info.textContent='✅ Preview OK | '+(f.size/1024).toFixed(0)+'KB -> will compress';
   setTimeout(()=>{ box.scrollIntoView({behavior:'smooth'}); },100);
  };
  reader.readAsDataURL(f);
 });
 document.getElementById('statusVideoInput').addEventListener('change', function(e){
  const f=e.target.files[0]; if(!f) return;
- log('Video picked: '+f.name+' '+(f.size/1024/1024).toFixed(1)+'MB');
- if(f.size>5*1024*1024){ alert('❌ Video too big! Max 5MB. Yours: '+(f.size/1024/1024).toFixed(1)+'MB'); e.target.value=''; return; }
+ if(f.size>5*1024*1024){ alert('❌ Video too big! Max 5MB'); e.target.value=''; return; }
  const reader=new FileReader();
  reader.onload=function(){
   const video=document.getElementById('statusPreviewVideo');
@@ -173,51 +192,71 @@ document.getElementById('postStatus').onclick=async()=>{
  if(currentTab==='text'){
   const text=document.getElementById('statusTextInput').value.trim(); if(!text){ alert('Type something!'); return; }
   const bg=document.getElementById('statusTextInput').dataset.bg||'#FCD116'; const color=document.getElementById('statusTextInput').dataset.color||'#000';
-  statusObj={type:'text', text, bg, color, avatar:myAvatar, user_id:myName, username:myName};
+  statusObj={type:'text', text, bg, color, avatar:myAvatar, username:myName};
  } else if(currentTab==='photo'){
-  const raw=document.getElementById('statusPreviewImg').dataset.raw; if(!raw){ alert('⚠️ No photo! Pick first!'); return; }
-  const btn=document.getElementById('postStatus'); btn.textContent='⏳ Compressing...'; btn.disabled=true;
+  const raw=document.getElementById('statusPreviewImg').dataset.raw; if(!raw){ alert('⚠️ No photo!'); return; }
+  const btn=document.getElementById('postStatus'); btn.textContent='⏳ Posting...'; btn.disabled=true;
   compressTiny(raw, async (compressed)=>{
    const cap=document.getElementById('statusCaption').value.trim();
-   const obj={type:'image', image:compressed, caption:cap, avatar:myAvatar, user_id:myName, username:myName};
+   const obj={type:'image', image:compressed, caption:cap, avatar:myAvatar, username:myName};
    const content=`[STATUS:${JSON.stringify(obj)}]`;
-   log('Posting photo '+ (content.length/1024).toFixed(0)+'KB — NO user_id column, only username+content');
-   // FIX: NO user_id column, only username and content!
    const {data, error}=await sb.from('messages').insert({username:myName, content:content}).select();
-   if(error){ log('❌ POST ERROR: '+error.message+' Code: '+error.code); alert('❌ Post failed: '+error.message+'\n\nDetail: '+error.details+'\nCode: '+error.code); btn.textContent='✓ Post Status'; btn.disabled=false; return; }
-   log('✅ POST SUCCESS! ID: '+data[0].id);
+   if(error){ alert('❌ Failed: '+error.message); btn.textContent='✓ Post Status'; btn.disabled=false; return; }
    document.getElementById('statusCreateModal').classList.remove('show'); 
    document.getElementById('statusImagePreview').classList.remove('show'); 
    document.getElementById('statusPreviewImg').dataset.raw=''; 
    document.getElementById('statusImageInput').value=''; 
    btn.textContent='✓ Post Status'; btn.disabled=false; 
-   document.getElementById('statusCaption').value='';
-   document.getElementById('statusTextInput').value='';
-   await loadStatuses();
-   setTimeout(()=>{ viewStatus(myName,0); }, 1000);
+   document.getElementById('statusCaption').value=''; document.getElementById('statusTextInput').value='';
+   await loadStatuses(); setTimeout(()=>{ viewStatus(myName,0); }, 800);
   }); return;
  } else if(currentTab==='video'){
   const raw=document.getElementById('statusPreviewVideo').dataset.raw; if(!raw){ alert('⚠️ No video!'); return; }
   const cap=document.getElementById('statusVideoCaption').value.trim();
-  statusObj={type:'video', video:raw, caption:cap, avatar:myAvatar, user_id:myName, username:myName};
+  statusObj={type:'video', video:raw, caption:cap, avatar:myAvatar, username:myName};
  }
  if(statusObj){ 
   const btn=document.getElementById('postStatus'); btn.textContent='⏳ Posting...'; btn.disabled=true;
   const content=`[STATUS:${JSON.stringify(statusObj)}]`; 
-  log('Posting '+currentTab+' '+ (content.length/1024).toFixed(0)+'KB — NO user_id column');
-  // FIX: Insert WITHOUT user_id column!
   const {data, error}=await sb.from('messages').insert({username:myName, content:content}).select();
-  if(error){ log('❌ POST ERROR: '+error.message); alert('❌ Failed: '+error.message+'\n'+error.details); btn.textContent='✓ Post Status'; btn.disabled=false; return; }
-  log('✅ SUCCESS ID: '+data[0].id);
+  if(error){ alert('❌ Failed: '+error.message); btn.textContent='✓ Post Status'; btn.disabled=false; return; }
   document.getElementById('statusCreateModal').classList.remove('show'); 
   document.getElementById('statusVideoPreview').classList.remove('show'); 
   document.getElementById('statusVideoInput').value=''; 
   document.getElementById('statusPreviewVideo').dataset.raw=''; 
-  document.getElementById('statusVideoCaption').value='';
-  document.getElementById('statusTextInput').value='';
+  document.getElementById('statusVideoCaption').value=''; document.getElementById('statusTextInput').value='';
   btn.textContent='✓ Post Status'; btn.disabled=false;
-  await loadStatuses(); 
-  setTimeout(()=>{ viewStatus(myName,0); }, 1000);
+  await loadStatuses(); setTimeout(()=>{ viewStatus(myName,0); }, 800);
+ }
+};
+// DELETE STATUS
+document.getElementById('deleteStatusBtn').onclick=async()=>{
+ if(!currentStatusId){ return; }
+ if(!confirm('🗑️ Delete this status? This go remove am for everyone!')) return;
+ log('Deleting status ID: '+currentStatusId);
+ const {error}=await sb.from('messages').delete().eq('id', currentStatusId);
+ if(error){ alert('❌ Delete failed: '+error.message); log('Delete error: '+error.message); return; }
+ log('✅ Deleted!');
+ closeStatusView();
+ await loadStatuses();
+};
+// DOWNLOAD STATUS
+document.getElementById('downloadStatusBtn').onclick=()=>{
+ const group=statuses.filter(s=> s.username===currentStatusUser);
+ const s=group[currentStatusIdx];
+ if(!s){ alert('No status to download'); return; }
+ let dataUrl=null, filename='chale-status';
+ if(s.type==='image'){ dataUrl=s.image; filename+='.jpg'; }
+ else if(s.type==='video'){ dataUrl=s.video; filename+='.mp4'; }
+ else if(s.type==='text'){ alert('Text status — screenshot am!'); return; }
+ if(dataUrl){
+  const a=document.createElement('a');
+  a.href=dataUrl;
+  a.download=filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  log('Downloaded: '+filename);
  }
 };
 function handleAvatarFile(file){ const reader=new FileReader(); reader.onloadend=()=>{ compressTiny(reader.result,(c)=>{ myAvatar=c; localStorage.setItem('chale_avatar',c); updateAvatarUI(); }); }; reader.readAsDataURL(file); }
@@ -228,9 +267,12 @@ document.getElementById('closeProfile').onclick=()=>document.getElementById('pro
 document.getElementById('saveProfile').onclick=async()=>{ const n=document.getElementById('profileNameInput').value.trim(); if(n){ myName=n; localStorage.setItem('chale_name',n); } document.getElementById('profileModal').classList.remove('show'); await presenceChannel.track({userId, name:myName, avatar:myAvatar}); updateAvatarUI(); loadMessages(); };
 document.getElementById('usersBtn').onclick=()=>document.getElementById('onlineModal').classList.add('show');
 document.getElementById('closeOnline').onclick=()=>document.getElementById('onlineModal').classList.remove('show');
-document.getElementById('b').onclick=async()=>{ let t=document.getElementById('i').value.trim(); if(!t) return; if(!myName){ document.getElementById('nameModal').classList.add('show'); return; } document.getElementById('i').value=''; const {error}=await sb.from('messages').insert({username:myName, content:t}); if(error){ alert('Send failed: '+error.message); log('Send error: '+error.message); } };
+document.getElementById('contactsBtn').onclick=()=>{ renderContacts(); document.getElementById('contactsModal').classList.add('show'); };
+document.getElementById('closeContacts').onclick=()=>document.getElementById('contactsModal').classList.remove('show');
+document.getElementById('addContactBtn').onclick=()=>{ const n=document.getElementById('newContactName').value.trim(); if(!n){ alert('Enter name'); return; } if(contacts.includes(n)){ alert('Contact already dey!'); return; } contacts.push(n); saveContacts(); document.getElementById('newContactName').value=''; renderContacts(); };
+document.getElementById('b').onclick=async()=>{ let t=document.getElementById('i').value.trim(); if(!t) return; if(!myName){ document.getElementById('nameModal').classList.add('show'); return; } document.getElementById('i').value=''; const {error}=await sb.from('messages').insert({username:myName, content:t}); if(error){ alert('Send failed: '+error.message); } };
 document.getElementById('i').addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('b').click(); });
 document.getElementById('okName').onclick=async()=>{ const n=document.getElementById('nameInput').value.trim(); if(!n){ alert('Enter name'); return; } myName=n; localStorage.setItem('chale_name',myName); document.getElementById('nameModal').classList.remove('show'); await presenceChannel.track({userId, name:myName, avatar:myAvatar}); updateAvatarUI(); loadMessages(); loadStatuses(); };
-setTimeout(()=>{ if(!myName){ document.getElementById('nameModal').classList.add('show'); } updateAvatarUI(); },800);
+setTimeout(()=>{ if(!myName){ document.getElementById('nameModal').classList.add('show'); } updateAvatarUI(); renderContacts(); },800);
 </script>
 </body></html>
