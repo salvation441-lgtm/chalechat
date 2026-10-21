@@ -1,6 +1,6 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ChaleChat V36 FIXED</title>
+<title>ChaleChat V38 Import Contacts</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <style>
@@ -56,24 +56,25 @@ button.micBtn.recording{background:#fff;color:#CE1126;animation:pulse 1s infinit
 .recordingBar.show{display:flex}
 .langOption{padding:12px;border:1px solid #2a2a2a;background:#1e1e1e;border-radius:12px;margin-bottom:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
 .langOption.active{border-color:var(--yellow);background:#222}
+.importBtn{padding:12px;border-radius:12px;border:0;font-weight:800;cursor:pointer;flex:1}
 </style>
 </head>
 <body>
 <div class="top"><div style="display:flex;gap:6px;align-items:center"><div style="width:8px;height:8px;background:#00d26a;border-radius:50%"></div><div class="brand">CHALE<span>CHAT</span></div></div><div style="display:flex;gap:4px"><button id="langBtn" class="iconTop langBtn">🌍</button><button id="contactsBtn" class="iconTop contactsBtn">📇</button><button id="profileBtn" class="iconTop"><span id="topAvatarLetter">S</span></button><button id="usersBtn" class="iconTop">👥</button></div></div>
 <div id="statusBar"></div>
-<div id="chat"><div style="text-align:center;color:#666;padding:40px">Loading chat... If e stay long, refresh!</div></div>
+<div id="chat"><div style="text-align:center;color:#666;padding:40px">Loading chat...</div></div>
 <div class="recordingBar" id="recordingBar"><div style="width:10px;height:10px;background:#fff;border-radius:50%;animation:pulse 1s infinite"></div><span id="recordingText">Recording 0s...</span><button onclick="cancelRecording()" style="background:#000;color:#fff;border:0;border-radius:50%;width:28px;height:28px">✕</button></div>
 <div class="barWrap"><div class="bar"><input id="i" class="msg" placeholder="Type message..."><button class="micBtn" id="micBtn">🎙️</button><button class="send" id="b">➤</button></div></div>
 
 <div id="langModal" class="modal"><div class="box"><h3 id="langTitle">🌍 Choose Language / Kasa</h3>
-<div class="langOption" data-lang="en" onclick="setLang('en')"><span>🇬🇭 English (Ghana)</span><span class="check"></span></div>
+<div class="langOption" data-lang="en" onclick="setLang('en')"><span>🇬🇭 English</span><span class="check"></span></div>
 <div class="langOption" data-lang="tw" onclick="setLang('tw')"><span>🇬🇭 Twi - Asante Twi</span><span class="check"></span></div>
 <div class="langOption" data-lang="ga" onclick="setLang('ga')"><span>🇬🇭 Ga</span><span class="check"></span></div>
-<div class="langOption" data-lang="ewe" onclick="setLang('ewe')"><span>🇬🇭 Ewe - Eʋegbe</span><span class="check"></span></div>
+<div class="langOption" data-lang="ewe" onclick="setLang('ewe')"><span>🇬🇭 Ewe</span><span class="check"></span></div>
 <div class="langOption" data-lang="hausa" onclick="setLang('hausa')"><span>🇬🇭 Hausa</span><span class="check"></span></div>
 <div class="langOption" data-lang="fr" onclick="setLang('fr')"><span>🇫🇷 Français</span><span class="check"></span></div>
 <div class="langOption" data-lang="es" onclick="setLang('es')"><span>🇪🇸 Español</span><span class="check"></span></div>
-<div class="langOption" data-lang="pidgin" onclick="setLang('pidgin')"><span>🇬🇭 Ghana Pidgin - Chale!</span><span class="check"></span></div>
+<div class="langOption" data-lang="pidgin" onclick="setLang('pidgin')"><span>🇬🇭 Pidgin - Chale!</span><span class="check"></span></div>
 <div class="btnRow" style="margin-top:12px"><button class="btn btnOk" id="closeLang">Close</button></div>
 </div></div>
 
@@ -89,7 +90,27 @@ button.micBtn.recording{background:#fff;color:#CE1126;animation:pulse 1s infinit
 
 <div id="statusViewModal" class="modal" style="background:#000"><div class="statusView"><div class="statusProgress" id="statusProgress"></div><div class="statusViewTop"><div style="display:flex;align-items:center;gap:10px"><div id="viewStatusAv" style="width:40px;height:40px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;border:2px solid #fff"></div><div><div id="viewStatusName" style="font-weight:800;font-size:14px;color:#fff"></div><div id="viewStatusTime" style="font-size:11px;color:#ccc"></div></div></div><button onclick="closeStatusView()" style="background:rgba(255,255,255,.2);border:0;color:#fff;width:36px;height:36px;border-radius:50%;font-size:18px">✕</button></div><div id="viewStatusContent" style="flex:1;display:flex;align-items:center;justify-content:center;padding:0;overflow:auto;background:#000;margin-top:60px"></div><div style="padding:10px;background:#111;display:flex;gap:6px;justify-content:center;flex-wrap:wrap"><button id="downloadStatusBtn" class="btn btnOk" style="flex:1">⬇️ Download</button><button id="deleteStatusBtn" class="btn btnDanger" style="flex:1;display:none">🗑️ Delete</button><button onclick="closeStatusView()" class="btn btnCancel" style="flex:1">✕</button><button onclick="nextStatus()" class="btn btnOk" style="flex:1">Next →</button></div></div></div>
 
-<div id="contactsModal" class="modal"><div class="box"><h3>📇 Contacts</h3><input id="contactSearch" placeholder="🔍 Search..." oninput="filterContacts()"><div style="display:flex;gap:8px;margin-bottom:12px"><input id="newContactName" placeholder="Add contact name" style="flex:1;margin-bottom:0"><button id="addContactBtn" class="btn btnOk" style="padding:10px">+ Add</button></div><div id="contactsList" style="max-height:50vh;overflow:auto"></div><div class="btnRow" style="margin-top:12px"><button class="btn btnOk" id="closeContacts">Close</button></div></div></div>
+<!-- CONTACTS WITH IMPORT -->
+<div id="contactsModal" class="modal"><div class="box">
+<h3>📇 Contacts — Import</h3>
+<input id="contactSearch" placeholder="🔍 Search..." oninput="filterContacts()">
+
+<div style="display:flex;gap:8px;margin-bottom:12px">
+<button onclick="importPhoneContacts()" class="importBtn" style="background:#00d26a;color:#000">📲 Import from Phone</button>
+<button onclick="document.getElementById('vcfInput').click()" class="importBtn" style="background:#222;color:#fff;border:1px solid #333">📄 Import .vcf</button>
+</div>
+<input type="file" id="vcfInput" accept=".vcf,.vcard,text/vcard" hidden>
+
+<div style="display:flex;gap:8px;margin-bottom:12px"><input id="newContactName" placeholder="Add manually - e.g. Kofi" style="flex:1;margin-bottom:0"><button id="addContactBtn" class="btn btnOk" style="padding:10px">+ Add</button></div>
+
+<div id="contactsList" style="max-height:45vh;overflow:auto"></div>
+<div style="background:#111;padding:8px;border-radius:8px;font-size:10px;color:#888;margin-top:8px">
+💡 Android Chrome: Tap "Import from Phone" → Allow → Select contacts.<br>
+iPhone: Contacts app → Share Contact → Save .vcf → Import .vcf here.
+</div>
+<div class="btnRow" style="margin-top:12px"><button class="btn btnOk" id="closeContacts">Close</button></div>
+</div></div>
+
 <div id="nameModal" class="modal"><div class="box"><h3>👤 Setup</h3><div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:16px"><div class="picCircle" id="picCircle" onclick="document.getElementById('avatarInput').click()"><span id="picLetter">S</span></div><input type="file" id="avatarInput" hidden accept="image/*"></div><input id="nameInput" placeholder="Your name"><div class="btnRow"><button class="btn btnOk" id="okName">Save & Join</button></div></div></div>
 <div id="profileModal" class="modal"><div class="box"><h3>👤 My Profile</h3><div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:16px"><div class="picCircle" id="profilePicCircle" onclick="document.getElementById('avatarInput2').click()"><span id="profilePicLetter">S</span></div><input type="file" id="avatarInput2" hidden accept="image/*"></div><input id="profileNameInput" placeholder="Your name"><div class="btnRow"><button class="btn btnCancel" id="closeProfile">Close</button><button class="btn btnOk" id="saveProfile">Save</button></div></div></div>
 <div id="onlineModal" class="modal"><div class="box"><h3>👥 Online</h3><div id="onlineList"></div><div class="btnRow" style="margin-top:12px"><button class="btn btnOk" id="closeOnline">Close</button></div></div></div>
@@ -100,6 +121,7 @@ const sb = supabase.createClient('https://gmdtjtznwsimcseurntt.supabase.co','eyJ
 let userId=localStorage.getItem('chale_id')||'user_'+Math.random().toString(36).substr(2,9); localStorage.setItem('chale_id',userId);
 let myName=localStorage.getItem('chale_name')||''; let myAvatar=localStorage.getItem('chale_avatar')||'';
 let onlineUsers={}, statuses=[], seenStatus=JSON.parse(localStorage.getItem('seen_status')||'[]'), currentTab='text', currentStatusUser=null, currentStatusIdx=0, currentStatusId=null, contacts=JSON.parse(localStorage.getItem('chale_contacts')||'[]');
+let blocked=JSON.parse(localStorage.getItem('chale_blocked')||'[]');
 let currentLang=localStorage.getItem('chale_lang')||'en';
 let mediaRecorder=null, audioChunks=[], recordingTimer=null, recordingSeconds=0, isRecording=false;
 
@@ -146,14 +168,80 @@ window.showTab=(which)=>{ currentTab=which; document.getElementById('tabText').c
 window.closeStatusView=()=>{ document.getElementById('statusViewModal').classList.remove('show'); };
 window.nextStatus=()=>{ const group=statuses.filter(s=> s.username===currentStatusUser); if(currentStatusIdx+1<group.length){ viewStatus(currentStatusUser, currentStatusIdx+1); } else { closeStatusView(); } };
 window.filterContacts=()=>{ const q=document.getElementById('contactSearch').value.toLowerCase(); renderContacts(q); };
-function saveContacts(){ localStorage.setItem('chale_contacts', JSON.stringify(contacts)); }
-function renderContacts(filter=''){ const list=document.getElementById('contactsList'); if(!list) return; list.innerHTML=''; let filtered=contacts; if(filter){ filtered=contacts.filter(c=>c.toLowerCase().includes(filter)); } if(filtered.length===0){ list.innerHTML='<div style="text-align:center;color:#666;padding:20px">No contacts yet — chat to auto-add!</div>'; return; } filtered.forEach((name, idx)=>{ const row=document.createElement('div'); row.className='contactRow'; row.innerHTML=`<div style="width:44px;height:44px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-weight:800">${name[0].toUpperCase()}</div><div style="flex:1"><b>${name}</b></div><button onclick="event.stopPropagation(); deleteContact(${idx})" style="background:#CE1126;border:0;color:#fff;width:32px;height:32px;border-radius:50%">✕</button>`; row.onclick=()=>{ document.getElementById('contactsModal').classList.remove('show'); document.getElementById('i').value='@'+name+' '; document.getElementById('i').focus(); }; list.appendChild(row); }); }
-window.deleteContact=(idx)=>{ if(confirm('Delete '+contacts[idx]+'?')){ contacts.splice(idx,1); saveContacts(); renderContacts(); } };
+function saveContacts(){ localStorage.setItem('chale_contacts', JSON.stringify(contacts)); localStorage.setItem('chale_blocked', JSON.stringify(blocked)); }
+function renderContacts(filter=''){ 
+  const list=document.getElementById('contactsList'); if(!list) return; 
+  list.innerHTML=''; 
+  let allNames = new Set(contacts);
+  statuses.forEach(s=>{ if(s.username!==myName && !blocked.includes(s.username)) allNames.add(s.username); });
+  Object.values(onlineUsers).forEach(u=>{ if(u.name!==myName && !blocked.includes(u.name)) allNames.add(u.name); });
+  let combined = Array.from(allNames).filter(n=>!blocked.includes(n));
+  let filtered=combined;
+  if(filter){ filtered=combined.filter(c=>c.toLowerCase().includes(filter.toLowerCase())); }
+  if(filtered.length===0){ 
+    list.innerHTML=`<div style="text-align:center;color:#666;padding:20px">
+    No contacts yet — chat to auto-add!<br><br>
+    Tap <b>📲 Import from Phone</b> to pull your real contacts!<br><br>
+    <b>You get ${statuses.length} status users online</b>
+    </div>`; 
+    return; 
+  } 
+  filtered.forEach((name)=>{ 
+    const row=document.createElement('div'); row.className='contactRow'; 
+    row.innerHTML=`<div style="width:44px;height:44px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-weight:800">${name[0].toUpperCase()}</div><div style="flex:1"><b>${name}</b><div style="font-size:11px;color:#888">Tap to chat @${name}</div></div><button onclick="event.stopPropagation(); deleteContact('${name.replace(/'/g,"\\'")}')" style="background:#CE1126;border:0;color:#fff;width:32px;height:32px;border-radius:50%">✕</button>`; 
+    row.onclick=()=>{ document.getElementById('contactsModal').classList.remove('show'); document.getElementById('i').value='@'+name+' '; document.getElementById('i').focus(); }; 
+    list.appendChild(row); 
+  }); 
+}
+window.deleteContact=(name)=>{ 
+  if(confirm('Delete '+name+'?')){ 
+    if(!blocked.includes(name)) blocked.push(name);
+    contacts = contacts.filter(c=>c!==name);
+    saveContacts(); 
+    renderContacts(); 
+  } 
+};
+
+// === IMPORT CONTACTS ===
+window.importPhoneContacts = async () => {
+  try{
+    if('contacts' in navigator && 'ContactsManager' in window){
+      const props = ['name'];
+      const opts = {multiple: true};
+      const selected = await navigator.contacts.select(props, opts);
+      if(!selected || selected.length===0){ alert('No contacts selected'); return; }
+      let added = 0;
+      selected.forEach(c=>{
+        let name = c.name && c.name[0] ? c.name[0] : null;
+        if(name && !contacts.includes(name) && !blocked.includes(name)){
+          // Remove blocked if re-adding
+          blocked = blocked.filter(b=>b!==name);
+          contacts.push(name);
+          added++;
+        }
+      });
+      saveContacts();
+      renderContacts();
+      alert(`✅ Added ${added} contacts from phone! Total: ${contacts.length}`);
+    } else {
+      alert('📱 Your browser no support direct phone import.\n\nFor Android: Use Chrome browser and allow contacts.\nFor iPhone: Export contacts as .vcf file, then tap "Import .vcf file" button.\n\nYou can also add manually.');
+      document.getElementById('vcfInput').click();
+    }
+  }catch(err){
+    if(err.name==='NotAllowedError' || err.name==='SecurityError'){
+      alert('❌ Permission denied. Please allow contacts permission.\n\nGo to browser settings → Site settings → Contacts → Allow');
+    } else if(err.name==='NotSupportedError'){
+      alert('Your device no support contact picker. Try .vcf import.');
+    } else {
+      alert('Import error: '+err.message+'\nTry .vcf import instead.');
+    }
+    console.log(err);
+  }
+};
+
 const chatEl=document.getElementById('chat');
-// FORCE RENDER STATUS BAR IMMEDIATELY — even before Supabase!
 function forceRenderBar(){
- const bar=document.getElementById('statusBar');
- if(!bar) return;
+ const bar=document.getElementById('statusBar'); if(!bar) return;
  bar.innerHTML='';
  const addItem=document.createElement('div'); addItem.className='statusItem'; addItem.onclick=()=>{ document.getElementById('statusCreateModal').classList.add('show'); showTab('text'); }; addItem.innerHTML=`<div class="statusRing addRing"><div class="statusAv">${myAvatar?`<img src="${myAvatar}">`: (myName[0]||'+').toUpperCase()}<div class="plusBadge">+</div></div></div><div class="statusName">Add Status</div>`; bar.appendChild(addItem);
  if(statuses.length>0){
@@ -170,21 +258,20 @@ async function loadMessages(){ try{
  const {data, error}=await sb.from('messages').select('*').order('created_at',{ascending:true}).limit(300); 
  if(error) throw error;
  if(!data){ chatEl.innerHTML='<div style="text-align:center;color:#666;padding:40px">No messages yet — start chatting!</div>'; return; }
- chatEl.innerHTML=''; const usernames=new Set(contacts);
- data.forEach(m=>{ if(!m.content) return; if(m.content.startsWith('[STATUS:')) return; if(m.username && m.username!==myName){ usernames.add(m.username); } const isMe=m.username===myName; const div=document.createElement('div'); div.className='m '+(isMe?'me':'other'); let content=m.content; 
- if(content.startsWith('[VOICE:')){ const src=content.match(/^\[VOICE:(.*?)\]/)?.[1]; if(src) content=`<audio controls style="max-width:200px"><source src="${src}" type="audio/webm"></audio><div style="font-size:10px;opacity:.6">🎙️ Voice note</div>`; else content='🎙️ Voice note (error)'; }
+ chatEl.innerHTML=''; 
+ data.forEach(m=>{ if(!m.content) return; if(m.content.startsWith('[STATUS:')) return; const isMe=m.username===myName; const div=document.createElement('div'); div.className='m '+(isMe?'me':'other'); let content=m.content; 
+ if(content.startsWith('[VOICE:')){ const src=content.match(/^\[VOICE:(.*?)\]/)?.[1]; if(src) content=`<audio controls style="max-width:200px"><source src="${src}" type="audio/webm"></audio><div style="font-size:10px;opacity:.6">🎙️ Voice note</div>`; else content='🎙️ Voice note'; }
  div.innerHTML=`<div class="avatar">${(m.username[0]||'?').toUpperCase()}</div><div style="flex:1"><b style="font-size:11px;opacity:.6">${m.username}</b><div style="font-size:14px;word-break:break-word">${content}</div></div>`; chatEl.appendChild(div); }); 
- if(usernames.size!==contacts.length){ contacts=Array.from(usernames); saveContacts(); }
  chatEl.scrollTop=chatEl.scrollHeight; 
- }catch(e){ chatEl.innerHTML=`<div style="text-align:center;color:#CE1126;padding:20px">Chat load error: ${e.message}<br>Check internet! Add Status still go work.</div>`; console.log(e); } }
-async function loadStatuses(){ try{ const {data, error}=await sb.from('messages').select('*').order('created_at',{ascending:false}).limit(300); if(error) throw error; const now=Date.now(); statuses=(data||[]).filter(m=>m.content && m.content.startsWith('[STATUS:')).filter(m=>(now-new Date(m.created_at).getTime())<24*60*60*1000).map(m=>{ try{ const j=m.content.replace('[STATUS:','').slice(0,-1); const o=JSON.parse(j); return {id:m.id, username:m.username, created_at:m.created_at, ...o}; }catch(e){ return null;} }).filter(Boolean); forceRenderBar(); }catch(e){ console.log('status load error',e); forceRenderBar(); } }
+ }catch(e){ chatEl.innerHTML=`<div style="text-align:center;color:#CE1126;padding:20px">Chat load error: ${e.message}<br>Check internet!</div>`; } }
+async function loadStatuses(){ try{ const {data, error}=await sb.from('messages').select('*').order('created_at',{ascending:false}).limit(300); if(error) throw error; const now=Date.now(); statuses=(data||[]).filter(m=>m.content && m.content.startsWith('[STATUS:')).filter(m=>(now-new Date(m.created_at).getTime())<24*60*60*1000).map(m=>{ try{ const j=m.content.replace('[STATUS:','').slice(0,-1); const o=JSON.parse(j); return {id:m.id, username:m.username, created_at:m.created_at, ...o}; }catch(e){ return null;} }).filter(Boolean); forceRenderBar(); }catch(e){ forceRenderBar(); } }
 function viewStatus(keyView, idx){ try{ const group=statuses.filter(s=> s.username===keyView); if(!group.length) return; currentStatusUser=keyView; currentStatusIdx=idx; currentStatusId=group[idx].id; const s=group[idx]; document.getElementById('viewStatusName').textContent=s.username; document.getElementById('viewStatusTime').textContent=new Date(s.created_at).toLocaleString(); document.getElementById('viewStatusAv').innerHTML=s.avatar?`<img src="${s.avatar}">`: (s.username[0]||'?').toUpperCase(); const c=document.getElementById('viewStatusContent'); if(s.type==='text'){ c.innerHTML=`<div style="background:${s.bg||'#FCD116'};color:${s.color||'#000'};padding:40px;border-radius:24px;font-size:26px;font-weight:900;text-align:center;max-width:90%;min-height:200px;display:flex;align-items:center;justify-content:center">${s.text}</div>`; } else if(s.type==='image'){ c.innerHTML=`<div style="text-align:center;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center"><img src="${s.image}" style="max-width:100%;max-height:65vh;border-radius:16px;object-fit:contain"><div style="margin-top:16px;background:rgba(255,255,255,.15);padding:10px 16px;border-radius:12px;color:#fff;font-size:14px;max-width:90%">${s.caption||''}</div></div>`; } else if(s.type==='video'){ c.innerHTML=`<div style="text-align:center;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center"><video src="${s.video}" controls autoplay playsinline style="width:100%;max-width:100%;max-height:65vh;border-radius:16px;background:#000"></video><div style="margin-top:16px;background:rgba(255,255,255,.15);padding:10px 16px;border-radius:12px;color:#fff;font-size:14px;max-width:90%">${s.caption||''}</div></div>`; } const prog=document.getElementById('statusProgress'); prog.innerHTML=''; group.forEach((_,i)=>{ const d=document.createElement('div'); d.className=i===idx?'active':''; prog.appendChild(d); }); if(!seenStatus.includes(s.id)){ seenStatus.push(s.id); localStorage.setItem('seen_status',JSON.stringify(seenStatus)); } const delBtn=document.getElementById('deleteStatusBtn'); if(s.username===myName){ delBtn.style.display='block'; } else { delBtn.style.display='none'; } document.getElementById('statusViewModal').classList.add('show'); if(s.type!=='video'){ setTimeout(()=>{ if(document.getElementById('statusViewModal').classList.contains('show')&&currentStatusUser===keyView && currentStatusIdx===idx){ if(idx+1<group.length) viewStatus(keyView,idx+1); else closeStatusView(); } },6000); } }catch(e){ console.log(e); } }
 
 forceRenderBar();
 loadMessages(); loadStatuses();
-sb.channel('chale-v36').on('postgres_changes',{event:'*',schema:'public',table:'messages'},()=>{ loadMessages(); loadStatuses(); }).subscribe();
-const presenceChannel=sb.channel('presence-v36',{config:{presence:{key:userId}}});
-presenceChannel.on('presence',{event:'sync'},()=>{ try{ const state=presenceChannel.presenceState(); onlineUsers={}; Object.values(state).forEach(ps=>{ ps.forEach(p=>{ onlineUsers[p.userId]=p; }) }); const listEl=document.getElementById('onlineList'); if(!listEl) return; listEl.innerHTML=''; Object.values(onlineUsers).forEach(u=>{ const row=document.createElement('div'); row.style.cssText='display:flex;gap:10px;padding:12px;background:#1a1a1a;border-radius:12px;margin-bottom:8px'; row.innerHTML=`<div style="width:44px;height:44px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center">${(u.name[0]||'?').toUpperCase()}</div><div><b>${u.name}</b><div style="font-size:11px;color:#00d26a">${tr('online')}</div></div>`; listEl.appendChild(row); }); }catch(e){} }).subscribe(async()=>{ if(myName){ await presenceChannel.track({userId, name:myName, avatar:myAvatar}); } });
+sb.channel('chale-v38').on('postgres_changes',{event:'*',schema:'public',table:'messages'},()=>{ loadMessages(); loadStatuses(); }).subscribe();
+const presenceChannel=sb.channel('presence-v38',{config:{presence:{key:userId}}});
+presenceChannel.on('presence',{event:'sync'},()=>{ try{ const state=presenceChannel.presenceState(); onlineUsers={}; Object.values(state).forEach(ps=>{ ps.forEach(p=>{ onlineUsers[p.userId]=p; }) }); const listEl=document.getElementById('onlineList'); if(!listEl) return; listEl.innerHTML=''; Object.values(onlineUsers).forEach(u=>{ const row=document.createElement('div'); row.style.cssText='display:flex;gap:10px;padding:12px;background:#1a1a1a;border-radius:12px;margin-bottom:8px'; row.innerHTML=`<div style="width:44px;height:44px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center">${(u.name[0]||'?').toUpperCase()}</div><div><b>${u.name}</b><div style="font-size:11px;color:#00d26a">${tr('online')}</div></div>`; listEl.appendChild(row); }); renderContacts(); }catch(e){} }).subscribe(async()=>{ if(myName){ await presenceChannel.track({userId, name:myName, avatar:myAvatar}); } });
 
 async function startRecording(){ if(isRecording) return; try{ const stream=await navigator.mediaDevices.getUserMedia({audio:true}); mediaRecorder=new MediaRecorder(stream, {mimeType:'audio/webm'}); audioChunks=[]; recordingSeconds=0; isRecording=true; document.getElementById('recordingBar').classList.add('show'); document.getElementById('micBtn').classList.add('recording'); mediaRecorder.ondataavailable=e=>{ if(e.data.size>0) audioChunks.push(e.data); }; mediaRecorder.onstop=async()=>{ const audioBlob=new Blob(audioChunks, {type:'audio/webm'}); if(audioBlob.size<1000){ alert('Too short!'); cleanupRecording(); return; } if(audioBlob.size>600*1024){ alert('Too long! Max 30s'); cleanupRecording(); return; } const reader=new FileReader(); reader.onload=async()=>{ const base64=reader.result; const content=`[VOICE:${base64}]`; const {error}=await sb.from('messages').insert({username:myName, content:content}); if(error){ alert('Voice failed: '+error.message); } cleanupRecording(); }; reader.readAsDataURL(audioBlob); stream.getTracks().forEach(track=>track.stop()); }; mediaRecorder.start(); recordingTimer=setInterval(()=>{ recordingSeconds++; document.getElementById('recordingText').textContent=`${tr('recording')} ${recordingSeconds}s... Tap mic to send`; if(recordingSeconds>=30){ stopRecording(); } },1000); }catch(err){ alert('Mic permission needed! Allow mic. '+err.message); cleanupRecording(); } }
 function stopRecording(){ if(mediaRecorder && isRecording){ mediaRecorder.stop(); isRecording=false; } clearInterval(recordingTimer); }
@@ -195,6 +282,33 @@ document.getElementById('micBtn').onclick=()=>{ if(!myName){ document.getElement
 
 document.getElementById('statusImageInput').addEventListener('change', function(e){ const f=e.target.files[0]; if(!f) return; const reader=new FileReader(); reader.onload=function(){ const img=document.getElementById('statusPreviewImg'); const box=document.getElementById('statusImagePreview'); img.src=reader.result; img.dataset.raw=reader.result; box.classList.add('show'); }; reader.readAsDataURL(f); });
 document.getElementById('statusVideoInput').addEventListener('change', function(e){ const f=e.target.files[0]; if(!f) return; if(f.size>5*1024*1024){ alert('❌ Video too big! Max 5MB'); e.target.value=''; return; } const reader=new FileReader(); reader.onload=function(){ const video=document.getElementById('statusPreviewVideo'); const box=document.getElementById('statusVideoPreview'); video.src=reader.result; video.dataset.raw=reader.result; box.classList.add('show'); video.load(); }; reader.readAsDataURL(f); });
+document.getElementById('vcfInput').addEventListener('change', function(e){
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=function(){
+    try{
+      const text=reader.result;
+      const names=[];
+      const lines=text.split(/\r?\n/);
+      lines.forEach(line=>{
+        if(line.toUpperCase().startsWith('FN:')){
+          let name=line.substring(3).trim();
+          if(name) names.push(name);
+        }
+      });
+      if(names.length===0){ alert('No contacts found in .vcf'); return; }
+      let added=0;
+      names.forEach(name=>{
+        if(!contacts.includes(name) && !blocked.includes(name)){
+          contacts.push(name); added++;
+        }
+      });
+      saveContacts(); renderContacts();
+      alert(`✅ Imported ${added} contacts from .vcf (${names.length} found)`);
+    }catch(err){ alert('Failed .vcf: '+err.message); }
+  };
+  reader.readAsText(file);
+});
 document.getElementById('cancelStatus').onclick=()=>{ document.getElementById('statusCreateModal').classList.remove('show'); document.getElementById('statusImagePreview').classList.remove('show'); document.getElementById('statusVideoPreview').classList.remove('show'); };
 document.getElementById('postStatus').onclick=async()=>{
  let statusObj=null;
@@ -217,13 +331,13 @@ document.getElementById('contactsBtn').onclick=()=>{ renderContacts(); document.
 document.getElementById('closeContacts').onclick=()=>document.getElementById('contactsModal').classList.remove('show');
 document.getElementById('langBtn').onclick=()=>{ document.getElementById('langModal').classList.add('show'); };
 document.getElementById('closeLang').onclick=()=>document.getElementById('langModal').classList.remove('show');
-document.getElementById('addContactBtn').onclick=()=>{ const n=document.getElementById('newContactName').value.trim(); if(!n){ alert('Enter name'); return; } if(contacts.includes(n)){ alert('Already dey!'); return; } contacts.push(n); saveContacts(); document.getElementById('newContactName').value=''; renderContacts(); };
+document.getElementById('addContactBtn').onclick=()=>{ const n=document.getElementById('newContactName').value.trim(); if(!n){ alert('Enter name'); return; } if(contacts.includes(n)){ alert('Already dey!'); return; } blocked = blocked.filter(b=>b!==n); contacts.push(n); saveContacts(); document.getElementById('newContactName').value=''; renderContacts(); };
 document.getElementById('b').onclick=async()=>{ let t=document.getElementById('i').value.trim(); if(!t) return; if(!myName){ document.getElementById('nameModal').classList.add('show'); return; } document.getElementById('i').value=''; const {error}=await sb.from('messages').insert({username:myName, content:t}); if(error){ alert('Send failed: '+error.message); } };
 document.getElementById('i').addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('b').click(); });
 document.getElementById('okName').onclick=async()=>{ const n=document.getElementById('nameInput').value.trim(); if(!n){ alert('Enter name'); return; } myName=n; localStorage.setItem('chale_name',myName); document.getElementById('nameModal').classList.remove('show'); try{ await presenceChannel.track({userId, name:myName, avatar:myAvatar}); }catch(e){} updateAvatarUI(); forceRenderBar(); loadMessages(); loadStatuses(); };
 setTimeout(()=>{ if(!myName){ document.getElementById('nameModal').classList.add('show'); } updateAvatarUI(); renderContacts(); applyLang(); forceRenderBar(); },500);
 }catch(err){
- document.body.innerHTML=`<div style="padding:20px;color:#fff;background:#000"><h2 style="color:#FCD116">⚠️ Error loading V36</h2><p>${err.message}</p><pre style="background:#111;padding:10px;overflow:auto">${err.stack}</pre><button onclick="localStorage.clear(); location.href=location.href.split('?')[0]+'?v36=1'" style="background:#FCD116;color:#000;padding:12px 20px;border-radius:12px;border:0;font-weight:900">Clear Cache & Reload</button></div>`;
+ document.body.innerHTML=`<div style="padding:20px;color:#fff;background:#000"><h2 style="color:#FCD116">⚠️ Error V38</h2><p>${err.message}</p><button onclick="localStorage.clear(); location.href=location.href.split('?')[0]+'?v38=1'" style="background:#FCD116;color:#000;padding:12px 20px;border-radius:12px;border:0;font-weight:900">Clear & Reload</button></div>`;
 }
 </script>
 </body></html>
