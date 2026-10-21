@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>ChaleChat V25 - Both Import</title>
+<title>ChaleChat V26 - Video Status</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <style>
@@ -16,8 +16,7 @@ body{margin:0;background:#000;color:#fff;font-family:'Inter',system-ui;display:f
 .topBtns::-webkit-scrollbar{display:none}
 .iconTop{width:36px;height:36px;min-width:36px;border-radius:50%;background:#1e1e1e;border:1px solid var(--border);color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;flex-shrink:0}
 .iconTop.contactsBtn{background:var(--yellow);color:#000;font-weight:900}
-.iconTop img{width:100%;height:100%;object-fit:cover;pointer-events:none}
-#stat{background:#1e1e1e;border:1px solid var(--border);padding:4px 8px;border-radius:20px;font-size:10px;color:#00d26a;font-weight:700;cursor:pointer;white-space:nowrap}
+#stat{background:#1e1e1e;border:1px solid var(--border);padding:4px 8px;border-radius:20px;font-size:10px;color:#00d26a;font-weight:700;cursor:pointer}
 #statusBar{display:flex;gap:14px;padding:12px 12px;background:#0f0f0f;border-bottom:1px solid #1a1a1a;overflow-x:auto;flex-shrink:0}
 #statusBar::-webkit-scrollbar{display:none}
 .statusItem{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:62px;cursor:pointer}
@@ -37,7 +36,7 @@ body{margin:0;background:#000;color:#fff;font-family:'Inter',system-ui;display:f
 .avatar{width:32px;height:32px;border-radius:50%;background:#111;color:var(--yellow);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;overflow:hidden}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .time{position:absolute;bottom:3px;right:10px;font-size:9px;opacity:.5;display:flex;gap:3px}
-.tick.read{color:#00a8ff;font-weight:900;font-size:11px}
+.tick.read{color:#00a8ff;font-weight:900}
 .menu{display:none;position:absolute;top:-36px;left:50%;transform:translateX(-50%);background:#222;border:1px solid #333;border-radius:20px;padding:3px;gap:3px;z-index:3}
 .m.show-menu .menu{display:flex}
 .menu button{background:#2a2a2a;border:0;color:#fff;padding:6px 10px;border-radius:14px;font-size:11px;font-weight:600}
@@ -56,7 +55,7 @@ button.send{border:0;border-radius:50%;width:44px;height:44px;min-width:44px;bac
 #recBar.show{display:flex}
 .recDot{width:10px;height:10px;background:#ff3b30;border-radius:50%;animation:blink 1s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);backdrop-filter:blur(10px);z-index:100;align-items:center;justify-content:center;padding:20px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);backdrop-filter:blur(10px);z-index:100;align-items:center;justify-content:center;padding:20px}
 .modal.show{display:flex}
 .box{background:#151515;border:1px solid var(--border);border-radius:20px;padding:20px;width:100%;max-width:420px;max-height:85vh;overflow:auto}
 .box h3{margin:0 0 12px;font-size:16px;font-weight:800}
@@ -72,8 +71,8 @@ button.send{border:0;border-radius:50%;width:44px;height:44px;min-width:44px;bac
 .userRow .av{width:44px;height:44px;border-radius:50%;background:#222;color:var(--yellow);display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden}
 .contactRow{display:flex;align-items:center;gap:10px;padding:12px;background:#1a1a1a;border:1px solid var(--border);border-radius:12px;margin-bottom:8px}
 .contactRow .av{width:44px;height:44px;border-radius:50%;background:#222;color:var(--yellow);display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
-.statusView{position:relative;width:100%;max-width:380px;height:70vh;background:#000;border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
-.statusViewTop{position:absolute;top:0;left:0;right:0;padding:12px;display:flex;justify-content:space-between;align-items:center;z-index:2;background:linear-gradient(to bottom,rgba(0,0,0,.8),transparent)}
+.statusView{position:relative;width:100%;max-width:380px;height:75vh;background:#000;border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
+.statusViewTop{position:absolute;top:0;left:0;right:0;padding:12px;display:flex;justify-content:space-between;align-items:center;z-index:2;background:linear-gradient(to bottom,rgba(0,0,0,.9),transparent)}
 .statusProgress{position:absolute;top:0;left:0;right:0;display:flex;gap:3px;padding:6px}
 .statusProgress div{height:3px;background:rgba(255,255,255,.3);flex:1;border-radius:2px}
 .statusProgress div.active{background:#fff}
@@ -81,10 +80,9 @@ button.send{border:0;border-radius:50%;width:44px;height:44px;min-width:44px;bac
 #videos video{width:100%;background:#0f0f0f;border-radius:14px;height:35vh;object-fit:cover}
 .footer{flex-shrink:0;background:#000;border-top:1px solid #111;padding:8px 10px calc(8px + env(safe-area-inset-bottom));text-align:center;font-size:10px;color:#555}
 .footer .secret{color:var(--yellow);font-weight:900;cursor:pointer;padding:2px 6px;border-radius:6px}
-.m img{pointer-events:auto !important}
 </style>
 </head>
-<body oncontextmenu="return false">
+<body>
 <div class="top"><div style="display:flex;align-items:center;gap:6px"><div style="width:8px;height:8px;background:#00d26a;border-radius:50%;box-shadow:0 0 8px #00d26a"></div><div class="brand">CHALE<span>CHAT</span></div></div><div class="topBtns"><button id="contactsBtn" class="iconTop contactsBtn">📇</button><button id="profileBtn" class="iconTop"><span id="topAvatarLetter">S</span></button><button id="langBtn" class="iconTop">🌍</button><button id="videoBtn" class="iconTop">📹</button><button id="usersBtn" class="iconTop">👥</button><div id="stat"><span id="onlineCount">1</span></div></div></div>
 <div id="statusBar"></div>
 <div id="privateBanner"><span>🔒 Private with <b id="privateName"></b></span><button onclick="exitPrivate()" style="background:#000;color:var(--yellow);border:0;padding:4px 10px;border-radius:12px;font-weight:800">✕ Group</button></div>
@@ -98,29 +96,60 @@ button.send{border:0;border-radius:50%;width:44px;height:44px;min-width:44px;bac
 </div>
 <div class="footer"><b>POWERED BY</b> <span class="secret" id="secretAdminBtn">SALVATION TECH - GHANA</span> 🇬🇭 • <span id="footerOnline">1 online</span></div>
 
-<div id="contactsModal" class="modal"><div class="box" style="max-width:95vw;width:95vw;max-height:90vh"><h3>📇 Contacts — Both iPhone & Android</h3>
-<div style="display:flex;gap:6px;margin-bottom:8px"><input id="contactSearch" placeholder="🔍 Search..." style="flex:1;margin-bottom:0"><button class="btn btnOk" id="pickPhoneContacts" title="Android auto pick">📱</button></div>
-<div style="display:flex;gap:6px;margin-bottom:8px">
-<button class="btn btnOk" id="importFileBtn" style="flex:1">📁 Import .vcf/.csv</button>
-<button class="btn btnCancel" id="addContactBtn" style="flex:1">➕ Add</button>
-</div>
-<input type="file" id="contactsFileInput" hidden accept=".vcf,.csv,.txt,text/vcard,text/csv">
-<div style="background:#111;padding:8px;border-radius:8px;margin-bottom:10px;font-size:10px;color:#888">📁 = Works on BOTH iPhone & Android — Export contacts as .vcf file then import<br>📱 = Works only Android Chrome — auto pick</div>
-<div style="display:flex;gap:6px;margin-bottom:12px"><button class="btn btnOk" id="inviteAllBtn" style="flex:1">📤 Invite All via WhatsApp</button><button class="btn btnDel" id="clearContactsBtn" style="flex:0">🗑️</button></div>
+<!-- CONTACTS -->
+<div id="contactsModal" class="modal"><div class="box" style="max-width:95vw;width:95vw;max-height:90vh"><h3>📇 Contacts</h3>
+<div style="display:flex;gap:6px;margin-bottom:8px"><input id="contactSearch" placeholder="🔍 Search..." style="flex:1;margin-bottom:0"><button class="btn btnOk" id="pickPhoneContacts">📱</button></div>
+<div style="display:flex;gap:6px;margin-bottom:8px"><button class="btn btnOk" id="importFileBtn" style="flex:1">📁 Import .vcf/.csv</button><button class="btn btnCancel" id="addContactBtn" style="flex:1">➕ Add</button></div>
+<input type="file" id="contactsFileInput" hidden accept=".vcf,.csv,.txt">
 <div id="contactsList" style="max-height:45vh;overflow:auto;display:flex;flex-direction:column;gap:8px"></div>
 <div class="btnRow" style="margin-top:12px"><button class="btn btnCancel" id="closeContacts">Close</button></div>
 </div></div>
 <div id="addContactModal" class="modal"><div class="box"><h3>➕ Add Contact</h3><input id="newContactName" placeholder="Name"><input id="newContactPhone" placeholder="Phone" type="tel"><div class="btnRow"><button class="btn btnCancel" id="cancelAddContact">Cancel</button><button class="btn btnOk" id="saveContact">Save</button></div></div></div>
 
+<!-- STATUS CREATE WITH VIDEO -->
+<div id="statusCreateModal" class="modal"><div class="box" style="max-width:95vw;width:95vw"><h3>📸 Add Status</h3>
+<div style="display:flex;gap:6px;margin-bottom:12px">
+<button class="btn btnOk" id="statusTextBtn" style="flex:1">📝 Text</button>
+<button class="btn btnCancel" id="statusImageBtn" style="flex:1">🖼️ Photo</button>
+<button class="btn btnCancel" id="statusVideoBtn" style="flex:1">🎬 Video</button>
+</div>
+<!-- TEXT -->
+<div id="statusTextArea">
+<textarea id="statusTextInput" placeholder="What dey happen? 24hrs..." rows="4"></textarea>
+<div style="display:flex;gap:8px;margin-top:8px"><div style="width:36px;height:36px;border-radius:50%;background:#FCD116;border:2px solid #fff;cursor:pointer" onclick="setStatusBg('#FCD116','#000')"></div><div style="width:36px;height:36px;border-radius:50%;background:#CE1126;border:2px solid #fff;cursor:pointer" onclick="setStatusBg('#CE1126','#fff')"></div><div style="width:36px;height:36px;border-radius:50%;background:#00d26a;border:2px solid #fff;cursor:pointer" onclick="setStatusBg('#00d26a','#000')"></div><div style="width:36px;height:36px;border-radius:50%;background:#000;border:2px solid #fff;cursor:pointer" onclick="setStatusBg('#000','#fff')"></div></div>
+</div>
+<!-- IMAGE -->
+<div id="statusImageArea" style="display:none">
+<input type="file" id="statusImageInput" accept="image/*" style="background:#1e1e1e;color:#fff;padding:10px;border-radius:12px;width:100%;border:1px solid #333">
+<div id="statusImagePreview" style="margin-top:12px;display:none;border:2px solid #FCD116;border-radius:12px;overflow:hidden;background:#000">
+<img id="statusPreviewImg" style="width:100%;max-height:320px;object-fit:contain">
+<div style="padding:6px;text-align:center;font-size:11px;color:#00d26a;background:#111">✅ Photo Preview — You fit watch!</div>
+</div>
+<input id="statusCaption" placeholder="Caption... ✍️" style="margin-top:10px">
+</div>
+<!-- VIDEO - NEW -->
+<div id="statusVideoArea" style="display:none">
+<input type="file" id="statusVideoInput" accept="video/*" style="background:#1e1e1e;color:#fff;padding:10px;border-radius:12px;width:100%;border:1px solid #333">
+<div id="statusVideoPreview" style="margin-top:12px;display:none;border:2px solid #FCD116;border-radius:12px;overflow:hidden;background:#000">
+<video id="statusPreviewVideo" controls playsinline style="width:100%;max-height:320px;background:#000"></video>
+<div style="padding:6px;text-align:center;font-size:11px;color:#00d26a;background:#111">✅ Video Preview — Watch before post! Max 15MB</div>
+</div>
+<input id="statusVideoCaption" placeholder="Video caption... 🎬" style="margin-top:10px">
+</div>
+<div class="btnRow" style="margin-top:16px"><button class="btn btnCancel" id="cancelStatus">Cancel</button><button class="btn btnOk" id="postStatus">✓ Post</button></div>
+</div></div>
+
+<!-- STATUS VIEW -->
+<div id="statusViewModal" class="modal"><div class="statusView"><div class="statusProgress" id="statusProgress"></div><div class="statusViewTop"><div style="display:flex;align-items:center;gap:10px"><div class="av" id="viewStatusAv" style="width:36px;height:36px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden"></div><div><div id="viewStatusName" style="font-weight:700;font-size:13px"></div><div id="viewStatusTime" style="font-size:10px;color:#aaa"></div></div></div><button onclick="document.getElementById('statusViewModal').classList.remove('show')" style="background:rgba(0,0,0,.5);border:0;color:#fff;width:32px;height:32px;border-radius:50%">✕</button></div><div id="viewStatusContent" style="flex:1;display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto"></div><div style="padding:12px;background:rgba(0,0,0,.7);display:flex;gap:8px"><input id="statusReplyInput" placeholder="Reply..." style="flex:1;background:#222;border:1px solid #333;border-radius:20px;padding:10px 14px;color:#fff;outline:none"><button id="sendStatusReply" style="background:var(--yellow);border:0;width:40px;height:40px;border-radius:50%">➤</button></div></div></div>
+
+<!-- OTHER MODALS -->
 <div id="nameModal" class="modal"><div class="box"><h3>👤 Setup</h3><div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:16px"><div class="picCircle" id="picCircle" onclick="document.getElementById('avatarInput').click()"><span id="picLetter">S</span></div><input type="file" id="avatarInput" hidden accept="image/*"></div><input id="nameInput" placeholder="Your name"><div class="btnRow"><button class="btn btnCancel" id="cancelName">Cancel</button><button class="btn btnOk" id="okName">Save & Join</button></div></div></div>
 <div id="profileModal" class="modal"><div class="box"><h3>👤 My Profile</h3><div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:16px"><div class="picCircle" id="profilePicCircle" onclick="document.getElementById('avatarInput2').click()"><span id="profilePicLetter">S</span></div><input type="file" id="avatarInput2" hidden accept="image/*"></div><input id="profileNameInput" placeholder="Your name"><div class="btnRow"><button class="btn btnCancel" id="closeProfile">Close</button><button class="btn btnOk" id="saveProfile">Save</button></div></div></div>
-<div id="statusCreateModal" class="modal"><div class="box"><h3>📸 Add Status</h3><div style="display:flex;gap:8px;margin-bottom:12px"><button class="btn btnOk" id="statusTextBtn" style="flex:1">📝 Text</button><button class="btn btnCancel" id="statusImageBtn" style="flex:1">🖼️ Photo</button></div><div id="statusTextArea"><textarea id="statusTextInput" placeholder="What dey happen? 24hrs..." rows="4"></textarea><div style="display:flex;gap:8px;margin-top:8px"><div style="width:36px;height:36px;border-radius:50%;background:#FCD116;border:2px solid #fff;cursor:pointer" onclick="setStatusBg('#FCD116','#000')"></div><div style="width:36px;height:36px;border-radius:50%;background:#CE1126;border:2px solid #fff;cursor:pointer" onclick="setStatusBg('#CE1126','#fff')"></div><div style="width:36px;height:36px;border-radius:50%;background:#00d26a;border:2px solid #fff;cursor:pointer" onclick="setStatusBg('#00d26a','#000')"></div><div style="width:36px;height:36px;border-radius:50%;background:#000;border:2px solid #fff;cursor:pointer" onclick="setStatusBg('#000','#fff')"></div></div></div><div id="statusImageArea" style="display:none"><input type="file" id="statusImageInput" accept="image/*"><div id="statusImagePreview" style="margin-top:10px;display:none"><img id="statusPreviewImg" style="width:100%;border-radius:12px;max-height:250px;object-fit:cover"></div><input id="statusCaption" placeholder="Caption..." style="margin-top:10px"></div><div class="btnRow" style="margin-top:16px"><button class="btn btnCancel" id="cancelStatus">Cancel</button><button class="btn btnOk" id="postStatus">✓ Post</button></div></div></div>
-<div id="statusViewModal" class="modal"><div class="statusView"><div class="statusProgress" id="statusProgress"></div><div class="statusViewTop"><div style="display:flex;align-items:center;gap:10px"><div class="av" id="viewStatusAv" style="width:36px;height:36px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden"></div><div><div id="viewStatusName" style="font-weight:700;font-size:13px"></div><div id="viewStatusTime" style="font-size:10px;color:#aaa"></div></div></div><button onclick="document.getElementById('statusViewModal').classList.remove('show')" style="background:rgba(0,0,0,.5);border:0;color:#fff;width:32px;height:32px;border-radius:50%">✕</button></div><div id="viewStatusContent" style="flex:1;display:flex;align-items:center;justify-content:center;padding:20px"></div><div style="padding:12px;background:rgba(0,0,0,.6);display:flex;gap:8px"><input id="statusReplyInput" placeholder="Reply..." style="flex:1;background:#222;border:1px solid #333;border-radius:20px;padding:10px 14px;color:#fff;outline:none"><button id="sendStatusReply" style="background:var(--yellow);border:0;width:40px;height:40px;border-radius:50%">➤</button></div></div></div>
 <div id="langModal" class="modal"><div class="box"><h3>🌍 Language</h3><select id="langSelect"><option value="en">🇬🇧 English</option><option value="pidgin">🇬🇭 Pidgin</option><option value="twi">🇬🇭 Twi</option></select><div class="btnRow"><button class="btn btnCancel" id="cancelLang">Cancel</button><button class="btn btnOk" id="okLang">Save</button></div></div></div>
 <div id="onlineModal" class="modal"><div class="box"><h3>👥 Online — <span id="onlineNum">0</span></h3><div id="onlineList"></div><div class="btnRow" style="margin-top:12px"><button class="btn btnCancel" id="showGroup">👥 Group</button><button class="btn btnOk" id="closeOnline">Close</button></div></div></div>
 <div id="delModal" class="modal"><div class="box"><h3>Delete?</h3><div class="btnRow"><button class="btn btnCancel" id="cancelDel">Cancel</button><button class="btn btnDel" id="okDel">Delete</button></div></div></div>
 <div id="adminLoginModal" class="modal"><div class="box"><h3>🔑 Secret Admin</h3><input id="adminPass" type="password" placeholder="SALVATION2026"><div class="btnRow"><button class="btn btnCancel" id="cancelAdminLogin">Cancel</button><button class="btn btnOk" id="okAdminLogin">Unlock</button></div></div></div>
-<div id="adminPanelModal" class="modal"><div class="box" style="max-width:95vw;width:95vw;max-height:90vh"><h3>🛡️ ADMIN</h3><div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap"><button class="btn btnOk" id="adminRefresh">🔄</button><button class="btn btnCancel" id="adminClearFlagged">🗑️ Flagged</button><button class="btn btnDel" id="adminClearReports">🧹 Reports</button><button class="btn btnDel" id="adminUnbanAll">✅ Unban</button><span style="margin-left:auto;font-size:11px">R: <span id="adminReports">0</span> | B: <span id="banCount">0</span></span></div><div style="display:flex;gap:8px;margin-bottom:12px"><input id="adminSearch" placeholder="Search..." style="flex:1;margin-bottom:0"><select id="adminFilter" style="width:120px;margin-bottom:0"><option value="all">All</option><option value="flagged">🚩</option><option value="reports">⚠️</option><option value="banned">🚫</option></select></div><div style="background:#1a1a1a;padding:10px;border-radius:10px;margin-bottom:12px"><div id="reportsLeaderboard" style="font-size:11px"></div></div><div id="adminMessages" style="max-height:30vh;overflow:auto;display:flex;flex-direction:column;gap:8px"></div><div style="margin-top:12px;background:#1a1a1a;padding:12px;border-radius:12px"><textarea id="badWordsList" rows="2" style="font-size:11px"></textarea><div style="display:flex;gap:8px;margin-top:8px"><label style="font-size:11px">Ban <input id="banThreshold" type="number" value="3" style="width:40px;display:inline"> reports</label><button class="btn btnOk" id="saveBadWords">Save</button></div></div><div class="btnRow" style="margin-top:12px"><button class="btn btnCancel" id="closeAdminPanel">Close</button></div></div></div>
+<div id="adminPanelModal" class="modal"><div class="box" style="max-width:95vw;width:95vw;max-height:90vh"><h3>🛡️ ADMIN</h3><div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap"><button class="btn btnOk" id="adminRefresh">🔄</button><button class="btn btnCancel" id="adminClearFlagged">🗑️ Flagged</button><button class="btn btnDel" id="adminClearReports">🧹 Reports</button><button class="btn btnDel" id="adminUnbanAll">✅ Unban</button><span style="margin-left:auto;font-size:11px">R: <span id="adminReports">0</span> | B: <span id="banCount">0</span></span></div><div style="display:flex;gap:8px;margin-bottom:12px"><input id="adminSearch" placeholder="Search..." style="flex:1;margin-bottom:0"><select id="adminFilter" style="width:120px;margin-bottom:0"><option value="all">All</option><option value="flagged">🚩</option><option value="reports">⚠️</option><option value="banned">🚫</option></select></div><div style="background:#1a1a1a;padding:10px;border-radius:10px;margin-bottom:12px"><div id="reportsLeaderboard" style="font-size:11px"></div></div><div id="adminMessages" style="max-height:30vh;overflow:auto;display:flex;flex-direction:column;gap:8px"></div><div class="btnRow" style="margin-top:12px"><button class="btn btnCancel" id="closeAdminPanel">Close</button></div></div></div>
 <div id="callModal" class="modal"><div class="box"><h3>Video Call</h3><input id="callInput" value="all"><div class="btnRow"><button class="btn btnCancel" id="cancelCall">Cancel</button><button class="btn btnOk" id="okCall">Call</button></div></div></div>
 <div id="incomingModal" class="modal"><div class="box"><h3 id="incomingText">📹 Incoming...</h3><div class="btnRow"><button class="btn btnCancel" id="declineCall">Decline</button><button class="btn btnOk" id="acceptCall">Accept</button></div></div></div>
 <div id="videoModal" class="modal"><div class="box" style="max-width:95vw"><h3>📹 Live</h3><div id="videos"><video id="localV" autoplay muted playsinline></video><video id="remoteV" autoplay playsinline></video></div><div class="btnRow"><button class="btn btnDel" id="endCall">End</button><button class="btn btnCancel" id="closeVideo">Close</button></div></div></div>
@@ -137,217 +166,112 @@ let onlineUsers={}, privateChatWith=null, statuses=[], seenStatus=JSON.parse(loc
 let bannedUsers=JSON.parse(localStorage.getItem('banned_users')||'[]');
 let reportsData=JSON.parse(localStorage.getItem('reports_data')||'{}');
 let contacts=JSON.parse(localStorage.getItem('chale_contacts')||'[]');
-let badWords = (localStorage.getItem('bad_words')||'scam,fraud,sakawa,insult,abuse,porn,xxx,fuck,shit').split(',').map(s=>s.trim().toLowerCase());
+let badWords = (localStorage.getItem('bad_words')||'scam,fraud,sakawa,insult,abuse,porn,xxx').split(',').map(s=>s.trim().toLowerCase());
 let banThreshold = parseInt(localStorage.getItem('ban_threshold')||'3');
 let currentStatusUser=null;
-function compress(dataUrl, cb, max=120, q=0.6){ const img=new Image(); img.onload=()=>{ const c=document.createElement('canvas'); let w=img.width,h=img.height; if(w>max||h>max){ if(w>h){ h*=max/w; w=max; } else { w*=max/h; h=max; } } c.width=w; c.height=h; c.getContext('2d').drawImage(img,0,0,w,h); cb(c.toDataURL('image/jpeg',q)); }; img.src=dataUrl; }
+function compress(dataUrl, cb, max=400, q=0.7){ const img=new Image(); img.onload=()=>{ const c=document.createElement('canvas'); let w=img.width,h=img.height; if(w>max||h>max){ if(w>h){ h*=max/w; w=max; } else { w*=max/h; h=max; } } c.width=w; c.height=h; c.getContext('2d').drawImage(img,0,0,w,h); cb(c.toDataURL('image/jpeg',q)); }; img.src=dataUrl; }
 function updateAvatarUI(){ const l=(myName||'S')[0].toUpperCase(); document.getElementById('picLetter').textContent=l; document.getElementById('profilePicLetter').textContent=l; document.getElementById('topAvatarLetter').textContent=l; if(myAvatar){ document.getElementById('picCircle').innerHTML=`<img src="${myAvatar}">`; document.getElementById('profilePicCircle').innerHTML=`<img src="${myAvatar}">`; document.getElementById('topAvatarLetter').innerHTML=`<img src="${myAvatar}">`; } }
-function isBadContent(text){ const t=(text||'').toLowerCase(); return badWords.some(w=> w && t.includes(w)); }
+function isBadContent(t){ return badWords.some(w=> w && (t||'').toLowerCase().includes(w)); }
 window.setStatusBg=(bg,color)=>{ const ta=document.getElementById('statusTextInput'); ta.style.background=bg; ta.style.color=color; ta.dataset.bg=bg; ta.dataset.color=color; }
 const chatEl=document.getElementById('chat'), typingEl=document.getElementById('typing'), inputEl=document.getElementById('i');
 const recBar=document.getElementById('recBar'), recTime=document.getElementById('recTime');
 function fmt(d){try{return new Date(d).toLocaleTimeString('en-GH',{hour:'numeric',minute:'2-digit'})}catch{return''}}
-function getTick(msgTime, isMe){ if(!isMe) return ''; const mt=new Date(msgTime).getTime(); let delivered=false, read=false; Object.keys(readReceipts).forEach(uid=>{ if(uid!==userId && readReceipts[uid]>=mt){ delivered=true; read=true; }}); if(Object.keys(onlineUsers).length>1) delivered=true; if(read) return `<span class="tick read">✓✓</span>`; if(delivered) return `<span class="tick delivered">✓✓</span>`; return `<span class="tick sent">✓</span>`; }
+function getTick(mt, isMe){ if(!isMe) return ''; return `<span class="tick read">✓✓</span>`; }
 function checkAutoBan(rid){ const r=reportsData[rid]; if(!r) return false; if(r.count>=banThreshold){ if(!bannedUsers.includes(rid)){ bannedUsers.push(rid); localStorage.setItem('banned_users',JSON.stringify(bannedUsers)); sb.from('messages').insert({username:'SYSTEM',content:`[AUTO-BAN] ${r.names[rid]||rid} banned`,user_id:'system'}); return true; } } return false; }
 function saveContacts(){ localStorage.setItem('chale_contacts',JSON.stringify(contacts)); }
 function renderContacts(){
- const list=document.getElementById('contactsList');
- const q=(document.getElementById('contactSearch').value||'').toLowerCase();
- list.innerHTML='';
- const filtered=contacts.filter(c=> c.name.toLowerCase().includes(q) || c.phone.includes(q));
- if(filtered.length===0){ list.innerHTML=`<div style="text-align:center;color:#666;padding:20px">No contacts<br><span style="font-size:11px">Use 📁 Import .vcf (works iPhone & Android)<br>or 📱 Auto-pick (Android Chrome only)</span></div>`; return; }
+ const list=document.getElementById('contactsList'); const q=(document.getElementById('contactSearch').value||'').toLowerCase();
+ list.innerHTML=''; const filtered=contacts.filter(c=> c.name.toLowerCase().includes(q) || c.phone.includes(q));
+ if(filtered.length===0){ list.innerHTML=`<div style="text-align:center;color:#666;padding:20px">No contacts<br>Use 📁 Import .vcf (iPhone & Android)</div>`; return; }
  filtered.forEach((c)=>{
   const onlineMatch=Object.values(onlineUsers).find(u=> u.name.toLowerCase()===c.name.toLowerCase());
   const row=document.createElement('div'); row.className='contactRow';
-  row.innerHTML=`<div class="av">${c.name[0].toUpperCase()}</div><div style="flex:1"><div style="font-weight:700;font-size:14px">${c.name} ${onlineMatch?'🟢':''}</div><div style="font-size:11px;color:${onlineMatch?'#00d26a':'#888'}">${onlineMatch?'Online':'📱 '+c.phone}</div></div><div style="display:flex;flex-direction:column;gap:4px"><${onlineMatch?'button':'a'} ${onlineMatch?`onclick="startChatFromContact('${c.phone}')"`:`href="https://wa.me/${c.phone.replace(/[^0-9+]/g,'').replace(/^0/,'233')}?text=${encodeURIComponent('Join ChaleChat 🇬🇭 https://41-lgtm.github.io/?v25=1')}"`} target="${onlineMatch?'':'_blank'}" style="background:${onlineMatch?'#00d26a':'#25D366'};border:0;color:#000;padding:6px 10px;border-radius:8px;font-size:11px;font-weight:700;text-decoration:none;text-align:center">${onlineMatch?'💬 Chat':'📤 Invite'}</${onlineMatch?'button':'a'}><button onclick="deleteContact('${c.phone}')" style="background:#1e1e1e;border:1px solid #333;color:#fff;padding:4px 8px;border-radius:6px;font-size:10px">🗑️</button></div>`;
+  row.innerHTML=`<div class="av">${c.name[0].toUpperCase()}</div><div style="flex:1"><div style="font-weight:700;font-size:14px">${c.name} ${onlineMatch?'🟢':''}</div><div style="font-size:11px;color:${onlineMatch?'#00d26a':'#888'}">${onlineMatch?'Online':'📱 '+c.phone}</div></div><div style="display:flex;flex-direction:column;gap:4px"><${onlineMatch?'button':'a'} ${onlineMatch?`onclick="startChatFromContact('${c.phone}')"`:`href="https://wa.me/${c.phone.replace(/[^0-9+]/g,'').replace(/^0/,'233')}?text=${encodeURIComponent('Join ChaleChat 🇬🇭 https://41-lgtm.github.io/?v26=1')}"`} target="_blank" style="background:${onlineMatch?'#00d26a':'#25D366'};border:0;color:#000;padding:6px 10px;border-radius:8px;font-size:11px;font-weight:700;text-decoration:none;text-align:center">${onlineMatch?'💬 Chat':'📤 Invite'}</${onlineMatch?'button':'a'}><button onclick="deleteContact('${c.phone}')" style="background:#1e1e1e;border:1px solid #333;color:#fff;padding:4px 8px;border-radius:6px;font-size:10px">🗑️</button></div>`;
   list.appendChild(row);
  });
 }
-window.startChatFromContact=(phone)=>{
- const c=contacts.find(x=>x.phone===phone); if(!c) return;
- const onlineMatch=Object.values(onlineUsers).find(u=> u.name.toLowerCase()===c.name.toLowerCase());
- if(onlineMatch){ startPrivateChat(onlineMatch.userId, onlineMatch.name); document.getElementById('contactsModal').classList.remove('show'); }
- else { alert(c.name+' no dey online'); }
-}
+window.startChatFromContact=(phone)=>{ const c=contacts.find(x=>x.phone===phone); const onlineMatch=Object.values(onlineUsers).find(u=> u.name.toLowerCase()===c.name.toLowerCase()); if(onlineMatch){ startPrivateChat(onlineMatch.userId, onlineMatch.name); document.getElementById('contactsModal').classList.remove('show'); } }
 window.deleteContact=(phone)=>{ if(confirm('Delete?')){ contacts=contacts.filter(c=>c.phone!==phone); saveContacts(); renderContacts(); } }
-
-// VCF + CSV PARSER - WORKS BOTH iPHONE & ANDROID
-function parseVCF(text){
- let added=0;
- const cards=text.split('BEGIN:VCARD');
- cards.forEach(card=>{
-  if(!card.trim()) return;
-  let name='', phone='';
-  const lines=card.split(/\r\n|\n|\r/);
-  lines.forEach(l=>{
-   if(l.startsWith('FN:')) name=l.replace('FN:','').trim();
-   if(l.startsWith('N:') && !name){ const parts=l.replace('N:','').split(';'); name=(parts[1]||'')+' '+(parts[0]||''); name=name.trim(); }
-   if(l.startsWith('TEL') && !phone){ const m=l.match(/TEL[^:]*:(.+)/); if(m) phone=m[1].trim(); }
-  });
-  if(name && phone){
-   phone=phone.replace(/[^0-9+]/g,'');
-   if(!contacts.find(c=>c.phone===phone)){ contacts.push({name:name||phone, phone, added:Date.now()}); added++; }
-  }
- });
- return added;
-}
-function parseCSV(text){
- let added=0;
- const lines=text.split(/\r\n|\n/);
- // detect header
- let nameIdx=-1, phoneIdx=-1;
- lines.forEach((line,i)=>{
-  const cols=line.split(/[,;]\s*/).map(s=>s.replace(/"/g,'').trim());
-  if(i===0){
-   cols.forEach((c,ci)=>{ const lc=c.toLowerCase(); if(lc.includes('name')||lc.includes('first')) nameIdx=ci; if(lc.includes('phone')||lc.includes('mobile')||lc.includes('tel')) phoneIdx=ci; });
-   if(nameIdx===-1) nameIdx=0; if(phoneIdx===-1) phoneIdx=1;
-   return;
-  }
-  if(cols.length>=2){
-   const name=cols[nameIdx]||''; const phone=(cols[phoneIdx]||'').replace(/[^0-9+]/g,'');
-   if(name && phone && phone.length>=7){
-    if(!contacts.find(c=>c.phone===phone)){ contacts.push({name, phone, added:Date.now()}); added++; }
-   }
-  }
- });
- return added;
-}
-
+function parseVCF(text){ let added=0; const cards=text.split('BEGIN:VCARD'); cards.forEach(card=>{ if(!card.trim()) return; let name='', phone=''; const lines=card.split(/\r\n|\n|\r/); lines.forEach(l=>{ if(l.startsWith('FN:')) name=l.replace('FN:','').trim(); if(l.startsWith('TEL') && !phone){ const m=l.match(/TEL[^:]*:(.+)/); if(m) phone=m[1].trim(); } }); if(name && phone){ phone=phone.replace(/[^0-9+]/g,''); if(!contacts.find(c=>c.phone===phone)){ contacts.push({name:name||phone, phone, added:Date.now()}); added++; } } }); return added; }
+function parseCSV(text){ let added=0; const lines=text.split(/\r\n|\n/); let nameIdx=0, phoneIdx=1; lines.forEach((line,i)=>{ const cols=line.split(/[,;]\s*/).map(s=>s.replace(/"/g,'').trim()); if(i===0) return; if(cols.length>=2){ const name=cols[nameIdx]||''; const phone=(cols[phoneIdx]||'').replace(/[^0-9+]/g,''); if(name && phone && phone.length>=7){ if(!contacts.find(c=>c.phone===phone)){ contacts.push({name, phone, added:Date.now()}); added++; } } } }); return added; }
 let tapCount=0, lastTap=0;
-document.getElementById('secretAdminBtn').addEventListener('click',()=>{
- const now=Date.now(); if(now-lastTap>2000){ tapCount=0; }
- tapCount++; lastTap=now;
- if(tapCount>=5){ tapCount=0; if(navigator.vibrate) navigator.vibrate([100,50,100]); document.getElementById('adminLoginModal').classList.add('show'); }
-});
-
+document.getElementById('secretAdminBtn').addEventListener('click',()=>{ const now=Date.now(); if(now-lastTap>2000){ tapCount=0; } tapCount++; lastTap=now; if(tapCount>=5){ tapCount=0; document.getElementById('adminLoginModal').classList.add('show'); } });
 async function loadMessages(){
- if(bannedUsers.includes(userId)){ chatEl.innerHTML=`<div style="margin:auto;text-align:center;padding:40px"><h2>🚫 Banned</h2></div>`; return; }
  const {data}=await sb.from('messages').select('*').order('created_at',{ascending:true}).limit(500);
  chatEl.innerHTML=''; let visible=0;
  data.forEach(m=>{
-  if(m.content.startsWith('[STATUS:')) return;
-  if(m.content.startsWith('[REPORT]') || m.content.startsWith('[AUTO-BAN]')) return;
-  if(bannedUsers.includes(m.user_id)) return;
-  const dm = m.content.match(/^\[DM:(.*?)\|(.*?)\]/);
-  let isForMe=false;
-  if(dm){ const toId=dm[1], fromId=dm[2]; if(privateChatWith){ isForMe = (toId===privateChatWith.userId && fromId===userId) || (fromId===privateChatWith.userId && toId===userId); } else { isForMe=false; } } else { isForMe = !privateChatWith; }
-  if(!isForMe) return; visible++;
-  const isMe=m.user_id? m.user_id===userId : m.username.trim().toLowerCase()===myName.trim().toLowerCase();
-  const userInfo = Object.values(onlineUsers).find(u=>u.name===m.username) || {};
-  const avatar = userInfo.avatar || (isMe? myAvatar : '');
-  const div=document.createElement('div'); div.className='m '+(isMe?'me':'other');
-  let replyHtml='', content=m.content||'', extra='';
-  const rMatch=content.match(/^\[REPLY:(.*?)\|(.*?)\]\n(.*)$/s);
-  if(rMatch){ replyHtml=`<div style="font-size:11px;background:rgba(0,0,0,.12);border-left:3px solid #CE1126;padding:4px 8px;border-radius:8px;margin-bottom:6px"><b>${rMatch[1]}</b> ${rMatch[2]}</div>`; content=rMatch[3]; }
-  content=content.replace(/^\[DM:.*?\|.*?\]\n?/,'');
-  if(content.startsWith('[AUDIO:')){ const src=content.match(/^\[AUDIO:(.*?)\]/)?.[1]; extra=`<div style="background:#fff;border-radius:20px;padding:4px 8px;margin-top:4px"><audio controls src="${src}" style="width:180px;height:30px"></audio></div>`; content=''; }
-  else if(content.startsWith('[IMG:')){ const src=content.match(/^\[IMG:(.*?)\]/)?.[1]; extra=`<img style="max-width:160px;border-radius:12px;margin-top:4px" src="${src}">`; content=''; }
-  const privLabel = dm ? `<span style="font-size:8px;background:#00d26a;color:#000;padding:2px 6px;border-radius:8px">🔒</span>` : '';
-  div.innerHTML=`<div class="avatar">${avatar?`<img src="${avatar}">`: (m.username[0]||'?').toUpperCase()}</div><div style="flex:1;min-width:0"><b style="font-size:11px;opacity:.6">${m.username} ${privLabel}</b>${replyHtml}<div style="font-size:14px;word-break:break-word">${content}</div>${extra}<span class="time">${fmt(m.created_at)} ${getTick(m.created_at,isMe)}</span></div><div class="menu"><button onclick="event.stopPropagation();doReply('${m.username.replace(/'/g,"\\'")}','${content.replace(/'/g,"\\'").substring(0,60)}')">Reply</button><button onclick="event.stopPropagation();reportUser('${m.user_id}','${m.username.replace(/'/g,"\\'")}')">🚩 Report</button></div>`;
+  if(m.content.startsWith('[STATUS:')) return; if(m.content.startsWith('[REPORT]')||m.content.startsWith('[AUTO-BAN]')) return; if(bannedUsers.includes(m.user_id)) return;
+  const dm=m.content.match(/^\[DM:(.*?)\|(.*?)\]/); let isForMe=false; if(dm){ const toId=dm[1], fromId=dm[2]; if(privateChatWith){ isForMe=(toId===privateChatWith.userId && fromId===userId)||(fromId===privateChatWith.userId && toId===userId); } } else { isForMe=!privateChatWith; } if(!isForMe) return; visible++;
+  const isMe=m.user_id?m.user_id===userId:m.username.trim().toLowerCase()===myName.trim().toLowerCase();
+  const userInfo=Object.values(onlineUsers).find(u=>u.name===m.username)||{}; const avatar=userInfo.avatar||(isMe?myAvatar:'');
+  const div=document.createElement('div'); div.className='m '+(isMe?'me':'other'); let replyHtml='', content=m.content||'', extra='';
+  const rMatch=content.match(/^\[REPLY:(.*?)\|(.*?)\]\n(.*)$/s); if(rMatch){ replyHtml=`<div style="font-size:11px;background:rgba(0,0,0,.12);border-left:3px solid #CE1126;padding:4px 8px;border-radius:8px;margin-bottom:6px"><b>${rMatch[1]}</b> ${rMatch[2]}</div>`; content=rMatch[3]; }
+  content=content.replace(/^\[DM:.*?\|.*?\]\n?/,''); if(content.startsWith('[AUDIO:')){ const src=content.match(/^\[AUDIO:(.*?)\]/)?.[1]; extra=`<audio controls src="${src}" style="width:180px"></audio>`; content=''; } else if(content.startsWith('[IMG:')){ const src=content.match(/^\[IMG:(.*?)\]/)?.[1]; extra=`<img style="max-width:160px;border-radius:12px" src="${src}">`; content=''; }
+  div.innerHTML=`<div class="avatar">${avatar?`<img src="${avatar}">`: (m.username[0]||'?').toUpperCase()}</div><div style="flex:1;min-width:0"><b style="font-size:11px;opacity:.6">${m.username}</b>${replyHtml}<div style="font-size:14px;word-break:break-word">${content}</div>${extra}<span class="time">${fmt(m.created_at)}</span></div><div class="menu"><button onclick="event.stopPropagation();doReply('${m.username.replace(/'/g,"\\'")}','${content.replace(/'/g,"\\'").substring(0,60)}')">Reply</button><button onclick="event.stopPropagation();reportUser('${m.user_id}','${m.username.replace(/'/g,"\\'")}')">🚩 Report</button></div>`;
   div.onclick=()=>{ document.querySelectorAll('.m.show-menu').forEach(b=>{ if(b!==div) b.classList.remove('show-menu') }); div.classList.toggle('show-menu'); };
   chatEl.appendChild(div);
  });
- if(visible===0){ const e=document.createElement('div'); e.style.cssText='margin:auto;text-align:center;color:#666;padding:30px;font-size:13px'; e.innerHTML=privateChatWith?`🔒 No private with <b>${privateChatWith.name}</b>`:`👋 No messages`; chatEl.appendChild(e); }
+ if(visible===0){ const e=document.createElement('div'); e.style.cssText='margin:auto;text-align:center;color:#666;padding:30px'; e.innerHTML=privateChatWith?`🔒 No private with <b>${privateChatWith.name}</b>`:`👋 No messages`; chatEl.appendChild(e); }
  chatEl.scrollTop=chatEl.scrollHeight;
 }
-window.reportUser=async(uid, name)=>{
- if(uid===userId) return;
- if(!reportsData[uid]) reportsData[uid]={count:0, reporters:[], names:{}};
- if(reportsData[uid].reporters.includes(userId)){ alert(`Already reported ${name}`); return; }
- if(confirm(`🚩 Report ${name}?`)){
-  reportsData[uid].count++; reportsData[uid].reporters.push(userId); reportsData[uid].names[uid]=name; localStorage.setItem('reports_data',JSON.stringify(reportsData));
-  await sb.from('messages').insert({username:'SYSTEM_REPORT',content:`[REPORT] ${myName} reported ${name}`,user_id:'system'});
-  if(checkAutoBan(uid)){ alert(`🚫 ${name} banned!`); } loadMessages();
- }
-}
+window.reportUser=async(uid,name)=>{ if(uid===userId) return; if(!reportsData[uid]) reportsData[uid]={count:0, reporters:[], names:{}}; if(reportsData[uid].reporters.includes(userId)){ alert(`Already reported ${name}`); return; } if(confirm(`🚩 Report ${name}?`)){ reportsData[uid].count++; reportsData[uid].reporters.push(userId); reportsData[uid].names[uid]=name; localStorage.setItem('reports_data',JSON.stringify(reportsData)); await sb.from('messages').insert({username:'SYSTEM_REPORT',content:`[REPORT] ${myName} reported ${name}`,user_id:'system'}); if(checkAutoBan(uid)) alert(`🚫 ${name} banned!`); loadMessages(); } }
 async function loadStatuses(){
  const {data}=await sb.from('messages').select('*').order('created_at',{ascending:false}).limit(200);
  const now=Date.now();
- statuses = (data||[]).filter(m=>m.content.startsWith('[STATUS:')).filter(m=>{ const t=new Date(m.created_at).getTime(); return (now - t) < 24*60*60*1000; }).map(m=>{ try{ const j=m.content.replace('[STATUS:','').slice(0,-1); const o=JSON.parse(j); return {id:m.id, username:m.username, user_id:m.user_id, created_at:m.created_at, ...o}; }catch{return null;} }).filter(Boolean);
+ statuses=(data||[]).filter(m=>m.content.startsWith('[STATUS:')).filter(m=>{ const t=new Date(m.created_at).getTime(); return (now-t)<24*60*60*1000; }).map(m=>{ try{ const j=m.content.replace('[STATUS:','').slice(0,-1); const o=JSON.parse(j); return {id:m.id, username:m.username, user_id:m.user_id, created_at:m.created_at, ...o}; }catch{return null;} }).filter(Boolean);
  renderStatusBar();
 }
 function renderStatusBar(){
- const bar=document.getElementById('statusBar'); const grouped={};
- statuses.forEach(s=>{ if(!grouped[s.user_id]) grouped[s.user_id]=[]; grouped[s.user_id].push(s); });
- bar.innerHTML='';
- const addItem=document.createElement('div'); addItem.className='statusItem'; addItem.onclick=()=>document.getElementById('statusCreateModal').classList.add('show');
- addItem.innerHTML=`<div class="statusRing addRing"><div class="statusAv">${myAvatar?`<img src="${myAvatar}">`: (myName[0]||'+').toUpperCase()}<div class="plusBadge">+</div></div></div><div class="statusName">Add Status</div>`;
- bar.appendChild(addItem);
- const myGroup = grouped[userId] || [];
- if(myGroup.length>0){ const myItem=document.createElement('div'); myItem.className='statusItem'; myItem.onclick=()=>viewStatus(userId,0); myItem.innerHTML=`<div class="statusRing"><div class="statusAv">${myAvatar?`<img src="${myAvatar}">`: (myName[0]||'M').toUpperCase()}</div></div><div class="statusName">My Status</div>`; bar.appendChild(myItem); }
- Object.keys(grouped).forEach(uid=>{ if(uid===userId) return; if(bannedUsers.includes(uid)) return; const g=grouped[uid]; const latest=g[0]; const isSeen=seenStatus.includes(latest.id); const ui=onlineUsers[uid]||{name:latest.username, avatar:latest.avatar}; const it=document.createElement('div'); it.className='statusItem'; it.onclick=()=>viewStatus(uid,0); it.innerHTML=`<div class="statusRing ${isSeen?'seen':''}"><div class="statusAv">${ui.avatar||latest.avatar?`<img src="${ui.avatar||latest.avatar}">`: (latest.username[0]||'?').toUpperCase()}</div></div><div class="statusName">${latest.username}</div>`; bar.appendChild(it); });
+ const bar=document.getElementById('statusBar'); const grouped={}; statuses.forEach(s=>{ if(!grouped[s.user_id]) grouped[s.user_id]=[]; grouped[s.user_id].push(s); }); bar.innerHTML='';
+ const addItem=document.createElement('div'); addItem.className='statusItem'; addItem.onclick=()=>document.getElementById('statusCreateModal').classList.add('show'); addItem.innerHTML=`<div class="statusRing addRing"><div class="statusAv">${myAvatar?`<img src="${myAvatar}">`: (myName[0]||'+').toUpperCase()}<div class="plusBadge">+</div></div></div><div class="statusName">Add Status</div>`; bar.appendChild(addItem);
+ const myGroup=grouped[userId]||[]; if(myGroup.length>0){ const myItem=document.createElement('div'); myItem.className='statusItem'; myItem.onclick=()=>viewStatus(userId,0); myItem.innerHTML=`<div class="statusRing"><div class="statusAv">${myAvatar?`<img src="${myAvatar}">`: (myName[0]||'M').toUpperCase()}</div></div><div class="statusName">My Status</div>`; bar.appendChild(myItem); }
+ Object.keys(grouped).forEach(uid=>{ if(uid===userId) return; if(bannedUsers.includes(uid)) return; const g=grouped[uid]; const latest=g[0]; const isSeen=seenStatus.includes(latest.id); const ui=onlineUsers[uid]||{name:latest.username, avatar:latest.avatar}; const it=document.createElement('div'); it.className='statusItem'; it.onclick=()=>viewStatus(uid,0); let icon=''; if(latest.type==='video') icon='🎬'; else if(latest.type==='image') icon='🖼️'; it.innerHTML=`<div class="statusRing ${isSeen?'seen':''}"><div class="statusAv">${ui.avatar||latest.avatar?`<img src="${ui.avatar||latest.avatar}">`: (latest.username[0]||'?').toUpperCase()}</div></div><div class="statusName">${icon} ${latest.username}</div>`; bar.appendChild(it); });
 }
 function viewStatus(uidView, idx){
- const group=statuses.filter(s=>s.user_id===uidView); if(!group.length) return; currentStatusUser=uidView;
- const s=group[idx];
- document.getElementById('viewStatusName').textContent=s.username; document.getElementById('viewStatusTime').textContent=new Date(s.created_at).toLocaleString();
- document.getElementById('viewStatusAv').innerHTML=s.avatar?`<img src="${s.avatar}">`: (s.username[0]||'?').toUpperCase();
+ const group=statuses.filter(s=>s.user_id===uidView); if(!group.length) return; currentStatusUser=uidView; const s=group[idx];
+ document.getElementById('viewStatusName').textContent=s.username; document.getElementById('viewStatusTime').textContent=new Date(s.created_at).toLocaleString(); document.getElementById('viewStatusAv').innerHTML=s.avatar?`<img src="${s.avatar}">`: (s.username[0]||'?').toUpperCase();
  const c=document.getElementById('viewStatusContent');
  if(s.type==='text'){ c.innerHTML=`<div style="background:${s.bg||'#FCD116'};color:${s.color||'#000'};padding:30px;border-radius:20px;font-size:22px;font-weight:800;text-align:center;max-width:90%">${s.text}</div>`; }
- else { c.innerHTML=`<div style="text-align:center"><img src="${s.image}" style="max-width:100%;max-height:50vh;border-radius:16px"><div style="margin-top:12px">${s.caption||''}</div></div>`; }
+ else if(s.type==='image'){ c.innerHTML=`<div style="text-align:center"><img src="${s.image}" style="max-width:100%;max-height:60vh;border-radius:16px"><div style="margin-top:12px;color:#fff;background:rgba(0,0,0,.5);padding:8px;border-radius:10px">${s.caption||''}</div></div>`; }
+ else if(s.type==='video'){ c.innerHTML=`<div style="text-align:center;width:100%"><video src="${s.video}" controls autoplay playsinline style="width:100%;max-height:60vh;border-radius:16px;background:#000"></video><div style="margin-top:12px;color:#fff;background:rgba(0,0,0,.5);padding:8px;border-radius:10px">${s.caption||''}</div></div>`; }
  const prog=document.getElementById('statusProgress'); prog.innerHTML=''; group.forEach((_,i)=>{ const d=document.createElement('div'); d.className=i===idx?'active':''; prog.appendChild(d); });
  if(!seenStatus.includes(s.id)){ seenStatus.push(s.id); localStorage.setItem('seen_status',JSON.stringify(seenStatus)); }
  document.getElementById('statusViewModal').classList.add('show');
- setTimeout(()=>{ if(document.getElementById('statusViewModal').classList.contains('show') && currentStatusUser===uidView){ if(idx+1<group.length){ viewStatus(uidView,idx+1); } else { document.getElementById('statusViewModal').classList.remove('show'); } } },5000);
+ if(s.type!=='video'){ setTimeout(()=>{ if(document.getElementById('statusViewModal').classList.contains('show') && currentStatusUser===uidView){ if(idx+1<group.length){ viewStatus(uidView,idx+1); } else { document.getElementById('statusViewModal').classList.remove('show'); } } },6000); }
 }
 window.doReply=(u,c)=>{ replyTo={user:u,content:c}; document.getElementById('replyWho').textContent=u; document.getElementById('replyText').textContent=c.substring(0,60); document.getElementById('replyBar').classList.add('show'); inputEl.focus(); }
 window.cancelReply=()=>{ replyTo=null; document.getElementById('replyBar').classList.remove('show'); }
 window.exitPrivate=()=>{ privateChatWith=null; document.getElementById('privateBanner').classList.remove('show'); loadMessages(); }
-window.startPrivateChat=(uid,name)=>{ if(uid===userId) return; privateChatWith={userId:uid,name:name}; document.getElementById('privateName').textContent=name; document.getElementById('privateBanner').classList.add('show'); document.getElementById('onlineModal').classList.remove('show'); loadMessages(); }
+window.startPrivateChat=(uid,name)=>{ privateChatWith={userId:uid,name:name}; document.getElementById('privateName').textContent=name; document.getElementById('privateBanner').classList.add('show'); document.getElementById('onlineModal').classList.remove('show'); loadMessages(); }
 loadMessages(); loadStatuses();
-sb.channel('chale-v25').on('postgres_changes',{event:'*',schema:'public',table:'messages'},()=>{ loadMessages(); loadStatuses(); }).subscribe();
-const presenceChannel = sb.channel('presence-v25', {config:{presence:{key:userId}}});
+sb.channel('chale-v26').on('postgres_changes',{event:'*',schema:'public',table:'messages'},()=>{ loadMessages(); loadStatuses(); }).subscribe();
+const presenceChannel=sb.channel('presence-v26',{config:{presence:{key:userId}}});
 presenceChannel.on('presence',{event:'sync'},()=>{
- const state=presenceChannel.presenceState(); onlineUsers={}; let count=0;
- Object.values(state).forEach(ps=>{ ps.forEach(p=>{ if(bannedUsers.includes(p.userId)) return; onlineUsers[p.userId]=p; count++; }) });
+ const state=presenceChannel.presenceState(); onlineUsers={}; let count=0; Object.values(state).forEach(ps=>{ ps.forEach(p=>{ if(bannedUsers.includes(p.userId)) return; onlineUsers[p.userId]=p; count++; }) });
  document.getElementById('onlineCount').textContent=count; document.getElementById('footerOnline').textContent=count+' online'; document.getElementById('onlineNum').textContent=count;
- const listEl=document.getElementById('onlineList'); listEl.innerHTML='';
- Object.values(onlineUsers).forEach(u=>{
-  const row=document.createElement('div'); row.className='userRow'; row.onclick=()=>startPrivateChat(u.userId,u.name);
-  row.innerHTML=`<div class="av">${u.avatar?`<img src="${u.avatar}">`: (u.name[0]||'?').toUpperCase()}</div><div style="flex:1"><div style="font-weight:700;font-size:14px">${u.name} ${u.userId===userId?'(You)':''}</div><div style="font-size:11px;color:#00d26a">● Online</div></div><div style="width:8px;height:8px;background:#00d26a;border-radius:50%"></div>`;
-  listEl.appendChild(row);
- });
+ const listEl=document.getElementById('onlineList'); listEl.innerHTML=''; Object.values(onlineUsers).forEach(u=>{ const row=document.createElement('div'); row.className='userRow'; row.onclick=()=>startPrivateChat(u.userId,u.name); row.innerHTML=`<div class="av">${u.avatar?`<img src="${u.avatar}">`: (u.name[0]||'?').toUpperCase()}</div><div style="flex:1"><div style="font-weight:700">${u.name} ${u.userId===userId?'(You)':''}</div><div style="font-size:11px;color:#00d26a">● Online</div></div></div>`; listEl.appendChild(row); });
  loadMessages(); renderStatusBar(); renderContacts();
 }).subscribe(async()=>{ if(myName){ await presenceChannel.track({userId, name:myName, avatar:myAvatar, online_at:new Date().toISOString()}); } });
-const receiptChannel = sb.channel('receipts-v25');
-receiptChannel.on('broadcast',{event:'read'},p=>{ if(p.payload.userId!==userId){ readReceipts[p.payload.userId]=new Date(p.payload.readAt).getTime(); loadMessages(); } }).subscribe();
-function sendRead(){ receiptChannel.send({type:'broadcast',event:'read',payload:{userId, readAt:new Date().toISOString()}}); }
-setInterval(()=>{ if(document.hasFocus()) sendRead(); },3000);
-const typeChannel = sb.channel('typing-v25');
-typeChannel.on('broadcast',{event:'typing'},p=>{ if(p.payload.user!==myName){ typingEl.textContent=`${p.payload.user} is typing...`; setTimeout(()=>typingEl.textContent='',2000); } }).subscribe();
+const receiptChannel=sb.channel('receipts-v26'); receiptChannel.subscribe();
+const typeChannel=sb.channel('typing-v26'); typeChannel.on('broadcast',{event:'typing'},p=>{ if(p.payload.user!==myName){ typingEl.textContent=`${p.payload.user} is typing...`; setTimeout(()=>typingEl.textContent='',2000); } }).subscribe();
 inputEl.addEventListener('input',()=>{ typeChannel.send({type:'broadcast',event:'typing',payload:{user:myName}}); });
 document.getElementById('emojiBtn').onclick=()=>document.getElementById('emojiPanel').classList.toggle('show');
 document.querySelectorAll('#emojiPanel span').forEach(s=>s.onclick=()=>{ inputEl.value+=s.textContent; inputEl.focus(); document.getElementById('emojiPanel').classList.remove('show'); });
 document.getElementById('fileBtn').onclick=()=>document.getElementById('fileInput').click();
-document.getElementById('fileInput').onchange=async()=>{
- const file=document.getElementById('fileInput').files[0]; if(!file) return;
- const reader=new FileReader(); reader.onloadend=async()=>{
-  let msg=file.type.startsWith('image/')?`[IMG:${reader.result}]`:`[FILE:${file.name}|${reader.result}]`;
-  if(privateChatWith) msg=`[DM:${privateChatWith.userId}|${userId}]\n${msg}`;
-  if(replyTo) msg=`[REPLY:${replyTo.user}|${replyTo.content}]\n${msg}`;
-  await sb.from('messages').insert({username:myName,content:msg,user_id:userId}); document.getElementById('fileInput').value='';
- }; reader.readAsDataURL(file);
-};
+document.getElementById('fileInput').onchange=async()=>{ const file=document.getElementById('fileInput').files[0]; if(!file) return; const reader=new FileReader(); reader.onloadend=async()=>{ let msg=file.type.startsWith('image/')?`[IMG:${reader.result}]`:`[FILE:${file.name}|${reader.result}]`; if(privateChatWith) msg=`[DM:${privateChatWith.userId}|${userId}]\n${msg}`; if(replyTo) msg=`[REPLY:${replyTo.user}|${replyTo.content}]\n${msg}`; await sb.from('messages').insert({username:myName,content:msg,user_id:userId}); document.getElementById('fileInput').value=''; }; reader.readAsDataURL(file); };
 document.getElementById('micBtn').onclick=async()=>{
  if(mediaRecorder && mediaRecorder.state==='recording'){ stopRec(true); return; }
  try{
-  const stream=await navigator.mediaDevices.getUserMedia({audio:true});
-  recChunks=[]; mediaRecorder=new MediaRecorder(stream);
+  const stream=await navigator.mediaDevices.getUserMedia({audio:true}); recChunks=[]; mediaRecorder=new MediaRecorder(stream);
   mediaRecorder.ondataavailable=e=>{ if(e.data.size>0) recChunks.push(e.data); };
-  mediaRecorder.onstop=async()=>{
-   const blob=new Blob(recChunks,{type:'audio/webm'}); const reader=new FileReader();
-   reader.onloadend=async()=>{ if(reader.result.length>5000){ let msg=`[AUDIO:${reader.result}]`; if(privateChatWith) msg=`[DM:${privateChatWith.userId}|${userId}]\n${msg}`; if(replyTo){ msg=`[REPLY:${replyTo.user}|${replyTo.content}]\n${msg}`; cancelReply(); } await sb.from('messages').insert({username:myName,content:msg,user_id:userId}); } stream.getTracks().forEach(t=>t.stop()); };
-   reader.readAsDataURL(blob);
-  };
-  mediaRecorder.start(); recBar.classList.add('show'); recStart=Date.now();
-  recTimer=setInterval(()=>{ const s=Math.floor((Date.now()-recStart)/1000); recTime.textContent=`${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`; },400);
+  mediaRecorder.onstop=async()=>{ const blob=new Blob(recChunks,{type:'audio/webm'}); const reader=new FileReader(); reader.onloadend=async()=>{ if(reader.result.length>5000){ let msg=`[AUDIO:${reader.result}]`; if(privateChatWith) msg=`[DM:${privateChatWith.userId}|${userId}]\n${msg}`; if(replyTo){ msg=`[REPLY:${replyTo.user}|${replyTo.content}]\n${msg}`; cancelReply(); } await sb.from('messages').insert({username:myName,content:msg,user_id:userId}); } stream.getTracks().forEach(t=>t.stop()); }; reader.readAsDataURL(blob); };
+  mediaRecorder.start(); recBar.classList.add('show'); recStart=Date.now(); recTimer=setInterval(()=>{ const s=Math.floor((Date.now()-recStart)/1000); recTime.textContent=`${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`; },400);
  }catch{}
 };
 function stopRec(send=true){ if(mediaRecorder){ if(!send) recChunks=[]; mediaRecorder.stop(); recBar.classList.remove('show'); clearInterval(recTimer); mediaRecorder=null; } }
 document.getElementById('stopRec').onclick=()=>stopRec(true);
 document.getElementById('cancelRec').onclick=()=>stopRec(false);
-const videoChannel=sb.channel('video-v25');
-videoChannel.on('broadcast',{event:'call'},p=>{ if((p.payload.to===myName || p.payload.to==='all' || p.payload.to.toLowerCase()===myName.toLowerCase()) && p.payload.from!==myName){ document.getElementById('incomingText').textContent=`📹 ${p.payload.from} is calling...`; document.getElementById('incomingModal').classList.add('show'); } }).subscribe();
+const videoChannel=sb.channel('video-v26'); videoChannel.on('broadcast',{event:'call'},p=>{ if((p.payload.to===myName||p.payload.to==='all'||p.payload.to.toLowerCase()===myName.toLowerCase())&&p.payload.from!==myName){ document.getElementById('incomingText').textContent=`📹 ${p.payload.from} is calling...`; document.getElementById('incomingModal').classList.add('show'); } }).subscribe();
 document.getElementById('videoBtn').onclick=()=>{ document.getElementById('callInput').value='all'; document.getElementById('callModal').classList.add('show'); };
 document.getElementById('cancelCall').onclick=()=>document.getElementById('callModal').classList.remove('show');
 document.getElementById('okCall').onclick=()=>{ const who=document.getElementById('callInput').value.trim()||'all'; videoChannel.send({type:'broadcast',event:'call',payload:{from:myName,to:who}}); document.getElementById('callModal').classList.remove('show'); openVideo(); };
@@ -357,7 +281,7 @@ function openVideo(){ document.getElementById('videoModal').classList.add('show'
 async function startLocal(){ try{ const s=await navigator.mediaDevices.getUserMedia({video:true,audio:true}); localStream=s; document.getElementById('localV').srcObject=s; }catch{} }
 document.getElementById('endCall').onclick=()=>{ if(localStream) localStream.getTracks().forEach(t=>t.stop()); document.getElementById('localV').srcObject=null; };
 document.getElementById('closeVideo').onclick=()=>{ document.getElementById('endCall').click(); document.getElementById('videoModal').classList.remove('show'); };
-function handleAvatarFile(file, after){ const reader=new FileReader(); reader.onloadend=()=>{ compress(reader.result,(c)=>{ myAvatar=c; localStorage.setItem('chale_avatar',c); updateAvatarUI(); if(after) after(); }); }; reader.readAsDataURL(file); }
+function handleAvatarFile(file, after){ const reader=new FileReader(); reader.onloadend=()=>{ compress(reader.result,(c)=>{ myAvatar=c; localStorage.setItem('chale_avatar',c); updateAvatarUI(); if(after) after(); },120,0.6); }; reader.readAsDataURL(file); }
 document.getElementById('avatarInput').onchange=(e)=>{ const f=e.target.files[0]; if(f) handleAvatarFile(f); };
 document.getElementById('avatarInput2').onchange=(e)=>{ const f=e.target.files[0]; if(f) handleAvatarFile(f, async()=>{ await presenceChannel.track({userId, name:myName, avatar:myAvatar, online_at:new Date().toISOString()}); }); };
 document.getElementById('profileBtn').onclick=()=>{ document.getElementById('profileNameInput').value=myName; updateAvatarUI(); document.getElementById('profileModal').classList.add('show'); };
@@ -369,162 +293,106 @@ document.getElementById('closeOnline').onclick=()=>document.getElementById('onli
 document.getElementById('showGroup').onclick=()=>{ privateChatWith=null; document.getElementById('privateBanner').classList.remove('show'); document.getElementById('onlineModal').classList.remove('show'); loadMessages(); };
 document.getElementById('langBtn').onclick=()=>{ document.getElementById('langSelect').value=lang; document.getElementById('langModal').classList.add('show'); };
 document.getElementById('cancelName').onclick=()=>{ if(!myName) return; document.getElementById('nameModal').classList.remove('show'); };
-document.getElementById('okName').onclick=async()=>{ const n=document.getElementById('nameInput').value.trim(); if(!n){ alert('Enter name'); return; } myName=n; localStorage.setItem('chale_name',myName); document.getElementById('nameModal').classList.remove('show'); await presenceChannel.track({userId, name:myName, avatar:myAvatar, online_at:new Date().toISOString()}); updateAvatarUI(); loadMessages(); sendRead(); renderStatusBar(); };
+document.getElementById('okName').onclick=async()=>{ const n=document.getElementById('nameInput').value.trim(); if(!n){ alert('Enter name'); return; } myName=n; localStorage.setItem('chale_name',myName); document.getElementById('nameModal').classList.remove('show'); await presenceChannel.track({userId, name:myName, avatar:myAvatar, online_at:new Date().toISOString()}); updateAvatarUI(); loadMessages(); renderStatusBar(); };
 document.getElementById('cancelLang').onclick=()=>document.getElementById('langModal').classList.remove('show');
 document.getElementById('okLang').onclick=()=>{ lang=document.getElementById('langSelect').value; localStorage.setItem('chale_lang',lang); document.getElementById('langModal').classList.remove('show'); };
 document.getElementById('cancelDel').onclick=()=>{ document.getElementById('delModal').classList.remove('show'); pendingDelId=null; };
 document.getElementById('okDel').onclick=async()=>{ if(pendingDelId) await sb.from('messages').delete().eq('id',pendingDelId); document.getElementById('delModal').classList.remove('show'); pendingDelId=null; };
-document.getElementById('statusTextBtn').onclick=()=>{ document.getElementById('statusTextArea').style.display='block'; document.getElementById('statusImageArea').style.display='none'; };
-document.getElementById('statusImageBtn').onclick=()=>{ document.getElementById('statusTextArea').style.display='none'; document.getElementById('statusImageArea').style.display='block'; };
-document.getElementById('statusImageInput').onchange=(e)=>{ const f=e.target.files[0]; if(!f) return; const reader=new FileReader(); reader.onloadend=()=>{ document.getElementById('statusImagePreview').style.display='block'; document.getElementById('statusPreviewImg').src=reader.result; document.getElementById('statusPreviewImg').dataset.raw=reader.result; }; reader.readAsDataURL(f); };
-document.getElementById('cancelStatus').onclick=()=>document.getElementById('statusCreateModal').classList.remove('show');
+// STATUS TAB SWITCH
+document.getElementById('statusTextBtn').onclick=()=>{ document.getElementById('statusTextArea').style.display='block'; document.getElementById('statusImageArea').style.display='none'; document.getElementById('statusVideoArea').style.display='none'; document.getElementById('statusTextBtn').className='btn btnOk'; document.getElementById('statusImageBtn').className='btn btnCancel'; document.getElementById('statusVideoBtn').className='btn btnCancel'; };
+document.getElementById('statusImageBtn').onclick=()=>{ document.getElementById('statusTextArea').style.display='none'; document.getElementById('statusImageArea').style.display='block'; document.getElementById('statusVideoArea').style.display='none'; document.getElementById('statusTextBtn').className='btn btnCancel'; document.getElementById('statusImageBtn').className='btn btnOk'; document.getElementById('statusVideoBtn').className='btn btnCancel'; };
+document.getElementById('statusVideoBtn').onclick=()=>{ document.getElementById('statusTextArea').style.display='none'; document.getElementById('statusImageArea').style.display='none'; document.getElementById('statusVideoArea').style.display='block'; document.getElementById('statusTextBtn').className='btn btnCancel'; document.getElementById('statusImageBtn').className='btn btnCancel'; document.getElementById('statusVideoBtn').className='btn btnOk'; };
+// IMAGE PREVIEW FIX
+document.getElementById('statusImageInput').onchange=(e)=>{
+ const f=e.target.files[0]; if(!f) return;
+ const reader=new FileReader();
+ reader.onload=()=>{
+  const preview=document.getElementById('statusImagePreview');
+  const img=document.getElementById('statusPreviewImg');
+  img.src=reader.result; img.dataset.raw=reader.result; preview.style.display='block';
+ };
+ reader.readAsDataURL(f);
+};
+// VIDEO PREVIEW NEW
+document.getElementById('statusVideoInput').onchange=(e)=>{
+ const f=e.target.files[0]; if(!f) return;
+ if(f.size>15*1024*1024){ alert('Video too big! Max 15MB. Try shorter video.'); e.target.value=''; return; }
+ const reader=new FileReader();
+ reader.onload=()=>{
+  const preview=document.getElementById('statusVideoPreview');
+  const video=document.getElementById('statusPreviewVideo');
+  video.src=reader.result; video.dataset.raw=reader.result; preview.style.display='block'; video.load();
+ };
+ reader.readAsDataURL(f);
+};
+document.getElementById('cancelStatus').onclick=()=>{ document.getElementById('statusCreateModal').classList.remove('show'); document.getElementById('statusImagePreview').style.display='none'; document.getElementById('statusVideoPreview').style.display='none'; };
+// POST STATUS WITH IMAGE OR VIDEO
 document.getElementById('postStatus').onclick=async()=>{
  let statusObj=null;
  if(document.getElementById('statusTextArea').style.display!=='none'){
   const text=document.getElementById('statusTextInput').value.trim(); if(!text){ alert('Type something!'); return; }
   const bg=document.getElementById('statusTextInput').dataset.bg||'#FCD116'; const color=document.getElementById('statusTextInput').dataset.color||'#000';
   statusObj={type:'text', text, bg, color, avatar:myAvatar};
- } else {
+ } else if(document.getElementById('statusImageArea').style.display!=='none'){
   const raw=document.getElementById('statusPreviewImg').dataset.raw; if(!raw){ alert('Pick image first!'); return; }
+  const btn=document.getElementById('postStatus'); btn.textContent='⏳ Compressing...'; btn.disabled=true;
   compress(raw,(compressed)=>{
    const cap=document.getElementById('statusCaption').value.trim();
    const obj={type:'image', image:compressed, caption:cap, avatar:myAvatar};
    const content=`[STATUS:${JSON.stringify(obj)}]`;
-   sb.from('messages').insert({username:myName,content,user_id:userId}).then(()=>{ document.getElementById('statusCreateModal').classList.remove('show'); document.getElementById('statusTextInput').value=''; document.getElementById('statusImagePreview').style.display='none'; loadStatuses(); });
-  },400,0.7); return;
+   sb.from('messages').insert({username:myName,content,user_id:userId}).then(()=>{ document.getElementById('statusCreateModal').classList.remove('show'); document.getElementById('statusTextInput').value=''; document.getElementById('statusImagePreview').style.display='none'; document.getElementById('statusPreviewImg').dataset.raw=''; btn.textContent='✓ Post'; btn.disabled=false; loadStatuses(); });
+  },500,0.7); return;
+ } else if(document.getElementById('statusVideoArea').style.display!=='none'){
+  const raw=document.getElementById('statusPreviewVideo').dataset.raw; if(!raw){ alert('Pick video first!'); return; }
+  const cap=document.getElementById('statusVideoCaption').value.trim();
+  statusObj={type:'video', video:raw, caption:cap, avatar:myAvatar};
  }
- if(statusObj){ const content=`[STATUS:${JSON.stringify(statusObj)}]`; await sb.from('messages').insert({username:myName,content,user_id:userId}); document.getElementById('statusCreateModal').classList.remove('show'); document.getElementById('statusTextInput').value=''; loadStatuses(); }
+ if(statusObj){ const content=`[STATUS:${JSON.stringify(statusObj)}]`; await sb.from('messages').insert({username:myName,content,user_id:userId}); document.getElementById('statusCreateModal').classList.remove('show'); document.getElementById('statusTextInput').value=''; document.getElementById('statusVideoPreview').style.display='none'; document.getElementById('statusPreviewVideo').dataset.raw=''; loadStatuses(); }
 };
-document.getElementById('sendStatusReply').onclick=async()=>{
- const txt=document.getElementById('statusReplyInput').value.trim(); if(!txt) return;
- const msg=`[DM:${currentStatusUser}|${userId}]\nReplied to status: ${txt}`;
- await sb.from('messages').insert({username:myName,content:msg,user_id:userId});
- document.getElementById('statusReplyInput').value=''; document.getElementById('statusViewModal').classList.remove('show');
-};
+document.getElementById('sendStatusReply').onclick=async()=>{ const txt=document.getElementById('statusReplyInput').value.trim(); if(!txt) return; const msg=`[DM:${currentStatusUser}|${userId}]\nReplied to status: ${txt}`; await sb.from('messages').insert({username:myName,content:msg,user_id:userId}); document.getElementById('statusReplyInput').value=''; document.getElementById('statusViewModal').classList.remove('show'); };
 document.getElementById('cancelAdminLogin').onclick=()=>document.getElementById('adminLoginModal').classList.remove('show');
-document.getElementById('okAdminLogin').onclick=()=>{
- const pass=document.getElementById('adminPass').value;
- if(pass==='SALVATION2026' || pass==='admin123'){
-  document.getElementById('adminLoginModal').classList.remove('show'); document.getElementById('adminPanelModal').classList.add('show'); loadAdminMessages();
- } else alert('Wrong!');
-};
+document.getElementById('okAdminLogin').onclick=()=>{ const pass=document.getElementById('adminPass').value; if(pass==='SALVATION2026'||pass==='admin123'){ document.getElementById('adminLoginModal').classList.remove('show'); document.getElementById('adminPanelModal').classList.add('show'); loadAdminMessages(); } else alert('Wrong!'); };
 document.getElementById('closeAdminPanel').onclick=()=>document.getElementById('adminPanelModal').classList.remove('show');
 document.getElementById('adminRefresh').onclick=()=>loadAdminMessages();
-document.getElementById('saveBadWords').onclick=()=>{
- const list=document.getElementById('badWordsList').value; const thresh=document.getElementById('banThreshold').value;
- localStorage.setItem('bad_words',list); localStorage.setItem('ban_threshold',thresh);
- badWords=list.split(',').map(s=>s.trim().toLowerCase()); banThreshold=parseInt(thresh)||3;
- alert(`Saved!`); loadAdminMessages();
-};
-document.getElementById('adminClearFlagged').onclick=async()=>{
- if(!confirm('Delete ALL flagged?')) return;
- const {data}=await sb.from('messages').select('*').limit(500);
- for(const m of data){ if(isBadContent(m.content)){ await sb.from('messages').delete().eq('id',m.id); } }
- alert('Flagged deleted!'); loadAdminMessages(); loadMessages();
-};
-document.getElementById('adminClearReports').onclick=()=>{
- if(confirm('Clear all reports?')){ reportsData={}; localStorage.setItem('reports_data',JSON.stringify(reportsData)); alert('Reports cleared!'); loadAdminMessages(); loadMessages(); }
-};
-document.getElementById('adminUnbanAll').onclick=()=>{
- if(confirm('Unban ALL?')){ bannedUsers=[]; localStorage.setItem('banned_users',JSON.stringify(bannedUsers)); reportsData={}; localStorage.setItem('reports_data',JSON.stringify(reportsData)); alert('All unbanned!'); loadAdminMessages(); loadMessages(); }
-};
+document.getElementById('adminClearFlagged').onclick=async()=>{ if(!confirm('Delete ALL flagged?')) return; const {data}=await sb.from('messages').select('*').limit(500); for(const m of data){ if(isBadContent(m.content)){ await sb.from('messages').delete().eq('id',m.id); } } alert('Flagged deleted!'); loadAdminMessages(); loadMessages(); };
+document.getElementById('adminClearReports').onclick=()=>{ if(confirm('Clear all reports?')){ reportsData={}; localStorage.setItem('reports_data',JSON.stringify(reportsData)); alert('Reports cleared!'); loadAdminMessages(); } };
+document.getElementById('adminUnbanAll').onclick=()=>{ if(confirm('Unban ALL?')){ bannedUsers=[]; localStorage.setItem('banned_users',JSON.stringify(bannedUsers)); reportsData={}; localStorage.setItem('reports_data',JSON.stringify(reportsData)); alert('All unbanned!'); loadAdminMessages(); } };
 async function loadAdminMessages(){
  const {data}=await sb.from('messages').select('*').order('created_at',{ascending:false}).limit(300);
  const container=document.getElementById('adminMessages'); container.innerHTML='';
  const filter=document.getElementById('adminFilter').value; const search=document.getElementById('adminSearch').value.toLowerCase();
  const leaderboardDiv=document.getElementById('reportsLeaderboard'); leaderboardDiv.innerHTML='';
- Object.keys(reportsData).sort((a,b)=>reportsData[b].count-reportsData[a].count).forEach(uid=>{
-  const r=reportsData[uid]; const isBanned=bannedUsers.includes(uid);
-  const div=document.createElement('div'); div.style.cssText=`display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #222`;
-  div.innerHTML=`<span>${r.names[uid]||uid} — ${r.count}/${banThreshold} ${isBanned?'🚫 BANNED':''}</span><span><button onclick="adminUnban('${uid}')" style="background:#00d26a;border:0;padding:2px 8px;border-radius:6px;font-size:10px">Unban</button></span>`;
-  leaderboardDiv.appendChild(div);
- });
+ Object.keys(reportsData).sort((a,b)=>reportsData[b].count-reportsData[a].count).forEach(uid=>{ const r=reportsData[uid]; const div=document.createElement('div'); div.style.cssText=`display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #222`; div.innerHTML=`<span>${r.names[uid]||uid} — ${r.count}/${banThreshold}</span>`; leaderboardDiv.appendChild(div); });
  if(Object.keys(reportsData).length===0) leaderboardDiv.innerHTML='<span style="color:#666">No reports</span>';
  data.forEach(m=>{
   if(filter==='flagged' && !isBadContent(m.content) && !m.content.includes('[REPORT]')) return;
   if(filter==='reports' && !m.content.includes('[REPORT]')) return;
   if(filter==='banned' && !bannedUsers.includes(m.user_id)) return;
   if(search && !m.content.toLowerCase().includes(search) && !m.username.toLowerCase().includes(search)) return;
-  const row=document.createElement('div'); row.style.cssText=`background:#1e1e1e;border:1px solid ${isBadContent(m.content)?'#ff3b30':m.content.includes('[REPORT]')?'#ff9500':'#333'};border-radius:12px;padding:10px;display:flex;gap:10px;align-items:flex-start`;
-  const rc=reportsData[m.user_id]?.count||0;
-  row.innerHTML=`<div style="flex:1;min-width:0"><div style="font-size:11px;color:#888">${m.username} • ${new Date(m.created_at).toLocaleString()} ${rc>0?`⚠️ ${rc}`:''}</div><div style="font-size:13px;margin-top:4px;word-break:break-word">${m.content.substring(0,300)}</div></div><div style="display:flex;flex-direction:column;gap:4px"><button onclick="adminDelete('${m.id}')" style="background:#ff3b30;border:0;color:#fff;padding:6px 10px;border-radius:8px;font-size:11px">Del</button><button onclick="adminBan('${m.user_id}','${m.username}')" style="background:#222;border:1px solid #444;color:#fff;padding:6px 10px;border-radius:8px;font-size:11px">Ban</button></div>`;
+  const row=document.createElement('div'); row.style.cssText=`background:#1e1e1e;border:1px solid #333;border-radius:12px;padding:10px;display:flex;gap:10px`;
+  row.innerHTML=`<div style="flex:1;min-width:0"><div style="font-size:11px;color:#888">${m.username} • ${new Date(m.created_at).toLocaleString()}</div><div style="font-size:13px;margin-top:4px;word-break:break-word">${m.content.substring(0,300)}</div></div><div style="display:flex;flex-direction:column;gap:4px"><button onclick="adminDelete('${m.id}')" style="background:#ff3b30;border:0;color:#fff;padding:6px 10px;border-radius:8px;font-size:11px">Del</button></div>`;
   container.appendChild(row);
  });
  document.getElementById('adminReports').textContent=Object.keys(reportsData).length;
  document.getElementById('banCount').textContent=bannedUsers.length;
- document.getElementById('badWordsList').value=badWords.join(', ');
- document.getElementById('banThreshold').value=banThreshold;
 }
 window.adminDelete=async(id)=>{ if(!confirm('Delete?')) return; await sb.from('messages').delete().eq('id',id); loadAdminMessages(); loadMessages(); }
-window.adminBan=(uid, name)=>{ if(!uid) return; if(confirm(`Ban ${name}?`)){ if(!bannedUsers.includes(uid)){ bannedUsers.push(uid); localStorage.setItem('banned_users',JSON.stringify(bannedUsers)); } alert(`Banned ${name}!`); loadAdminMessages(); loadMessages(); } }
-window.adminUnban=(uid)=>{ bannedUsers=bannedUsers.filter(id=>id!==uid); localStorage.setItem('banned_users',JSON.stringify(bannedUsers)); delete reportsData[uid]; localStorage.setItem('reports_data',JSON.stringify(reportsData)); alert('Unbanned!'); loadAdminMessages(); loadMessages(); }
 document.getElementById('adminSearch').addEventListener('input',loadAdminMessages);
 document.getElementById('adminFilter').addEventListener('change',loadAdminMessages);
-
-// CONTACTS EVENTS - BOTH
+// CONTACTS EVENTS
 document.getElementById('contactsBtn').onclick=()=>{ renderContacts(); document.getElementById('contactsModal').classList.add('show'); };
 document.getElementById('closeContacts').onclick=()=>document.getElementById('contactsModal').classList.remove('show');
 document.getElementById('addContactBtn').onclick=()=>document.getElementById('addContactModal').classList.add('show');
 document.getElementById('cancelAddContact').onclick=()=>document.getElementById('addContactModal').classList.remove('show');
-document.getElementById('saveContact').onclick=()=>{
- const name=document.getElementById('newContactName').value.trim();
- const phone=document.getElementById('newContactPhone').value.trim();
- if(!name || !phone){ alert('Enter name and phone'); return; }
- if(!contacts.find(c=>c.phone===phone)){ contacts.push({name, phone, added:Date.now()}); saveContacts(); renderContacts(); }
- document.getElementById('newContactName').value=''; document.getElementById('newContactPhone').value='';
- document.getElementById('addContactModal').classList.remove('show');
-};
+document.getElementById('saveContact').onclick=()=>{ const name=document.getElementById('newContactName').value.trim(); const phone=document.getElementById('newContactPhone').value.trim(); if(!name||!phone){ alert('Enter name and phone'); return; } if(!contacts.find(c=>c.phone===phone)){ contacts.push({name, phone, added:Date.now()}); saveContacts(); renderContacts(); } document.getElementById('newContactName').value=''; document.getElementById('newContactPhone').value=''; document.getElementById('addContactModal').classList.remove('show'); };
 document.getElementById('contactSearch').addEventListener('input',renderContacts);
-document.getElementById('pickPhoneContacts').onclick=async()=>{
- if('contacts' in navigator && 'ContactsManager' in window){
-  try{
-   const picked=await navigator.contacts.select(['name','tel'],{multiple:true});
-   let added=0;
-   picked.forEach(p=>{
-    const name=p.name&&p.name[0]?p.name[0]:'Unknown';
-    const phone=p.tel&&p.tel[0]?p.tel[0].replace(/[^0-9+]/g,''):'';
-    if(phone && !contacts.find(c=>c.phone===phone)){ contacts.push({name, phone, added:Date.now()}); added++; }
-   });
-   saveContacts(); renderContacts(); alert(`✅ ${added} contacts auto-added!`);
-  }catch(e){ alert('Permission denied or cancelled'); }
- } else { alert('❌ Not supported. Use 📁 Import .vcf file — works on iPhone & Android!'); }
-};
+document.getElementById('pickPhoneContacts').onclick=async()=>{ if('contacts' in navigator && 'ContactsManager' in window){ try{ const picked=await navigator.contacts.select(['name','tel'],{multiple:true}); let added=0; picked.forEach(p=>{ const name=p.name&&p.name[0]?p.name[0]:'Unknown'; const phone=p.tel&&p.tel[0]?p.tel[0].replace(/[^0-9+]/g,''):''; if(phone && !contacts.find(c=>c.phone===phone)){ contacts.push({name, phone, added:Date.now()}); added++; } }); saveContacts(); renderContacts(); alert(`✅ ${added} contacts!`); }catch(e){ alert('Cancelled'); } } else { alert('Use 📁 Import .vcf — works iPhone & Android!'); } };
 document.getElementById('importFileBtn').onclick=()=>document.getElementById('contactsFileInput').click();
-document.getElementById('contactsFileInput').onchange=(e)=>{
- const file=e.target.files[0]; if(!file) return;
- const reader=new FileReader();
- reader.onload=()=>{
-  const text=reader.result;
-  let added=0;
-  if(file.name.endsWith('.vcf') || text.includes('BEGIN:VCARD')){ added=parseVCF(text); }
-  else { added=parseCSV(text); }
-  saveContacts(); renderContacts();
-  alert(`✅ ${added} contacts imported from ${file.name}!\nTotal contacts: ${contacts.length}`);
- };
- reader.readAsText(file);
- e.target.value='';
-};
-document.getElementById('inviteAllBtn').onclick=()=>{
- if(contacts.length===0){ alert('No contacts! Import first'); return; }
- const text=encodeURIComponent(`🔥 Join me on ChaleChat 🇬🇭 https://41-lgtm.github.io/?v25=1`);
- window.open(`https://wa.me/?text=${text}`,'_blank');
-};
-document.getElementById('clearContactsBtn').onclick=()=>{
- if(confirm(`Delete all ${contacts.length} contacts?`)){ contacts=[]; saveContacts(); renderContacts(); }
-};
-
-async function send(){
- let t=inputEl.value.trim(); if(!t) return;
- if(bannedUsers.includes(userId)){ alert(`🚫 Banned!`); return; }
- if(!myName){ document.getElementById('nameModal').classList.add('show'); return; }
- if(isBadContent(t)){ if(!confirm('🚩 Flagged! Send anyway?')) return; }
- if(privateChatWith) t=`[DM:${privateChatWith.userId}|${userId}]\n${t}`;
- if(replyTo){ t=`[REPLY:${replyTo.user}|${replyTo.content}]\n${t}`; cancelReply(); }
- inputEl.value=''; await sb.from('messages').insert({username:myName,content:t,user_id:userId}); sendRead();
-}
+document.getElementById('contactsFileInput').onchange=(e)=>{ const file=e.target.files[0]; if(!file) return; const reader=new FileReader(); reader.onload=()=>{ const text=reader.result; let added=0; if(file.name.endsWith('.vcf')||text.includes('BEGIN:VCARD')){ added=parseVCF(text); } else { added=parseCSV(text); } saveContacts(); renderContacts(); alert(`✅ ${added} imported!`); }; reader.readAsText(file); e.target.value=''; };
+async function send(){ let t=inputEl.value.trim(); if(!t) return; if(bannedUsers.includes(userId)){ alert(`🚫 Banned!`); return; } if(!myName){ document.getElementById('nameModal').classList.add('show'); return; } if(isBadContent(t)){ if(!confirm('🚩 Flagged! Send anyway?')) return; } if(privateChatWith) t=`[DM:${privateChatWith.userId}|${userId}]\n${t}`; if(replyTo){ t=`[REPLY:${replyTo.user}|${replyTo.content}]\n${t}`; cancelReply(); } inputEl.value=''; await sb.from('messages').insert({username:myName,content:t,user_id:userId}); }
 document.getElementById('b').onclick=send;
 inputEl.addEventListener('keydown',e=>{if(e.key==='Enter')send()});
-setTimeout(()=>{ if(!myName){ document.getElementById('nameModal').classList.add('show'); } updateAvatarUI(); sendRead(); renderContacts(); },800);
+setTimeout(()=>{ if(!myName){ document.getElementById('nameModal').classList.add('show'); } updateAvatarUI(); renderContacts(); },800);
 </script>
 </body>
-                                         </html>
+ </html>
