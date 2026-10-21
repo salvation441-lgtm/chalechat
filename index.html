@@ -1,6 +1,6 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ChaleChat V30 - View Fix</title>
+<title>ChaleChat V31 - FINAL POST FIX</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <style>
@@ -9,16 +9,12 @@ body{margin:0;background:#000;color:#fff;font-family:'Inter',system-ui;display:f
 .top{height:56px;padding:0 8px;background:#151515;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .brand{font-weight:900} .brand span{color:var(--yellow)}
 .iconTop{width:36px;height:36px;border-radius:50%;background:#1e1e1e;border:1px solid var(--border);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.iconTop.contactsBtn{background:var(--yellow);color:#000;font-weight:900}
 #statusBar{display:flex;gap:14px;padding:12px;background:#0f0f0f;overflow-x:auto;flex-shrink:0;border-bottom:1px solid #1a1a1a}
 .statusItem{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:68px;cursor:pointer;padding:4px;border-radius:12px}
-.statusItem:active{background:#222}
 .statusRing{width:62px;height:62px;border-radius:50%;padding:3px;background:conic-gradient(#FCD116,#CE1126,#00d26a,#FCD116);display:flex;align-items:center;justify-content:center;position:relative}
 .statusRing.seen{background:#444}
 .statusRing.addRing{background:#222;border:2px dashed #FCD116}
-.statusAv{width:56px;height:56px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;border:2px solid #000;font-size:18px}
-.statusAv img{width:100%;height:100%;object-fit:cover}
-.statusName{font-size:11px;color:#aaa;max-width:68px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.statusAv{width:56px;height:56px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-weight:800;overflow:hidden;border:2px solid #000}
 .plusBadge{position:absolute;bottom:-2px;right:-2px;background:var(--yellow);color:#000;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;border:2px solid #000}
 #chat{flex:1;overflow-y:auto;padding:14px 10px;display:flex;flex-direction:column;gap:12px}
 .m{max-width:80%;padding:8px 12px 20px;border-radius:18px;position:relative;display:flex;gap:8px}
@@ -44,7 +40,6 @@ button.send{border:0;border-radius:50%;width:44px;height:44px;background:var(--y
 .statusProgress{position:absolute;top:0;left:0;right:0;display:flex;gap:3px;padding:6px;z-index:11}
 .statusProgress div{height:4px;background:rgba(255,255,255,.3);flex:1;border-radius:2px}
 .statusProgress div.active{background:#fff}
-.footer{flex-shrink:0;background:#000;border-top:1px solid #111;padding:8px;text-align:center;font-size:10px;color:#555}
 .bigTab{width:100%;padding:14px;border-radius:12px;border:2px solid #333;background:#1e1e1e;color:#fff;font-weight:800;font-size:14px;margin-bottom:8px;cursor:pointer;text-align:left}
 .bigTab.active{background:var(--yellow);color:#000;border-color:var(--yellow)}
 .previewBox{display:none;border:3px solid #00d26a;border-radius:16px;overflow:hidden;background:#000;margin-top:10px}
@@ -57,16 +52,16 @@ button.send{border:0;border-radius:50%;width:44px;height:44px;background:var(--y
 <div id="statusBar"></div>
 <div id="chat"></div>
 <div class="barWrap"><div class="bar"><input id="i" class="msg" placeholder="Type..."><button class="send" id="b">➤</button></div></div>
-<div class="footer">V30 — Tap My Status to view!</div>
 
-<div id="statusCreateModal" class="modal"><div class="box"><h3>📸 Add Status — V30</h3>
+<div id="statusCreateModal" class="modal"><div class="box"><h3>📸 Add Status V31 — LIGHT & MUST WORK</h3>
 <button id="tabText" class="bigTab active" onclick="showTab('text')">📝 Text Status</button>
 <div id="panelText"><textarea id="statusTextInput" placeholder="What dey happen? 24hrs..." rows="4"></textarea><div style="display:flex;gap:8px;margin:8px 0"><div style="width:36px;height:36px;border-radius:50%;background:#FCD116;border:2px solid #fff;cursor:pointer" onclick="setStatusBg('#FCD116','#000')"></div><div style="width:36px;height:36px;border-radius:50%;background:#CE1126;border:2px solid #fff;cursor:pointer" onclick="setStatusBg('#CE1126','#fff')"></div><div style="width:36px;height:36px;border-radius:50%;background:#00d26a;border:2px solid #fff;cursor:pointer" onclick="setStatusBg('#00d26a','#000')"></div><div style="width:36px;height:36px;border-radius:50%;background:#000;border:2px solid #fff;cursor:pointer" onclick="setStatusBg('#000','#fff')"></div></div></div>
-<button id="tabPhoto" class="bigTab" onclick="showTab('photo')">🖼️ Photo Status</button>
-<div id="panelPhoto" style="display:none"><input type="file" id="statusImageInput" accept="image/*" class="fileVisible"><div id="statusImagePreview" class="previewBox"><img id="statusPreviewImg" style="width:100%;max-height:380px;object-fit:contain;display:block;background:#000"><div style="background:#00d26a;color:#000;padding:8px;text-align:center;font-weight:900">✅ PHOTO PREVIEW</div></div><input id="statusCaption" placeholder="Add caption..." style="margin-top:10px"></div>
-<button id="tabVideo" class="bigTab" onclick="showTab('video')">🎬 Video Status</button>
-<div id="panelVideo" style="display:none"><input type="file" id="statusVideoInput" accept="video/*" class="fileVisible"><div id="statusVideoPreview" class="previewBox"><video id="statusPreviewVideo" controls playsinline style="width:100%;max-height:380px;background:#000;display:block"></video><div style="background:#00d26a;color:#000;padding:8px;text-align:center;font-weight:900">✅ VIDEO PREVIEW</div></div><input id="statusVideoCaption" placeholder="Video caption..." style="margin-top:10px"></div>
+<button id="tabPhoto" class="bigTab" onclick="showTab('photo')">🖼️ Photo Status — SMALL SIZE</button>
+<div id="panelPhoto" style="display:none"><input type="file" id="statusImageInput" accept="image/*" class="fileVisible"><div id="statusImagePreview" class="previewBox"><img id="statusPreviewImg" style="width:100%;max-height:300px;object-fit:contain;display:block;background:#000"><div style="background:#00d26a;color:#000;padding:6px;text-align:center;font-weight:900;font-size:12px" id="photoSizeInfo">✅ PREVIEW</div></div><input id="statusCaption" placeholder="Add caption..." style="margin-top:10px"></div>
+<button id="tabVideo" class="bigTab" onclick="showTab('video')">🎬 Video Status — Max 5MB!</button>
+<div id="panelVideo" style="display:none"><input type="file" id="statusVideoInput" accept="video/*" class="fileVisible"><div id="statusVideoPreview" class="previewBox"><video id="statusPreviewVideo" controls playsinline style="width:100%;max-height:300px;background:#000;display:block"></video><div style="background:#00d26a;color:#000;padding:6px;text-align:center;font-weight:900;font-size:12px" id="videoSizeInfo">✅ VIDEO PREVIEW</div></div><input id="statusVideoCaption" placeholder="Video caption..." style="margin-top:10px"></div>
 <div class="btnRow" style="margin-top:16px"><button class="btn btnCancel" id="cancelStatus">Cancel</button><button class="btn btnOk" id="postStatus">✓ Post Status</button></div>
+<div id="debugLog" style="background:#111;color:#0f0;padding:8px;border-radius:8px;font-size:10px;margin-top:10px;max-height:80px;overflow:auto"></div>
 </div></div>
 
 <div id="statusViewModal" class="modal" style="background:#000"><div class="statusView">
@@ -85,32 +80,21 @@ const sb = supabase.createClient('https://gmdtjtznwsimcseurntt.supabase.co','eyJ
 let userId=localStorage.getItem('chale_id')||'user_'+Math.random().toString(36).substr(2,9); localStorage.setItem('chale_id',userId);
 let myName=localStorage.getItem('chale_name')||''; let myAvatar=localStorage.getItem('chale_avatar')||'';
 let onlineUsers={}, statuses=[], seenStatus=JSON.parse(localStorage.getItem('seen_status')||'[]'), currentTab='text', currentStatusUser=null, currentStatusIdx=0;
-function compress(dataUrl,cb,max=800,q=0.8){ const img=new Image(); img.onload=()=>{ const c=document.createElement('canvas'); let w=img.width,h=img.height; if(w>max||h>max){ if(w>h){ h*=max/w; w=max; } else { w*=max/h; h=max; } } c.width=w; c.height=h; c.getContext('2d').drawImage(img,0,0,w,h); cb(c.toDataURL('image/jpeg',q)); }; img.onerror=()=>{ cb(dataUrl); }; img.src=dataUrl; }
-function updateAvatarUI(){ const l=(myName||'S')[0].toUpperCase(); document.getElementById('picLetter').textContent=l; document.getElementById('profilePicLetter').textContent=l; document.getElementById('topAvatarLetter').textContent=l; if(myAvatar){ document.getElementById('picCircle').innerHTML=`<img src="${myAvatar}">`; document.getElementById('profilePicCircle').innerHTML=`<img src="${myAvatar}">`; document.getElementById('topAvatarLetter').innerHTML=`<img src="${myAvatar}">`; } }
+function log(msg){ const d=document.getElementById('debugLog'); if(d){ d.innerHTML+=msg+'<br>'; d.scrollTop=d.scrollHeight; } console.log(msg); }
+function compressTiny(dataUrl,cb){ const img=new Image(); img.onload=()=>{ const c=document.createElement('canvas'); let max=400; let w=img.width,h=img.height; if(w>max||h>max){ if(w>h){ h*=max/w; w=max; } else { w*=max/h; h=max; } } c.width=w; c.height=h; c.getContext('2d').drawImage(img,0,0,w,h); const tiny=c.toDataURL('image/jpeg',0.5); log('Compressed: '+img.width+'x'+img.height+' -> '+w+'x'+h+' | '+Math.round(tiny.length/1024)+'KB'); cb(tiny); }; img.onerror=()=>{ cb(dataUrl); }; img.src=dataUrl; }
+function updateAvatarUI(){ const l=(myName||'S')[0].toUpperCase(); document.getElementById('picLetter').textContent=l; document.getElementById('profilePicLetter').textContent=l; document.getElementById('topAvatarLetter').textContent=l; if(myAvatar){ document.getElementById('picCircle').innerHTML=`<img src="${myAvatar}">`; document.getElementById('profilePicCircle').innerHTML=`<img src="${myAvatar}">`; const topEl=document.getElementById('topAvatarLetter'); if(topEl) topEl.innerHTML=`<img src="${myAvatar}">`; } }
 window.setStatusBg=(bg,color)=>{ const ta=document.getElementById('statusTextInput'); ta.style.background=bg; ta.style.color=color; ta.dataset.bg=bg; ta.dataset.color=color; }
-window.showTab=(which)=>{
- currentTab=which;
- document.getElementById('tabText').classList.toggle('active', which==='text');
- document.getElementById('tabPhoto').classList.toggle('active', which==='photo');
- document.getElementById('tabVideo').classList.toggle('active', which==='video');
- document.getElementById('panelText').style.display=which==='text'?'block':'none';
- document.getElementById('panelPhoto').style.display=which==='photo'?'block':'none';
- document.getElementById('panelVideo').style.display=which==='video'?'block':'none';
-};
+window.showTab=(which)=>{ currentTab=which; document.getElementById('tabText').classList.toggle('active', which==='text'); document.getElementById('tabPhoto').classList.toggle('active', which==='photo'); document.getElementById('tabVideo').classList.toggle('active', which==='video'); document.getElementById('panelText').style.display=which==='text'?'block':'none'; document.getElementById('panelPhoto').style.display=which==='photo'?'block':'none'; document.getElementById('panelVideo').style.display=which==='video'?'block':'none'; };
 window.closeStatusView=()=>{ document.getElementById('statusViewModal').classList.remove('show'); };
-window.nextStatus=()=>{
- const group=statuses.filter(s=>s.user_id===currentStatusUser);
- if(currentStatusIdx+1<group.length){ viewStatus(currentStatusUser, currentStatusIdx+1); }
- else { closeStatusView(); }
-};
+window.nextStatus=()=>{ const group=statuses.filter(s=>s.user_id===currentStatusUser); if(currentStatusIdx+1<group.length){ viewStatus(currentStatusUser, currentStatusIdx+1); } else { closeStatusView(); } };
 const chatEl=document.getElementById('chat');
 async function loadMessages(){ const {data}=await sb.from('messages').select('*').order('created_at',{ascending:true}).limit(200); chatEl.innerHTML=''; data.forEach(m=>{ if(m.content.startsWith('[STATUS:')) return; const isMe=m.user_id===userId; const div=document.createElement('div'); div.className='m '+(isMe?'me':'other'); let content=m.content; if(content.startsWith('[IMG:')){ const src=content.match(/^\[IMG:(.*?)\]/)?.[1]; content=`<img style="max-width:150px;border-radius:12px" src="${src}">`; } div.innerHTML=`<div class="avatar">${(m.username[0]||'?').toUpperCase()}</div><div style="flex:1"><b style="font-size:11px;opacity:.6">${m.username}</b><div style="font-size:14px;word-break:break-word">${content}</div></div>`; chatEl.appendChild(div); }); chatEl.scrollTop=chatEl.scrollHeight; }
 async function loadStatuses(){ 
  const {data, error}=await sb.from('messages').select('*').order('created_at',{ascending:false}).limit(200); 
- if(error){ console.log('Load error', error); return; }
+ if(error){ log('Load error: '+error.message); return; }
  const now=Date.now(); 
- statuses=(data||[]).filter(m=>m.content.startsWith('[STATUS:')).filter(m=>(now-new Date(m.created_at).getTime())<24*60*60*1000).map(m=>{ try{ const j=m.content.replace('[STATUS:','').slice(0,-1); const o=JSON.parse(j); return {id:m.id, username:m.username, user_id:m.user_id, created_at:m.created_at, ...o}; }catch(e){ console.log('Parse error', e); return null;} }).filter(Boolean); 
- console.log('Statuses loaded:', statuses.length);
+ statuses=(data||[]).filter(m=>m.content.startsWith('[STATUS:')).filter(m=>(now-new Date(m.created_at).getTime())<24*60*60*1000).map(m=>{ try{ const j=m.content.replace('[STATUS:','').slice(0,-1); const o=JSON.parse(j); return {id:m.id, username:m.username, user_id:m.user_id, created_at:m.created_at, ...o}; }catch(e){ log('Parse error'); return null;} }).filter(Boolean); 
+ log('Statuses loaded: '+statuses.length);
  renderStatusBar(); 
 }
 function renderStatusBar(){ 
@@ -118,26 +102,20 @@ function renderStatusBar(){
  const addItem=document.createElement('div'); addItem.className='statusItem'; addItem.onclick=()=>{ document.getElementById('statusCreateModal').classList.add('show'); showTab('text'); }; addItem.innerHTML=`<div class="statusRing addRing"><div class="statusAv">${myAvatar?`<img src="${myAvatar}">`: (myName[0]||'+').toUpperCase()}<div class="plusBadge">+</div></div></div><div class="statusName">Add Status</div>`; bar.appendChild(addItem); 
  const myGroup=grouped[userId]||[]; 
  if(myGroup.length>0){ 
-  const myItem=document.createElement('div'); myItem.className='statusItem'; myItem.onclick=()=>{ console.log('My Status clicked'); viewStatus(userId,0); }; 
+  const myItem=document.createElement('div'); myItem.className='statusItem'; myItem.onclick=()=>{ log('My Status clicked, count='+myGroup.length); viewStatus(userId,0); }; 
   myItem.innerHTML=`<div class="statusRing"><div class="statusAv">${myAvatar?`<img src="${myAvatar}">`: (myName[0]||'M').toUpperCase()}</div></div><div class="statusName">My Status (${myGroup.length})</div>`; 
   bar.appendChild(myItem); 
  } 
- Object.keys(grouped).forEach(uid=>{ 
-  if(uid===userId) return; 
-  const g=grouped[uid]; const latest=g[0]; const isSeen=seenStatus.includes(latest.id); 
-  const it=document.createElement('div'); it.className='statusItem'; it.onclick=()=>viewStatus(uid,0); 
-  let icon=''; if(latest.type==='video') icon='🎬 '; else if(latest.type==='image') icon='🖼️ '; 
-  it.innerHTML=`<div class="statusRing ${isSeen?'seen':''}"><div class="statusAv">${latest.avatar?`<img src="${latest.avatar}">`: (latest.username[0]||'?').toUpperCase()}</div></div><div class="statusName">${icon}${latest.username}</div>`; 
-  bar.appendChild(it); 
- }); 
+ Object.keys(grouped).forEach(uid=>{ if(uid===userId) return; const g=grouped[uid]; const latest=g[0]; const isSeen=seenStatus.includes(latest.id); const it=document.createElement('div'); it.className='statusItem'; it.onclick=()=>viewStatus(uid,0); let icon=''; if(latest.type==='video') icon='🎬 '; else if(latest.type==='image') icon='🖼️ '; it.innerHTML=`<div class="statusRing ${isSeen?'seen':''}"><div class="statusAv">${latest.avatar?`<img src="${latest.avatar}">`: (latest.username[0]||'?').toUpperCase()}</div></div><div class="statusName">${icon}${latest.username}</div>`; bar.appendChild(it); }); 
 }
 function viewStatus(uidView, idx){
- console.log('viewStatus', uidView, idx);
+ log('viewStatus called: '+uidView+' idx '+idx+' total statuses '+statuses.length);
  const group=statuses.filter(s=>s.user_id===uidView); 
- if(!group.length){ alert('No status found for this user! Try refresh.'); return; }
+ log('Group found: '+group.length);
+ if(!group.length){ alert('❌ No status found! Maybe post fail? Check debug log. Total statuses in DB: '+statuses.length); return; }
  currentStatusUser=uidView; currentStatusIdx=idx;
  const s=group[idx]; 
- if(!s){ alert('Status not found at index '+idx); return; }
+ if(!s){ alert('Status index not found'); return; }
  document.getElementById('viewStatusName').textContent=s.username; 
  document.getElementById('viewStatusTime').textContent=new Date(s.created_at).toLocaleString(); 
  document.getElementById('viewStatusAv').innerHTML=s.avatar?`<img src="${s.avatar}">`: (s.username[0]||'?').toUpperCase(); 
@@ -148,35 +126,39 @@ function viewStatus(uidView, idx){
  const prog=document.getElementById('statusProgress'); prog.innerHTML=''; group.forEach((_,i)=>{ const d=document.createElement('div'); d.className=i===idx?'active':''; prog.appendChild(d); }); 
  if(!seenStatus.includes(s.id)){ seenStatus.push(s.id); localStorage.setItem('seen_status',JSON.stringify(seenStatus)); } 
  document.getElementById('statusViewModal').classList.add('show');
- console.log('Status view opened');
- // Auto next for text/image only, not video (user controls video)
+ log('Status view opened SUCCESS');
  if(s.type!=='video'){ setTimeout(()=>{ if(document.getElementById('statusViewModal').classList.contains('show')&&currentStatusUser===uidView && currentStatusIdx===idx){ if(idx+1<group.length) viewStatus(uidView,idx+1); else closeStatusView(); } },6000); }
 }
 loadMessages(); loadStatuses();
-sb.channel('chale-v30').on('postgres_changes',{event:'*',schema:'public',table:'messages'},()=>{ console.log('New message event'); loadMessages(); loadStatuses(); }).subscribe();
-const presenceChannel=sb.channel('presence-v30',{config:{presence:{key:userId}}});
+sb.channel('chale-v31').on('postgres_changes',{event:'*',schema:'public',table:'messages'},()=>{ log('DB change detected'); loadMessages(); loadStatuses(); }).subscribe();
+const presenceChannel=sb.channel('presence-v31',{config:{presence:{key:userId}}});
 presenceChannel.on('presence',{event:'sync'},()=>{ const state=presenceChannel.presenceState(); onlineUsers={}; Object.values(state).forEach(ps=>{ ps.forEach(p=>{ onlineUsers[p.userId]=p; }) }); const listEl=document.getElementById('onlineList'); listEl.innerHTML=''; Object.values(onlineUsers).forEach(u=>{ const row=document.createElement('div'); row.style.cssText='display:flex;gap:10px;padding:12px;background:#1a1a1a;border-radius:12px;margin-bottom:8px'; row.innerHTML=`<div style="width:44px;height:44px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center">${(u.name[0]||'?').toUpperCase()}</div><div><b>${u.name}</b><div style="font-size:11px;color:#00d26a">Online</div></div>`; listEl.appendChild(row); }); }).subscribe(async()=>{ if(myName){ await presenceChannel.track({userId, name:myName, avatar:myAvatar}); } });
 
-// FILE INPUTS
 document.getElementById('statusImageInput').addEventListener('change', function(e){
  const f=e.target.files[0]; if(!f) return;
+ log('Photo picked: '+f.name+' '+(f.size/1024).toFixed(0)+'KB');
  const reader=new FileReader();
  reader.onload=function(){
   const img=document.getElementById('statusPreviewImg');
   const box=document.getElementById('statusImagePreview');
+  const info=document.getElementById('photoSizeInfo');
   img.src=reader.result; img.dataset.raw=reader.result; box.classList.add('show');
+  info.textContent='✅ Preview | Original: '+(f.size/1024).toFixed(0)+'KB — Will compress to ~40KB';
   setTimeout(()=>{ box.scrollIntoView({behavior:'smooth'}); },100);
  };
  reader.readAsDataURL(f);
 });
 document.getElementById('statusVideoInput').addEventListener('change', function(e){
  const f=e.target.files[0]; if(!f) return;
- if(f.size>30*1024*1024){ alert('Video too big! Max 30MB'); e.target.value=''; return; }
+ log('Video picked: '+f.name+' '+(f.size/1024/1024).toFixed(1)+'MB');
+ if(f.size>5*1024*1024){ alert('❌ Video too big! Max 5MB allowed. Your video is '+(f.size/1024/1024).toFixed(1)+'MB. Pick shorter video or trim am!'); e.target.value=''; return; }
  const reader=new FileReader();
  reader.onload=function(){
   const video=document.getElementById('statusPreviewVideo');
   const box=document.getElementById('statusVideoPreview');
+  const info=document.getElementById('videoSizeInfo');
   video.src=reader.result; video.dataset.raw=reader.result; box.classList.add('show'); video.load();
+  info.textContent='✅ Video Preview | Size: '+(f.size/1024).toFixed(0)+'KB — OK!';
   setTimeout(()=>{ box.scrollIntoView({behavior:'smooth'}); },100);
  };
  reader.readAsDataURL(f);
@@ -190,23 +172,27 @@ document.getElementById('postStatus').onclick=async()=>{
   statusObj={type:'text', text, bg, color, avatar:myAvatar};
  } else if(currentTab==='photo'){
   const raw=document.getElementById('statusPreviewImg').dataset.raw; if(!raw){ alert('⚠️ No photo! Pick photo first!'); return; }
-  const btn=document.getElementById('postStatus'); btn.textContent='⏳ Posting...'; btn.disabled=true;
-  compress(raw,(compressed)=>{
+  const btn=document.getElementById('postStatus'); btn.textContent='⏳ Compressing...'; btn.disabled=true;
+  log('Starting tiny compression...');
+  compressTiny(raw, async (compressed)=>{
    const cap=document.getElementById('statusCaption').value.trim();
    const obj={type:'image', image:compressed, caption:cap, avatar:myAvatar};
    const content=`[STATUS:${JSON.stringify(obj)}]`;
-   sb.from('messages').insert({username:myName,content,user_id:userId}).then(async()=>{
-    document.getElementById('statusCreateModal').classList.remove('show'); 
-    document.getElementById('statusImagePreview').classList.remove('show'); 
-    document.getElementById('statusPreviewImg').dataset.raw=''; 
-    document.getElementById('statusImageInput').value=''; 
-    btn.textContent='✓ Post Status'; btn.disabled=false; 
-    document.getElementById('statusCaption').value='';
-    document.getElementById('statusTextInput').value='';
-    await loadStatuses();
-    setTimeout(()=>{ viewStatus(userId,0); }, 800);
-   });
-  },900,0.85); return;
+   log('Posting... size: '+(content.length/1024).toFixed(0)+'KB');
+   btn.textContent='⏳ Posting to Supabase...';
+   const {data, error}=await sb.from('messages').insert({username:myName,content,user_id:userId}).select();
+   if(error){ log('❌ POST ERROR: '+error.message); alert('❌ Post failed: '+error.message+'\n\nTry smaller image!'); btn.textContent='✓ Post Status'; btn.disabled=false; return; }
+   log('✅ POST SUCCESS! ID: '+data[0].id);
+   document.getElementById('statusCreateModal').classList.remove('show'); 
+   document.getElementById('statusImagePreview').classList.remove('show'); 
+   document.getElementById('statusPreviewImg').dataset.raw=''; 
+   document.getElementById('statusImageInput').value=''; 
+   btn.textContent='✓ Post Status'; btn.disabled=false; 
+   document.getElementById('statusCaption').value='';
+   document.getElementById('statusTextInput').value='';
+   await loadStatuses();
+   setTimeout(()=>{ viewStatus(userId,0); }, 800);
+  }); return;
  } else if(currentTab==='video'){
   const raw=document.getElementById('statusPreviewVideo').dataset.raw; if(!raw){ alert('⚠️ No video! Pick video first!'); return; }
   const cap=document.getElementById('statusVideoCaption').value.trim();
@@ -215,7 +201,10 @@ document.getElementById('postStatus').onclick=async()=>{
  if(statusObj){ 
   const btn=document.getElementById('postStatus'); btn.textContent='⏳ Posting...'; btn.disabled=true;
   const content=`[STATUS:${JSON.stringify(statusObj)}]`; 
-  await sb.from('messages').insert({username:myName,content,user_id:userId}); 
+  log('Posting '+currentTab+' size: '+(content.length/1024).toFixed(0)+'KB');
+  const {data, error}=await sb.from('messages').insert({username:myName,content,user_id:userId}).select();
+  if(error){ log('❌ POST ERROR: '+error.message); alert('❌ Post failed: '+error.message); btn.textContent='✓ Post Status'; btn.disabled=false; return; }
+  log('✅ POST SUCCESS!');
   document.getElementById('statusCreateModal').classList.remove('show'); 
   document.getElementById('statusVideoPreview').classList.remove('show'); 
   document.getElementById('statusVideoInput').value=''; 
@@ -227,7 +216,7 @@ document.getElementById('postStatus').onclick=async()=>{
   setTimeout(()=>{ viewStatus(userId,0); }, 800);
  }
 };
-function handleAvatarFile(file){ const reader=new FileReader(); reader.onloadend=()=>{ compress(reader.result,(c)=>{ myAvatar=c; localStorage.setItem('chale_avatar',c); updateAvatarUI(); },120,0.6); }; reader.readAsDataURL(file); }
+function handleAvatarFile(file){ const reader=new FileReader(); reader.onloadend=()=>{ compressTiny(reader.result,(c)=>{ myAvatar=c; localStorage.setItem('chale_avatar',c); updateAvatarUI(); }); }; reader.readAsDataURL(file); }
 document.getElementById('avatarInput').onchange=(e)=>{ const f=e.target.files[0]; if(f) handleAvatarFile(f); };
 document.getElementById('avatarInput2').onchange=(e)=>{ const f=e.target.files[0]; if(f) handleAvatarFile(f); };
 document.getElementById('profileBtn').onclick=()=>{ document.getElementById('profileNameInput').value=myName; updateAvatarUI(); document.getElementById('profileModal').classList.add('show'); };
