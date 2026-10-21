@@ -1,25 +1,25 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>ChaleChat V51 SALVATION TECH-GHANA</title>
+<title>ChaleChat V52 FINAL POLISH - SALVATION TECH-GHANA</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#0B141A;color:#E9EDEF;font-family:'Inter',system-ui;display:flex;flex-direction:column;height:100dvh;overflow:hidden}
-.top{height:59px;padding:0 6px 0 10px;background:#202C33;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.leftTop{display:flex;align-items:center;gap:10px;flex:1;overflow:hidden;cursor:pointer}
-.topAvatar{width:42px;height:42px;border-radius:50%;background:#000;border:2px solid #D4AF37;display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;color:#D4AF37;font-size:18px;flex-shrink:0;box-shadow:0 0 0 2px #000}
+.top{height:60px;padding:0 8px 0 12px;background:#202C33;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;gap:8px}
+.leftTop{display:flex;align-items:center;gap:10px;flex:1;min-width:0;overflow:hidden;cursor:pointer}
+.topAvatar{width:42px;height:42px;border-radius:50%;background:#000;border:2px solid #D4AF37;display:flex;align-items:center;justify-content:center;font-weight:900;color:#D4AF37;font-size:18px;flex-shrink:0}
 .topAvatar img{width:100%;height:100%;object-fit:cover}
-.topName{font-weight:700;font-size:16px;letter-spacing:.2px}
-.topSub{font-size:11px;color:#8696A0}
+.topText{flex:1;min-width:0;overflow:hidden}
+.topName{font-weight:700;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topSub{font-size:11.5px;color:#8696A0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .iconTop{width:40px;height:40px;border-radius:50%;background:transparent;border:0;color:#AEBAC1;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.iconTop:active{background:#2A3942}
 #statusBar{display:flex;gap:12px;padding:10px 12px;background:#0B141A;overflow-x:auto;flex-shrink:0;border-bottom:1px solid #1F2C34;min-height:88px}
 .statusItem{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:64px;cursor:pointer}
 .statusRing{width:58px;height:58px;border-radius:50%;padding:2.5px;background:conic-gradient(#00A884,#D4AF37,#3B4A54,#00A884);display:flex;align-items:center;justify-content:center;position:relative}
 .statusRing.seen{background:#3B4A54}
 .statusRing.addRing{background:#000;border:2px dashed #D4AF37}
-.statusAv{width:52px;height:52px;border-radius:50%;background:#000;border:2px solid #D4AF37;display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;color:#D4AF37}
+.statusAv{width:52px;height:52px;border-radius:50%;background:#000;border:2px solid #D4AF37;display:flex;align-items:center;justify-content:center;font-weight:900;color:#D4AF37;overflow:hidden}
 .statusName{font-size:11px;color:#8696A0;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .plusBadge{position:absolute;bottom:-2px;right:-2px;background:#D4AF37;color:#000;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;border:2px solid #0B141A;font-size:12px}
 #chat{flex:1;overflow-y:auto;padding:12px 8px;display:flex;flex-direction:column;gap:6px;background:#0B141A;min-height:0}
@@ -27,7 +27,7 @@ body{margin:0;background:#0B141A;color:#E9EDEF;font-family:'Inter',system-ui;dis
 .me{align-self:flex-end;background:#005C4B;color:#E9EDEF;border-top-right-radius:0}
 .other{align-self:flex-start;background:#202C33;color:#E9EDEF;border-top-left-radius:0}
 .avatar{width:28px;height:28px;border-radius:50%;background:#000;border:1px solid #D4AF37;color:#D4AF37;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0}
-.barWrap{flex-shrink:0;background:#202C33;padding:6px 8px;padding-bottom:calc(6px + env(safe-area-inset-bottom));position:sticky;bottom:0;z-index:40}
+.barWrap{flex-shrink:0;background:#202C33;padding:6px 8px 6px 8px;position:sticky;bottom:0;z-index:40}
 .bar{display:flex;gap:6px;align-items:flex-end}
 .inputWrap{flex:1;background:#2A3942;border-radius:21px;display:flex;align-items:flex-end;padding:5px 8px;gap:6px}
 input.msg{flex:1;background:transparent;border:0;color:#E9EDEF;outline:none;font-size:15px;padding:8px 4px}
@@ -35,33 +35,31 @@ button.send{border:0;border-radius:50%;width:45px;height:45px;background:#00A884
 button.micBtn{border:0;border-radius:50%;width:45px;height:45px;background:#00A884;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .modal{position:fixed;inset:0;background:rgba(11,20,26,.88);z-index:200;display:none;align-items:center;justify-content:center;padding:12px}
 .modal.show{display:flex!important}
-.box{background:#202C33;border:1px solid #2A3942;border-radius:12px;padding:16px;width:100%;max-width:420px;max-height:92vh;overflow:auto}
+.box{background:#202C33;border:1px solid #2A3942;border-radius:14px;padding:16px;width:100%;max-width:420px;max-height:92vh;overflow:auto}
 .box input,.box textarea{width:100%;background:#2A3942;border:1px solid #2A3942;color:#E9EDEF;border-radius:8px;padding:12px;outline:none;margin-bottom:12px}
 .btn{padding:10px 16px;border-radius:8px;border:0;font-weight:600;cursor:pointer;font-size:14px}
 .btnCancel{background:#2A3942;color:#AEBAC1}
 .btnOk{background:#00A884;color:#fff}
 .btnDanger{background:#F15C6D;color:#fff}
 .btnRow{display:flex;gap:10px;justify-content:flex-end}
-.picCircle{width:88px;height:88px;border-radius:50%;background:#000;border:3px solid #D4AF37;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#D4AF37;overflow:hidden;cursor:pointer;box-shadow:0 0 0 4px #111B21}
+.picCircle{width:88px;height:88px;border-radius:50%;background:#000;border:3px solid #D4AF37;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#D4AF37;overflow:hidden;cursor:pointer}
 .picCircle img{width:100%;height:100%;object-fit:cover}
 .bigTab{width:100%;padding:12px 14px;border-radius:8px;border:0;background:#2A3942;color:#E9EDEF;font-weight:500;font-size:14px;margin-bottom:6px;cursor:pointer;text-align:left;display:block}
 .bigTab.active{background:#00A884;color:#fff}
 .fileVisible{width:100%;padding:12px;background:#2A3942;border:1px dashed #D4AF37;border-radius:8px;color:#E9EDEF;font-weight:600;margin-bottom:8px}
 .contactRow{display:flex;gap:12px;padding:10px;border-bottom:1px solid #2A3942;align-items:center;cursor:pointer}
-.contactRow:active{background:#2A3942}
 .previewBox{display:none;border:2px solid #D4AF37;border-radius:12px;overflow:hidden;background:#000;margin-top:10px}
 .previewBox.show{display:block}
-.recordingBar{display:none;position:fixed;bottom:78px;left:50%;transform:translateX(-50%);background:#202C33;color:#E9EDEF;padding:10px 16px;border-radius:24px;font-weight:600;z-index:60;gap:10px;align-items:center;border:1px solid #2A3942}
+.recordingBar{display:none;position:fixed;bottom:98px;left:50%;transform:translateX(-50%);background:#202C33;color:#E9EDEF;padding:10px 16px;border-radius:24px;font-weight:600;z-index:60;gap:10px;align-items:center;border:1px solid #2A3942}
 .recordingBar.show{display:flex}
 .langOption{padding:14px 16px;border-bottom:1px solid #2A3942;cursor:pointer;display:flex;justify-content:space-between;color:#E9EDEF}
-.langOption.active{background:#2A3942}
 .importBtn{padding:10px;border-radius:8px;border:0;font-weight:600;cursor:pointer;flex:1;font-size:13px}
 .statusView{position:relative;width:100%;max-width:400px;height:85vh;background:#000;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;border:1px solid #2A3942}
 .statusViewTop{position:absolute;top:0;left:0;right:0;padding:14px;display:flex;justify-content:space-between;align-items:center;z-index:10;background:linear-gradient(to bottom,rgba(0,0,0,.9),transparent)}
 .statusProgress{position:absolute;top:0;left:0;right:0;display:flex;gap:3px;padding:6px;z-index:11}
 .statusProgress div{height:3px;background:rgba(255,255,255,.35);flex:1;border-radius:2px}
 .statusProgress div.active{background:#fff}
-#threeDotsMenu{position:fixed;top:8px;right:8px;width:268px;background:#233138;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.6);z-index:150;display:none;flex-direction:column;padding:8px 0;max-height:85vh;overflow:auto}
+#threeDotsMenu{position:fixed;top:8px;right:8px;width:270px;background:#233138;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.6);z-index:150;display:none;flex-direction:column;padding:8px 0;max-height:85vh;overflow:auto}
 #threeDotsMenu.show{display:flex!important}
 .menuItem{padding:14px 20px;font-size:14.5px;color:#E9EDEF;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
 .menuItem:active{background:#2A3942}
@@ -72,27 +70,30 @@ button.micBtn{border:0;border-radius:50%;width:45px;height:45px;background:#00A8
 .bottomNavItem.active{color:#E9EDEF}
 .bottomNavItem.active .navIcon{background:#00A88422;padding:4px 14px;border-radius:16px;color:#fff}
 .navIcon{font-size:19px;padding:4px 14px}
-.poweredFooter{text-align:center;padding:6px 0 8px 0;background:#202C33;color:#8696A0;font-size:10.5px;letter-spacing:.5px;border-top:1px solid #1F2C34;flex-shrink:0;line-height:1.2}
+.poweredFooter{text-align:center;padding:7px 0 8px 0;background:#202C33;color:#8696A0;font-size:10.5px;letter-spacing:.5px;border-top:1px solid #1F2C34;flex-shrink:0;line-height:1.3}
 .poweredFooter b{color:#D4AF37}
-.poweredFooter .sub{font-size:9px;color:#5a6b74;margin-top:2px}
+/* S TECH TOAST - NO MORE github.io says */
+#sToast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%) translateY(20px);background:#111B21;border:1px solid #D4AF37;color:#E9EDEF;padding:12px 18px;border-radius:24px;font-size:13px;font-weight:500;z-index:300;display:none;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.5);max-width:85%;opacity:0;transition:all .25s}
+#sToast.show{display:flex;opacity:1;transform:translateX(-50%) translateY(0)}
+#sToast .sIcon{width:28px;height:28px;border-radius:50%;background:#000;border:1.5px solid #D4AF37;display:flex;align-items:center;justify-content:center;color:#D4AF37;font-weight:900;font-size:12px;flex-shrink:0}
 </style>
 </head>
 <body>
 <div class="top">
-<div class="leftTop" id="leftTop"><div class="topAvatar" id="topAvatarWrap">S</div><div><div class="topName" id="topName">CHALE CHAT</div><div class="topSub" id="topSub">S TECH • 1 online • tap for contacts</div></div></div>
-<div style="display:flex;gap:2px"><button class="iconTop" id="searchBtn">🔍</button><button class="iconTop" id="callBtn">📞</button><button class="iconTop" id="dotsBtn" style="font-weight:900;font-size:22px">⋮</button></div>
+<div class="leftTop" id="leftTop"><div class="topAvatar" id="topAvatarWrap">S</div><div class="topText"><div class="topName" id="topName">CHALE CHAT</div><div class="topSub" id="topSub">S TECH • 1 online • tap for contacts</div></div></div>
+<div style="display:flex;gap:2px;flex-shrink:0"><button class="iconTop" id="searchBtn">🔍</button><button class="iconTop" id="callBtn">📞</button><button class="iconTop" id="dotsBtn" style="font-weight:900;font-size:22px">⋮</button></div>
 </div>
 
 <div id="menuOverlay"></div>
 <div id="threeDotsMenu">
-<div class="menuItem" id="mNewGroup"><span>New group</span></div>
-<div class="menuItem" id="mNewCommunity"><span>New community</span></div>
-<div class="menuItem" id="mBroadcast"><span>Broadcast lists</span></div>
-<div class="menuItem" id="mLinked"><span>Linked devices</span></div>
-<div class="menuItem" id="mStarred"><span>Starred</span></div>
-<div class="menuItem" id="mReadAll"><span>Read all</span></div>
-<div class="menuItem" id="mStatusPrivacy"><span>Status privacy</span></div>
-<div class="menuItem" id="mSettings"><span>Settings</span></div>
+<div class="menuItem" id="mNewGroup"><span>New group</span><span style="color:#8696A0">👥</span></div>
+<div class="menuItem" id="mNewCommunity"><span>New community</span><span style="color:#8696A0">🌐</span></div>
+<div class="menuItem" id="mBroadcast"><span>Broadcast lists</span><span style="color:#8696A0">📢</span></div>
+<div class="menuItem" id="mLinked"><span>Linked devices</span><span style="color:#8696A0">🔗</span></div>
+<div class="menuItem" id="mStarred"><span>Starred</span><span style="color:#8696A0">⭐</span></div>
+<div class="menuItem" id="mReadAll"><span>Read all</span><span style="color:#8696A0">✓✓</span></div>
+<div class="menuItem" id="mStatusPrivacy"><span>Status privacy</span><span style="color:#8696A0">🔒</span></div>
+<div class="menuItem" id="mSettings"><span>Settings</span><span style="color:#8696A0">⚙️</span></div>
 <div style="height:1px;background:#2A3942;margin:6px 0"></div>
 <div class="menuItem" id="mProfile"><span>👤 View profile</span></div>
 <div class="menuItem" id="mContacts"><span>📇 New chat / Contacts</span></div>
@@ -102,10 +103,10 @@ button.micBtn{border:0;border-radius:50%;width:45px;height:45px;background:#00A8
 </div>
 
 <div id="statusBar"></div>
-<div id="chat"><div style="text-align:center;color:#8696A0;padding:30px;font-size:13px"><div style="width:60px;height:60px;border-radius:50%;background:#000;border:3px solid #D4AF37;display:flex;align-items:center;justify-content:center;color:#D4AF37;font-weight:900;font-size:24px;margin:0 auto 12px auto">S</div>V51 SALVATION TECH-GHANA<br>S LOGO ACTIVE • Tap ⋮ for menu</div></div>
+<div id="chat"></div>
 
 <div class="recordingBar" id="recordingBar"><div style="width:8px;height:8px;background:#F15C6D;border-radius:50%"></div><span id="recordingText">Recording 0s...</span><button id="cancelRecBtn" style="background:#2A3942;color:#fff;border:0;border-radius:50%;width:24px;height:24px">✕</button></div>
-<div class="barWrap"><div class="bar"><div class="inputWrap"><input id="i" class="msg" placeholder="Message"></div><button class="micBtn" id="micBtn">🎙️</button><button class="send" id="b">➤</button></div></div>
+<div class="barWrap"><div class="bar"><div class="inputWrap"><input id="i" class="msg" placeholder="Message • S TECH"></div><button class="micBtn" id="micBtn">🎙️</button><button class="send" id="b">➤</button></div></div>
 
 <div class="bottomNav">
 <div class="bottomNavItem active" id="navChats"><div class="navIcon">💬</div><div>Chats</div></div>
@@ -115,25 +116,27 @@ button.micBtn{border:0;border-radius:50%;width:45px;height:45px;background:#00A8
 </div>
 
 <div class="poweredFooter">
-  Powered by <b>SALVATION TECH-GHANA</b> • S TECH HUB • 🇬🇭<br>
-  <div class="sub">Built for Ghana • S Logo • AYEEE! 🔥 • V51</div>
+Powered by <b>SALVATION TECH-GHANA</b> • S TECH HUB • 🇬🇭<br>
+<span style="font-size:9px;color:#5a6b74">Built for Ghana • S Logo • AYEEE! 🔥 • V52 FINAL</span>
 </div>
 
+<div id="sToast"><div class="sIcon">S</div><span id="sToastText">S TECH</span></div>
+
 <!-- MODALS -->
-<div id="langModal" class="modal"><div class="box"><h3>🌍 Language</h3>
-<div class="langOption" data-lang="en" onclick="setLang('en')">English <span class="check"></span></div>
-<div class="langOption" data-lang="tw" onclick="setLang('tw')">Twi <span class="check"></span></div>
-<div class="langOption" data-lang="ga" onclick="setLang('ga')">Ga <span class="check"></span></div>
-<div class="langOption" data-lang="ewe" onclick="setLang('ewe')">Ewe <span class="check"></span></div>
-<div class="langOption" data-lang="hausa" onclick="setLang('hausa')">Hausa <span class="check"></span></div>
-<div class="langOption" data-lang="pidgin" onclick="setLang('pidgin')">Pidgin <span class="check"></span></div>
-<div class="btnRow"><button class="btn btnOk" id="closeLang">Close</button></div>
+<div id="langModal" class="modal"><div class="box"><h3>🌍 Language • S TECH</h3>
+<div class="langOption" data-lang="en" onclick="setLang('en')">English</div>
+<div class="langOption" data-lang="tw" onclick="setLang('tw')">Twi</div>
+<div class="langOption" data-lang="ga" onclick="setLang('ga')">Ga</div>
+<div class="langOption" data-lang="ewe" onclick="setLang('ewe')">Ewe</div>
+<div class="langOption" data-lang="hausa" onclick="setLang('hausa')">Hausa</div>
+<div class="langOption" data-lang="pidgin" onclick="setLang('pidgin')">Pidgin</div>
+<div class="btnRow" style="margin-top:12px"><button class="btn btnOk" id="closeLang">Close</button></div>
 </div></div>
 
-<div id="statusCreateModal" class="modal"><div class="box"><h3 id="addStatusTitle">Add Status</h3>
+<div id="statusCreateModal" class="modal"><div class="box"><h3 id="addStatusTitle">Add Status • S TECH</h3>
 <button id="tabText" class="bigTab active" onclick="showTab('text')">📝 Text</button>
 <div id="panelText"><textarea id="statusTextInput" placeholder="What dey happen? 24hrs..." rows="4"></textarea></div>
-<button id="tabPhoto" class="bigTab" onclick="showTab('photo')">🖼️ Photo — Saver 80KB</button>
+<button id="tabPhoto" class="bigTab" onclick="showTab('photo')">🖼️ Photo — 80KB Saver</button>
 <div id="panelPhoto" style="display:none"><input type="file" id="statusImageInput" accept="image/*" class="fileVisible"><div id="statusImagePreview" class="previewBox"><img id="statusPreviewImg" style="width:100%;max-height:300px;object-fit:contain;background:#000"></div><input id="statusCaption" placeholder="Caption..."></div>
 <button id="tabVideo" class="bigTab" onclick="showTab('video')">🎬 Video — 1MB Saver</button>
 <div id="panelVideo" style="display:none"><input type="file" id="statusVideoInput" accept="video/*" class="fileVisible"><div id="statusVideoPreview" class="previewBox"><video id="statusPreviewVideo" controls playsinline style="width:100%;max-height:300px;background:#000"></video></div><input id="statusVideoCaption" placeholder="Caption..."></div>
@@ -149,16 +152,18 @@ button.micBtn{border:0;border-radius:50%;width:45px;height:45px;background:#00A8
 <div id="mediaModal" class="modal"><div class="box"><h3>Media • S TECH</h3><div id="mediaList" style="max-height:50vh;overflow:auto"></div><div class="btnRow"><button class="btn btnOk" id="closeMedia">Close</button></div></div></div>
 
 <div id="moreModal" class="modal"><div class="box"><h3 style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:50%;background:#000;border:2px solid #D4AF37;display:flex;align-items:center;justify-content:center;color:#D4AF37;font-weight:900">S</div> SALVATION TECH Settings</h3>
-<div style="text-align:center;padding:10px;margin-bottom:12px;background:#111B21;border-radius:10px;border:1px solid #2A3942"><b style="color:#D4AF37;font-size:15px">SALVATION TECH-GHANA</b><br><span style="font-size:11px;color:#8696A0">Built for Ghana 🇬🇭 • AYEEE! 🔥<br>S Logo • S TECH HUB • V51<br>Powered by Salvation Tech</span></div>
+<div style="text-align:center;padding:10px;margin-bottom:12px;background:#111B21;border-radius:10px;border:1px solid #2A3942"><b style="color:#D4AF37;font-size:15px">SALVATION TECH-GHANA</b><br><span style="font-size:11px;color:#8696A0">Built for Ghana 🇬🇭 • AYEEE! 🔥<br>S Logo • S TECH HUB • V52 FINAL</span></div>
 <div style="background:#111B21;padding:10px;border-radius:8px;margin-bottom:12px;font-size:12px;color:#8696A0"><b>📶</b> <span id="moreNetworkStatus">Checking...</span><br><b>Active:</b> <span id="moreActiveChat">CHALE CHAT</span><br><b>Queue:</b> <span id="moreQueue">0</span></div><button class="bigTab" id="btnSendQueued">🔄 Send queued</button><button class="bigTab" id="btnClearHidden">🙈 Clear hidden</button><button class="bigTab" id="btnDeleteStatus" style="color:#F15C6D">🎬 Delete my status</button><button class="bigTab" id="btnClearData">⚠️ Clear data</button><div class="btnRow"><button class="btn btnOk" id="closeMore">Close</button></div></div></div>
 
-<div id="nameModal" class="modal"><div class="box"><h3 style="display:flex;align-items:center;gap:10px"><div style="width:32px;height:32px;border-radius:50%;background:#000;border:2px solid #D4AF37;display:flex;align-items:center;justify-content:center;color:#D4AF37;font-weight:900">S</div> Join ChaleChat</h3><div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:16px"><div class="picCircle" id="picCircle"><span id="picLetter">S</span></div><input type="file" id="avatarInput" hidden accept="image/*"></div><input id="nameInput" placeholder="Your name — e.g. Kwaakye"><div class="btnRow"><button class="btn btnOk" id="okName">Save & Join • S TECH</button></div><div style="text-align:center;margin-top:12px;font-size:10px;color:#5a6b74">Powered by SALVATION TECH-GHANA 🇬🇭</div></div></div>
+<div id="nameModal" class="modal"><div class="box"><h3 style="display:flex;align-items:center;gap:10px"><div style="width:32px;height:32px;border-radius:50%;background:#000;border:2px solid #D4AF37;display:flex;align-items:center;justify-content:center;color:#D4AF37;font-weight:900">S</div> Join ChaleChat</h3><div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:16px"><div class="picCircle" id="picCircle"><span id="picLetter">S</span></div><input type="file" id="avatarInput" hidden accept="image/*"></div><input id="nameInput" placeholder="Your name"><div class="btnRow"><button class="btn btnOk" id="okName">Save & Join • S TECH</button></div><div style="text-align:center;margin-top:12px;font-size:10px;color:#5a6b74">Powered by SALVATION TECH-GHANA 🇬🇭</div></div></div>
 
 <div id="profileModal" class="modal"><div class="box"><h3 style="display:flex;align-items:center;gap:10px"><div style="width:32px;height:32px;border-radius:50%;background:#000;border:2px solid #D4AF37;display:flex;align-items:center;justify-content:center;color:#D4AF37;font-weight:900">S</div> Profile • S TECH</h3><div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:16px"><div class="picCircle" id="profilePicCircle"><span id="profilePicLetter">S</span></div><input type="file" id="avatarInput2" hidden accept="image/*"></div><input id="profileNameInput" placeholder="Your name"><div class="btnRow"><button class="btn btnCancel" id="closeProfile">Close</button><button class="btn btnOk" id="saveProfile">Save</button></div></div></div>
 
 <div id="onlineModal" class="modal"><div class="box"><h3>Online • S TECH</h3><div id="onlineList"></div><div class="btnRow"><button class="btn btnOk" id="closeOnline">Close</button></div></div></div>
 
 <div id="newGroupModal" class="modal"><div class="box"><h3>New group • S TECH</h3><input id="groupNameInput" placeholder="Group name, e.g. GH Coders"><div id="groupContactsList" style="max-height:30vh;overflow:auto;margin-bottom:12px"></div><div class="btnRow"><button class="btn btnCancel" id="closeNewGroup">Cancel</button><button class="btn btnOk" id="createGroupBtn">Create</button></div></div></div>
+
+<div id="linkedModal" class="modal"><div class="box" style="text-align:center"><h3 style="display:flex;align-items:center;justify-content:center;gap:8px"><span style="width:32px;height:32px;border-radius:50%;background:#000;border:2px solid #D4AF37;display:flex;align-items:center;justify-content:center;color:#D4AF37;font-weight:900">S</span> Linked devices</h3><div style="width:200px;height:200px;background:#fff;border-radius:12px;margin:16px auto;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#000"><div style="font-size:60px">📱</div><div style="font-size:12px;margin-top:8px">QR Code for S TECH Web</div><div style="font-size:10px;color:#666;margin-top:4px">Coming in V53</div></div><p style="font-size:12px;color:#8696A0">Use ChaleChat on your computer — S TECH Web will be live soon!<br><br>Your chats are end-to-end encrypted like WhatsApp.</p><div class="btnRow" style="justify-content:center;margin-top:12px"><button class="btn btnOk" id="closeLinked">OK • S TECH</button></div></div></div>
 
 <script>
 try{
@@ -176,20 +181,32 @@ let starredMsgs=JSON.parse(localStorage.getItem('chale_starred')||'[]');
 
 function safeGet(id){ try{ return document.getElementById(id); }catch(e){ return null; } }
 function safeOn(id, ev, fn){ const el=safeGet(id); if(el) el.addEventListener(ev, fn); }
+
+// S TECH TOAST - REPLACES ALERT
+function sToast(msg){
+  const toast=safeGet('sToast'); const txt=safeGet('sToastText');
+  if(!toast||!txt) return;
+  txt.textContent=msg;
+  toast.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t=setTimeout(()=>toast.classList.remove('show'),3000);
+}
+window.sToast=sToast;
+
 function saveActiveChat(){ localStorage.setItem('chale_active_chat', JSON.stringify(activeChat)); updateTopBar(); }
 function updateTopBar(){
   try{
     const topName=safeGet('topName'), topSub=safeGet('topSub'), topAvatarWrap=safeGet('topAvatarWrap'), moreActive=safeGet('moreActiveChat'), input=safeGet('i');
     if(!topName) return;
     if(activeChat.type==='group'){
-      topName.textContent=activeChat.name==='CHALE CHAT'?'CHALE CHAT':activeChat.name;
-      topSub.textContent=Object.keys(onlineUsers).length>0?Object.keys(onlineUsers).length+' online • S TECH':'S TECH • tap for contacts • V51';
+      topName.textContent=activeChat.name;
+      topSub.textContent=Object.keys(onlineUsers).length>0?Object.keys(onlineUsers).length+' online • S TECH':'S TECH • tap for contacts • V52';
       if(topAvatarWrap) topAvatarWrap.innerHTML=activeChat.name==='CHALE CHAT'?'S':activeChat.name[0].toUpperCase();
-      if(moreActive) moreActive.textContent=activeChat.name+' (group)'; if(input) input.placeholder='Message';
+      if(moreActive) moreActive.textContent=activeChat.name+' (group)'; if(input) input.placeholder='Message • S TECH';
     } else {
       const name=activeChat.name; topName.textContent=name;
       const isOnlineUser=Object.values(onlineUsers).some(u=>u.name===name);
-      topSub.textContent=isOnlineUser?'online • S TECH • tap to change':'S TECH • tap to change chat';
+      topSub.textContent=isOnlineUser?'online • S TECH':'S TECH • tap to change';
       if(topAvatarWrap) topAvatarWrap.innerHTML=name[0].toUpperCase();
       if(moreActive) moreActive.textContent=name+' (1-1)'; if(input) input.placeholder=`Message ${name}...`;
     }
@@ -197,14 +214,14 @@ function updateTopBar(){
 }
 window.showChatList=()=>{ safeGet('contactsModal')?.classList.add('show'); renderContacts(); };
 window.startGroupChat=()=>{ activeChat={name:'CHALE CHAT', type:'group'}; saveActiveChat(); safeGet('contactsModal')?.classList.remove('show'); loadMessages(); };
-function selectContact(name){ activeChat={name:name, type:'direct'}; saveActiveChat(); safeGet('contactsModal')?.classList.remove('show'); loadMessages(); }
+function selectContact(name){ activeChat={name:name, type:'direct'}; saveActiveChat(); safeGet('contactsModal')?.classList.remove('show'); loadMessages(); sToast(`Chatting with ${name} • S TECH`); }
 function updateNetworkUI(){
   const moreEl=safeGet('moreNetworkStatus'), queueEl=safeGet('moreQueue');
-  if(moreEl) moreEl.textContent=isOnline?(messageQueue.length>0?`🟡 ${messageQueue.length} queued`:'🟢 Online — S TECH'):'🔴 Offline';
+  if(moreEl) moreEl.textContent=isOnline?(messageQueue.length>0?`🟡 ${messageQueue.length} queued`:'🟢 Online • S TECH'):'🔴 Offline';
   if(queueEl) queueEl.textContent=messageQueue.length+' queued';
 }
-window.addEventListener('online', ()=>{ isOnline=true; updateNetworkUI(); sendQueued(); });
-window.addEventListener('offline', ()=>{ isOnline=false; updateNetworkUI(); });
+window.addEventListener('online', ()=>{ isOnline=true; updateNetworkUI(); sendQueued(); sToast('Back online • S TECH 🟢'); });
+window.addEventListener('offline', ()=>{ isOnline=false; updateNetworkUI(); sToast('Offline • messages queued • S TECH'); });
 function saveQueue(){ localStorage.setItem('chale_queue', JSON.stringify(messageQueue)); updateNetworkUI(); }
 function queueMessage(content){ messageQueue.push({username:myName, content, time:Date.now()}); saveQueue(); }
 async function sendQueued(){
@@ -213,9 +230,9 @@ async function sendQueued(){
   for(let m of toSend){
     try{ const {error}=await sb.from('messages').insert({username:m.username, content:m.content}); if(!error){ messageQueue.shift(); saveQueue(); } }catch(e){ break; }
   }
-  loadMessages();
+  loadMessages(); sToast('Queued messages sent • S TECH');
 }
-function setLang(lang){ localStorage.setItem('chale_lang', lang); currentLang=lang; safeGet('langModal')?.classList.remove('show'); }
+function setLang(lang){ localStorage.setItem('chale_lang', lang); currentLang=lang; safeGet('langModal')?.classList.remove('show'); sToast(`Language: ${lang} • S TECH`); }
 window.setLang=setLang;
 function compressTiny(dataUrl,cb){
   try{ const img=new Image(); img.onload=()=>{ const c=document.createElement('canvas'); let max=300; let w=img.width,h=img.height; if(w>max||h>max){ if(w>h){ h*=max/w; w=max; } else { w*=max/h; h=max; } } c.width=w; c.height=h; c.getContext('2d').drawImage(img,0,0,w,h); cb(c.toDataURL('image/jpeg',0.3)); }; img.onerror=()=>cb(dataUrl); img.src=dataUrl; }catch(e){ cb(dataUrl); }
@@ -239,15 +256,15 @@ function renderContacts(filter=''){
     row.onclick=()=>selectContact(name); list.appendChild(row);
   });
 }
-window.deleteContact=(name)=>{ if(confirm('Delete '+name+'?')){ if(!blocked.includes(name)) blocked.push(name); contacts=contacts.filter(c=>c!==name); if(activeChat.name===name){ activeChat={name:'CHALE CHAT', type:'group'}; saveActiveChat(); } saveContacts(); renderContacts(); } };
+window.deleteContact=(name)=>{ if(confirm('Delete '+name+'? • S TECH')){ if(!blocked.includes(name)) blocked.push(name); contacts=contacts.filter(c=>c!==name); if(activeChat.name===name){ activeChat={name:'CHALE CHAT', type:'group'}; saveActiveChat(); } saveContacts(); renderContacts(); sToast(`Deleted ${name} • S TECH`); } };
 window.importPhoneContacts = async () => {
   try{
     if('contacts' in navigator && 'ContactsManager' in window){
-      const selected = await navigator.contacts.select(['name'], {multiple: true}); if(!selected || selected.length===0){ alert('No contacts selected'); return; }
+      const selected = await navigator.contacts.select(['name'], {multiple: true}); if(!selected || selected.length===0){ sToast('No contacts selected • S TECH'); return; }
       let added=0; selected.forEach(c=>{ let name=c.name&&c.name[0]?c.name[0]:null; if(name && !contacts.includes(name) && !blocked.includes(name)){ blocked=blocked.filter(b=>b!==name); contacts.push(name); added++; } });
-      saveContacts(); renderContacts(); alert(`✅ Added ${added} contacts! • S TECH`);
+      saveContacts(); renderContacts(); sToast(`✅ Added ${added} contacts! • S TECH`);
     } else { safeGet('vcfInput')?.click(); }
-  }catch(err){ alert('Import error: '+err.message); }
+  }catch(err){ sToast('Import error: '+err.message); }
 };
 const chatEl=safeGet('chat');
 function forceRenderBar(){
@@ -270,7 +287,7 @@ async function loadMessages(){
     if(error) throw error; let filteredData=(data||[]).filter(m=>!hidden.includes(m.id));
     if(activeChat.type==='direct'){ const contactName=activeChat.name; filteredData=filteredData.filter(m=> m.username===myName || m.username===contactName || m.content.includes('@'+contactName)); }
     if(!chatEl) return;
-    if(filteredData.length===0){ chatEl.innerHTML=`<div style="text-align:center;color:#8696A0;padding:30px;font-size:13px"><div style="width:60px;height:60px;border-radius:50%;background:#000;border:3px solid #D4AF37;display:flex;align-items:center;justify-content:center;color:#D4AF37;font-weight:900;font-size:24px;margin:0 auto 12px auto">S</div>${activeChat.type==='group'?'No messages in group yet<br><small>S TECH • Type below</small>':'No messages with ${activeChat.name} yet<br><small>Say hi! S TECH'}</small></div>`; return; }
+    if(filteredData.length===0){ chatEl.innerHTML=`<div style="text-align:center;color:#8696A0;padding:30px;font-size:13px"><div style="width:60px;height:60px;border-radius:50%;background:#000;border:3px solid #D4AF37;display:flex;align-items:center;justify-content:center;color:#D4AF37;font-weight:900;font-size:24px;margin:0 auto 12px auto">S</div>${activeChat.type==='group'?'No messages in group yet<br><small>S TECH • Type below • AYEEE!</small>':'No messages with ${activeChat.name} yet<br><small>Say hi! S TECH'}</small></div>`; return; }
     const sorted=filteredData.reverse(); chatEl.innerHTML=''; 
     sorted.forEach(m=>{ 
       if(!m.content || m.content.length>300000) return; const isMe=m.username===myName; 
@@ -282,12 +299,12 @@ async function loadMessages(){
       chatEl.appendChild(div); 
     }); 
     chatEl.scrollTop=chatEl.scrollHeight; 
-  }catch(e){ if(chatEl) chatEl.innerHTML=`<div style="text-align:center;color:#F15C6D;padding:20px;font-size:13px">Error: ${e.message}<br><button onclick="loadMessages()" style="background:#00A884;color:#fff;padding:8px 16px;border-radius:8px;border:0">Retry</button></div>`; } 
+  }catch(e){ if(chatEl) chatEl.innerHTML=`<div style="text-align:center;color:#F15C6D;padding:20px;font-size:13px">Error: ${e.message}<br><button onclick="loadMessages()" style="background:#00A884;color:#fff;padding:8px 16px;border-radius:8px;border:0">Retry • S TECH</button></div>`; } 
 }
 async function loadStatuses(){ 
   try{ const {data, error}=await sb.from('messages').select('id,username,content,created_at').like('content','[STATUS:%').order('created_at',{ascending:false}).limit(60); if(error) throw error; const now=Date.now(); statuses=(data||[]).filter(m=>(now-new Date(m.created_at).getTime())<24*60*60*1000).map(m=>{ try{ const j=m.content.replace('[STATUS:','').slice(0,-1); const o=JSON.parse(j); return {id:m.id, username:m.username, created_at:m.created_at, ...o}; }catch(e){ return null;} }).filter(Boolean); forceRenderBar(); }catch(e){ forceRenderBar(); } 
 }
-function viewStatus(keyView, idx){ try{ const group=statuses.filter(s=> s.username===keyView); if(!group.length) return; currentStatusUser=keyView; currentStatusIdx=idx; currentStatusId=group[idx].id; const s=group[idx]; const nameEl=safeGet('viewStatusName'), timeEl=safeGet('viewStatusTime'), avEl=safeGet('viewStatusAv'); if(nameEl) nameEl.textContent=s.username; if(timeEl) timeEl.textContent=new Date(s.created_at).toLocaleString(); if(avEl) avEl.innerHTML=s.avatar?`<img src="${s.avatar}">`: (s.username[0]||'?').toUpperCase(); const c=safeGet('viewStatusContent'); if(!c) return; c.innerHTML=''; if(s.type==='text'){ c.innerHTML=`<div style="background:${s.bg||'#00A884'};color:${s.color||'#fff'};padding:36px;border-radius:16px;font-size:24px;font-weight:700;text-align:center;max-width:90%;min-height:180px;display:flex;align-items:center;justify-content:center">${s.text}</div>`; } else if(s.type==='image'){ c.innerHTML=`<div style="text-align:center;width:100%"><img src="${s.image}" style="max-width:100%;max-height:65vh;border-radius:12px"></div>`; } else if(s.type==='video'){ c.innerHTML=`<div style="text-align:center;width:100%"><video src="${s.video}" controls autoplay playsinline style="width:100%;max-height:65vh;border-radius:12px;background:#000"></video></div>`; } const prog=safeGet('statusProgress'); if(prog){ prog.innerHTML=''; group.forEach((_,i)=>{ const d=document.createElement('div'); d.className=i===idx?'active':''; prog.appendChild(d); }); } if(!seenStatus.includes(s.id)){ seenStatus.push(s.id); localStorage.setItem('seen_status',JSON.stringify(seenStatus)); } const delBtn=safeGet('deleteStatusBtn'); if(delBtn) delBtn.style.display=s.username===myName?'block':'none'; safeGet('statusViewModal')?.classList.add('show'); if(s.type!=='video'){ setTimeout(()=>{ if(safeGet('statusViewModal')?.classList.contains('show')&&currentStatusUser===keyView && currentStatusIdx===idx){ if(idx+1<group.length) viewStatus(keyView,idx+1); else closeStatusView(); } },6000); } }catch(e){} }
+function viewStatus(keyView, idx){ try{ const group=statuses.filter(s=> s.username===keyView); if(!group.length) return; currentStatusUser=keyView; currentStatusIdx=idx; currentStatusId=group[idx].id; const s=group[idx]; const nameEl=safeGet('viewStatusName'), timeEl=safeGet('viewStatusTime'), avEl=safeGet('viewStatusAv'); if(nameEl) nameEl.textContent=s.username; if(timeEl) timeEl.textContent=new Date(s.created_at).toLocaleString(); if(avEl) avEl.innerHTML=s.avatar?`<img src="${s.avatar}">`: (s.username[0]||'?').toUpperCase(); const c=safeGet('viewStatusContent'); if(!c) return; c.innerHTML=''; if(s.type==='text'){ c.innerHTML=`<div style="background:${s.bg||'#000'};color:${s.color||'#D4AF37'};padding:36px;border-radius:16px;font-size:24px;font-weight:700;text-align:center;max-width:90%;min-height:180px;display:flex;align-items:center;justify-content:center;border:2px solid #D4AF37">${s.text}</div>`; } else if(s.type==='image'){ c.innerHTML=`<div style="text-align:center;width:100%"><img src="${s.image}" style="max-width:100%;max-height:65vh;border-radius:12px"></div>`; } else if(s.type==='video'){ c.innerHTML=`<div style="text-align:center;width:100%"><video src="${s.video}" controls autoplay playsinline style="width:100%;max-height:65vh;border-radius:12px;background:#000"></video></div>`; } const prog=safeGet('statusProgress'); if(prog){ prog.innerHTML=''; group.forEach((_,i)=>{ const d=document.createElement('div'); d.className=i===idx?'active':''; prog.appendChild(d); }); } if(!seenStatus.includes(s.id)){ seenStatus.push(s.id); localStorage.setItem('seen_status',JSON.stringify(seenStatus)); } const delBtn=safeGet('deleteStatusBtn'); if(delBtn) delBtn.style.display=s.username===myName?'block':'none'; safeGet('statusViewModal')?.classList.add('show'); if(s.type!=='video'){ setTimeout(()=>{ if(safeGet('statusViewModal')?.classList.contains('show')&&currentStatusUser===keyView && currentStatusIdx===idx){ if(idx+1<group.length) viewStatus(keyView,idx+1); else closeStatusView(); } },6000); } }catch(e){} }
 function openDotsMenu(){ safeGet('threeDotsMenu')?.classList.add('show'); safeGet('menuOverlay')?.classList.add('show'); }
 function closeDotsMenu(){ safeGet('threeDotsMenu')?.classList.remove('show'); safeGet('menuOverlay')?.classList.remove('show'); }
 safeOn('dotsBtn','click',(e)=>{ e.stopPropagation(); const m=safeGet('threeDotsMenu'); if(m?.classList.contains('show')) closeDotsMenu(); else openDotsMenu(); });
@@ -297,23 +314,23 @@ safeOn('mNewGroup','click',()=>{
   closeDotsMenu(); const list=safeGet('groupContactsList'); if(list){ list.innerHTML=''; contacts.forEach(name=>{ const row=document.createElement('div'); row.style.cssText='display:flex;gap:10px;padding:8px;border-bottom:1px solid #2A3942;align-items:center'; row.innerHTML=`<input type="checkbox" value="${name}" class="groupCheck"><div style="width:32px;height:32px;border-radius:50%;background:#000;border:1px solid #D4AF37;display:flex;align-items:center;justify-content:center;color:#D4AF37;font-weight:900">${name[0].toUpperCase()}</div><div>${name}</div>`; list.appendChild(row); }); if(contacts.length===0) list.innerHTML='<div style="color:#8696A0;padding:10px;font-size:12px">Add contacts first — S TECH</div>'; }
   safeGet('newGroupModal')?.classList.add('show');
 });
-safeOn('mNewCommunity','click',()=>{ closeDotsMenu(); alert('👥 New community — S TECH Communities soon!'); });
-safeOn('mBroadcast','click',()=>{ closeDotsMenu(); alert('📢 Broadcast lists — S TECH Broadcast soon!'); });
-safeOn('mLinked','click',()=>{ closeDotsMenu(); alert('🔗 Linked devices — S TECH Web QR soon!'); });
-safeOn('mStarred','click',()=>{ closeDotsMenu(); alert(`⭐ Starred: ${starredMsgs.length} messages`); });
-safeOn('mReadAll','click',()=>{ closeDotsMenu(); seenStatus=statuses.map(s=>s.id); localStorage.setItem('seen_status',JSON.stringify(seenStatus)); forceRenderBar(); alert('✅ Read all • S TECH'); });
-safeOn('mStatusPrivacy','click',()=>{ closeDotsMenu(); const cur=localStorage.getItem('chale_status_privacy')||'My contacts'; const next=prompt('🔒 Status privacy • S TECH\n\nCurrent: '+cur+'\nType:', cur); if(next){ localStorage.setItem('chale_status_privacy', next); alert('✅ Privacy: '+next); } });
+safeOn('mNewCommunity','click',()=>{ closeDotsMenu(); sToast('👥 New community — S TECH soon!'); });
+safeOn('mBroadcast','click',()=>{ closeDotsMenu(); sToast('📢 Broadcast lists — S TECH V53'); });
+safeOn('mLinked','click',()=>{ closeDotsMenu(); safeGet('linkedModal')?.classList.add('show'); });
+safeOn('mStarred','click',()=>{ closeDotsMenu(); sToast(`⭐ Starred: ${starredMsgs.length} messages • S TECH`); });
+safeOn('mReadAll','click',()=>{ closeDotsMenu(); seenStatus=statuses.map(s=>s.id); localStorage.setItem('seen_status',JSON.stringify(seenStatus)); forceRenderBar(); sToast('✅ All read • S TECH ✓✓'); });
+safeOn('mStatusPrivacy','click',()=>{ closeDotsMenu(); const cur=localStorage.getItem('chale_status_privacy')||'My contacts'; const next=prompt('🔒 Status privacy • S TECH\nCurrent: '+cur+'\nType:', cur); if(next){ localStorage.setItem('chale_status_privacy', next); sToast('🔒 Privacy: '+next+' • S TECH'); } });
 safeOn('mSettings','click',()=>{ closeDotsMenu(); safeGet('moreModal')?.classList.add('show'); });
 safeOn('closeNewGroup','click',()=>safeGet('newGroupModal')?.classList.remove('show'));
+safeOn('closeLinked','click',()=>safeGet('linkedModal')?.classList.remove('show'));
 safeOn('createGroupBtn','click',()=>{
-  const name=safeGet('groupNameInput')?.value.trim(); if(!name){ alert('Enter group name!'); return; }
+  const name=safeGet('groupNameInput')?.value.trim(); if(!name){ sToast('Enter group name! • S TECH'); return; }
   const checks=document.querySelectorAll('.groupCheck:checked'); const members=Array.from(checks).map(c=>c.value);
-  if(members.length===0){ alert('Select at least 1 member'); return; }
-  activeChat={name:name, type:'group', members:members}; saveActiveChat(); safeGet('newGroupModal')?.classList.remove('show'); safeGet('groupNameInput').value=''; loadMessages(); alert(`✅ Group "${name}" created • S TECH • ${members.length} members!`);
+  if(members.length===0){ sToast('Select at least 1 member • S TECH'); return; }
+  activeChat={name:name, type:'group', members:members}; saveActiveChat(); safeGet('newGroupModal')?.classList.remove('show'); safeGet('groupNameInput').value=''; loadMessages(); sToast(`✅ Group "${name}" created • S TECH`);
 });
 
 window.openProfile=()=>{ const inp=safeGet('profileNameInput'); if(inp) inp.value=myName; updateAvatarUI(); safeGet('profileModal')?.classList.add('show'); };
-window.focusSearch=()=>{ safeGet('contactsModal')?.classList.add('show'); renderContacts(); };
 window.openContacts=()=>{ safeGet('contactsModal')?.classList.add('show'); renderContacts(); };
 window.openMedia=()=>{
   const list=safeGet('mediaList'); if(!list) return; list.innerHTML='';
@@ -332,7 +349,7 @@ window.openMedia=()=>{
 };
 window.openLang=()=>safeGet('langModal')?.classList.add('show');
 window.openMore=()=>{ updateNetworkUI(); safeGet('moreModal')?.classList.add('show'); };
-window.deleteAllStatus=async()=>{ const {error}=await sb.from('messages').delete().like('content','[STATUS:%').eq('username',myName); if(error) alert('Failed: '+error.message); else { alert('✅ Deleted status • S TECH'); loadStatuses(); } };
+window.deleteAllStatus=async()=>{ const {error}=await sb.from('messages').delete().like('content','[STATUS:%').eq('username',myName); if(error) sToast('Failed: '+error.message); else { sToast('✅ Deleted status • S TECH'); loadStatuses(); } };
 window.sendQueued=sendQueued;
 
 let deleteTargetId=null;
@@ -345,10 +362,10 @@ window.closeDeleteMenu=()=>{ safeGet('deleteModal')?.classList.remove('show'); d
 window.deleteForEveryone=async()=>{
   if(!deleteTargetId) return; if(!confirm('Delete for everyone? • S TECH')) return;
   const {error}=await sb.from('messages').delete().eq('id', deleteTargetId);
-  if(error) alert('Delete failed: '+error.message); else { closeDeleteMenu(); loadMessages(); }
+  if(error) sToast('Delete failed: '+error.message); else { closeDeleteMenu(); loadMessages(); sToast('Deleted for everyone • S TECH'); }
 };
 window.deleteForMe=()=>{
-  if(!deleteTargetId) return; let hidden=JSON.parse(localStorage.getItem('chale_hidden_msgs')||'[]'); if(!hidden.includes(deleteTargetId)) hidden.push(deleteTargetId); localStorage.setItem('chale_hidden_msgs', JSON.stringify(hidden)); closeDeleteMenu(); loadMessages();
+  if(!deleteTargetId) return; let hidden=JSON.parse(localStorage.getItem('chale_hidden_msgs')||'[]'); if(!hidden.includes(deleteTargetId)) hidden.push(deleteTargetId); localStorage.setItem('chale_hidden_msgs', JSON.stringify(hidden)); closeDeleteMenu(); loadMessages(); sToast('Deleted for you • S TECH');
 };
 
 safeOn('mProfile','click',()=>{ closeDotsMenu(); openProfile(); });
@@ -358,7 +375,7 @@ safeOn('mLang','click',()=>{ closeDotsMenu(); openLang(); });
 safeOn('mMore','click',()=>{ closeDotsMenu(); openMore(); });
 safeOn('leftTop','click',showChatList);
 safeOn('searchBtn','click',()=>{ safeGet('contactsModal')?.classList.add('show'); renderContacts(); });
-safeOn('callBtn','click',()=>alert('📞 Calls • S TECH • Voice note for now 🎙️'));
+safeOn('callBtn','click',()=>sToast('📞 Calls soon • Voice note for now • S TECH 🎙️'));
 safeOn('closeLang','click',()=>safeGet('langModal')?.classList.remove('show'));
 safeOn('cancelStatus','click',()=>{ safeGet('statusCreateModal')?.classList.remove('show'); safeGet('statusImagePreview')?.classList.remove('show'); safeGet('statusVideoPreview')?.classList.remove('show'); try{ safeGet('statusPreviewVideo')?.pause(); }catch(e){} });
 safeOn('closeContactsTop','click',()=>safeGet('contactsModal')?.classList.remove('show'));
@@ -369,37 +386,37 @@ safeOn('closeProfile','click',()=>safeGet('profileModal')?.classList.remove('sho
 safeOn('btnPhoneImport','click',importPhoneContacts);
 safeOn('btnVcfImport','click',()=>safeGet('vcfInput')?.click());
 safeOn('btnGroupChat','click',startGroupChat);
-safeOn('btnSendQueued','click',()=>{ sendQueued(); alert('Sending queued... • S TECH'); });
-safeOn('btnClearHidden','click',()=>{ if(confirm('Clear hidden?')){ localStorage.removeItem('chale_hidden_msgs'); loadMessages(); } });
+safeOn('btnSendQueued','click',()=>{ sendQueued(); });
+safeOn('btnClearHidden','click',()=>{ if(confirm('Clear hidden? • S TECH')){ localStorage.removeItem('chale_hidden_msgs'); loadMessages(); sToast('Hidden cleared • S TECH'); } });
 safeOn('btnDeleteStatus','click',deleteAllStatus);
 safeOn('btnClearData','click',()=>{ if(confirm('Clear all data? • S TECH')){ localStorage.clear(); location.reload(); } });
 safeOn('cancelRecBtn','click',()=>{ try{ cancelRecording(); }catch(e){} });
 safeOn('picCircle','click',()=>safeGet('avatarInput')?.click());
 safeOn('profilePicCircle','click',()=>safeGet('avatarInput2')?.click());
 safeOn('addContactBtn','click',()=>{
-  const n=safeGet('newContactName')?.value.trim(); if(!n){ alert('Enter name'); return; }
-  if(contacts.includes(n)){ alert('Already dey!'); return; }
-  blocked=blocked.filter(b=>b!==n); contacts.push(n); saveContacts(); if(safeGet('newContactName')) safeGet('newContactName').value=''; renderContacts();
+  const n=safeGet('newContactName')?.value.trim(); if(!n){ sToast('Enter name • S TECH'); return; }
+  if(contacts.includes(n)){ sToast('Already dey! • S TECH'); return; }
+  blocked=blocked.filter(b=>b!==n); contacts.push(n); saveContacts(); if(safeGet('newContactName')) safeGet('newContactName').value=''; renderContacts(); sToast(`Added ${n} • S TECH`);
 });
 safeOn('b','click',async()=>{
   let t=safeGet('i')?.value.trim(); if(!t) return;
   if(!myName){ safeGet('nameModal')?.classList.add('show'); return; }
   if(safeGet('i')) safeGet('i').value='';
-  if(!isOnline){ queueMessage(t); if(chatEl){ chatEl.innerHTML+=`<div class="m me"><div style="flex:1"><div style="font-size:14.2px">${t.replace(/</g,'&lt;')} <span style="font-size:10px;color:#8696A0">⏳ queued • S TECH</span></div></div></div>`; chatEl.scrollTop=chatEl.scrollHeight; } return; }
-  const {error}=await sb.from('messages').insert({username:myName, content:t}); if(error){ queueMessage(t); }
+  if(!isOnline){ queueMessage(t); if(chatEl){ chatEl.innerHTML+=`<div class="m me"><div style="flex:1"><div style="font-size:14.2px">${t.replace(/</g,'&lt;')} <span style="font-size:10px;color:#8696A0">⏳ queued • S TECH</span></div></div></div>`; chatEl.scrollTop=chatEl.scrollHeight; } sToast('Offline — queued • S TECH'); return; }
+  const {error}=await sb.from('messages').insert({username:myName, content:t}); if(error){ queueMessage(t); sToast('Queued • S TECH'); }
 });
 safeOn('i','keydown',(e)=>{ if(e.key==='Enter') safeGet('b')?.click(); });
 safeOn('okName','click',async()=>{
-  const n=safeGet('nameInput')?.value.trim(); if(!n){ alert('Enter name'); return; }
+  const n=safeGet('nameInput')?.value.trim(); if(!n){ sToast('Enter name • S TECH'); return; }
   myName=n; localStorage.setItem('chale_name',myName); safeGet('nameModal')?.classList.remove('show');
   try{ await presenceChannel.track({userId, name:myName, avatar:myAvatar}); }catch(e){}
-  updateAvatarUI(); forceRenderBar(); loadMessages(); loadStatuses(); updateTopBar();
+  updateAvatarUI(); forceRenderBar(); loadMessages(); loadStatuses(); updateTopBar(); sToast(`Welcome ${myName}! • S TECH 🇬🇭`);
 });
 safeOn('saveProfile','click',async()=>{
   const n=safeGet('profileNameInput')?.value.trim(); if(n){ myName=n; localStorage.setItem('chale_name',n); }
   safeGet('profileModal')?.classList.remove('show');
   try{ await presenceChannel.track({userId, name:myName, avatar:myAvatar}); }catch(e){}
-  updateAvatarUI(); forceRenderBar(); loadMessages(); updateTopBar();
+  updateAvatarUI(); forceRenderBar(); loadMessages(); updateTopBar(); sToast('Profile saved • S TECH');
 });
 safeOn('avatarInput','change',(e)=>{ const f=e.target.files[0]; if(f) handleAvatarFile(f); });
 safeOn('avatarInput2','change',(e)=>{ const f=e.target.files[0]; if(f) handleAvatarFile(f); });
@@ -407,43 +424,43 @@ safeOn('statusImageInput','change',(e)=>{
   const f=e.target.files[0]; if(!f) return; const reader=new FileReader(); reader.onload=function(){ const img=safeGet('statusPreviewImg'), box=safeGet('statusImagePreview'); if(img){ img.src=reader.result; img.dataset.raw=reader.result; } if(box) box.classList.add('show'); }; reader.readAsDataURL(f);
 });
 safeOn('statusVideoInput','change',(e)=>{
-  const f=e.target.files[0]; if(!f) return; if(f.size>1*1024*1024){ alert('❌ Video too big! Max 1MB • S TECH'); e.target.value=''; return; } const reader=new FileReader(); reader.onload=function(){ const video=safeGet('statusPreviewVideo'), box=safeGet('statusVideoPreview'); if(video){ video.src=reader.result; video.dataset.raw=reader.result; video.load(); } if(box) box.classList.add('show'); }; reader.readAsDataURL(f);
+  const f=e.target.files[0]; if(!f) return; if(f.size>1*1024*1024){ sToast('❌ Video too big! Max 1MB • S TECH'); e.target.value=''; return; } const reader=new FileReader(); reader.onload=function(){ const video=safeGet('statusPreviewVideo'), box=safeGet('statusVideoPreview'); if(video){ video.src=reader.result; video.dataset.raw=reader.result; video.load(); } if(box) box.classList.add('show'); }; reader.readAsDataURL(f);
 });
 safeOn('vcfInput','change',(e)=>{
   const file=e.target.files[0]; if(!file) return; const reader=new FileReader(); reader.onload=function(){
-    try{ const text=reader.result; const names=[]; text.split(/\r?\n/).forEach(line=>{ if(line.toUpperCase().startsWith('FN:')){ let name=line.substring(3).trim(); if(name) names.push(name); } }); if(names.length===0){ alert('No contacts found'); return; } let added=0; names.forEach(name=>{ if(!contacts.includes(name) && !blocked.includes(name)){ contacts.push(name); added++; } }); saveContacts(); renderContacts(); alert(`✅ Imported ${added} from .vcf • S TECH`); }catch(err){ alert('Failed .vcf: '+err.message); }
+    try{ const text=reader.result; const names=[]; text.split(/\r?\n/).forEach(line=>{ if(line.toUpperCase().startsWith('FN:')){ let name=line.substring(3).trim(); if(name) names.push(name); } }); if(names.length===0){ sToast('No contacts found • S TECH'); return; } let added=0; names.forEach(name=>{ if(!contacts.includes(name) && !blocked.includes(name)){ contacts.push(name); added++; } }); saveContacts(); renderContacts(); sToast(`✅ Imported ${added} • S TECH`); }catch(err){ sToast('Failed .vcf: '+err.message); }
   }; reader.readAsText(file);
 });
 safeOn('postStatus','click',async()=>{
  let statusObj=null;
- if(currentTab==='text'){ const text=safeGet('statusTextInput')?.value.trim(); if(!text){ alert('Type something!'); return; } statusObj={type:'text', text, bg:'#000', color:'#D4AF37', avatar:myAvatar, username:myName}; }
- else if(currentTab==='photo'){ const raw=safeGet('statusPreviewImg')?.dataset.raw; if(!raw){ alert('⚠️ No photo!'); return; } const btn=safeGet('postStatus'); if(btn){ btn.textContent='⏳ S TECH Compressing...'; btn.disabled=true; } compressTiny(raw, async (compressed)=>{ const cap=safeGet('statusCaption')?.value.trim()||''; const obj={type:'image', image:compressed, caption:cap, avatar:myAvatar, username:myName}; const content=`[STATUS:${JSON.stringify(obj)}]`; const {error}=await sb.from('messages').insert({username:myName, content:content}).select(); if(error){ alert('❌ Failed: '+error.message); const b=safeGet('postStatus'); if(b){ b.textContent='Post'; b.disabled=false; } return; } safeGet('statusCreateModal')?.classList.remove('show'); safeGet('statusImagePreview')?.classList.remove('show'); const sImg=safeGet('statusPreviewImg'); if(sImg) sImg.dataset.raw=''; const sIn=safeGet('statusImageInput'); if(sIn) sIn.value=''; const b=safeGet('postStatus'); if(b){ b.textContent='Post'; b.disabled=false; } if(safeGet('statusCaption')) safeGet('statusCaption').value=''; if(safeGet('statusTextInput')) safeGet('statusTextInput').value=''; await loadStatuses(); setTimeout(()=>viewStatus(myName,0),800); }); return; }
- else if(currentTab==='video'){ const raw=safeGet('statusPreviewVideo')?.dataset.raw; if(!raw){ alert('⚠️ No video!'); return; } const cap=safeGet('statusVideoCaption')?.value.trim()||''; statusObj={type:'video', video:raw, caption:cap, avatar:myAvatar, username:myName}; }
- if(statusObj){ const btn=safeGet('postStatus'); if(btn){ btn.textContent='⏳ Posting S TECH...'; btn.disabled=true; } const content=`[STATUS:${JSON.stringify(statusObj)}]`; const {error}=await sb.from('messages').insert({username:myName, content:content}).select(); if(error){ alert('❌ Failed: '+error.message); if(btn){ btn.textContent='Post'; btn.disabled=false; } return; } safeGet('statusCreateModal')?.classList.remove('show'); safeGet('statusVideoPreview')?.classList.remove('show'); const vIn=safeGet('statusVideoInput'); if(vIn) vIn.value=''; const vPrev=safeGet('statusPreviewVideo'); if(vPrev){ try{ vPrev.pause(); }catch(e){} vPrev.dataset.raw=''; } if(safeGet('statusVideoCaption')) safeGet('statusVideoCaption').value=''; if(safeGet('statusTextInput')) safeGet('statusTextInput').value=''; if(btn){ btn.textContent='Post'; btn.disabled=false; } await loadStatuses(); setTimeout(()=>viewStatus(myName,0),800); }
+ if(currentTab==='text'){ const text=safeGet('statusTextInput')?.value.trim(); if(!text){ sToast('Type something! • S TECH'); return; } statusObj={type:'text', text, bg:'#000', color:'#D4AF37', avatar:myAvatar, username:myName}; }
+ else if(currentTab==='photo'){ const raw=safeGet('statusPreviewImg')?.dataset.raw; if(!raw){ sToast('⚠️ No photo! • S TECH'); return; } const btn=safeGet('postStatus'); if(btn){ btn.textContent='⏳ S TECH...'; btn.disabled=true; } compressTiny(raw, async (compressed)=>{ const cap=safeGet('statusCaption')?.value.trim()||''; const obj={type:'image', image:compressed, caption:cap, avatar:myAvatar, username:myName}; const content=`[STATUS:${JSON.stringify(obj)}]`; const {error}=await sb.from('messages').insert({username:myName, content:content}).select(); if(error){ sToast('❌ Failed: '+error.message); const b=safeGet('postStatus'); if(b){ b.textContent='Post'; b.disabled=false; } return; } safeGet('statusCreateModal')?.classList.remove('show'); safeGet('statusImagePreview')?.classList.remove('show'); const sImg=safeGet('statusPreviewImg'); if(sImg) sImg.dataset.raw=''; const sIn=safeGet('statusImageInput'); if(sIn) sIn.value=''; const b=safeGet('postStatus'); if(b){ b.textContent='Post'; b.disabled=false; } if(safeGet('statusCaption')) safeGet('statusCaption').value=''; if(safeGet('statusTextInput')) safeGet('statusTextInput').value=''; await loadStatuses(); setTimeout(()=>viewStatus(myName,0),800); sToast('Status posted • S TECH 🔥'); }); return; }
+ else if(currentTab==='video'){ const raw=safeGet('statusPreviewVideo')?.dataset.raw; if(!raw){ sToast('⚠️ No video! • S TECH'); return; } const cap=safeGet('statusVideoCaption')?.value.trim()||''; statusObj={type:'video', video:raw, caption:cap, avatar:myAvatar, username:myName}; }
+ if(statusObj){ const btn=safeGet('postStatus'); if(btn){ btn.textContent='⏳ Posting S TECH...'; btn.disabled=true; } const content=`[STATUS:${JSON.stringify(statusObj)}]`; const {error}=await sb.from('messages').insert({username:myName, content:content}).select(); if(error){ sToast('❌ Failed: '+error.message); if(btn){ btn.textContent='Post'; btn.disabled=false; } return; } safeGet('statusCreateModal')?.classList.remove('show'); safeGet('statusVideoPreview')?.classList.remove('show'); const vIn=safeGet('statusVideoInput'); if(vIn) vIn.value=''; const vPrev=safeGet('statusPreviewVideo'); if(vPrev){ try{ vPrev.pause(); }catch(e){} vPrev.dataset.raw=''; } if(safeGet('statusVideoCaption')) safeGet('statusVideoCaption').value=''; if(safeGet('statusTextInput')) safeGet('statusTextInput').value=''; if(btn){ btn.textContent='Post'; btn.disabled=false; } await loadStatuses(); setTimeout(()=>viewStatus(myName,0),800); sToast('Status posted • S TECH 🔥'); }
 });
-safeOn('deleteStatusBtn','click',async()=>{ if(!currentStatusId) return; if(!confirm('Delete? • S TECH')) return; const {error}=await sb.from('messages').delete().eq('id', currentStatusId); if(error){ alert('❌ Delete failed: '+error.message); return; } closeStatusView(); await loadStatuses(); });
-safeOn('downloadStatusBtn','click',()=>{ const group=statuses.filter(s=> s.username===currentStatusUser); const s=group[currentStatusIdx]; if(!s) return; let dataUrl=null, filename='chale-status-S-TECH'; if(s.type==='image'){ dataUrl=s.image; filename+='.jpg'; } else if(s.type==='video'){ dataUrl=s.video; filename+='.mp4'; } else { alert('Screenshot am!'); return; } if(dataUrl){ const a=document.createElement('a'); a.href=dataUrl; a.download=filename; document.body.appendChild(a); a.click(); document.body.removeChild(a); } });
-function handleAvatarFile(file){ const reader=new FileReader(); reader.onloadend=()=>{ compressTiny(reader.result,(c)=>{ myAvatar=c; localStorage.setItem('chale_avatar',c); updateAvatarUI(); forceRenderBar(); }); }; reader.readAsDataURL(file); }
+safeOn('deleteStatusBtn','click',async()=>{ if(!currentStatusId) return; if(!confirm('Delete? • S TECH')) return; const {error}=await sb.from('messages').delete().eq('id', currentStatusId); if(error){ sToast('❌ Delete failed: '+error.message); return; } closeStatusView(); await loadStatuses(); sToast('Deleted • S TECH'); });
+safeOn('downloadStatusBtn','click',()=>{ const group=statuses.filter(s=> s.username===currentStatusUser); const s=group[currentStatusIdx]; if(!s) return; let dataUrl=null, filename='chale-status-S-TECH'; if(s.type==='image'){ dataUrl=s.image; filename+='.jpg'; } else if(s.type==='video'){ dataUrl=s.video; filename+='.mp4'; } else { sToast('Screenshot am! • S TECH'); return; } if(dataUrl){ const a=document.createElement('a'); a.href=dataUrl; a.download=filename; document.body.appendChild(a); a.click(); document.body.removeChild(a); sToast('Downloaded • S TECH ⬇️'); } });
+function handleAvatarFile(file){ const reader=new FileReader(); reader.onloadend=()=>{ compressTiny(reader.result,(c)=>{ myAvatar=c; localStorage.setItem('chale_avatar',c); updateAvatarUI(); forceRenderBar(); sToast('Avatar updated • S TECH'); }); }; reader.readAsDataURL(file); }
 
 forceRenderBar(); loadMessages(); loadStatuses(); updateNetworkUI(); sendQueued(); updateTopBar();
-const ch=sb.channel('chale-v51').on('postgres_changes',{event:'*',schema:'public',table:'messages'},(p)=>{ const nm=p.new; if(nm && nm.content && !nm.content.startsWith('[STATUS:')) loadMessages(); else loadStatuses(); }).subscribe();
-const presenceChannel=sb.channel('presence-v51',{config:{presence:{key:userId}}});
+const ch=sb.channel('chale-v52').on('postgres_changes',{event:'*',schema:'public',table:'messages'},(p)=>{ const nm=p.new; if(nm && nm.content && !nm.content.startsWith('[STATUS:')) loadMessages(); else loadStatuses(); }).subscribe();
+const presenceChannel=sb.channel('presence-v52',{config:{presence:{key:userId}}});
 presenceChannel.on('presence',{event:'sync'},()=>{ try{ const state=presenceChannel.presenceState(); onlineUsers={}; Object.values(state).forEach(ps=>{ ps.forEach(p=>{ onlineUsers[p.userId]=p; }) }); const listEl=safeGet('onlineList'); if(listEl){ listEl.innerHTML=''; Object.values(onlineUsers).forEach(u=>{ const row=document.createElement('div'); row.style.cssText='display:flex;gap:10px;padding:12px;border-bottom:1px solid #2A3942'; row.innerHTML=`<div style="width:40px;height:40px;border-radius:50%;background:#000;border:1px solid #D4AF37;display:flex;align-items:center;justify-content:center;color:#D4AF37;font-weight:900">${(u.name[0]||'?').toUpperCase()}</div><div><div style="font-weight:500">${u.name}</div><div style="font-size:11px;color:#00A884">online • S TECH</div></div>`; listEl.appendChild(row); }); } renderContacts(); updateTopBar(); }catch(e){} }).subscribe(async()=>{ if(myName){ await presenceChannel.track({userId, name:myName, avatar:myAvatar}); } });
 
-async function startRecording(){ if(isRecording) return; try{ const stream=await navigator.mediaDevices.getUserMedia({audio:true}); mediaRecorder=new MediaRecorder(stream, {mimeType:'audio/webm'}); audioChunks=[]; recordingSeconds=0; isRecording=true; safeGet('recordingBar')?.classList.add('show'); safeGet('micBtn')?.classList.add('recording'); mediaRecorder.ondataavailable=e=>{ if(e.data.size>0) audioChunks.push(e.data); }; mediaRecorder.onstop=async()=>{ const audioBlob=new Blob(audioChunks, {type:'audio/webm'}); if(audioBlob.size<1000){ alert('Too short!'); cleanupRecording(); return; } if(audioBlob.size>300*1024){ alert('Too long! Max 20s • S TECH'); cleanupRecording(); return; } const reader=new FileReader(); reader.onload=async()=>{ const base64=reader.result; if(base64.length>300000){ alert('Voice too big — try shorter • S TECH'); cleanupRecording(); return; } const content=`[VOICE:${base64}]`; if(!isOnline){ queueMessage(content); alert('Offline — voice queued • S TECH'); cleanupRecording(); return; } const {error}=await sb.from('messages').insert({username:myName, content:content}); if(error){ queueMessage(content); } cleanupRecording(); }; reader.readAsDataURL(audioBlob); stream.getTracks().forEach(track=>track.stop()); }; mediaRecorder.start(); recordingTimer=setInterval(()=>{ recordingSeconds++; const rt=safeGet('recordingText'); if(rt) rt.textContent=`Recording ${recordingSeconds}s... • S TECH`; if(recordingSeconds>=20){ stopRecording(); } },1000); }catch(err){ alert('Mic permission needed! '+err.message); cleanupRecording(); } }
+async function startRecording(){ if(isRecording) return; try{ const stream=await navigator.mediaDevices.getUserMedia({audio:true}); mediaRecorder=new MediaRecorder(stream, {mimeType:'audio/webm'}); audioChunks=[]; recordingSeconds=0; isRecording=true; safeGet('recordingBar')?.classList.add('show'); safeGet('micBtn')?.classList.add('recording'); mediaRecorder.ondataavailable=e=>{ if(e.data.size>0) audioChunks.push(e.data); }; mediaRecorder.onstop=async()=>{ const audioBlob=new Blob(audioChunks, {type:'audio/webm'}); if(audioBlob.size<1000){ sToast('Too short! • S TECH'); cleanupRecording(); return; } if(audioBlob.size>300*1024){ sToast('Too long! Max 20s • S TECH'); cleanupRecording(); return; } const reader=new FileReader(); reader.onload=async()=>{ const base64=reader.result; if(base64.length>300000){ sToast('Voice too big • S TECH'); cleanupRecording(); return; } const content=`[VOICE:${base64}]`; if(!isOnline){ queueMessage(content); sToast('Offline — voice queued • S TECH'); cleanupRecording(); return; } const {error}=await sb.from('messages').insert({username:myName, content:content}); if(error){ queueMessage(content); } cleanupRecording(); sToast('Voice sent • S TECH 🎙️'); }; reader.readAsDataURL(audioBlob); stream.getTracks().forEach(track=>track.stop()); }; mediaRecorder.start(); recordingTimer=setInterval(()=>{ recordingSeconds++; const rt=safeGet('recordingText'); if(rt) rt.textContent=`Recording ${recordingSeconds}s... • S TECH`; if(recordingSeconds>=20){ stopRecording(); } },1000); }catch(err){ sToast('Mic permission needed! • S TECH'); cleanupRecording(); } }
 function stopRecording(){ if(mediaRecorder && isRecording){ mediaRecorder.stop(); isRecording=false; } clearInterval(recordingTimer); }
-function cancelRecording(){ if(mediaRecorder && isRecording){ mediaRecorder.stop(); isRecording=false; audioChunks=[]; } cleanupRecording(); }
+function cancelRecording(){ if(mediaRecorder && isRecording){ mediaRecorder.stop(); isRecording=false; audioChunks=[]; } cleanupRecording(); sToast('Cancelled • S TECH'); }
 function cleanupRecording(){ isRecording=false; clearInterval(recordingTimer); safeGet('recordingBar')?.classList.remove('show'); safeGet('micBtn')?.classList.remove('recording'); const rt=safeGet('recordingText'); if(rt) rt.textContent='Recording 0s...'; }
 window.cancelRecording=cancelRecording;
 safeOn('micBtn','click',()=>{ if(!myName){ safeGet('nameModal')?.classList.add('show'); return; } if(isRecording){ stopRecording(); } else { startRecording(); } });
 safeOn('navChats','click',()=>{ document.querySelectorAll('.bottomNavItem').forEach(b=>b.classList.remove('active')); safeGet('navChats')?.classList.add('active'); activeChat={name:'CHALE CHAT', type:'group'}; saveActiveChat(); loadMessages(); });
 safeOn('navUpdates','click',()=>{ document.querySelectorAll('.bottomNavItem').forEach(b=>b.classList.remove('active')); safeGet('navUpdates')?.classList.add('active'); safeGet('statusCreateModal')?.classList.add('show'); });
-safeOn('navCommunities','click',()=>{ document.querySelectorAll('.bottomNavItem').forEach(b=>b.classList.remove('active')); safeGet('navCommunities')?.classList.add('active'); alert('👥 Communities • S TECH • Group of groups soon!'); });
-safeOn('navCalls','click',()=>{ document.querySelectorAll('.bottomNavItem').forEach(b=>b.classList.remove('active')); safeGet('navCalls')?.classList.add('active'); alert('📞 Calls • S TECH • Voice note for now 🎙️'); });
+safeOn('navCommunities','click',()=>{ document.querySelectorAll('.bottomNavItem').forEach(b=>b.classList.remove('active')); safeGet('navCommunities')?.classList.add('active'); sToast('👥 Communities • S TECH soon!'); });
+safeOn('navCalls','click',()=>{ document.querySelectorAll('.bottomNavItem').forEach(b=>b.classList.remove('active')); safeGet('navCalls')?.classList.add('active'); sToast('📞 Calls • S TECH • Voice note for now 🎙️'); });
 
 setTimeout(()=>{ if(!myName){ safeGet('nameModal')?.classList.add('show'); } updateAvatarUI(); renderContacts(); forceRenderBar(); updateNetworkUI(); updateTopBar(); },600);
 }catch(err){
- document.body.innerHTML=`<div style="padding:20px;color:#fff;background:#0B141A"><h2 style="color:#D4AF37">⚠️ Error V51 S TECH</h2><p>${err.message}</p><pre style="font-size:10px;color:#8696A0;white-space:pre-wrap">${err.stack||''}</pre><button onclick="localStorage.clear(); location.href=location.href.split('?')[0]+'?v51=1'" style="background:#D4AF37;color:#000;padding:12px 20px;border-radius:8px;border:0;font-weight:700">Clear & Reload • S TECH</button><div style="text-align:center;margin-top:20px;font-size:11px;color:#5a6b74">Powered by SALVATION TECH-GHANA 🇬🇭</div></div>`;
+ document.body.innerHTML=`<div style="padding:20px;color:#fff;background:#0B141A"><h2 style="color:#D4AF37">⚠️ Error V52 S TECH</h2><p>${err.message}</p><pre style="font-size:10px;color:#8696A0;white-space:pre-wrap">${err.stack||''}</pre><button onclick="localStorage.clear(); location.href=location.href.split('?')[0]+'?v52=1'" style="background:#D4AF37;color:#000;padding:12px 20px;border-radius:8px;border:0;font-weight:700">Clear & Reload • S TECH</button><div style="text-align:center;margin-top:20px;font-size:11px;color:#5a6b74">Powered by SALVATION TECH-GHANA 🇬🇭</div></div>`;
 }
 </script>
 </body></html>
