@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CHALE CHAT V73</title>
+<title>CHALE CHAT V74</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
 body{background:#0f0f0f;color:white}
@@ -24,19 +24,17 @@ body{background:#0f0f0f;color:white}
 .inputBar{position:fixed;bottom:0;left:0;width:100%;background:#1a1a1a;padding:10px;display:flex;gap:10px}
 .inputBar input{flex:1;background:#222;border:none;padding:12px;border-radius:25px;color:white;outline:none}
 .inputBar button{width:45px;height:45px;border-radius:50%;border:none;background:#25D366;font-size:18px}
-#settingsPage{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f0f0f;z-index:999;display:none;overflow-y:auto;padding:20px}
+#settingsPage, #profilePage{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f0f0f;z-index:999;display:none;overflow-y:auto;padding:20px}
 .setHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
 .set-item{background:#1e1e1e;padding:16px;margin:12px 0;border-radius:12px;border-left:4px solid #FFD700}
-.set-item h3{margin-bottom:5px}
-.set-item p{color:#888;font-size:13px}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="logo">CHALE <span>CHAT</span> <span class="badge">V73 SETTINGS</span></div>
+  <div class="logo">CHALE <span>CHAT</span> <span class="badge">V74 PROFILE</span></div>
   <div class="topBtns">
-    <button onclick="switchV()">🔄</button>
+    <button onclick="alert('Switch V68 <-> V74')">🔄</button>
     <button onclick="clearAll()">🗑️</button>
     <button id="settingsBtn" onclick="openSettings()">⚙️</button>
   </div>
@@ -45,7 +43,7 @@ body{background:#0f0f0f;color:white}
 <div class="search"><input placeholder="Search"></div>
 
 <div class="statusRow">
-  <div class="sItem"><div class="sCircle">+</div><p>My Status</p></div>
+  <div class="sItem"><div class="sCircle" id="myStatusCircle">🇬🇭</div><p id="myStatusName">My Status</p></div>
   <div class="sItem"><div class="sCircle">🇬🇭</div><p>Salvation</p></div>
   <div class="sItem"><div class="sCircle">👤</div><p>Kwame</p></div>
   <div class="sItem"><div class="sCircle">🙎‍♀️</div><p>Ama</p></div>
@@ -53,78 +51,74 @@ body{background:#0f0f0f;color:white}
 </div>
 
 <div class="chatList">
-  <div class="chat"><div class="avatar">👤</div><div><b>Rockson Boateng</b><br><small style="color:gray">Missed call • 0:00 • S TECH 04:39 PM</small></div></div>
+  <div class="chat"><div class="avatar">👤</div><div><b>Rockson Boateng</b><br><small style="color:gray">Missed call • S TECH 04:39 PM</small></div></div>
 </div>
 
 <div class="inputBar">
-  <input id="msgInput" placeholder="Type message - V73 SETTINGS">
+  <input id="msgInput" placeholder="Type message - V74">
   <button onclick="sendMsg()">➤</button>
   <button style="background:#FFD700">🎤</button>
 </div>
 
-<!-- SETTINGS 1-2-3-4 FULL PAGE -->
+<!-- SETTINGS PAGE 1-2-3-4 -->
 <div id="settingsPage">
   <div class="setHead">
     <h2>⚙️ CHALE CHAT SETTINGS</h2>
     <button onclick="closeSettings()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">X Close</button>
   </div>
+  <div class="set-item" onclick="editProfile()"><h3>1. Profile Settings ></h3><p>Change name, pic, Ghana flag, My Status</p><small style="color:#FFD700">Current: <span id="curName">Salvation</span> (GH)</small></div>
+  <div class="set-item"><h3>2. Wallpaper / Theme</h3><p>Dark / Light mode</p><label><input type="checkbox" checked> Dark Mode ON</label><br><br>Chat Color: <input type="color" value="#FFD700"></div>
+  <div class="set-item"><h3>3. Privacy</h3><label><input type="checkbox" checked> Last Seen</label><br><label><input type="checkbox" checked> Read Receipts</label><br><label><input type="checkbox" checked> Online Status</label></div>
+  <div class="set-item" style="border:2px solid #FFD700;"><h3>4. Backup & Restore</h3><p>V68 Backup: Kept Safe ✅</p><div style="margin-top:10px;display:flex;gap:10px"><button onclick="alert('V68 Restored!')" style="background:#FFD700;border:none;padding:10px 15px;border-radius:8px;font-weight:bold;">Restore V68</button><button onclick="clearAll()" style="background:#222;border:1px solid red;color:red;padding:10px 15px;border-radius:8px;">Clear All</button></div></div>
+</div>
 
-  <!-- 1 -->
-  <div class="set-item" onclick="editProfile()">
-    <h3>1. Profile Settings ></h3>
-    <p>Change name, pic, Ghana flag, My Status</p>
-    <small style="color:#FFD700">Current: Salvation (GH)</small>
+<!-- PROFILE FULL PAGE V74 - NEW! -->
+<div id="profilePage">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h2>👤 Edit Profile</h2>
+    <button onclick="closeProfile()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button>
   </div>
-
-  <!-- 2 -->
-  <div class="set-item">
-    <h3>2. Wallpaper / Theme</h3>
-    <p>Dark / Light mode</p>
-    <div style="margin-top:10px">
-      <label><input type="checkbox" id="darkToggle" checked onchange="toggleTheme()"> Dark Mode ON</label><br>
-      <label style="margin-top:5px;display:block">Chat Color: <input type="color" value="#FFD700"></label>
-    </div>
+  <div style="text-align:center;margin-top:30px">
+    <div id="bigAvatar" style="width:110px;height:110px;border-radius:50%;background:#222;border:3px solid #FFD700;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:55px;">🇬🇭</div>
+    <button onclick="changeEmoji()" style="margin-top:12px;background:#1e1e1e;color:#FFD700;border:1px solid #FFD700;padding:8px 15px;border-radius:20px;">Change Pic / Emoji</button>
   </div>
-
-  <!-- 3 -->
-  <div class="set-item">
-    <h3>3. Privacy</h3>
-    <label><input type="checkbox" checked> Last Seen</label><br>
-    <label><input type="checkbox" checked> Read Receipts (Blue ticks)</label><br>
-    <label><input type="checkbox" checked> Online Status</label>
-  </div>
-
-  <!-- 4 -->
-  <div class="set-item" style="border:2px solid #FFD700;border-left:4px solid #FFD700;">
-    <h3>4. Backup & Restore</h3>
-    <p>V68 Backup: Kept Safe ✅</p>
-    <div style="margin-top:10px;display:flex;gap:10px">
-      <button onclick="alert('V68 Restored!')" style="background:#FFD700;border:none;padding:10px 15px;border-radius:8px;font-weight:bold;">Restore V68</button>
-      <button onclick="clearAll()" style="background:#222;border:1px solid red;color:red;padding:10px 15px;border-radius:8px;">Clear All</button>
-    </div>
-    <p style="margin-top:10px;font-size:11px;color:#666">Clear all? This will reset but keep V68 backup!</p>
+  <div style="margin-top:30px">
+    <label style="color:#888;font-size:13px;">Your Name</label>
+    <input id="profileNameInput" value="Salvation" style="width:100%;background:#1e1e1e;border:none;padding:15px;border-radius:10px;color:white;margin-top:5px;font-size:16px;">
+    <label style="color:#888;font-size:13px;margin-top:20px;display:block;">Status Message</label>
+    <input id="statusInput" value="Chale, I dey! 🇬🇭" style="width:100%;background:#1e1e1e;border:none;padding:15px;border-radius:10px;color:white;margin-top:5px;">
+    <label style="color:#888;font-size:13px;margin-top:20px;display:block;">Flag</label>
+    <select id="flagSelect" style="width:100%;background:#1e1e1e;border:none;padding:15px;border-radius:10px;color:white;margin-top:5px;"><option>🇬🇭 Ghana</option><option>🇳🇬 Nigeria</option><option>🌍 Africa</option><option>🔥 Chale</option></select>
+    <button onclick="saveProfile()" style="width:100%;background:#FFD700;border:none;padding:16px;border-radius:12px;font-weight:bold;margin-top:25px;font-size:16px;">Save Profile ✅</button>
   </div>
 </div>
 
 <script>
 function openSettings(){document.getElementById('settingsPage').style.display='block'}
 function closeSettings(){document.getElementById('settingsPage').style.display='none'}
-function editProfile(){
-  let n=prompt("Enter new profile name:","Salvation");
-  if(n){alert("✅ Profile changed to "+n+" - Next version go update circle!")}
+function editProfile(){document.getElementById('settingsPage').style.display='none'; document.getElementById('profilePage').style.display='block';}
+function closeProfile(){document.getElementById('profilePage').style.display='none'; document.getElementById('settingsPage').style.display='block';}
+function saveProfile(){
+  let newName=document.getElementById('profileNameInput').value;
+  let emoji=document.getElementById('bigAvatar').innerText;
+  localStorage.setItem('chale_name',newName);
+  localStorage.setItem('chale_emoji',emoji);
+  document.getElementById('curName').innerText=newName;
+  document.getElementById('myStatusCircle').innerText=emoji;
+  alert("✅ Saved! Name: "+newName+" "+emoji);
+  closeProfile();
 }
-function clearAll(){
-  if(confirm("Clear all? This will reset but keep V68 backup!")){
-    localStorage.clear();
-    alert("Cleared! V68 backup still dey!");
-    location.reload();
-  }
+function changeEmoji(){
+  let e=prompt("Enter emoji or flag: 🇬🇭 👤 🙎‍♀️ 🔥","");
+  if(e){document.getElementById('bigAvatar').innerText=e;}
 }
-function switchV(){alert("Switch Version - V68 <-> V73")}
-function toggleTheme(){alert("Theme toggled!")}
-function sendMsg(){
-  let i=document.getElementById('msgInput');
-  if(i.value){alert("Sent: "+i.value); i.value=""}
+function clearAll(){if(confirm("Clear all? This will reset but keep V68 backup!")){localStorage.clear();alert("Cleared! V68 backup still dey!");location.reload();}}
+function sendMsg(){let i=document.getElementById('msgInput'); if(i.value){alert("Sent: "+i.value); i.value="";}}
+// load saved
+window.onload=()=>{
+  let n=localStorage.getItem('chale_name'); let em=localStorage.getItem('chale_emoji');
+  if(n){document.getElementById('curName').innerText=n; document.getElementById('profileNameInput').value=n;}
+  if(em){document.getElementById('bigAvatar').innerText=em; document.getElementById('myStatusCircle').innerText=em;}
 }
 </script>
 </body>
