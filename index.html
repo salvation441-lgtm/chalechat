@@ -2,33 +2,43 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CHALE CHAT V75</title>
+<title>CHALE CHAT V76</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
-body{background:#0f0f0f;color:white}
-.header{background:#1a1a1a;padding:12px 15px;display:flex;justify-content:space-between;align-items:center}
+body{background:#0f0f0f;color:white;transition:0.3s}
+body.light{background:#f5f5f5;color:#111}
+body.light .header{background:#fff}
+body.light .search, body.light .chat, body.light .set-item{background:#fff;color:#111}
+body.light .inputBar{background:#fff}
+.header{background:#1a1a1a;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;transition:0.3s}
 .logo{font-weight:bold;font-size:18px}.logo span{color:#FFD700}
 .badge{background:#333;color:#FFD700;font-size:10px;padding:3px 8px;border-radius:10px;margin-left:5px}
 .topBtns{display:flex;gap:10px}
 .topBtns button{width:38px;height:38px;border-radius:50%;border:none;background:#2a2a2a;font-size:16px}
-#settingsBtn{background:#FFD700 !important}
 .search{margin:15px;background:#222;padding:10px 15px;border-radius:10px}
 .search input{background:transparent;border:none;color:white;width:100%;outline:none}
 .statusRow{display:flex;gap:15px;overflow-x:auto;padding:10px 15px}
 .sItem{text-align:center;min-width:65px}
 .sCircle{width:60px;height:60px;border-radius:50%;border:2px dashed #FFD700;display:flex;align-items:center;justify-content:center;font-size:28px;background:#222;overflow:hidden}
 .sCircle img{width:100%;height:100%;object-fit:cover}
-.sItem p{font-size:11px;margin-top:5px;color:#aaa}
-#settingsPage, #profilePage{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f0f0f;z-index:999;display:none;overflow-y:auto;padding:20px}
+.chatList{padding:10px;min-height:400px;transition:0.3s;background-size:cover;background-position:center}
+.chat{background:#1e1e1e;padding:12px;border-radius:10px;margin-bottom:8px;display:flex;gap:10px}
+.avatar{width:40px;height:40px;border-radius:50%;background:#2a5bd7;display:flex;align-items:center;justify-content:center}
+.inputBar{position:fixed;bottom:0;left:0;width:100%;background:#1a1a1a;padding:10px;display:flex;gap:10px}
+.inputBar input{flex:1;background:#222;border:none;padding:12px;border-radius:25px;color:white;outline:none}
+#settingsPage, #profilePage, #wallpaperPage{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f0f0f;z-index:999;display:none;overflow-y:auto;padding:20px}
+#wallpaperPage{z-index:1000}
 .set-item{background:#1e1e1e;padding:16px;margin:12px 0;border-radius:12px;border-left:4px solid #FFD700}
+.wall-option{width:60px;height:60px;border-radius:10px;border:2px solid transparent;cursor:pointer;display:inline-block;margin:5px}
+.wall-option.active{border:2px solid #FFD700}
 </style>
 </head>
-<body>
+<body id="body">
 
 <div class="header">
-  <div class="logo">CHALE <span>CHAT</span> <span class="badge">V75 REAL PHOTO</span></div>
+  <div class="logo">CHALE <span>CHAT</span> <span class="badge">V76 THEME</span></div>
   <div class="topBtns">
-    <button onclick="alert('Switch V68 <-> V75')">🔄</button>
+    <button onclick="alert('Switch')">🔄</button>
     <button onclick="clearAll()">🗑️</button>
     <button onclick="openSettings()" style="background:#FFD700">⚙️</button>
   </div>
@@ -37,99 +47,148 @@ body{background:#0f0f0f;color:white}
 <div class="search"><input placeholder="Search"></div>
 
 <div class="statusRow">
-  <div class="sItem"><div class="sCircle" id="myStatusCircle"><img id="myStatusImg" style="display:none"><span id="myStatusEmoji">🇬🇭</span></div><p id="myStatusName">My Status</p></div>
-  <div class="sItem"><div class="sCircle">🇬🇭</div><p>Salvation</p></div>
+  <div class="sItem"><div class="sCircle" id="myStatusCircle"><img id="myStatusImg" style="display:none"><span id="myStatusEmoji">🇬🇭</span></div><p>My Status</p></div>
+  <div class="sItem"><div class="sCircle"><img src="" id="salImg"><span>🇬🇭</span></div><p>Salvation</p></div>
   <div class="sItem"><div class="sCircle">👤</div><p>Kwame</p></div>
+</div>
+
+<div class="chatList" id="chatList">
+  <div class="chat"><div class="avatar">👤</div><div><b>Rockson Boateng</b><br><small style="color:gray">Chale Chat V76 Theme Preview</small></div></div>
+  <p style="text-align:center;color:gray;margin-top:30px;font-size:12px">Chat wallpaper will show here</p>
+</div>
+
+<div class="inputBar">
+  <input placeholder="Type message - V76">
+  <button style="width:45px;height:45px;border-radius:50%;border:none;background:#25D366">➤</button>
 </div>
 
 <!-- SETTINGS -->
 <div id="settingsPage">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-    <h2>⚙️ SETTINGS</h2><button onclick="closeSettings()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">X Close</button>
-  </div>
-  <div class="set-item" onclick="editProfile()"><h3>1. Profile Settings ></h3><p>Change name, REAL PHOTO</p><small style="color:#FFD700">Current: <span id="curName">Salvation</span></small></div>
-  <div class="set-item"><h3>2. Wallpaper / Theme</h3><label><input type="checkbox" checked> Dark Mode</label></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"><h2>⚙️ SETTINGS</h2><button onclick="closeSettings()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">X</button></div>
+  <div class="set-item" onclick="editProfile()"><h3>1. Profile Settings ></h3><p>Real Photo</p></div>
+  <div class="set-item" onclick="openWallpaper()"><h3>2. Wallpaper / Theme ></h3><p>Change chat background, Dark/Light</p><small style="color:#FFD700">Current: <span id="curWall">Dark Default</span></small></div>
   <div class="set-item"><h3>3. Privacy</h3><label><input type="checkbox" checked> Last Seen</label></div>
-  <div class="set-item" style="border:2px solid #FFD700;"><h3>4. Backup & Restore</h3><p>V68 Backup: Kept Safe ✅</p></div>
+  <div class="set-item" style="border:2px solid #FFD700;"><h3>4. Backup & Restore</h3><p>V68 Safe ✅</p></div>
 </div>
 
-<!-- PROFILE REAL PHOTO PAGE -->
-<div id="profilePage">
+<!-- WALLPAPER PAGE V76 NEW! -->
+<div id="wallpaperPage">
   <div style="display:flex;justify-content:space-between;align-items:center">
-    <h2>👤 Edit Profile - REAL PHOTO</h2>
-    <button onclick="closeProfile()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button>
+    <h2>🎨 Wallpaper & Theme</h2>
+    <button onclick="closeWallpaper()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button>
   </div>
 
+  <div style="margin-top:20px">
+    <h3>Theme Mode</h3>
+    <div style="display:flex;gap:10px;margin-top:10px">
+      <button onclick="setTheme('dark')" id="darkBtn" style="flex:1;background:#111;color:white;border:2px solid #FFD700;padding:12px;border-radius:10px;">🌙 Dark</button>
+      <button onclick="setTheme('light')" id="lightBtn" style="flex:1;background:white;color:black;border:2px solid #ccc;padding:12px;border-radius:10px;">☀️ Light</button>
+    </div>
+  </div>
+
+  <div style="margin-top:25px">
+    <h3>Chat Wallpaper</h3>
+    <p style="color:gray;font-size:12px;margin:5px 0">Tap to change chat background</p>
+    <div style="margin-top:10px">
+      <div class="wall-option active" style="background:#0f0f0f" onclick="setWall('none','Dark Default',this)"></div>
+      <div class="wall-option" style="background:#1a2a1a" onclick="setWall('#1a2a1a','Dark Green',this)"></div>
+      <div class="wall-option" style="background:#2a1a1a" onclick="setWall('#2a1a1a','Dark Red',this)"></div>
+      <div class="wall-option" style="background:#1a1a2a" onclick="setWall('#1a1a2a','Dark Blue',this)"></div>
+      <div class="wall-option" style="background:#FFD700" onclick="setWall('#FFD700','Gold',this)"></div>
+      <div class="wall-option" style="background:linear-gradient(45deg,#111,#333)" onclick="setWall('linear-gradient(45deg,#111,#333)','Gradient Dark',this)"></div>
+      <div class="wall-option" style="background:url('https://i.imgur.com/8Km9tLL.png');background-size:cover" onclick="setWall('doodle','WhatsApp Doodle',this)"></div>
+      <div class="wall-option" style="background:#222 url('https://www.transparenttextures.com/patterns/cubes.png')" onclick="setWall('pattern','Cubes Pattern',this)"></div>
+    </div>
+    
+    <label for="wallUpload" style="display:block;margin-top:15px;background:#1e1e1e;border:1px dashed #FFD700;padding:12px;border-radius:10px;text-align:center;cursor:pointer;">📸 Upload Custom Wallpaper</label>
+    <input type="file" id="wallUpload" accept="image/*" style="display:none" onchange="uploadWall(this)">
+  </div>
+
+  <button onclick="saveWallpaper()" style="width:100%;background:#FFD700;border:none;padding:16px;border-radius:12px;font-weight:bold;margin-top:30px;font-size:16px;">Save Theme ✅</button>
+</div>
+
+<!-- PROFILE PAGE -->
+<div id="profilePage">
+  <div style="display:flex;justify-content:space-between;align-items:center"><h2>👤 Edit Profile</h2><button onclick="closeProfile()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button></div>
   <div style="text-align:center;margin-top:25px">
     <div style="position:relative;width:120px;height:120px;margin:0 auto">
-      <div id="bigAvatar" style="width:120px;height:120px;border-radius:50%;background:#222;border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;font-size:60px;overflow:hidden">
-        <img id="bigAvatarImg" style="width:100%;height:100%;object-fit:cover;display:none">
-        <span id="bigAvatarEmoji">🇬🇭</span>
-      </div>
+      <div id="bigAvatar" style="width:120px;height:120px;border-radius:50%;background:#222;border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;font-size:60px;overflow:hidden"><img id="bigAvatarImg" style="width:100%;height:100%;object-fit:cover;display:none"><span id="bigAvatarEmoji">🇬🇭</span></div>
       <label for="photoUpload" style="position:absolute;bottom:0;right:0;background:#FFD700;width:35px;height:35px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;">📷</label>
       <input type="file" id="photoUpload" accept="image/*" style="display:none" onchange="uploadPhoto(this)">
     </div>
-    <p style="color:#888;margin-top:10px;font-size:12px;">Tap 📷 to upload REAL photo from gallery</p>
-    <div style="margin-top:15px;display:flex;gap:10px;justify-content:center">
-      <button onclick="document.getElementById('photoUpload').click()" style="background:#1e1e1e;color:#FFD700;border:1px solid #FFD700;padding:8px 15px;border-radius:20px;">📸 Upload Photo</button>
-      <button onclick="removePhoto()" style="background:#1e1e1e;color:red;border:1px solid red;padding:8px 15px;border-radius:20px;">Remove</button>
-    </div>
   </div>
-
-  <div style="margin-top:30px">
-    <label style="color:#888;font-size:13px;">Your Name</label>
-    <input id="profileNameInput" value="Salvation" style="width:100%;background:#1e1e1e;border:none;padding:15px;border-radius:10px;color:white;margin-top:5px;font-size:16px;">
-    <label style="color:#888;font-size:13px;margin-top:20px;display:block;">Status Message</label>
-    <input id="statusInput" value="Chale, I dey! 🇬🇭" style="width:100%;background:#1e1e1e;border:none;padding:15px;border-radius:10px;color:white;margin-top:5px;">
-    <button onclick="saveProfile()" style="width:100%;background:#FFD700;border:none;padding:16px;border-radius:12px;font-weight:bold;margin-top:25px;font-size:16px;">Save Profile ✅</button>
-  </div>
+  <div style="margin-top:30px"><input id="profileNameInput" value="Salvation" style="width:100%;background:#1e1e1e;border:none;padding:15px;border-radius:10px;color:white;"><button onclick="saveProfile()" style="width:100%;background:#FFD700;border:none;padding:16px;border-radius:12px;font-weight:bold;margin-top:20px;">Save Profile ✅</button></div>
 </div>
 
 <script>
+let currentWall='none';
 function openSettings(){document.getElementById('settingsPage').style.display='block'}
 function closeSettings(){document.getElementById('settingsPage').style.display='none'}
 function editProfile(){document.getElementById('settingsPage').style.display='none';document.getElementById('profilePage').style.display='block'}
 function closeProfile(){document.getElementById('profilePage').style.display='none';document.getElementById('settingsPage').style.display='block'}
+function openWallpaper(){document.getElementById('settingsPage').style.display='none';document.getElementById('wallpaperPage').style.display='block'}
+function closeWallpaper(){document.getElementById('wallpaperPage').style.display='none';document.getElementById('settingsPage').style.display='block'}
 
+function setTheme(mode){
+  if(mode==='light'){document.getElementById('body').className='light'; localStorage.setItem('chale_theme','light')}
+  else{document.getElementById('body').className=''; localStorage.setItem('chale_theme','dark')}
+}
+function setWall(color,name,el){
+  document.querySelectorAll('.wall-option').forEach(e=>e.classList.remove('active'));
+  el.classList.add('active');
+  currentWall=color;
+  document.getElementById('curWall').innerText=name;
+  let chat=document.getElementById('chatList');
+  if(color==='none'){chat.style.background=''; chat.style.backgroundImage=''}
+  else if(color==='doodle'){chat.style.backgroundImage="url('https://i.imgur.com/8Km9tLL.png')"; chat.style.backgroundColor='#0f0f0f'}
+  else if(color==='pattern'){chat.style.backgroundImage="url('https://www.transparenttextures.com/patterns/cubes.png')"}
+  else if(color.includes('gradient')){chat.style.background=color; chat.style.backgroundImage=''}
+  else{chat.style.backgroundColor=color; chat.style.backgroundImage=''}
+}
+function uploadWall(input){
+  if(input.files[0]){
+    let r=new FileReader();
+    r.onload=e=>{
+      document.getElementById('chatList').style.backgroundImage=`url('${e.target.result}')`;
+      document.getElementById('chatList').style.backgroundSize='cover';
+      currentWall=e.target.result;
+      localStorage.setItem('chale_wall_custom', e.target.result);
+      document.getElementById('curWall').innerText='Custom Photo';
+    }
+    r.readAsDataURL(input.files[0]);
+  }
+}
+function saveWallpaper(){
+  localStorage.setItem('chale_wall', currentWall);
+  alert("✅ Theme Saved! "+document.getElementById('curWall').innerText);
+  closeWallpaper();
+}
 function uploadPhoto(input){
-  if(input.files && input.files[0]){
+  if(input.files[0]){
     let reader=new FileReader();
-    reader.onload=function(e){
-      document.getElementById('bigAvatarImg').src=e.target.result;
-      document.getElementById('bigAvatarImg').style.display='block';
+    reader.onload=e=>{
+      document.getElementById('bigAvatarImg').src=e.target.result; document.getElementById('bigAvatarImg').style.display='block';
       document.getElementById('bigAvatarEmoji').style.display='none';
-      document.getElementById('myStatusImg').src=e.target.result;
-      document.getElementById('myStatusImg').style.display='block';
+      document.getElementById('myStatusImg').src=e.target.result; document.getElementById('myStatusImg').style.display='block';
       document.getElementById('myStatusEmoji').style.display='none';
       localStorage.setItem('chale_photo', e.target.result);
     }
     reader.readAsDataURL(input.files[0]);
   }
 }
-function removePhoto(){
-  document.getElementById('bigAvatarImg').style.display='none';
-  document.getElementById('bigAvatarEmoji').style.display='block';
-  document.getElementById('myStatusImg').style.display='none';
-  document.getElementById('myStatusEmoji').style.display='block';
-  localStorage.removeItem('chale_photo');
-}
 function saveProfile(){
-  let newName=document.getElementById('profileNameInput').value;
-  localStorage.setItem('chale_name',newName);
-  document.getElementById('curName').innerText=newName;
-  alert("✅ Saved! Real photo + Name: "+newName);
+  let n=document.getElementById('profileNameInput').value;
+  localStorage.setItem('chale_name',n);
+  alert("✅ Saved "+n);
   closeProfile();
 }
-function clearAll(){if(confirm("Clear all? V68 backup safe!")){localStorage.clear();location.reload();}}
+function clearAll(){if(confirm("Clear all? V68 safe!")){localStorage.clear();location.reload();}}
 window.onload=()=>{
-  let n=localStorage.getItem('chale_name'); let p=localStorage.getItem('chale_photo');
-  if(n){document.getElementById('curName').innerText=n; document.getElementById('profileNameInput').value=n;}
-  if(p){
-    document.getElementById('bigAvatarImg').src=p; document.getElementById('bigAvatarImg').style.display='block';
-    document.getElementById('bigAvatarEmoji').style.display='none';
-    document.getElementById('myStatusImg').src=p; document.getElementById('myStatusImg').style.display='block';
-    document.getElementById('myStatusEmoji').style.display='none';
-  }
+  let th=localStorage.getItem('chale_theme'); if(th==='light') setTheme('light');
+  let ph=localStorage.getItem('chale_photo');
+  if(ph){document.getElementById('bigAvatarImg').src=ph; document.getElementById('bigAvatarImg').style.display='block'; document.getElementById('bigAvatarEmoji').style.display='none'; document.getElementById('myStatusImg').src=ph; document.getElementById('myStatusImg').style.display='block'; document.getElementById('myStatusEmoji').style.display='none';}
+  let wl=localStorage.getItem('chale_wall'); let wlc=localStorage.getItem('chale_wall_custom');
+  if(wlc){document.getElementById('chatList').style.backgroundImage=`url('${wlc}')`; document.getElementById('chatList').style.backgroundSize='cover';}
 }
 </script>
 </body>
