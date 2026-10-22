@@ -6,7 +6,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>ChaleChat V66 FINAL • SALVATION TECH-GHANA</title>
+<title>ChaleChat V67 CAMERA • SALVATION TECH-GHANA</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--gold:#d4af37;--bg:#0b141a;--header:#202c33;--text:#e9edef;--muted:#8696a0}
@@ -52,11 +52,12 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .msg{max-width:78%;padding:6px 7px 8px 9px;border-radius:7.5px;font-size:14.2px;box-shadow:0 1px .5px rgba(0,0,0,.13);word-wrap:break-word;position:relative}
 .msg.other{background:#202c33;border-top-left-radius:0;align-self:flex-start}
 .msg.me{background:#005c4b;border-top-right-radius:0;align-self:flex-end}
-.msg .meta{display:flex;gap:4px;align-items:center;justify-content:flex-end;margin-top:4px;float:right;margin-left:10px}
+.msg .meta{display:flex;gap:4px;align-items:center;justify-content:flex-end;margin-top:4px;float:right;margin-left:10px;clear:both}
 .msg .time{font-size:10.5px;color:rgba(255,255,255,.6)}
 .ticks{font-size:12px;color:#53bdeb}
 .msg .trans{font-size:11px;color:#ffcc33;margin-top:5px;border-top:1px dashed rgba(255,204,51,.3);padding-top:4px;display:block;line-height:1.3}
 .msg .trans.loading{color:#8696a0;font-style:italic}
+.msg img.chatImg{max-width:220px;max-height:260px;border-radius:10px;margin-top:6px;display:block;cursor:pointer;border:1px solid rgba(255,255,255,.1)}
 .broadcast{align-self:center;background:#182533;color:#ffcc33;padding:8px 12px;border-radius:7.5px;font-size:12.5px;font-weight:600;text-align:center;max-width:90%}
 .inputBar{position:absolute;bottom:0;left:0;right:0;height:62px;background:var(--header);display:flex;align-items:center;gap:8px;padding:5px 10px;padding-bottom:calc(5px + env(safe-area-inset-bottom));z-index:20;border-top:1px solid #222d34;flex-shrink:0}
 .inputBar .tool{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#8696a0;font-size:22px;flex-shrink:0}
@@ -95,16 +96,16 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 <body>
 
 <div class="header">
-  <div class="logo"><div class="dot"></div> CHALE <b>CHAT</b> <span class="badge" id="langBadge">EN • V66</span></div>
+  <div class="logo"><div class="dot"></div> CHALE <b>CHAT</b> <span class="badge" id="langBadge">EN • V67 CAM</span></div>
   <div class="h-actions">
-    <div class="iconBtn" onclick="openLangModal()" style="background:var(--gold);color:#000;font-size:20px" title="22 Languages">🌍</div>
+    <div class="iconBtn" onclick="openLangModal()" style="background:var(--gold);color:#000;font-size:20px">🌍</div>
     <div class="iconBtn gold" onclick="toggleMenu()">⋮</div>
   </div>
   <div class="menu" id="mainMenu">
-    <div class="menuItem" onclick="openLangModal()"><span>🌍 Language — 22 Languages REAL</span><span style="color:var(--gold)">▶</span></div>
+    <div class="menuItem" onclick="openLangModal()"><span>🌍 Language — 22 REAL API</span><span style="color:var(--gold)">▶</span></div>
+    <div class="menuItem" onclick="openCamera()"><span>📷 Camera — Take Photo</span><span>📸</span></div>
+    <div class="menuItem" onclick="openGallery()"><span>🖼️ Gallery — Pick Photo</span><span>🖼️</span></div>
     <div class="menuItem" onclick="openAddContact()"><span>📇 New contact — Auto Add</span><span>➕</span></div>
-    <div class="menuItem" onclick="toggleSearch()"><span>🔍 Search</span></div>
-    <div class="menuItem" onclick="popup('ChaleChat V66 FINAL\n• Input bar fixed\n• Ghana number checker\n• Auto-fill contact\n• 22 Languages Real API\n• S TECH GHANA 🇬🇭','V66 INFO')"><span>ℹ️ V66 Info</span></div>
   </div>
 </div>
 
@@ -118,41 +119,64 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
     </div>
     <div class="chatList" id="chatList"></div>
     <div class="fab" onclick="openAddContact()">+</div>
-    <div class="footer" id="footerTap">V66 FINAL • SALVATION TECH-GHANA • S TECH HUB 🇬🇭 • 22 Lang REAL API</div>
+    <div class="footer" id="footerTap">V67 CAMERA FIXED • SALVATION TECH-GHANA • S TECH HUB 🇬🇭</div>
   </div>
   <div class="chatViewPanel">
     <div class="chatViewHeader">
       <div class="back iconBtn" onclick="closeChat()">←</div>
       <div class="avatar" id="chatAvatar">🇬🇭</div>
-      <div style="flex:1"><div style="font-weight:600;font-size:16px" id="chatName">Salvation</div><div style="font-size:12px;color:#00a884" id="chatStatus">🌍 Real translate ON • V66</div></div>
-      <div class="iconBtn" onclick="openLangModal()" style="background:var(--gold);color:#000">🌍</div>
-      <div class="iconBtn">📞</div>
+      <div style="flex:1"><div style="font-weight:600;font-size:16px" id="chatName">Salvation</div><div style="font-size:12px;color:#00a884" id="chatStatus">📷 Camera ready • V67</div></div>
+      <div class="iconBtn" onclick="openCamera()" style="background:var(--gold);color:#000">📷</div>
+      <div class="iconBtn" onclick="openLangModal()">🌍</div>
     </div>
     <div class="wallpaper" id="wallpaper"></div>
     <div class="inputBar">
       <div class="tool" onclick="openLangModal()">🌍</div>
-      <div class="tool" onclick="popup('😊 Emoji picker • S TECH','EMOJI')">😊</div>
-      <div class="field"><input id="msgInput" placeholder="Message — real translate" onkeydown="if(event.key==='Enter')sendMsg()"><div class="tool" onclick="popup('📷 Camera • S TECH','CAMERA')">📷</div></div>
-      <div class="tool" onclick="popup('🎤 Voice • S TECH','VOICE')">🎤</div>
+      <div class="tool" onclick="openGallery()">🖼️</div>
+      <div class="field"><input id="msgInput" placeholder="Type & auto-translate" onkeydown="if(event.key==='Enter')sendMsg()"><div class="tool" onclick="openCamera()" style="color:var(--gold)">📷</div></div>
       <div class="send" onclick="sendMsg()">➤</div>
     </div>
   </div>
 </div>
 
-<!-- LANG MODAL — REAL 22 LANGUAGES -->
+<!-- CAMERA MODAL V67 FIXED -->
+<input type="file" id="galleryInput" accept="image/*" style="display:none" onchange="sendGalleryFile(this)">
+<div id="cameraModal" style="position:fixed;inset:0;background:#000;z-index:10001;display:none;flex-direction:column">
+  <div style="height:59px;background:#202c33;display:flex;align-items:center;justify-content:space-between;padding:0 14px;flex-shrink:0">
+    <div style="display:flex;align-items:center;gap:10px"><div style="width:10px;height:10px;background:#00a884;border-radius:50%"></div><b style="color:#d4af37;font-size:13px">CAMERA • V67 • S TECH</b></div>
+    <div onclick="closeCamera()" style="width:38px;height:38px;border-radius:50%;background:#233138;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff">✕</div>
+  </div>
+  <div style="flex:1;position:relative;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden">
+    <video id="cameraVideo" autoplay playsinline style="width:100%;height:100%;object-fit:cover"></video>
+    <canvas id="cameraCanvas" style="display:none"></canvas>
+    <div id="cameraPreview" style="position:absolute;inset:0;display:none;background:#000;align-items:center;justify-content:center;z-index:2">
+      <img id="previewImg" style="max-width:100%;max-height:100%;object-fit:contain">
+    </div>
+  </div>
+  <div style="height:95px;background:#202c33;display:flex;align-items:center;justify-content:space-around;padding:10px;flex-shrink:0" id="cameraControls">
+    <div onclick="openGallery()" style="width:52px;height:52px;border-radius:50%;background:#111b21;border:1px solid #2a3942;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer" title="Gallery">🖼️</div>
+    <div onclick="capturePhoto()" id="shutterBtn" style="width:74px;height:74px;border-radius:50%;background:#fff;border:4px solid #d4af37;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 0 4px rgba(212,175,55,.3)"><div style="width:58px;height:58px;border-radius:50%;background:#fff;border:2px solid #000"></div></div>
+    <div onclick="switchCamera()" style="width:52px;height:52px;border-radius:50%;background:#111b21;border:1px solid #2a3942;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer" title="Switch">🔄</div>
+  </div>
+  <div id="afterCapture" style="height:75px;background:#202c33;display:none;align-items:center;justify-content:space-between;padding:0 16px;gap:12px;flex-shrink:0">
+    <button onclick="retakePhoto()" style="flex:1;padding:13px;border-radius:10px;background:#111b21;color:#8696a0;border:1px solid #2a3942;font-weight:700;cursor:pointer">Retake</button>
+    <button onclick="sendCapturedPhoto()" style="flex:1;padding:13px;border-radius:10px;background:#00a884;color:#fff;border:none;font-weight:800;cursor:pointer">Send • S TECH ➤</button>
+  </div>
+</div>
+
 <div id="langModal" style="position:fixed;inset:0;background:rgba(11,20,26,.88);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;z-index:10000;padding:20px">
   <div class="sTechPopup" style="max-width:460px">
-    <div class="top"><div class="icon">🌍</div><h4>SELECT LANGUAGE — 22 REAL</h4><p style="font-size:11px">Green = Real API (Internet) • Gold = Ghana Local (Offline Dictionary) • Tap to translate instantly!</p></div>
+    <div class="top"><div class="icon">🌍</div><h4>SELECT LANGUAGE — 22 REAL</h4><p style="font-size:11px">Green = Real API • Gold = Ghana Local • Tap to translate!</p></div>
     <div class="langGrid" id="langGrid"></div>
     <div class="actions"><button style="background:#202c33;color:#8696a0;border:1px solid #2a3942" onclick="closeLangModal()">Cancel</button><button onclick="closeLangModal()">Done • Translate! 🌍</button></div>
   </div>
 </div>
 
-<div id="sTechModal" onclick="if(event.target.id==='sTechModal')closeModal()"><div class="sTechPopup"><div class="top"><div class="icon">S</div><h4 id="modalTitle">SALVATION TECH</h4><p id="modalMsg">Welcome</p><div class="sub">SALVATION TECH-GHANA • S TECH HUB 🇬🇭 V66 FINAL</div></div><div class="actions"><button onclick="closeModal()">OK • S TECH</button></div></div></div>
+<div id="sTechModal" onclick="if(event.target.id==='sTechModal')closeModal()"><div class="sTechPopup"><div class="top"><div class="icon">S</div><h4 id="modalTitle">SALVATION TECH</h4><p id="modalMsg">Welcome</p><div class="sub">SALVATION TECH-GHANA • S TECH HUB 🇬🇭 V67 CAMERA</div></div><div class="actions"><button onclick="closeModal()">OK • S TECH</button></div></div></div>
 
 <div id="addContactModal" style="position:fixed;inset:0;background:rgba(11,20,26,.85);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px">
   <div class="sTechPopup" style="text-align:left;max-width:380px">
-    <div class="top" style="text-align:center"><div class="icon">+</div><h4>NEW CONTACT</h4><p style="font-size:12px">Ghana number checker • Auto-fill • V66</p></div>
+    <div class="top" style="text-align:center"><div class="icon">+</div><h4>NEW CONTACT</h4><p style="font-size:12px">Auto-fill • Ghana checker • V67</p></div>
     <div style="padding:0 18px 18px">
       <div style="margin-top:12px;text-align:left"><label style="font-size:12px;color:#8696a0">Name *</label><input id="newName" style="width:100%;padding:12px;border-radius:8px;background:#111b21;border:1px solid #2a3942;color:#fff;margin-top:6px" placeholder="e.g. Kofi"></div>
       <div style="margin-top:12px;text-align:left"><label style="font-size:12px;color:#8696a0">Phone * (Ghana)</label><input id="newPhone" style="width:100%;padding:12px;border-radius:8px;background:#111b21;border:1px solid #2a3942;color:#fff;margin-top:6px" placeholder="0241234567 or +233..."></div>
@@ -186,28 +210,30 @@ const LANGUAGES=[
 {code:'zu',name:'Zulu',flag:'🇿🇦',local:'Zulu',api:true,mym:'zu'},
 {code:'nl',name:'Dutch',flag:'🇳🇱',local:'Nederlands',api:true,mym:'nl'},
 {code:'it',name:'Italian',flag:'🇮🇹',local:'Italiano',api:true,mym:'it'},
-{code:'frafra',name:'Frafra',flag:'🇬🇭',local:'Frafra - Gurene',api:false,mym:null}
+{code:'frafra',name:'Frafra',flag:'🇬🇭',local:'Frafra',api:false,mym:null}
 ];
 const DICT={
   "Hello":{"ak":"Maakye","gaa":"Atu","ee":"Ŋdi","ha":"Sannu","dag":"Dasiba","fat":"Maakye","nzi":"Mawalɛ","frafra":"Anɔre","fr":"Bonjour","es":"Hola"},
-  "Welcome to ChaleChat":{"ak":"Akwaaba wɔ ChaleChat","gaa":"Atuu wɔ ChaleChat","ee":"Woezɔ va ChaleChat","ha":"Barka da zuwa ChaleChat","fr":"Bienvenue sur ChaleChat","es":"Bienvenido a ChaleChat"},
+  "Welcome to ChaleChat":{"ak":"Akwaaba wɔ ChaleChat","gaa":"Atuu","ee":"Woezɔ","ha":"Barka","fr":"Bienvenue sur ChaleChat","es":"Bienvenido a ChaleChat"},
   "Chale how for do?":{"ak":"Chale ɛte sɛn?","gaa":"Chale te tɛŋ?","ee":"Chale aleke?","ha":"Chale ya ya?","fr":"Chale comment ça va?","es":"Chale ¿cómo va?"},
   "We dey!":{"ak":"Yɛ wɔ ha!","gaa":"Wɔ yɛ ŋmɛ!","ee":"Mí li!","ha":"Muna nan!","fr":"On est là!","es":"¡Aquí estamos!"},
-  "Message":{"ak":"Nkrasɛm","gaa":"Sane","ee":"Nya","ha":"Saƙo","fr":"Message","es":"Mensaje"},
-  "Search or start new chat":{"ak":"Hwehwɛ anaa fi chat foforo","gaa":"Taomɔ loo bɔi sane hee","ee":"Di alo dze nya yeyea gɔme","ha":"Bincika ko fara sabon hira","fr":"Rechercher ou démarrer discussion","es":"Buscar o iniciar chat"}
+  "Ama sent a photo":{"ak":"Ama de mfonini bi akɔ","gaa":"Ama tsɔ foto","ee":"Ama dɔ foto","ha":"Ama ta aiko hoto","fr":"Ama a envoyé une photo","es":"Ama envió una foto"}
 };
-let transCache=JSON.parse(localStorage.getItem('v66_transCache')||'{}');
-let currentLang=localStorage.getItem('v66_lang')||'en';
+let transCache=JSON.parse(localStorage.getItem('v67_transCache')||'{}');
+let currentLang=localStorage.getItem('v67_lang')||'en';
 let currentChat='Salvation';
-let chats=JSON.parse(localStorage.getItem('v66_chats')||'null')||{
-  Salvation:{avatar:'🇬🇭',phone:'',msgs:[{t:"Welcome to ChaleChat V66 FINAL! Real translation ON! Input bar fixed! Ghana number checker! Auto-add! 🌍🇬🇭",me:false,time:"08:07",id:1}],online:"online • S TECH"},
+let chats=JSON.parse(localStorage.getItem('v67_chats')||'null')||{
+  Salvation:{avatar:'🇬🇭',phone:'',msgs:[{t:"Welcome to ChaleChat V67! 📷 Camera fixed! 🌍 Real translate ON! Type anything, snap photo! 🇬🇭",me:false,time:"08:07",id:1}],online:"online • S TECH"},
   Kwame:{avatar:'👤',phone:'0244123456',msgs:[{t:"Chale how for do? 🇬🇭",me:false,time:"07:30",id:2},{t:"We dey!",me:true,time:"07:31",id:3}],online:"0244123456"},
-  Ama:{avatar:'👩',phone:'0551234567',msgs:[{t:"Ama sent a photo 📷",me:false,time:"Yesterday",id:4}],online:"0551234567"}
+  Ama:{avatar:'👩',phone:'0551234567',msgs:[{t:"Ama sent a photo",me:false,time:"Yesterday",id:4,img:"https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400"}],online:"0551234567"}
 };
-let broad=localStorage.getItem('v66_broad')||'';
+let broad=localStorage.getItem('v67_broad')||'';
 let selectedAvatar='👤';
-let msgIdCounter=200;
-function save(){ localStorage.setItem('v66_chats',JSON.stringify(chats)); localStorage.setItem('v66_transCache',JSON.stringify(transCache)); }
+let msgIdCounter=300;
+let cameraStream=null; let facing='environment'; let capturedData=null;
+
+function save(){ localStorage.setItem('v67_chats',JSON.stringify(chats)); localStorage.setItem('v67_transCache',JSON.stringify(transCache)); }
+
 async function realTranslateAPI(text, targetCode){
   const lang=LANGUAGES.find(l=>l.code===targetCode);
   if(!lang||targetCode==='en') return text;
@@ -234,8 +260,8 @@ function renderLangGrid(){
   grid.innerHTML=h;
 }
 async function setLang(code){
-  currentLang=code; localStorage.setItem('v66_lang',code);
-  document.getElementById('langBadge').textContent=code.toUpperCase()+' • V66';
+  currentLang=code; localStorage.setItem('v67_lang',code);
+  document.getElementById('langBadge').textContent=code.toUpperCase()+' • V67 CAM';
   renderLangGrid();
   const l=LANGUAGES.find(x=>x.code===code);
   popup(`🌍 Changing to ${l.name} ${l.flag}\n${l.local}\n\nReal translating... • S TECH`, `LANGUAGE: ${l.name.toUpperCase()}`);
@@ -249,13 +275,14 @@ function renderChatList(){
   Object.keys(chats).forEach(name=>{
     const c=chats[name]; const last=c.msgs[c.msgs.length-1];
     const cacheKey=last.t+'|'+currentLang; const display=transCache[cacheKey]||last.t;
-    h+=`<div class="chatItem ${name===currentChat?'active':''}" onclick="openChat('${name}')"><div class="avatar">${c.avatar}</div><div class="chatInfo"><div class="topRow"><div class="name">${name}</div><div class="time">${last.time}</div></div><div class="topRow"><div class="lastMsg">${display.slice(0,38)}</div></div></div></div>`;
+    const icon=last.img?'📷 ':''; 
+    h+=`<div class="chatItem ${name===currentChat?'active':''}" onclick="openChat('${name}')"><div class="avatar">${c.avatar}</div><div class="chatInfo"><div class="topRow"><div class="name">${name}</div><div class="time">${last.time}</div></div><div class="topRow"><div class="lastMsg">${icon}${display.slice(0,36)}</div></div></div></div>`;
   });
   list.innerHTML=h;
 }
 async function renderWallpaperReal(){
   const wall=document.getElementById('wallpaper');
-  let h=`<div class="dateSep">TODAY • ${currentLang.toUpperCase()} • REAL TRANSLATE V66</div>`;
+  let h=`<div class="dateSep">TODAY • ${currentLang.toUpperCase()} • V67 CAMERA 📷</div>`;
   if(broad){ const bTrans=currentLang==='en'?broad:await realTranslateAPI(broad, currentLang); h+=`<div class="broadcast">📢 ${bTrans}</div>`; }
   for(let m of chats[currentChat].msgs){
     const cacheKey=m.t+'|'+currentLang; let translated=transCache[cacheKey];
@@ -263,18 +290,22 @@ async function renderWallpaperReal(){
     else if(!translated){ translated=m.t; }
     const ticks=m.me?`<span class="ticks">✓✓</span>`:'';
     const showOriginal=transCache[cacheKey]&&transCache[cacheKey]!==m.t&&currentLang!=='en';
-    h+=`<div class="msg ${m.me?'me':'other'}" id="msg-${m.id}">${translated}${showOriginal?`<span class="trans">Original: ${m.t}</span>`:''}<span class="meta"><span class="time">${m.time}</span>${ticks}</span></div>`;
+    const imgHtml=m.img?`<img src="${m.img}" class="chatImg" onclick="window.open(this.src,'_blank')">`:'';
+    h+=`<div class="msg ${m.me?'me':'other'}" id="msg-${m.id}"><div>${translated}</div>${imgHtml}${showOriginal?`<span class="trans">Original: ${m.t}</span>`:''}<span class="meta"><span class="time">${m.time}</span>${ticks}</span></div>`;
   }
   wall.innerHTML=h; wall.scrollTop=wall.scrollHeight;
   document.getElementById('chatName').textContent=currentChat;
   document.getElementById('chatAvatar').textContent=chats[currentChat].avatar;
-  document.getElementById('chatStatus').textContent='🌍 Real: '+currentLang.toUpperCase()+' • V66 FINAL';
+  document.getElementById('chatStatus').textContent='📷 Camera ready • '+currentLang.toUpperCase()+' • V67';
   for(let m of chats[currentChat].msgs){
     const cacheKey=m.t+'|'+currentLang;
     if(!transCache[cacheKey]&&currentLang!=='en'){
       const real=await realTranslateAPI(m.t, currentLang);
       const el=document.getElementById('msg-'+m.id);
-      if(el){ el.innerHTML=`${real}${real!==m.t?`<span class="trans">Original: ${m.t}</span>`:''}<span class="meta"><span class="time">${m.time}</span>${m.me?'<span class="ticks">✓✓</span>':''}</span>`; }
+      if(el){ 
+        const imgHtml=m.img?`<img src="${m.img}" class="chatImg" onclick="window.open(this.src,'_blank')">`:'';
+        el.innerHTML=`<div>${real}</div>${imgHtml}${real!==m.t?`<span class="trans">Original: ${m.t}</span>`:''}<span class="meta"><span class="time">${m.time}</span>${m.me?'<span class="ticks">✓✓</span>':''}</span>`; 
+      }
     }
   }
 }
@@ -308,7 +339,7 @@ function saveContact(){
   phone=normalizePhone(phone); if(!isValidGhanaPhone(phone)) return popup('❌ Invalid Ghana number!\nValid: 0241234567 or +233...','INVALID NUMBER');
   for(let n in chats){ if(chats[n].phone===phone) return popup('❌ Number '+phone+' already for "'+n+'"','DUPLICATE NUMBER'); }
   msgIdCounter++; chats[name]={avatar:selectedAvatar,phone:phone,msgs:[{t:`Hello! ${name} added 🇬🇭 • ${phone}`,me:false,time:"now",id:msgIdCounter}],online:phone};
-  save(); renderChatList(); renderWallpaperReal(); closeAddContact(); popup('✅ '+name+' added!\n📱 '+phone+'\nAuto-opening chat...','CONTACT ADDED'); setTimeout(()=>openChat(name),700);
+  save(); renderChatList(); renderWallpaperReal(); closeAddContact(); popup('✅ '+name+' added!\n📱 '+phone,'CONTACT ADDED'); setTimeout(()=>openChat(name),700);
 }
 async function importContacts(){
   try{
@@ -321,7 +352,7 @@ async function importContacts(){
         let dup=false; for(let n in chats){ if(chats[n].phone===tel) dup=true; }
         if(!dup){ popup('📇 Picked: '+name+'\n📱 '+tel+'\nAuto-adding...','AUTO ADD'); setTimeout(()=>{ saveContact(); },600); }
         else popup('❌ Number '+tel+' already exists','DUPLICATE');
-      }else popup('📝 Form filled:\n'+name+'\n📱 '+tel+'\nCheck & tap Add','FORM FILLED');
+      }else popup('📝 Form filled:\n'+name+'\n📱 '+tel,'FORM FILLED');
     }else{
       const demoName='Kofi Imported'; const demoPhone='0241234567';
       document.getElementById('newName').value=demoName; document.getElementById('newPhone').value=demoPhone;
@@ -329,11 +360,69 @@ async function importContacts(){
     }
   }catch(e){ popup('Import cancelled','IMPORT'); }
 }
+// CAMERA FUNCTIONS V67 FIXED
+async function openCamera(){
+  document.getElementById('cameraModal').style.display='flex';
+  document.getElementById('mainMenu').classList.remove('show');
+  try{
+    if(cameraStream) cameraStream.getTracks().forEach(t=>t.stop());
+    cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:facing, width:{ideal:1280}, height:{ideal:720}},audio:false});
+    document.getElementById('cameraVideo').srcObject=cameraStream;
+    document.getElementById('cameraPreview').style.display='none';
+    document.getElementById('afterCapture').style.display='none';
+    document.getElementById('cameraControls').style.display='flex';
+    document.getElementById('shutterBtn').style.display='flex';
+  }catch(e){ popup('❌ Camera permission denied\nAllow camera:\nSettings > Site settings > Camera > Allow • S TECH','CAMERA BLOCKED'); closeCamera(); }
+}
+function closeCamera(){
+  if(cameraStream) cameraStream.getTracks().forEach(t=>t.stop());
+  cameraStream=null; capturedData=null;
+  document.getElementById('cameraModal').style.display='none';
+}
+function switchCamera(){ facing=facing==='environment'?'user':'environment'; openCamera(); }
+function capturePhoto(){
+  const video=document.getElementById('cameraVideo');
+  const canvas=document.getElementById('cameraCanvas');
+  if(!video.videoWidth) return;
+  canvas.width=video.videoWidth; canvas.height=video.videoHeight;
+  canvas.getContext('2d').drawImage(video,0,0);
+  capturedData=canvas.toDataURL('image/jpeg',0.75);
+  document.getElementById('previewImg').src=capturedData;
+  document.getElementById('cameraPreview').style.display='flex';
+  document.getElementById('afterCapture').style.display='flex';
+  document.getElementById('cameraControls').style.display='none';
+  if(navigator.vibrate) navigator.vibrate(50);
+}
+function retakePhoto(){
+  capturedData=null;
+  document.getElementById('cameraPreview').style.display='none';
+  document.getElementById('afterCapture').style.display='none';
+  document.getElementById('cameraControls').style.display='flex';
+}
+function sendCapturedPhoto(){
+  if(!capturedData) return;
+  msgIdCounter++; const time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  chats[currentChat].msgs.push({t:'📷 Photo • '+new Date().toLocaleDateString(),img:capturedData,me:true,time,id:msgIdCounter});
+  save(); renderChatList(); renderWallpaperReal(); closeCamera();
+  popup('✅ Photo sent to '+currentChat+'\n📷 Real camera working! • S TECH','PHOTO SENT');
+}
+function openGallery(){ document.getElementById('galleryInput').click(); }
+function sendGalleryFile(input){
+  if(!input.files[0]) return;
+  const file=input.files[0]; const reader=new FileReader();
+  reader.onload=e=>{
+    msgIdCounter++; const time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    chats[currentChat].msgs.push({t:'🖼️ '+file.name,img:e.target.result,me:true,time,id:msgIdCounter});
+    save(); renderChatList(); renderWallpaperReal();
+    popup('✅ Image from gallery sent! • S TECH','GALLERY SENT');
+  };
+  reader.readAsDataURL(file); input.value='';
+}
 function popup(m,t="SALVATION TECH"){ document.getElementById('modalTitle').textContent=t; document.getElementById('modalMsg').innerText=m; document.getElementById('sTechModal').classList.add('show'); if(navigator.vibrate) navigator.vibrate(40); }
 function closeModal(){ document.getElementById('sTechModal').classList.remove('show'); }
 document.addEventListener('click',e=>{ if(!e.target.closest('.header')) document.getElementById('mainMenu').classList.remove('show'); });
-document.getElementById('langBadge').textContent=currentLang.toUpperCase()+' • V66 FINAL';
+document.getElementById('langBadge').textContent=currentLang.toUpperCase()+' • V67 CAM';
 renderChatList(); renderWallpaperReal(); renderLangGrid();
 </script>
 </body>
-  </html>
+</html>
