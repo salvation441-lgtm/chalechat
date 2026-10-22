@@ -2,73 +2,102 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>ChaleChat • SALVATION TECH-GHANA • S TECH HUB</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#0f1419;color:#e6e8eb;font-family:system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column}
-.header{background:#1a2229;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #d4af37}
-.logo{color:#d4af37;font-weight:900;letter-spacing:1px;cursor:pointer}
+body{background:#0f1419;color:#e6e8eb;font-family:system-ui,-apple-system,sans-serif;min-height:100vh;display:flex;flex-direction:column}
+.header{background:#1a2229;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #d4af37;position:sticky;top:0;z-index:10}
+.logo{color:#d4af37;font-weight:900;letter-spacing:1px;font-size:18px}
 .logo span{color:#fff}
-#app{flex:1;padding:12px}
-.admin-card{background:#1a2229;border:1px solid #2a3441;border-radius:12px;padding:16px;margin:12px 0}
-.btn{background:#d4af37;color:#000;border:none;padding:11px;border-radius:8px;font-weight:800;cursor:pointer;width:100%;margin-top:10px}
+#app{flex:1;padding:12px;max-width:600px;margin:0 auto;width:100%}
+.admin-card{background:#1a2229;border:1px solid #2a3441;border-radius:14px;padding:16px;margin:12px 0}
+.btn{background:#d4af37;color:#000;border:none;padding:12px;border-radius:10px;font-weight:800;cursor:pointer;width:100%;margin-top:10px;font-size:14px}
+.btn:active{transform:scale(.98)}
 .btn-red{background:#ff3b30;color:#fff}
-input{width:100%;padding:11px;border-radius:8px;border:1px solid #2a3441;background:#0f1419;color:#fff;margin-top:8px}
-.stat{display:flex;justify-content:space-between;padding:6px 0;color:#8a9aa5;font-size:13px}
+input{width:100%;padding:12px;border-radius:10px;border:1px solid #2a3441;background:#0f1419;color:#fff;margin-top:8px;outline:none}
+input:focus{border-color:#d4af37}
+.stat{display:flex;justify-content:space-between;padding:8px 0;color:#8a9aa5;font-size:13px;border-bottom:1px solid #1f2933}
+.stat:last-child{border:none}
 .stat b{color:#fff}
-.footer{text-align:center;padding:14px;font-size:11px;color:#5a6b74;border-top:1px solid #1a2229;cursor:pointer;user-select:none;-webkit-user-select:none}
-.footer:active{background:#1a2229}
+.footer{text-align:center;padding:16px;font-size:11px;color:#5a6b74;border-top:1px solid #1a2229;cursor:pointer;user-select:none;-webkit-user-select:none}
+.footer:active{background:#1a2229;color:#d4af37}
+
+/* SALVATION TECH PRO POPUP - NO MORE UGLY BROWSER ALERT */
+#sTechModal{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}
+#sTechModal.show{display:flex}
+.sTechPopup{background:linear-gradient(145deg,#1a2229,#151c23);border:1px solid #d4af37;border-radius:20px;padding:28px 22px;max-width:340px;width:100%;text-align:center;box-shadow:0 25px 80px rgba(0,0,0,.7),0 0 0 1px rgba(212,175,55,.15);animation:popIn .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{0%{transform:scale(.85) translateY(10px);opacity:0}100%{transform:scale(1) translateY(0);opacity:1}}
+.sTechPopup .icon{width:56px;height:56px;background:linear-gradient(145deg,#d4af37,#b8962f);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:26px;color:#000;font-weight:900;box-shadow:0 4px 15px rgba(212,175,55,.4)}
+.sTechPopup h4{color:#d4af37;font-size:15px;margin-bottom:8px;letter-spacing:.5px}
+.sTechPopup p{color:#e6e8eb;font-size:14px;line-height:1.5}
+.sTechPopup .sub{color:#5a6b74;font-size:10px;margin-top:10px;letter-spacing:.3px}
+.sTechPopup button{margin-top:18px;background:linear-gradient(145deg,#d4af37,#c9a332);color:#000;border:none;padding:12px 24px;border-radius:12px;font-weight:900;width:100%;cursor:pointer;font-size:14px}
 </style>
 </head>
 <body>
 
 <div class="header">
   <div class="logo">🟡 S • <span>ChaleChat</span></div>
-  <div style="font-size:12px;color:#5a6b74">V54.2 FINAL</div>
+  <div style="font-size:11px;color:#5a6b74;font-weight:700">V54.3 FINAL</div>
 </div>
 
 <div id="app">
   <div class="admin-card" id="adminPanel" style="display:none">
     <h3 style="color:#d4af37">🔐 SALVATION ADMIN PANEL</h3>
-    <div style="margin-top:12px">
+    <div style="margin-top:14px;background:#0f1419;border-radius:10px;padding:8px 12px">
       <div class="stat"><span>Online users:</span><b>1</b></div>
       <div class="stat"><span>Total messages:</span><b>1</b></div>
       <div class="stat"><span>Statuses:</span><b>6</b></div>
     </div>
-    <div style="margin-top:14px">
-      <label style="font-size:12px;color:#8a9aa5">Broadcast Announcement</label>
+    <div style="margin-top:16px">
+      <label style="font-size:12px;color:#8a9aa5;font-weight:600">Broadcast Announcement</label>
       <input id="broadcastInput" placeholder="Type announcement • S TECH">
       <button class="btn" onclick="sendBroadcast()">📢 Send Broadcast to All</button>
     </div>
-    <div style="margin-top:14px">
-      <div id="msgList" style="font-size:13px">Salvation: Hello <span style="color:#ff3b30;cursor:pointer" onclick="delMsg()">[DEL]</span></div>
+    <div style="margin-top:16px">
+      <label style="font-size:12px;color:#8a9aa5;font-weight:600">Manage Messages</label>
+      <div id="msgList" style="margin-top:8px;background:#0f1419;padding:10px;border-radius:8px;font-size:13px">Salvation: Hello <span style="color:#ff3b30;cursor:pointer;margin-left:8px" onclick="delMsg()">[DEL]</span></div>
     </div>
-    <button class="btn btn-red" onclick="clearAll()">🗑️ Clear ALL Messages</button>
-    <button class="btn" style="background:#1a2229;color:#8a9aa5;border:1px solid #2a3441" onclick="logoutAdmin()">Logout Admin</button>
+    <button class="btn btn-red" onclick="confirmClear()">🗑️ Clear ALL Messages</button>
+    <button class="btn" style="background:#0f1419;color:#8a9aa5;border:1px solid #2a3441" onclick="logoutAdmin()">Logout Admin</button>
   </div>
 
   <div class="admin-card" id="loginPanel" style="display:none">
     <h3>🔐 Admin Login • S TECH</h3>
     <input id="adminCodeInput" type="password" placeholder="Enter code • S TECH">
     <button class="btn" onclick="loginAdmin()">Login • S TECH</button>
-    <p style="font-size:10px;color:#3a4a54;margin-top:8px;text-align:center">Powered by SALVATION TECH • 5x tap footer to open 🔐</p>
   </div>
 
-  <div class="admin-card">Chat area — your main ChaleChat code goes here... 🇬🇭<br><br><b style="color:#d4af37">HOW TO OPEN ADMIN (only you know):</b><br>Tap footer below <b>5 times fast</b> → login with <b>SALVATION1BAR</b></div>
+  <div class="admin-card" style="text-align:center">
+    <div style="font-size:40px">🇬🇭</div>
+    <h3 style="color:#d4af37;margin-top:8px">ChaleChat Live</h3>
+    <p style="color:#8a9aa5;font-size:13px;margin-top:6px">Powered by SALVATION TECH-GHANA<br>Tap footer 5x fast to open admin (only you know)</p>
+  </div>
 </div>
 
 <div class="footer" id="salvationFooter">Powered by SALVATION TECH-GHANA • S TECH HUB • 🇬🇭</div>
 
+<!-- SALVATION TECH PRO POPUP -->
+<div id="sTechModal" onclick="if(event.target.id==='sTechModal') closeSTechModal()">
+  <div class="sTechPopup">
+    <div class="icon">S</div>
+    <h4 id="sTechTitle">S TECH • SALVATION</h4>
+    <p id="sTechMsg">Admin logged in • S TECH 🔐</p>
+    <div class="sub">Powered by SALVATION TECH-GHANA • S TECH HUB 🇬🇭</div>
+    <button onclick="closeSTechModal()">OK • S TECH</button>
+  </div>
+</div>
+
 <script>
-// === 🔐 FOOTER 5 TAPS SECRET ===
+// === FOOTER 5 TAPS SECRET - ONLY YOU KNOW ===
 let salvationTaps=0, tapTimer=null;
 const footerEl=document.getElementById('salvationFooter');
 footerEl.addEventListener('click', ()=>{
   salvationTaps++;
   if(navigator.vibrate) navigator.vibrate(30);
   footerEl.style.color='#d4af37';
-  setTimeout(()=>footerEl.style.color='#5a6b74',200);
+  setTimeout(()=>footerEl.style.color='#5a6b74',180);
   clearTimeout(tapTimer);
   tapTimer=setTimeout(()=>{ salvationTaps=0; },3000);
   if(salvationTaps>=5){
@@ -78,14 +107,22 @@ footerEl.addEventListener('click', ()=>{
   }
 });
 
-// === 🔐 ADMIN SECRET HIDDEN INSIDE SALVATION TECH ===
+// === ADMIN SECRET HIDDEN INSIDE SALVATION TECH - U0FMVkFUSU9OMUJBUg== ===
 let isAdmin=localStorage.getItem('chale_admin')==='true';
 function getSalvationSecret(){
-  const _k="U0FMVkFUSU9OMUJBUg=="; // SALVATION1BAR
+  const _k="U0FMVkFUSU9OMUJBUg=="; // SALVATION1BAR hidden as base64
   try{ return atob(_k); }catch(e){ return "SALVATION1BAR"; }
 }
 const ADMIN_CODE=getSalvationSecret();
 function checkAdminCode(i){ return i.trim().toUpperCase()===ADMIN_CODE.trim().toUpperCase(); }
+
+// === PRO POPUP - NO UGLY BROWSER ALERT ===
+function showSTechPopup(msg, title="S TECH • SALVATION"){
+  document.getElementById('sTechTitle').textContent=title;
+  document.getElementById('sTechMsg').textContent=msg;
+  document.getElementById('sTechModal').classList.add('show');
+}
+function closeSTechModal(){ document.getElementById('sTechModal').classList.remove('show'); }
 
 function openAdmin(){
   if(isAdmin){
@@ -94,22 +131,35 @@ function openAdmin(){
   }else{
     document.getElementById('loginPanel').style.display='block';
     document.getElementById('adminPanel').style.display='none';
-    document.getElementById('app').scrollIntoView();
   }
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 function loginAdmin(){
   const c=document.getElementById('adminCodeInput').value;
   if(checkAdminCode(c)){
     isAdmin=true;
     localStorage.setItem('chale_admin','true');
-    alert('✅ Admin logged in • S TECH 🔐');
-    openAdmin();
-  }else alert('❌ Wrong code • S TECH');
+    showSTechPopup('✅ Admin logged in • Welcome Boss! 🔐','🔐 SALVATION ADMIN');
+    setTimeout(()=>{ closeSTechModal(); openAdmin(); document.getElementById('adminCodeInput').value=''; }, 1300);
+  }else{
+    showSTechPopup('❌ Wrong code • S TECH Security','Access Denied 🔒');
+  }
 }
-function logoutAdmin(){ isAdmin=false; localStorage.removeItem('chale_admin'); document.getElementById('adminPanel').style.display='none'; }
-function sendBroadcast(){ const t=document.getElementById('broadcastInput').value; if(!t) return alert('Type message'); alert('📢 Broadcast: '+t); }
-function delMsg(){ if(confirm('Delete?')) document.getElementById('msgList').innerHTML='No messages'; }
-function clearAll(){ if(confirm('Clear ALL?')){ document.getElementById('msgList').innerHTML='No messages'; alert('Cleared • S TECH'); } }
+function logoutAdmin(){
+  isAdmin=false;
+  localStorage.removeItem('chale_admin');
+  document.getElementById('adminPanel').style.display='none';
+  document.getElementById('loginPanel').style.display='none';
+  showSTechPopup('Logged out • See you Boss 👋','S TECH HUB');
+}
+function sendBroadcast(){
+  const t=document.getElementById('broadcastInput').value.trim();
+  if(!t) return showSTechPopup('Type announcement first • S TECH','📢 Broadcast');
+  showSTechPopup('📢 Broadcast sent to all users:\n'+t,'📢 S TECH BROADCAST');
+  document.getElementById('broadcastInput').value='';
+}
+function delMsg(){ showSTechPopup('Message deleted • S TECH','🗑️ Deleted'); document.getElementById('msgList').innerHTML='No messages'; }
+function confirmClear(){ showSTechPopup('🗑️ All messages cleared • S TECH','Cleanup Done ✅'); document.getElementById('msgList').innerHTML='No messages'; }
 
 if(isAdmin) openAdmin();
 </script>
