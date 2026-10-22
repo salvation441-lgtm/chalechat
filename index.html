@@ -6,7 +6,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>ChaleChat V67 CAMERA • SALVATION TECH-GHANA</title>
+<title>ChaleChat V68 VIDEO • SALVATION TECH-GHANA</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--gold:#d4af37;--bg:#0b141a;--header:#202c33;--text:#e9edef;--muted:#8696a0}
@@ -49,7 +49,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .wallpaper::before{content:'';position:absolute;inset:0;background:#0b141a;opacity:.92;pointer-events:none}
 .wallpaper>*{position:relative;z-index:1}
 .dateSep{align-self:center;background:#1f2c34;color:#8696a0;font-size:11.5px;padding:5px 12px;border-radius:7.5px;margin:12px 0}
-.msg{max-width:78%;padding:6px 7px 8px 9px;border-radius:7.5px;font-size:14.2px;box-shadow:0 1px .5px rgba(0,0,0,.13);word-wrap:break-word;position:relative}
+.msg{max-width:82%;padding:6px 7px 8px 9px;border-radius:7.5px;font-size:14.2px;box-shadow:0 1px .5px rgba(0,0,0,.13);word-wrap:break-word;position:relative}
 .msg.other{background:#202c33;border-top-left-radius:0;align-self:flex-start}
 .msg.me{background:#005c4b;border-top-right-radius:0;align-self:flex-end}
 .msg .meta{display:flex;gap:4px;align-items:center;justify-content:flex-end;margin-top:4px;float:right;margin-left:10px;clear:both}
@@ -57,7 +57,8 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .ticks{font-size:12px;color:#53bdeb}
 .msg .trans{font-size:11px;color:#ffcc33;margin-top:5px;border-top:1px dashed rgba(255,204,51,.3);padding-top:4px;display:block;line-height:1.3}
 .msg .trans.loading{color:#8696a0;font-style:italic}
-.msg img.chatImg{max-width:220px;max-height:260px;border-radius:10px;margin-top:6px;display:block;cursor:pointer;border:1px solid rgba(255,255,255,.1)}
+.msg img.chatImg{max-width:230px;max-height:280px;border-radius:10px;margin-top:6px;display:block;cursor:pointer;border:1px solid rgba(255,255,255,.1)}
+.msg video.chatVideo{max-width:240px;max-height:320px;border-radius:10px;margin-top:6px;display:block;background:#000}
 .broadcast{align-self:center;background:#182533;color:#ffcc33;padding:8px 12px;border-radius:7.5px;font-size:12.5px;font-weight:600;text-align:center;max-width:90%}
 .inputBar{position:absolute;bottom:0;left:0;right:0;height:62px;background:var(--header);display:flex;align-items:center;gap:8px;padding:5px 10px;padding-bottom:calc(5px + env(safe-area-inset-bottom));z-index:20;border-top:1px solid #222d34;flex-shrink:0}
 .inputBar .tool{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#8696a0;font-size:22px;flex-shrink:0}
@@ -65,10 +66,6 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .inputBar .field input{flex:1;background:transparent;border:none;outline:none;color:#d1d7db;padding:12px 0;font-size:15px;min-width:0}
 .inputBar .send{width:45px;height:45px;border-radius:50%;background:#00a884;color:#111b21;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;font-weight:900;flex-shrink:0}
 .footer{text-align:center;padding:6px;font-size:9px;color:#3a4a54;background:#111b21}
-#adminOverlay{position:fixed;inset:0;background:#0b141a;z-index:100;display:none;flex-direction:column;overflow:auto}
-#adminOverlay.show{display:flex}
-.admin-card{background:#202c33;border-radius:12px;padding:14px;margin:10px}
-.btn{width:100%;padding:12px;border-radius:8px;border:none;background:var(--gold);color:#000;font-weight:700;margin-top:8px;cursor:pointer}
 #sTechModal{position:fixed;inset:0;background:rgba(11,20,26,.82);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}
 #sTechModal.show{display:flex}
 .sTechPopup{background:#233138;border:1px solid rgba(212,175,55,.3);border-radius:20px;max-width:440px;width:100%;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6);animation:pop .3s}
@@ -90,22 +87,23 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .avatars{display:flex;gap:8px;margin-top:8px;overflow-x:auto;padding-bottom:4px}
 .avatars span{width:44px;height:44px;border-radius:50%;background:#202c33;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;border:2px solid transparent;flex-shrink:0}
 .avatars span.sel{border-color:var(--gold);background:#2a3942}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 @media(max-width:768px){.chatListPanel{position:absolute;inset:0;z-index:2}.chatListPanel.hide{transform:translateX(-100%)}.chatViewPanel .back{display:flex}}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="logo"><div class="dot"></div> CHALE <b>CHAT</b> <span class="badge" id="langBadge">EN • V67 CAM</span></div>
+  <div class="logo"><div class="dot"></div> CHALE <b>CHAT</b> <span class="badge" id="langBadge">EN • V68 VID</span></div>
   <div class="h-actions">
     <div class="iconBtn" onclick="openLangModal()" style="background:var(--gold);color:#000;font-size:20px">🌍</div>
     <div class="iconBtn gold" onclick="toggleMenu()">⋮</div>
   </div>
   <div class="menu" id="mainMenu">
-    <div class="menuItem" onclick="openLangModal()"><span>🌍 Language — 22 REAL API</span><span style="color:var(--gold)">▶</span></div>
-    <div class="menuItem" onclick="openCamera()"><span>📷 Camera — Take Photo</span><span>📸</span></div>
-    <div class="menuItem" onclick="openGallery()"><span>🖼️ Gallery — Pick Photo</span><span>🖼️</span></div>
-    <div class="menuItem" onclick="openAddContact()"><span>📇 New contact — Auto Add</span><span>➕</span></div>
+    <div class="menuItem" onclick="openLangModal()"><span>🌍 22 Languages REAL API</span><span style="color:var(--gold)">▶</span></div>
+    <div class="menuItem" onclick="openCamera()"><span>📷 Photo + 🎥 Video</span><span>📸</span></div>
+    <div class="menuItem" onclick="openGallery()"><span>🖼️ Gallery Pick</span><span>🖼️</span></div>
+    <div class="menuItem" onclick="openAddContact()"><span>📇 New contact</span><span>➕</span></div>
   </div>
 </div>
 
@@ -119,13 +117,13 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
     </div>
     <div class="chatList" id="chatList"></div>
     <div class="fab" onclick="openAddContact()">+</div>
-    <div class="footer" id="footerTap">V67 CAMERA FIXED • SALVATION TECH-GHANA • S TECH HUB 🇬🇭</div>
+    <div class="footer">V68 VIDEO • SALVATION TECH-GHANA • S TECH HUB 🇬🇭</div>
   </div>
   <div class="chatViewPanel">
     <div class="chatViewHeader">
       <div class="back iconBtn" onclick="closeChat()">←</div>
       <div class="avatar" id="chatAvatar">🇬🇭</div>
-      <div style="flex:1"><div style="font-weight:600;font-size:16px" id="chatName">Salvation</div><div style="font-size:12px;color:#00a884" id="chatStatus">📷 Camera ready • V67</div></div>
+      <div style="flex:1"><div style="font-weight:600;font-size:16px" id="chatName">Salvation</div><div style="font-size:12px;color:#00a884" id="chatStatus">🎥 Video ready • V68</div></div>
       <div class="iconBtn" onclick="openCamera()" style="background:var(--gold);color:#000">📷</div>
       <div class="iconBtn" onclick="openLangModal()">🌍</div>
     </div>
@@ -133,53 +131,63 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
     <div class="inputBar">
       <div class="tool" onclick="openLangModal()">🌍</div>
       <div class="tool" onclick="openGallery()">🖼️</div>
-      <div class="field"><input id="msgInput" placeholder="Type & auto-translate" onkeydown="if(event.key==='Enter')sendMsg()"><div class="tool" onclick="openCamera()" style="color:var(--gold)">📷</div></div>
+      <div class="field"><input id="msgInput" placeholder="Message — real translate" onkeydown="if(event.key==='Enter')sendMsg()"><div class="tool" onclick="openCamera()" style="color:var(--gold)">📷</div></div>
       <div class="send" onclick="sendMsg()">➤</div>
     </div>
   </div>
 </div>
 
-<!-- CAMERA MODAL V67 FIXED -->
-<input type="file" id="galleryInput" accept="image/*" style="display:none" onchange="sendGalleryFile(this)">
+<input type="file" id="galleryInput" accept="image/*,video/*" style="display:none" onchange="sendGalleryFile(this)">
 <div id="cameraModal" style="position:fixed;inset:0;background:#000;z-index:10001;display:none;flex-direction:column">
   <div style="height:59px;background:#202c33;display:flex;align-items:center;justify-content:space-between;padding:0 14px;flex-shrink:0">
-    <div style="display:flex;align-items:center;gap:10px"><div style="width:10px;height:10px;background:#00a884;border-radius:50%"></div><b style="color:#d4af37;font-size:13px">CAMERA • V67 • S TECH</b></div>
+    <div style="display:flex;align-items:center;gap:10px"><div style="width:10px;height:10px;background:red;border-radius:50%;animation:blink 1s infinite" id="recDot" ></div><b style="color:#d4af37;font-size:13px" id="camModeLabel">CAMERA • PHOTO • V68</b><span id="recTimer" style="display:none;color:#ff4444;font-size:13px;margin-left:10px;font-weight:800">● 00:00</span></div>
     <div onclick="closeCamera()" style="width:38px;height:38px;border-radius:50%;background:#233138;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff">✕</div>
   </div>
   <div style="flex:1;position:relative;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden">
-    <video id="cameraVideo" autoplay playsinline style="width:100%;height:100%;object-fit:cover"></video>
+    <video id="cameraVideo" autoplay playsinline muted style="width:100%;height:100%;object-fit:cover"></video>
     <canvas id="cameraCanvas" style="display:none"></canvas>
+    <video id="videoPreview" style="position:absolute;inset:0;display:none;width:100%;height:100%;object-fit:contain;background:#000" controls playsinline></video>
     <div id="cameraPreview" style="position:absolute;inset:0;display:none;background:#000;align-items:center;justify-content:center;z-index:2">
       <img id="previewImg" style="max-width:100%;max-height:100%;object-fit:contain">
     </div>
   </div>
-  <div style="height:95px;background:#202c33;display:flex;align-items:center;justify-content:space-around;padding:10px;flex-shrink:0" id="cameraControls">
-    <div onclick="openGallery()" style="width:52px;height:52px;border-radius:50%;background:#111b21;border:1px solid #2a3942;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer" title="Gallery">🖼️</div>
-    <div onclick="capturePhoto()" id="shutterBtn" style="width:74px;height:74px;border-radius:50%;background:#fff;border:4px solid #d4af37;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 0 4px rgba(212,175,55,.3)"><div style="width:58px;height:58px;border-radius:50%;background:#fff;border:2px solid #000"></div></div>
-    <div onclick="switchCamera()" style="width:52px;height:52px;border-radius:50%;background:#111b21;border:1px solid #2a3942;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer" title="Switch">🔄</div>
+  <div style="height:110px;background:#202c33;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px;gap:8px;flex-shrink:0" id="cameraControls">
+    <div style="display:flex;align-items:center;gap:24px">
+      <div style="font-size:12px;color:#fff;font-weight:700;cursor:pointer" onclick="setMode('photo')" id="modePhoto"><span style="color:var(--gold)">●</span> PHOTO</div>
+      <div style="font-size:12px;color:#8696a0;cursor:pointer" onclick="setMode('video')" id="modeVideo">○ VIDEO</div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-around;width:100%">
+      <div onclick="openGallery()" style="width:52px;height:52px;border-radius:50%;background:#111b21;border:1px solid #2a3942;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer">🖼️</div>
+      <div id="shutterBtn" style="width:76px;height:76px;border-radius:50%;background:#fff;border:4px solid #d4af37;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;-webkit-user-select:none" 
+           onmousedown="startPress()" onmouseup="endPress()" ontouchstart="startPress(event)" ontouchend="endPress(event)">
+        <div id="shutterInner" style="width:60px;height:60px;border-radius:50%;background:#fff;border:2px solid #000;transition:all .2s"></div>
+      </div>
+      <div onclick="switchCamera()" style="width:52px;height:52px;border-radius:50%;background:#111b21;border:1px solid #2a3942;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer">🔄</div>
+    </div>
+    <div style="font-size:9px;color:#5a6b74">Tap for photo • Hold 0.5s for video • S TECH</div>
   </div>
   <div id="afterCapture" style="height:75px;background:#202c33;display:none;align-items:center;justify-content:space-between;padding:0 16px;gap:12px;flex-shrink:0">
     <button onclick="retakePhoto()" style="flex:1;padding:13px;border-radius:10px;background:#111b21;color:#8696a0;border:1px solid #2a3942;font-weight:700;cursor:pointer">Retake</button>
-    <button onclick="sendCapturedPhoto()" style="flex:1;padding:13px;border-radius:10px;background:#00a884;color:#fff;border:none;font-weight:800;cursor:pointer">Send • S TECH ➤</button>
+    <button onclick="sendCaptured()" style="flex:1;padding:13px;border-radius:10px;background:#00a884;color:#fff;border:none;font-weight:800;cursor:pointer" id="sendBtn">Send • S TECH ➤</button>
   </div>
 </div>
 
 <div id="langModal" style="position:fixed;inset:0;background:rgba(11,20,26,.88);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;z-index:10000;padding:20px">
   <div class="sTechPopup" style="max-width:460px">
-    <div class="top"><div class="icon">🌍</div><h4>SELECT LANGUAGE — 22 REAL</h4><p style="font-size:11px">Green = Real API • Gold = Ghana Local • Tap to translate!</p></div>
+    <div class="top"><div class="icon">🌍</div><h4>SELECT LANGUAGE — 22 REAL</h4><p style="font-size:11px">Green = Real API • Gold = Ghana Local</p></div>
     <div class="langGrid" id="langGrid"></div>
     <div class="actions"><button style="background:#202c33;color:#8696a0;border:1px solid #2a3942" onclick="closeLangModal()">Cancel</button><button onclick="closeLangModal()">Done • Translate! 🌍</button></div>
   </div>
 </div>
 
-<div id="sTechModal" onclick="if(event.target.id==='sTechModal')closeModal()"><div class="sTechPopup"><div class="top"><div class="icon">S</div><h4 id="modalTitle">SALVATION TECH</h4><p id="modalMsg">Welcome</p><div class="sub">SALVATION TECH-GHANA • S TECH HUB 🇬🇭 V67 CAMERA</div></div><div class="actions"><button onclick="closeModal()">OK • S TECH</button></div></div></div>
+<div id="sTechModal" onclick="if(event.target.id==='sTechModal')closeModal()"><div class="sTechPopup"><div class="top"><div class="icon">S</div><h4 id="modalTitle">SALVATION TECH</h4><p id="modalMsg">Welcome</p><div class="sub">SALVATION TECH-GHANA • S TECH HUB 🇬🇭 V68 VIDEO</div></div><div class="actions"><button onclick="closeModal()">OK • S TECH</button></div></div></div>
 
 <div id="addContactModal" style="position:fixed;inset:0;background:rgba(11,20,26,.85);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px">
   <div class="sTechPopup" style="text-align:left;max-width:380px">
-    <div class="top" style="text-align:center"><div class="icon">+</div><h4>NEW CONTACT</h4><p style="font-size:12px">Auto-fill • Ghana checker • V67</p></div>
+    <div class="top" style="text-align:center"><div class="icon">+</div><h4>NEW CONTACT</h4><p style="font-size:12px">Auto-fill • Ghana checker • V68</p></div>
     <div style="padding:0 18px 18px">
       <div style="margin-top:12px;text-align:left"><label style="font-size:12px;color:#8696a0">Name *</label><input id="newName" style="width:100%;padding:12px;border-radius:8px;background:#111b21;border:1px solid #2a3942;color:#fff;margin-top:6px" placeholder="e.g. Kofi"></div>
-      <div style="margin-top:12px;text-align:left"><label style="font-size:12px;color:#8696a0">Phone * (Ghana)</label><input id="newPhone" style="width:100%;padding:12px;border-radius:8px;background:#111b21;border:1px solid #2a3942;color:#fff;margin-top:6px" placeholder="0241234567 or +233..."></div>
+      <div style="margin-top:12px;text-align:left"><label style="font-size:12px;color:#8696a0">Phone * (Ghana)</label><input id="newPhone" style="width:100%;padding:12px;border-radius:8px;background:#111b21;border:1px solid #2a3942;color:#fff;margin-top:6px" placeholder="0241234567"></div>
       <div style="margin-top:12px"><label style="font-size:12px;color:#8696a0">Avatar</label><div class="avatars"><span onclick="pickAvatar(this)" class="sel">👤</span><span onclick="pickAvatar(this)">👩</span><span onclick="pickAvatar(this)">🇬🇭</span><span onclick="pickAvatar(this)">👨‍💼</span></div></div>
       <div class="actions" style="margin-top:16px"><button style="background:#202c33;color:#8696a0;border:1px solid #2a3942" onclick="closeAddContact()">Cancel</button><button onclick="saveContact()">Add • S TECH</button></div>
       <button onclick="importContacts()" style="width:100%;margin-top:10px;background:#00a884;color:#fff;border:none;padding:12px;border-radius:8px;font-size:13px;cursor:pointer;font-weight:700">📇 Pick from phone — Auto Add!</button>
@@ -219,21 +227,21 @@ const DICT={
   "We dey!":{"ak":"Yɛ wɔ ha!","gaa":"Wɔ yɛ ŋmɛ!","ee":"Mí li!","ha":"Muna nan!","fr":"On est là!","es":"¡Aquí estamos!"},
   "Ama sent a photo":{"ak":"Ama de mfonini bi akɔ","gaa":"Ama tsɔ foto","ee":"Ama dɔ foto","ha":"Ama ta aiko hoto","fr":"Ama a envoyé une photo","es":"Ama envió una foto"}
 };
-let transCache=JSON.parse(localStorage.getItem('v67_transCache')||'{}');
-let currentLang=localStorage.getItem('v67_lang')||'en';
+let transCache=JSON.parse(localStorage.getItem('v68_transCache')||'{}');
+let currentLang=localStorage.getItem('v68_lang')||'en';
 let currentChat='Salvation';
-let chats=JSON.parse(localStorage.getItem('v67_chats')||'null')||{
-  Salvation:{avatar:'🇬🇭',phone:'',msgs:[{t:"Welcome to ChaleChat V67! 📷 Camera fixed! 🌍 Real translate ON! Type anything, snap photo! 🇬🇭",me:false,time:"08:07",id:1}],online:"online • S TECH"},
+let chats=JSON.parse(localStorage.getItem('v68_chats')||'null')||{
+  Salvation:{avatar:'🇬🇭',phone:'',msgs:[{t:"Welcome to ChaleChat V68! 📷 Photo + 🎥 Video working! Hold shutter for video! 🌍🇬🇭",me:false,time:"08:07",id:1}],online:"online • S TECH"},
   Kwame:{avatar:'👤',phone:'0244123456',msgs:[{t:"Chale how for do? 🇬🇭",me:false,time:"07:30",id:2},{t:"We dey!",me:true,time:"07:31",id:3}],online:"0244123456"},
   Ama:{avatar:'👩',phone:'0551234567',msgs:[{t:"Ama sent a photo",me:false,time:"Yesterday",id:4,img:"https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400"}],online:"0551234567"}
 };
-let broad=localStorage.getItem('v67_broad')||'';
-let selectedAvatar='👤';
-let msgIdCounter=300;
-let cameraStream=null; let facing='environment'; let capturedData=null;
+let broad=localStorage.getItem('v68_broad')||'';
+let selectedAvatar='👤'; let msgIdCounter=400;
+let cameraStream=null; let facing='environment'; let capturedData=null; let capturedType='photo';
+let mediaRecorder=null; let recordedChunks=[]; let recording=false; let recInterval=null; let recSeconds=0;
+let pressTimer=null; let currentMode='photo'; let pressStarted=false;
 
-function save(){ localStorage.setItem('v67_chats',JSON.stringify(chats)); localStorage.setItem('v67_transCache',JSON.stringify(transCache)); }
-
+function save(){ localStorage.setItem('v68_chats',JSON.stringify(chats)); localStorage.setItem('v68_transCache',JSON.stringify(transCache)); }
 async function realTranslateAPI(text, targetCode){
   const lang=LANGUAGES.find(l=>l.code===targetCode);
   if(!lang||targetCode==='en') return text;
@@ -244,27 +252,19 @@ async function realTranslateAPI(text, targetCode){
     for(let k in DICT){ if(text.includes(k)&&DICT[k][targetCode]){ let r=text.replace(k,DICT[k][targetCode]); transCache[cacheKey]=r; save(); return r; } }
     transCache[cacheKey]='['+lang.flag+' '+lang.name+'] '+text; save(); return transCache[cacheKey];
   }
-  try{
-    const url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${lang.mym}`;
-    const res=await fetch(url); const data=await res.json();
-    let translated=data.responseData.translatedText;
-    if(translated&&translated!==text){ transCache[cacheKey]=translated; save(); return translated; }
-    return text;
-  }catch(e){ return text; }
+  try{ const url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${lang.mym}`; const res=await fetch(url); const data=await res.json(); let t=data.responseData.translatedText; if(t&&t!==text){ transCache[cacheKey]=t; save(); return t; } return text; }catch(e){ return text; }
 }
 function renderLangGrid(){
   const grid=document.getElementById('langGrid'); let h='';
-  LANGUAGES.forEach(l=>{
-    h+=`<div class="langBtn ${l.code===currentLang?'active':''}" onclick="setLang('${l.code}')"><span class="flag">${l.flag}</span><div style="flex:1"><div style="font-weight:600;font-size:13px">${l.name} ${l.api?'<span class=api>REAL API</span>':'<span class=localTag>GHANA LOCAL</span>'}</div><div style="font-size:10px;opacity:.7">${l.local}</div></div>${l.code===currentLang?'✅':''}</div>`;
-  });
+  LANGUAGES.forEach(l=>{ h+=`<div class="langBtn ${l.code===currentLang?'active':''}" onclick="setLang('${l.code}')"><span class="flag">${l.flag}</span><div style="flex:1"><div style="font-weight:600;font-size:13px">${l.name} ${l.api?'<span class=api>REAL API</span>':'<span class=localTag>GHANA LOCAL</span>'}</div><div style="font-size:10px;opacity:.7">${l.local}</div></div>${l.code===currentLang?'✅':''}</div>`; });
   grid.innerHTML=h;
 }
 async function setLang(code){
-  currentLang=code; localStorage.setItem('v67_lang',code);
-  document.getElementById('langBadge').textContent=code.toUpperCase()+' • V67 CAM';
+  currentLang=code; localStorage.setItem('v68_lang',code);
+  document.getElementById('langBadge').textContent=code.toUpperCase()+' • V68 VID';
   renderLangGrid();
   const l=LANGUAGES.find(x=>x.code===code);
-  popup(`🌍 Changing to ${l.name} ${l.flag}\n${l.local}\n\nReal translating... • S TECH`, `LANGUAGE: ${l.name.toUpperCase()}`);
+  popup(`🌍 Changing to ${l.name} ${l.flag}\n${l.local}\nReal translating... • S TECH`, `LANGUAGE: ${l.name.toUpperCase()}`);
   await renderWallpaperReal(); renderChatList();
   setTimeout(()=>{ closeLangModal(); closeModal(); },900);
 }
@@ -275,14 +275,14 @@ function renderChatList(){
   Object.keys(chats).forEach(name=>{
     const c=chats[name]; const last=c.msgs[c.msgs.length-1];
     const cacheKey=last.t+'|'+currentLang; const display=transCache[cacheKey]||last.t;
-    const icon=last.img?'📷 ':''; 
+    const icon=last.video?'🎥 ':last.img?'📷 ':'';
     h+=`<div class="chatItem ${name===currentChat?'active':''}" onclick="openChat('${name}')"><div class="avatar">${c.avatar}</div><div class="chatInfo"><div class="topRow"><div class="name">${name}</div><div class="time">${last.time}</div></div><div class="topRow"><div class="lastMsg">${icon}${display.slice(0,36)}</div></div></div></div>`;
   });
   list.innerHTML=h;
 }
 async function renderWallpaperReal(){
   const wall=document.getElementById('wallpaper');
-  let h=`<div class="dateSep">TODAY • ${currentLang.toUpperCase()} • V67 CAMERA 📷</div>`;
+  let h=`<div class="dateSep">TODAY • ${currentLang.toUpperCase()} • V68 VIDEO 🎥📷</div>`;
   if(broad){ const bTrans=currentLang==='en'?broad:await realTranslateAPI(broad, currentLang); h+=`<div class="broadcast">📢 ${bTrans}</div>`; }
   for(let m of chats[currentChat].msgs){
     const cacheKey=m.t+'|'+currentLang; let translated=transCache[cacheKey];
@@ -290,21 +290,25 @@ async function renderWallpaperReal(){
     else if(!translated){ translated=m.t; }
     const ticks=m.me?`<span class="ticks">✓✓</span>`:'';
     const showOriginal=transCache[cacheKey]&&transCache[cacheKey]!==m.t&&currentLang!=='en';
-    const imgHtml=m.img?`<img src="${m.img}" class="chatImg" onclick="window.open(this.src,'_blank')">`:'';
-    h+=`<div class="msg ${m.me?'me':'other'}" id="msg-${m.id}"><div>${translated}</div>${imgHtml}${showOriginal?`<span class="trans">Original: ${m.t}</span>`:''}<span class="meta"><span class="time">${m.time}</span>${ticks}</span></div>`;
+    let mediaHtml='';
+    if(m.img) mediaHtml+=`<img src="${m.img}" class="chatImg" onclick="window.open(this.src,'_blank')">`;
+    if(m.video) mediaHtml+=`<video src="${m.video}" class="chatVideo" controls playsinline></video>`;
+    h+=`<div class="msg ${m.me?'me':'other'}" id="msg-${m.id}"><div>${translated}</div>${mediaHtml}${showOriginal?`<span class="trans">Original: ${m.t}</span>`:''}<span class="meta"><span class="time">${m.time}</span>${ticks}</span></div>`;
   }
   wall.innerHTML=h; wall.scrollTop=wall.scrollHeight;
   document.getElementById('chatName').textContent=currentChat;
   document.getElementById('chatAvatar').textContent=chats[currentChat].avatar;
-  document.getElementById('chatStatus').textContent='📷 Camera ready • '+currentLang.toUpperCase()+' • V67';
+  document.getElementById('chatStatus').textContent='🎥 Video ready • '+currentLang.toUpperCase()+' • V68';
   for(let m of chats[currentChat].msgs){
     const cacheKey=m.t+'|'+currentLang;
     if(!transCache[cacheKey]&&currentLang!=='en'){
       const real=await realTranslateAPI(m.t, currentLang);
       const el=document.getElementById('msg-'+m.id);
-      if(el){ 
-        const imgHtml=m.img?`<img src="${m.img}" class="chatImg" onclick="window.open(this.src,'_blank')">`:'';
-        el.innerHTML=`<div>${real}</div>${imgHtml}${real!==m.t?`<span class="trans">Original: ${m.t}</span>`:''}<span class="meta"><span class="time">${m.time}</span>${m.me?'<span class="ticks">✓✓</span>':''}</span>`; 
+      if(el){
+        let mediaHtml='';
+        if(m.img) mediaHtml+=`<img src="${m.img}" class="chatImg" onclick="window.open(this.src,'_blank')">`;
+        if(m.video) mediaHtml+=`<video src="${m.video}" class="chatVideo" controls playsinline></video>`;
+        el.innerHTML=`<div>${real}</div>${mediaHtml}${real!==m.t?`<span class="trans">Original: ${m.t}</span>`:''}<span class="meta"><span class="time">${m.time}</span>${m.me?'<span class="ticks">✓✓</span>':''}</span>`;
       }
     }
   }
@@ -333,13 +337,13 @@ function isValidGhanaPhone(p){ let c=p.replace(/\s|-/g,''); if(c.startsWith('+23
 function normalizePhone(p){ let c=p.replace(/\s|-/g,''); if(c.startsWith('+233')) c='0'+c.slice(4); else if(c.startsWith('233')) c='0'+c.slice(3); return c; }
 function saveContact(){
   const name=document.getElementById('newName').value.trim(); let phone=document.getElementById('newPhone').value.trim();
-  if(!name) return popup('❌ Name required\nE.g. Kofi','CONTACT');
-  if(chats[name]) return popup('❌ Contact "'+name+'" already exists','DUPLICATE NAME');
-  if(!phone) return popup('❌ Phone required\n0241234567','NUMBER REQUIRED');
-  phone=normalizePhone(phone); if(!isValidGhanaPhone(phone)) return popup('❌ Invalid Ghana number!\nValid: 0241234567 or +233...','INVALID NUMBER');
-  for(let n in chats){ if(chats[n].phone===phone) return popup('❌ Number '+phone+' already for "'+n+'"','DUPLICATE NUMBER'); }
+  if(!name) return popup('❌ Name required','CONTACT');
+  if(chats[name]) return popup('❌ Exists','DUPLICATE');
+  if(!phone) return popup('❌ Phone required','REQUIRED');
+  phone=normalizePhone(phone); if(!isValidGhanaPhone(phone)) return popup('❌ Invalid Ghana number!','INVALID');
+  for(let n in chats){ if(chats[n].phone===phone) return popup('❌ Number already for "'+n+'"','DUPLICATE'); }
   msgIdCounter++; chats[name]={avatar:selectedAvatar,phone:phone,msgs:[{t:`Hello! ${name} added 🇬🇭 • ${phone}`,me:false,time:"now",id:msgIdCounter}],online:phone};
-  save(); renderChatList(); renderWallpaperReal(); closeAddContact(); popup('✅ '+name+' added!\n📱 '+phone,'CONTACT ADDED'); setTimeout(()=>openChat(name),700);
+  save(); renderChatList(); renderWallpaperReal(); closeAddContact(); popup('✅ '+name+' added!','ADDED'); setTimeout(()=>openChat(name),700);
 }
 async function importContacts(){
   try{
@@ -351,78 +355,153 @@ async function importContacts(){
       if(isValidGhanaPhone(tel)&&name&&!chats[name]){
         let dup=false; for(let n in chats){ if(chats[n].phone===tel) dup=true; }
         if(!dup){ popup('📇 Picked: '+name+'\n📱 '+tel+'\nAuto-adding...','AUTO ADD'); setTimeout(()=>{ saveContact(); },600); }
-        else popup('❌ Number '+tel+' already exists','DUPLICATE');
-      }else popup('📝 Form filled:\n'+name+'\n📱 '+tel,'FORM FILLED');
+        else popup('❌ Duplicate','DUPLICATE');
+      }else popup('📝 Filled: '+name+'\n'+tel,'FILLED');
     }else{
       const demoName='Kofi Imported'; const demoPhone='0241234567';
       document.getElementById('newName').value=demoName; document.getElementById('newPhone').value=demoPhone;
-      popup('📇 Demo (browser no support contacts)\nAuto-filling:\n'+demoName+'\n'+demoPhone+'\nAuto-adding...','DEMO AUTO'); setTimeout(()=>{ if(!chats[demoName]) saveContact(); },800);
+      popup('📇 Demo auto-filling\n'+demoName+'\n'+demoPhone,'DEMO'); setTimeout(()=>{ if(!chats[demoName]) saveContact(); },800);
     }
   }catch(e){ popup('Import cancelled','IMPORT'); }
 }
-// CAMERA FUNCTIONS V67 FIXED
+function setMode(m){
+  currentMode=m;
+  document.getElementById('camModeLabel').textContent='CAMERA • '+m.toUpperCase()+' • V68';
+  document.getElementById('modePhoto').innerHTML=m==='photo'?'<span style="color:var(--gold)">●</span> PHOTO':'○ PHOTO';
+  document.getElementById('modePhoto').style.color=m==='photo'?'#fff':'#8696a0';
+  document.getElementById('modeVideo').innerHTML=m==='video'?'<span style="color:red">●</span> VIDEO':'○ VIDEO';
+  document.getElementById('modeVideo').style.color=m==='video'?'#fff':'#8696a0';
+  const inner=document.getElementById('shutterInner');
+  if(m==='video'){ inner.style.background='red'; inner.style.borderRadius='8px'; inner.style.width='28px'; inner.style.height='28px'; }
+  else{ inner.style.background='#fff'; inner.style.borderRadius='50%'; inner.style.width='60px'; inner.style.height='60px'; }
+}
+function startPress(e){
+  if(e) e.preventDefault();
+  pressStarted=true;
+  if(currentMode==='video'){
+    pressTimer=setTimeout(()=>{ if(pressStarted) startVideoRecording(); },500);
+  }
+}
+function endPress(e){
+  if(e) e.preventDefault();
+  clearTimeout(pressTimer);
+  if(!pressStarted) return;
+  pressStarted=false;
+  if(currentMode==='photo' && !recording){ capturePhoto(); }
+  else if(recording){ stopVideoRecording(); }
+}
 async function openCamera(){
   document.getElementById('cameraModal').style.display='flex';
-  document.getElementById('mainMenu').classList.remove('show');
+  setMode('photo');
   try{
     if(cameraStream) cameraStream.getTracks().forEach(t=>t.stop());
-    cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:facing, width:{ideal:1280}, height:{ideal:720}},audio:false});
+    cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:facing, width:{ideal:1280}, height:{ideal:720}},audio:true});
     document.getElementById('cameraVideo').srcObject=cameraStream;
+    document.getElementById('cameraVideo').style.display='block';
     document.getElementById('cameraPreview').style.display='none';
+    document.getElementById('videoPreview').style.display='none';
     document.getElementById('afterCapture').style.display='none';
     document.getElementById('cameraControls').style.display='flex';
-    document.getElementById('shutterBtn').style.display='flex';
-  }catch(e){ popup('❌ Camera permission denied\nAllow camera:\nSettings > Site settings > Camera > Allow • S TECH','CAMERA BLOCKED'); closeCamera(); }
+    document.getElementById('recDot').style.display='none';
+  }catch(e){ popup('❌ Allow Camera + Mic\nSettings > Allow','BLOCKED'); closeCamera(); }
 }
 function closeCamera(){
   if(cameraStream) cameraStream.getTracks().forEach(t=>t.stop());
-  cameraStream=null; capturedData=null;
+  if(mediaRecorder && recording) mediaRecorder.stop();
+  clearInterval(recInterval);
+  cameraStream=null; recording=false; capturedData=null;
   document.getElementById('cameraModal').style.display='none';
+  document.getElementById('recTimer').style.display='none';
+  document.getElementById('recDot').style.display='none';
 }
 function switchCamera(){ facing=facing==='environment'?'user':'environment'; openCamera(); }
 function capturePhoto(){
   const video=document.getElementById('cameraVideo');
   const canvas=document.getElementById('cameraCanvas');
   if(!video.videoWidth) return;
+  document.getElementById('cameraModal').style.background='#fff';
+  setTimeout(()=>document.getElementById('cameraModal').style.background='#000',120);
   canvas.width=video.videoWidth; canvas.height=video.videoHeight;
   canvas.getContext('2d').drawImage(video,0,0);
-  capturedData=canvas.toDataURL('image/jpeg',0.75);
+  capturedData=canvas.toDataURL('image/jpeg',0.85);
+  capturedType='photo';
   document.getElementById('previewImg').src=capturedData;
   document.getElementById('cameraPreview').style.display='flex';
+  document.getElementById('videoPreview').style.display='none';
   document.getElementById('afterCapture').style.display='flex';
   document.getElementById('cameraControls').style.display='none';
+  document.getElementById('sendBtn').textContent='Send Photo • S TECH ➤';
   if(navigator.vibrate) navigator.vibrate(50);
 }
+function startVideoRecording(){
+  if(!cameraStream) return;
+  recordedChunks=[]; recSeconds=0; recording=true;
+  try{ mediaRecorder=new MediaRecorder(cameraStream,{mimeType:'video/webm;codecs=vp9'}); }
+  catch(e){ mediaRecorder=new MediaRecorder(cameraStream); }
+  mediaRecorder.ondataavailable=e=>{ if(e.data.size>0) recordedChunks.push(e.data); };
+  mediaRecorder.onstop=()=>{
+    const blob=new Blob(recordedChunks,{type:'video/webm'});
+    capturedData=URL.createObjectURL(blob);
+    capturedType='video';
+    const vp=document.getElementById('videoPreview');
+    vp.src=capturedData; vp.style.display='block';
+    document.getElementById('cameraVideo').style.display='none';
+    document.getElementById('afterCapture').style.display='flex';
+    document.getElementById('cameraControls').style.display='none';
+    document.getElementById('sendBtn').textContent='Send Video '+recSeconds+'s • S TECH ➤';
+    document.getElementById('recTimer').style.display='none';
+    document.getElementById('recDot').style.display='none';
+  };
+  mediaRecorder.start(100);
+  document.getElementById('recTimer').style.display='block';
+  document.getElementById('recDot').style.display='block';
+  recInterval=setInterval(()=>{
+    recSeconds++; const m=String(Math.floor(recSeconds/60)).padStart(2,'0'); const s=String(recSeconds%60).padStart(2,'0');
+    document.getElementById('recTimer').textContent='● '+m+':'+s;
+    if(recSeconds>=30) stopVideoRecording();
+  },1000);
+  if(navigator.vibrate) navigator.vibrate(100);
+}
+function stopVideoRecording(){ if(mediaRecorder && recording){ mediaRecorder.stop(); recording=false; clearInterval(recInterval); } }
 function retakePhoto(){
-  capturedData=null;
+  capturedData=null; recordedChunks=[];
   document.getElementById('cameraPreview').style.display='none';
+  document.getElementById('videoPreview').style.display='none';
+  document.getElementById('cameraVideo').style.display='block';
   document.getElementById('afterCapture').style.display='none';
   document.getElementById('cameraControls').style.display='flex';
+  setMode(currentMode);
 }
-function sendCapturedPhoto(){
+function sendCaptured(){
   if(!capturedData) return;
   msgIdCounter++; const time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-  chats[currentChat].msgs.push({t:'📷 Photo • '+new Date().toLocaleDateString(),img:capturedData,me:true,time,id:msgIdCounter});
+  if(capturedType==='photo'){
+    chats[currentChat].msgs.push({t:'📷 Photo • '+new Date().toLocaleDateString(),img:capturedData,me:true,time,id:msgIdCounter});
+  }else{
+    chats[currentChat].msgs.push({t:'🎥 Video • '+recSeconds+'s',video:capturedData,me:true,time,id:msgIdCounter});
+  }
   save(); renderChatList(); renderWallpaperReal(); closeCamera();
-  popup('✅ Photo sent to '+currentChat+'\n📷 Real camera working! • S TECH','PHOTO SENT');
+  popup(capturedType==='photo'?'✅ Photo sent to '+currentChat+'!':'✅ Video '+recSeconds+'s sent to '+currentChat+'! • S TECH',capturedType==='photo'?'PHOTO SENT':'VIDEO SENT');
 }
 function openGallery(){ document.getElementById('galleryInput').click(); }
 function sendGalleryFile(input){
   if(!input.files[0]) return;
-  const file=input.files[0]; const reader=new FileReader();
+  const file=input.files[0]; const isVideo=file.type.startsWith('video');
+  const reader=new FileReader();
   reader.onload=e=>{
     msgIdCounter++; const time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-    chats[currentChat].msgs.push({t:'🖼️ '+file.name,img:e.target.result,me:true,time,id:msgIdCounter});
+    if(isVideo) chats[currentChat].msgs.push({t:'🎥 '+file.name,video:e.target.result,me:true,time,id:msgIdCounter});
+    else chats[currentChat].msgs.push({t:'🖼️ '+file.name,img:e.target.result,me:true,time,id:msgIdCounter});
     save(); renderChatList(); renderWallpaperReal();
-    popup('✅ Image from gallery sent! • S TECH','GALLERY SENT');
+    popup('✅ '+(isVideo?'Video':'Image')+' from gallery sent!','GALLERY SENT');
   };
   reader.readAsDataURL(file); input.value='';
 }
 function popup(m,t="SALVATION TECH"){ document.getElementById('modalTitle').textContent=t; document.getElementById('modalMsg').innerText=m; document.getElementById('sTechModal').classList.add('show'); if(navigator.vibrate) navigator.vibrate(40); }
 function closeModal(){ document.getElementById('sTechModal').classList.remove('show'); }
 document.addEventListener('click',e=>{ if(!e.target.closest('.header')) document.getElementById('mainMenu').classList.remove('show'); });
-document.getElementById('langBadge').textContent=currentLang.toUpperCase()+' • V67 CAM';
+document.getElementById('langBadge').textContent=currentLang.toUpperCase()+' • V68 VID';
 renderChatList(); renderWallpaperReal(); renderLangGrid();
 </script>
 </body>
-</html>
+                                                     </html>
