@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CHALE CHAT V74</title>
+<title>CHALE CHAT V75</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
 body{background:#0f0f0f;color:white}
@@ -16,79 +16,71 @@ body{background:#0f0f0f;color:white}
 .search input{background:transparent;border:none;color:white;width:100%;outline:none}
 .statusRow{display:flex;gap:15px;overflow-x:auto;padding:10px 15px}
 .sItem{text-align:center;min-width:65px}
-.sCircle{width:60px;height:60px;border-radius:50%;border:2px dashed #FFD700;display:flex;align-items:center;justify-content:center;font-size:28px;background:#222}
+.sCircle{width:60px;height:60px;border-radius:50%;border:2px dashed #FFD700;display:flex;align-items:center;justify-content:center;font-size:28px;background:#222;overflow:hidden}
+.sCircle img{width:100%;height:100%;object-fit:cover}
 .sItem p{font-size:11px;margin-top:5px;color:#aaa}
-.chatList{padding:10px}
-.chat{background:#1e1e1e;padding:12px;border-radius:10px;margin-bottom:8px;display:flex;gap:10px}
-.avatar{width:40px;height:40px;border-radius:50%;background:#2a5bd7;display:flex;align-items:center;justify-content:center}
-.inputBar{position:fixed;bottom:0;left:0;width:100%;background:#1a1a1a;padding:10px;display:flex;gap:10px}
-.inputBar input{flex:1;background:#222;border:none;padding:12px;border-radius:25px;color:white;outline:none}
-.inputBar button{width:45px;height:45px;border-radius:50%;border:none;background:#25D366;font-size:18px}
 #settingsPage, #profilePage{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f0f0f;z-index:999;display:none;overflow-y:auto;padding:20px}
-.setHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
 .set-item{background:#1e1e1e;padding:16px;margin:12px 0;border-radius:12px;border-left:4px solid #FFD700}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="logo">CHALE <span>CHAT</span> <span class="badge">V74 PROFILE</span></div>
+  <div class="logo">CHALE <span>CHAT</span> <span class="badge">V75 REAL PHOTO</span></div>
   <div class="topBtns">
-    <button onclick="alert('Switch V68 <-> V74')">🔄</button>
+    <button onclick="alert('Switch V68 <-> V75')">🔄</button>
     <button onclick="clearAll()">🗑️</button>
-    <button id="settingsBtn" onclick="openSettings()">⚙️</button>
+    <button onclick="openSettings()" style="background:#FFD700">⚙️</button>
   </div>
 </div>
 
 <div class="search"><input placeholder="Search"></div>
 
 <div class="statusRow">
-  <div class="sItem"><div class="sCircle" id="myStatusCircle">🇬🇭</div><p id="myStatusName">My Status</p></div>
+  <div class="sItem"><div class="sCircle" id="myStatusCircle"><img id="myStatusImg" style="display:none"><span id="myStatusEmoji">🇬🇭</span></div><p id="myStatusName">My Status</p></div>
   <div class="sItem"><div class="sCircle">🇬🇭</div><p>Salvation</p></div>
   <div class="sItem"><div class="sCircle">👤</div><p>Kwame</p></div>
-  <div class="sItem"><div class="sCircle">🙎‍♀️</div><p>Ama</p></div>
-  <div class="sItem"><div class="sCircle">👤</div><p>Rockson</p></div>
 </div>
 
-<div class="chatList">
-  <div class="chat"><div class="avatar">👤</div><div><b>Rockson Boateng</b><br><small style="color:gray">Missed call • S TECH 04:39 PM</small></div></div>
-</div>
-
-<div class="inputBar">
-  <input id="msgInput" placeholder="Type message - V74">
-  <button onclick="sendMsg()">➤</button>
-  <button style="background:#FFD700">🎤</button>
-</div>
-
-<!-- SETTINGS PAGE 1-2-3-4 -->
+<!-- SETTINGS -->
 <div id="settingsPage">
-  <div class="setHead">
-    <h2>⚙️ CHALE CHAT SETTINGS</h2>
-    <button onclick="closeSettings()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">X Close</button>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+    <h2>⚙️ SETTINGS</h2><button onclick="closeSettings()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">X Close</button>
   </div>
-  <div class="set-item" onclick="editProfile()"><h3>1. Profile Settings ></h3><p>Change name, pic, Ghana flag, My Status</p><small style="color:#FFD700">Current: <span id="curName">Salvation</span> (GH)</small></div>
-  <div class="set-item"><h3>2. Wallpaper / Theme</h3><p>Dark / Light mode</p><label><input type="checkbox" checked> Dark Mode ON</label><br><br>Chat Color: <input type="color" value="#FFD700"></div>
-  <div class="set-item"><h3>3. Privacy</h3><label><input type="checkbox" checked> Last Seen</label><br><label><input type="checkbox" checked> Read Receipts</label><br><label><input type="checkbox" checked> Online Status</label></div>
-  <div class="set-item" style="border:2px solid #FFD700;"><h3>4. Backup & Restore</h3><p>V68 Backup: Kept Safe ✅</p><div style="margin-top:10px;display:flex;gap:10px"><button onclick="alert('V68 Restored!')" style="background:#FFD700;border:none;padding:10px 15px;border-radius:8px;font-weight:bold;">Restore V68</button><button onclick="clearAll()" style="background:#222;border:1px solid red;color:red;padding:10px 15px;border-radius:8px;">Clear All</button></div></div>
+  <div class="set-item" onclick="editProfile()"><h3>1. Profile Settings ></h3><p>Change name, REAL PHOTO</p><small style="color:#FFD700">Current: <span id="curName">Salvation</span></small></div>
+  <div class="set-item"><h3>2. Wallpaper / Theme</h3><label><input type="checkbox" checked> Dark Mode</label></div>
+  <div class="set-item"><h3>3. Privacy</h3><label><input type="checkbox" checked> Last Seen</label></div>
+  <div class="set-item" style="border:2px solid #FFD700;"><h3>4. Backup & Restore</h3><p>V68 Backup: Kept Safe ✅</p></div>
 </div>
 
-<!-- PROFILE FULL PAGE V74 - NEW! -->
+<!-- PROFILE REAL PHOTO PAGE -->
 <div id="profilePage">
   <div style="display:flex;justify-content:space-between;align-items:center">
-    <h2>👤 Edit Profile</h2>
+    <h2>👤 Edit Profile - REAL PHOTO</h2>
     <button onclick="closeProfile()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button>
   </div>
-  <div style="text-align:center;margin-top:30px">
-    <div id="bigAvatar" style="width:110px;height:110px;border-radius:50%;background:#222;border:3px solid #FFD700;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:55px;">🇬🇭</div>
-    <button onclick="changeEmoji()" style="margin-top:12px;background:#1e1e1e;color:#FFD700;border:1px solid #FFD700;padding:8px 15px;border-radius:20px;">Change Pic / Emoji</button>
+
+  <div style="text-align:center;margin-top:25px">
+    <div style="position:relative;width:120px;height:120px;margin:0 auto">
+      <div id="bigAvatar" style="width:120px;height:120px;border-radius:50%;background:#222;border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;font-size:60px;overflow:hidden">
+        <img id="bigAvatarImg" style="width:100%;height:100%;object-fit:cover;display:none">
+        <span id="bigAvatarEmoji">🇬🇭</span>
+      </div>
+      <label for="photoUpload" style="position:absolute;bottom:0;right:0;background:#FFD700;width:35px;height:35px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;">📷</label>
+      <input type="file" id="photoUpload" accept="image/*" style="display:none" onchange="uploadPhoto(this)">
+    </div>
+    <p style="color:#888;margin-top:10px;font-size:12px;">Tap 📷 to upload REAL photo from gallery</p>
+    <div style="margin-top:15px;display:flex;gap:10px;justify-content:center">
+      <button onclick="document.getElementById('photoUpload').click()" style="background:#1e1e1e;color:#FFD700;border:1px solid #FFD700;padding:8px 15px;border-radius:20px;">📸 Upload Photo</button>
+      <button onclick="removePhoto()" style="background:#1e1e1e;color:red;border:1px solid red;padding:8px 15px;border-radius:20px;">Remove</button>
+    </div>
   </div>
+
   <div style="margin-top:30px">
     <label style="color:#888;font-size:13px;">Your Name</label>
     <input id="profileNameInput" value="Salvation" style="width:100%;background:#1e1e1e;border:none;padding:15px;border-radius:10px;color:white;margin-top:5px;font-size:16px;">
     <label style="color:#888;font-size:13px;margin-top:20px;display:block;">Status Message</label>
     <input id="statusInput" value="Chale, I dey! 🇬🇭" style="width:100%;background:#1e1e1e;border:none;padding:15px;border-radius:10px;color:white;margin-top:5px;">
-    <label style="color:#888;font-size:13px;margin-top:20px;display:block;">Flag</label>
-    <select id="flagSelect" style="width:100%;background:#1e1e1e;border:none;padding:15px;border-radius:10px;color:white;margin-top:5px;"><option>🇬🇭 Ghana</option><option>🇳🇬 Nigeria</option><option>🌍 Africa</option><option>🔥 Chale</option></select>
     <button onclick="saveProfile()" style="width:100%;background:#FFD700;border:none;padding:16px;border-radius:12px;font-weight:bold;margin-top:25px;font-size:16px;">Save Profile ✅</button>
   </div>
 </div>
@@ -96,29 +88,48 @@ body{background:#0f0f0f;color:white}
 <script>
 function openSettings(){document.getElementById('settingsPage').style.display='block'}
 function closeSettings(){document.getElementById('settingsPage').style.display='none'}
-function editProfile(){document.getElementById('settingsPage').style.display='none'; document.getElementById('profilePage').style.display='block';}
-function closeProfile(){document.getElementById('profilePage').style.display='none'; document.getElementById('settingsPage').style.display='block';}
+function editProfile(){document.getElementById('settingsPage').style.display='none';document.getElementById('profilePage').style.display='block'}
+function closeProfile(){document.getElementById('profilePage').style.display='none';document.getElementById('settingsPage').style.display='block'}
+
+function uploadPhoto(input){
+  if(input.files && input.files[0]){
+    let reader=new FileReader();
+    reader.onload=function(e){
+      document.getElementById('bigAvatarImg').src=e.target.result;
+      document.getElementById('bigAvatarImg').style.display='block';
+      document.getElementById('bigAvatarEmoji').style.display='none';
+      document.getElementById('myStatusImg').src=e.target.result;
+      document.getElementById('myStatusImg').style.display='block';
+      document.getElementById('myStatusEmoji').style.display='none';
+      localStorage.setItem('chale_photo', e.target.result);
+    }
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+function removePhoto(){
+  document.getElementById('bigAvatarImg').style.display='none';
+  document.getElementById('bigAvatarEmoji').style.display='block';
+  document.getElementById('myStatusImg').style.display='none';
+  document.getElementById('myStatusEmoji').style.display='block';
+  localStorage.removeItem('chale_photo');
+}
 function saveProfile(){
   let newName=document.getElementById('profileNameInput').value;
-  let emoji=document.getElementById('bigAvatar').innerText;
   localStorage.setItem('chale_name',newName);
-  localStorage.setItem('chale_emoji',emoji);
   document.getElementById('curName').innerText=newName;
-  document.getElementById('myStatusCircle').innerText=emoji;
-  alert("✅ Saved! Name: "+newName+" "+emoji);
+  alert("✅ Saved! Real photo + Name: "+newName);
   closeProfile();
 }
-function changeEmoji(){
-  let e=prompt("Enter emoji or flag: 🇬🇭 👤 🙎‍♀️ 🔥","");
-  if(e){document.getElementById('bigAvatar').innerText=e;}
-}
-function clearAll(){if(confirm("Clear all? This will reset but keep V68 backup!")){localStorage.clear();alert("Cleared! V68 backup still dey!");location.reload();}}
-function sendMsg(){let i=document.getElementById('msgInput'); if(i.value){alert("Sent: "+i.value); i.value="";}}
-// load saved
+function clearAll(){if(confirm("Clear all? V68 backup safe!")){localStorage.clear();location.reload();}}
 window.onload=()=>{
-  let n=localStorage.getItem('chale_name'); let em=localStorage.getItem('chale_emoji');
+  let n=localStorage.getItem('chale_name'); let p=localStorage.getItem('chale_photo');
   if(n){document.getElementById('curName').innerText=n; document.getElementById('profileNameInput').value=n;}
-  if(em){document.getElementById('bigAvatar').innerText=em; document.getElementById('myStatusCircle').innerText=em;}
+  if(p){
+    document.getElementById('bigAvatarImg').src=p; document.getElementById('bigAvatarImg').style.display='block';
+    document.getElementById('bigAvatarEmoji').style.display='none';
+    document.getElementById('myStatusImg').src=p; document.getElementById('myStatusImg').style.display='block';
+    document.getElementById('myStatusEmoji').style.display='none';
+  }
 }
 </script>
 </body>
