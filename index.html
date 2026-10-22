@@ -2,24 +2,25 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CHALE CHAT V83.5 FINAL ALL TABS</title>
+<title>CHALE CHAT V84 LUXURY FINAL</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family: -apple-system, BlinkMacSystemFont, sans-serif}
 body{background:#0f0f0f;color:white;padding-bottom:75px}
 .header{background:#1a1a1a;padding:12px 15px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-weight:bold;font-size:18px}.logo span{color:#FFD700}
-.badge{background:#333;color:#FFD700;font-size:9px;padding:3px 8px;border-radius:10px;margin-left:5px}
-.search{margin:15px;background:#222;padding:10px 15px;border-radius:10px}
+.badge{background:linear-gradient(45deg,#FFD700,#FFA500);color:black;font-size:9px;padding:4px 10px;border-radius:12px;margin-left:6px;font-weight:bold;box-shadow:0 2px 6px rgba(255,215,0,0.3)}
+.search{margin:15px;background:#222;padding:10px 15px;border-radius:12px}
 .search input{background:transparent;border:none;color:white;width:100%;outline:none}
 .statusRow{display:flex;gap:15px;overflow-x:auto;padding:10px 15px}
 .sItem{text-align:center;min-width:65px;cursor:pointer}
 .sCircle{width:60px;height:60px;border-radius:50%;border:2px dashed #FFD700;display:flex;align-items:center;justify-content:center;font-size:28px;background:#222;overflow:hidden;position:relative}
-.sCircle.hasStatus{border:3px solid #25D366}
+.sCircle.hasStatus{border:3px solid #25D366;box-shadow:0 0 10px rgba(37,211,102,0.4)}
 .sCircle img{width:100%;height:100%;object-fit:cover}
 .addStatus{position:absolute;bottom:-2px;right:-2px;background:#25D366;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;border:2px solid #0f0f0f}
 .chatList{padding:10px;min-height:400px;padding-bottom:20px}
-.chat{background:#1e1e1e;padding:12px;border-radius:10px;margin-bottom:8px;display:flex;gap:10px;cursor:pointer}
-.avatar{width:40px;height:40px;border-radius:50%;background:#2a5bd7;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.chat{background:#1e1e1e;padding:12px;border-radius:12px;margin-bottom:8px;display:flex;gap:10px;cursor:pointer;border-left:3px solid transparent}
+.chat:hover{border-left:3px solid #FFD700}
+.avatar{width:40px;height:40px;border-radius:50%;background:#2a5bd7;display:flex;align-items:center;justify-content:center;overflow:hidden;font-weight:bold}
 .inputBar{position:fixed;bottom:75px;left:0;width:100%;background:#1a1a1a;padding:10px;display:flex;gap:10px;z-index:10;align-items:center}
 .inputBar input{flex:1;background:#222;border:none;padding:12px;border-radius:25px;color:white;outline:none}
 #settingsPage, #profilePage, #wallpaperPage, #privacyPage, #backupPage, #chatWindow, #statusViewer, #statusPage, #languagePage{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f0f0f;z-index:999;display:none;overflow-y:auto;padding:20px;padding-bottom:90px}
@@ -96,11 +97,9 @@ body{background:#0f0f0f;color:white;padding-bottom:75px}
 .newCommBtn{width:100%;background:#f0f0f0;border:1px dashed #aaa;padding:16px;border-radius:12px;display:flex;align-items:center;gap:15px;cursor:pointer;margin-bottom:20px}
 .newCommIcon{width:48px;height:48px;border-radius:12px;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:24px;color:white}
 .commCard{background:white;border:1px solid #f0f0f0;border-radius:12px;padding:15px;margin-bottom:12px;display:flex;gap:12px;align-items:center;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
-/* CALLS TAB */
 #callsTab{position:fixed;top:0;left:0;width:100%;height:100%;background:white;color:black;z-index:100;display:none;overflow-y:auto;padding-bottom:90px}
 .callsTop{padding:15px 20px;display:flex;justify-content:space-between;align-items:center;background:white;position:sticky;top:0;z-index:10}
 .callsTop h1{font-size:26px;font-weight:400;color:black}
-.callsIcons{display:flex;gap:20px;font-size:22px}
 .createCallLink{margin:15px 20px;background:white;border:1px solid #f0f0f0;border-radius:12px;padding:15px;display:flex;gap:15px;align-items:center;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
 .callLinkIcon{width:48px;height:48px;border-radius:50%;background:#00a884;display:flex;align-items:center;justify-content:center;font-size:24px;color:white}
 .callsSection{padding:0 20px}
@@ -113,11 +112,20 @@ body{background:#0f0f0f;color:white;padding-bottom:75px}
 .callRight{font-size:22px;color:#00a884}
 .callTypeMiss{color:#f15c6d !important}
 .callFab{position:fixed;bottom:85px;right:15px;width:56px;height:56px;border-radius:16px;background:#00a884;border:none;display:flex;align-items:center;justify-content:center;font-size:26px;color:white;box-shadow:0 3px 8px rgba(0,0,0,0.3);cursor:pointer;z-index:20}
+/* LUXURY CALL OVERLAY */
+#callOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(180deg,#0f0f0f,#1a1a1a);z-index:8000;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;color:white}
+.callAvatarBig{width:110px;height:110px;border-radius:50%;background:#222;border:4px solid #FFD700;display:flex;align-items:center;justify-content:center;font-size:50px;overflow:hidden;box-shadow:0 0 30px rgba(255,215,0,0.3)}
+.callAvatarBig img{width:100%;height:100%;object-fit:cover}
+.callButtons{display:flex;gap:25px;margin-top:40px}
+.callBtn{width:65px;height:65px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer}
+.callBtn.end{background:#f15c6d;color:white}
+.callBtn.answer{background:#25D366;color:white}
+.callBtn.mute{background:#333;color:white}
 </style>
 </head>
 <body id="body">
 <div id="chatsTab">
-<div class="header"><div class="logo">CHALE <span>CHAT</span> <span class="badge">V83.5 FINAL</span></div><div class="topBtns"><button onclick="openSettings()" style="background:#FFD700;width:38px;height:38px;border-radius:50%;border:none">⚙️</button></div></div>
+<div class="header"><div class="logo">CHALE <span>CHAT</span> <span class="badge">V84 LUXURY FINAL</span></div><div class="topBtns"><button onclick="openSettings()" style="background:#FFD700;width:38px;height:38px;border-radius:50%;border:none">⚙️</button></div></div>
 <div class="search"><input id="searchInput" placeholder="Search chats"></div>
 <div class="statusRow"><div class="sItem" onclick="openMyStatus()"><div class="sCircle" id="myStatusCircle"><img id="myStatusImg" style="display:none"><span id="myStatusEmoji">🇬🇭</span><div class="addStatus">+</div></div><p id="txtMyStatus">My Status</p></div><div class="sItem" onclick="viewStatus()"><div class="sCircle hasStatus" id="salStatus"><img id="salImg"><span id="salEmoji" style="display:none">🇬🇭</span></div><p>Salvation</p></div></div>
 <div class="chatList" id="chatList"></div>
@@ -129,7 +137,7 @@ body{background:#0f0f0f;color:white;padding-bottom:75px}
 <div class="statusSection"><h2>Status <span style="font-weight:400;font-size:12px;color:#25D366" id="realStatusCount">• Real</span></h2><div class="statusScroll" id="updatesStatusScroll"></div></div>
 <div class="channelsSection"><div class="channelsTop"><h2>Channels</h2><button class="exploreBtn">Explore</button></div>
 <div class="channelRow"><div class="channelAva"><img src="https://i.pravatar.cc/48?img=14"></div><div class="channelInfo"><b>Online Business</b><span>ONE MENTORSHIP. FOUR INCOM...</span></div><div class="channelRight"><div class="t">7:35 PM</div><div class="num">14</div></div></div>
-<div class="channelRow" style="background:#FFD70020;border-radius:10px;padding:12px"><div class="channelAva" style="background:#FFD700;color:black;font-weight:bold">🇬🇭</div><div class="channelInfo"><b>Chale Chat Official 🇬🇭 REAL</b><span id="liveChannelText">Welcome</span></div><div class="channelRight"><div class="t" style="color:#FFD700;font-weight:bold">LIVE</div><div class="num" style="background:#FFD700;color:black" id="liveNum">0</div></div></div>
+<div class="channelRow" style="background:#FFD70020;border-radius:10px;padding:12px"><div class="channelAva" style="background:#FFD700;color:black;font-weight:bold;overflow:hidden"><img id="chaleOfficialLogo" style="width:100%;height:100%;object-fit:cover;display:none"><span id="chaleOfficialEmoji">🇬🇭</span></div><div class="channelInfo"><b>Chale Chat Official 🇬🇭 REAL</b><span id="liveChannelText">Welcome</span></div><div class="channelRight"><div class="t" style="color:#FFD700;font-weight:bold">LIVE</div><div class="num" style="background:#FFD700;color:black" id="liveNum">0</div></div></div>
 </div><div class="fabWrap"><button class="fab edit">✏️</button><button class="fab cam" onclick="openMyStatus()">📷</button></div>
 </div>
 
@@ -137,49 +145,41 @@ body{background:#0f0f0f;color:white;padding-bottom:75px}
 <div class="commTop"><h1>Communities</h1></div>
 <div class="commIntro">
 <div class="newCommBtn" onclick="createCommunity()"><div class="newCommIcon">👥</div><div><b style="color:black">New community</b><br><span style="color:#666;font-size:13px">Create Ghana community 🇬🇭</span></div></div>
-<div class="commCard" onclick="openCommunity('Salvation Tech')"><div style="width:50px;height:50px;border-radius:12px;background:#FFD700;display:flex;align-items:center;justify-content:center;font-weight:bold;color:black">ST</div><div style="flex:1"><b style="color:black">Salvation Tech Community 🇬🇭</b><br><span style="color:#666;font-size:13px">Dansoman Accra • 0540042669 • ST Shield</span><div style="margin-top:6px;display:flex;gap:6px"><span style="background:#FFD700;color:black;font-size:10px;padding:3px 8px;border-radius:10px;font-weight:bold">CULTURAL</span><span style="background:#111;color:#FFD700;font-size:10px;padding:3px 8px;border-radius:10px">LUXURY</span></div></div><div style="color:#aaa">›</div></div>
+<div class="commCard" onclick="openCommunity('Salvation Tech')"><div style="width:54px;height:54px;border-radius:14px;background:#111;border:2px solid #FFD700;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0"><img id="commSTLogo" style="width:100%;height:100%;object-fit:cover;display:none"><span id="commSTEmoji" style="font-weight:bold;color:#FFD700">ST</span></div><div style="flex:1"><b style="color:black">Salvation Tech Community 🇬🇭</b><br><span style="color:#666;font-size:13px">Dansoman Accra • 0540042669 • ST Shield Luxury</span><div style="margin-top:6px;display:flex;gap:6px"><span style="background:#FFD700;color:black;font-size:10px;padding:3px 8px;border-radius:10px;font-weight:bold">CULTURAL</span><span style="background:#111;color:#FFD700;font-size:10px;padding:3px 8px;border-radius:10px">LUXURY • VERIFIED</span></div></div><div style="color:#aaa">›</div></div>
 <div class="commCard" onclick="openCommunity('Accra')"><div style="width:50px;height:50px;border-radius:12px;background:#FFD700;display:flex;align-items:center;justify-content:center;font-weight:bold;color:black">ACC</div><div style="flex:1"><b style="color:black">Accra Chale Chat</b><br><span style="color:#666;font-size:13px">Accra • Greater Accra</span><div style="margin-top:4px"><span style="font-size:12px;color:#666">👥 128 members • 12 groups</span></div></div><div style="color:#aaa">›</div></div>
 <div class="commCard" onclick="openCommunity('Kumasi')"><div style="width:50px;height:50px;border-radius:12px;background:#25D366;display:flex;align-items:center;justify-content:center;font-weight:bold;color:white">KMS</div><div style="flex:1"><b style="color:black">Kumasi Warriors</b><br><span style="color:#666;font-size:13px">Kumasi • Ashanti</span><div style="margin-top:4px"><span style="font-size:12px;color:#666">👥 89 members • 8 groups</span></div></div><div style="color:#aaa">›</div></div>
 <div class="commCard" onclick="openCommunity('Tamale')"><div style="width:50px;height:50px;border-radius:12px;background:#008751;display:flex;align-items:center;justify-content:center;font-weight:bold;color:white">TML</div><div style="flex:1"><b style="color:black">Tamale Northern Connect</b><br><span style="color:#666;font-size:13px">Tamale • Northern</span><div style="margin-top:4px"><span style="font-size:12px;color:#666">👥 56 members • 5 groups</span></div></div><div style="color:#aaa">›</div></div>
 <div class="commCard" onclick="openCommunity('Takoradi')"><div style="width:50px;height:50px;border-radius:12px;background:#CE1126;display:flex;align-items:center;justify-content:center;font-weight:bold;color:white">TKD</div><div style="flex:1"><b style="color:black">Takoradi Oil City</b><br><span style="color:#666;font-size:13px">Takoradi • Western</span><div style="margin-top:4px"><span style="font-size:12px;color:#666">👥 42 members • 4 groups</span></div></div><div style="color:#aaa">›</div></div>
+<div style="margin-top:20px;background:linear-gradient(135deg,#FFF9C4,#FFD70030);padding:15px;border-radius:12px;border:1px solid #FFD70050">
+<h3 style="color:black;font-size:14px">🇬🇭 V84 LUXURY FINAL</h3>
+<p style="color:#333;font-size:12px;margin-top:6px">ST Shield now uses your real uploaded photo! Upload your ST logo in Profile → it appears everywhere! Calls now auto-copy + ringing!</p>
+</div>
 </div>
 </div>
 
-<!-- CALLS TAB - FINAL STEP 4 -->
 <div id="callsTab">
-<div class="callsTop"><h1>Calls</h1><div class="callsIcons"><span onclick="alert('Search Calls')">🔍</span><span>⋮</span></div></div>
-
+<div class="callsTop"><h1>Calls</h1><div class="callsIcons"><span>🔍</span><span>⋮</span></div></div>
 <div class="createCallLink" onclick="createCallLink()">
 <div class="callLinkIcon">🔗</div>
 <div style="flex:1"><b style="color:#00a884;font-size:15px">Create call link</b><br><span style="color:#666;font-size:13px">Share a link for your Chale Chat call</span></div>
+<div style="color:#00a884;font-weight:bold">›</div>
 </div>
-
 <div class="callsSection">
 <h2>FAVORITES</h2>
-<div class="callRow" onclick="makeCall('Salvation Tech','ST')"><div class="callAva" style="background:#FFD700;color:black">ST</div><div class="callInfo"><b>Salvation Tech 🇬🇭 <span style="font-size:10px;background:#FFD700;color:black;padding:2px 6px;border-radius:8px">FAV</span></b><span>❤️ Favorite • Dansoman</span></div><div class="callRight">📞</div></div>
-
+<div class="callRow" onclick="makeCall('Salvation Tech','ST')"><div class="callAva" style="background:#111;border:2px solid #FFD700;color:#FFD700;overflow:hidden"><img id="favSTLogo" style="width:100%;height:100%;object-fit:cover;display:none"><span id="favSTEmoji">ST</span></div><div class="callInfo"><b>Salvation Tech 🇬🇭 <span style="font-size:10px;background:#FFD700;color:black;padding:2px 6px;border-radius:8px">FAV • LUXURY</span></b><span>❤️ Favorite • Dansoman • 0540042669</span></div><div class="callRight">📞</div></div>
 <h2>RECENT</h2>
 <div class="callRow" onclick="makeCall('Ama','A')"><div class="callAva" style="background:#f0f0f0;color:black">A</div><div class="callInfo"><b>Ama</b><span>↗ Outgoing • Today, 10:14 PM</span></div><div class="callRight">📹</div></div>
-
 <div class="callRow" onclick="makeCall('Kwame','K')"><div class="callAva" style="background:#e3f2fd;color:#1976d2">K</div><div class="callInfo"><b>Kwame</b><span class="callTypeMiss">↙ Missed • Today, 7:30 PM</span></div><div class="callRight" style="color:#f15c6d">📞</div></div>
-
 <div class="callRow" onclick="makeCall('Salvation','S')"><div class="callAva" style="background:#FFD700;color:black">S</div><div class="callInfo"><b>Salvation Tech • 0540042669</b><span>↘ Incoming • Today, 6:45 PM • 12:34</span></div><div class="callRight">📞</div></div>
-
 <div class="callRow" onclick="makeCall('Accra Group','ACC')"><div class="callAva" style="background:#FFD700;color:black">ACC</div><div class="callInfo"><b>Accra Chale Chat Group</b><span>↗ Outgoing • Yesterday, 9:15 PM • 5 members</span></div><div class="callRight">👥</div></div>
-
 <div class="callRow" onclick="makeCall('Kumasi','KMS')"><div class="callAva" style="background:#25D366;color:white">KMS</div><div class="callInfo"><b>Kumasi Warriors</b><span>↘ Incoming • Yesterday, 2:30 PM • 03:21</span></div><div class="callRight">📹</div></div>
-
 <div class="callRow" onclick="makeCall('Auntie Akosua','AA')"><div class="callAva" style="background:#fce4ec;color:#c2185b">AA</div><div class="callInfo"><b>Auntie Akosua</b><span class="callTypeMiss">↙ Missed • Monday, 8:00 AM</span></div><div class="callRight" style="color:#f15c6d">📞</div></div>
-
 <div class="callRow" onclick="makeCall('Tamale','TML')"><div class="callAva" style="background:#008751;color:white">TML</div><div class="callInfo"><b>Tamale Northern Connect</b><span>↗ Outgoing • Sunday, 5:45 PM • 01:15</span></div><div class="callRight">📞</div></div>
-
 <div style="margin-top:20px;background:#f9f9f9;padding:15px;border-radius:12px;text-align:center">
 <p style="color:#666;font-size:12px">🔒 Your personal calls are <span style="color:#00a884;font-weight:bold">end-to-end encrypted</span></p>
-<p style="color:#999;font-size:11px;margin-top:5px">Chale Chat Calls • Ghana 🇬🇭 • Powered by Salvation Tech</p>
+<p style="color:#999;font-size:11px;margin-top:5px">Chale Chat V84 Luxury • Ghana 🇬🇭 • Salvation Tech • 0540042669</p>
 </div>
-
 </div>
-
 <button class="callFab" onclick="showDialer()">📞</button>
 </div>
 
@@ -190,9 +190,26 @@ body{background:#0f0f0f;color:white;padding-bottom:75px}
 <div class="navItem" id="navCalls" onclick="switchTab('calls')"><span class="iconWrap"><span class="icon">📞</span></span><span class="label">Calls</span></div>
 </div>
 
+<!-- LUXURY CALL OVERLAY -->
+<div id="callOverlay">
+<div class="callAvatarBig" id="callAvatarBig"><img id="callBigImg" style="display:none"><span id="callBigEmoji">📞</span></div>
+<h2 id="callOverlayName" style="margin-top:20px">Salvation Tech</h2>
+<p id="callOverlayStatus" style="color:#FFD700;margin-top:8px">🇬🇭 Calling... Ghana Network</p>
+<p id="callTimer" style="color:#25D366;margin-top:5px;font-size:13px">00:00</p>
+<div class="callButtons">
+<button class="callBtn mute" onclick="toggleMute()" id="muteBtn">🎙️</button>
+<button class="callBtn end" onclick="endCall()">✕</button>
+<button class="callBtn answer" onclick="answerCall()" id="answerBtn" style="display:none">📞</button>
+<button class="callBtn mute" onclick="switchCam()">📹</button>
+</div>
+<div style="margin-top:30px;background:#FFD70020;padding:10px 20px;border-radius:20px;border:1px solid #FFD70040">
+<small style="color:#FFD700">🔒 End-to-end encrypted • Chale Chat V84 Luxury</small>
+</div>
+</div>
+
 <div id="statusViewer" style="background:black;padding:0;z-index:6000"><div class="statusProgress" id="statusProgress"></div><div class="chatWinHeader" style="position:absolute;top:20px;background:transparent;z-index:10;width:100%;border:none"><button onclick="closeStatusViewer()" style="background:rgba(0,0,0,0.5);border:none;width:35px;height:35px;border-radius:50%;color:white">✕</button><div class="avatar"><img id="viewerAvatar" style="display:none"><span id="viewerEmoji">🇬🇭</span></div><div style="flex:1"><b id="viewerName">Salvation</b><br><small style="color:#ccc" id="viewerTime">Today</small></div></div><img id="statusViewImg" class="statusViewImg"></div>
 <div id="statusPage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtStatusTitle">📸 My Status</h2><button onclick="closeMyStatus()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button></div><div style="background:#1a2a1a;border:1px solid #25D366;border-radius:12px;padding:15px;margin-top:20px;text-align:center"><div style="width:80px;height:80px;border-radius:50%;margin:0 auto;background:#222;border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;overflow:hidden"><img id="myStatusPageImg" style="width:100%;height:100%;object-fit:cover;display:none"><span id="myStatusPageEmoji" style="font-size:40px">🇬🇭</span></div><h3 style="margin-top:10px" id="myStatusName">Salvation</h3><small style="color:#888" id="txtTapAdd">Tap to add status</small><div style="margin-top:15px;display:flex;gap:10px;justify-content:center"><label for="statusUpload" style="background:#25D366;color:white;padding:12px 20px;border-radius:25px;font-weight:bold;cursor:pointer" id="txtPhotoStatus">📸 Photo Status</label></div><input type="file" id="statusUpload" accept="image/*" style="display:none" onchange="uploadStatus(this)"></div><div style="margin-top:25px"><h3 style="color:#FFD700;font-size:13px" id="txtMyUpdates">MY STATUS UPDATES — REAL</h3><div id="myStatusList" style="margin-top:10px"></div></div></div>
-<div id="chatWindow"><div class="chatWinHeader"><button onclick="closeChat()" style="background:#222;border:none;width:35px;height:35px;border-radius:50%;color:white">←</button><div class="avatar"><img id="chatAvatarImg" style="display:none"><span id="chatAvatarEmoji">A</span></div><div style="flex:1"><b id="chatName">Ama</b><br><small style="color:#25D366" id="txtOnline">Online • V83.5 FINAL ALL TABS</small></div></div><div class="msgList" id="msgList"></div><div class="inputBar" style="position:relative;bottom:auto"><input id="msgInput" placeholder="Type a message"><button id="micBtn" class="micBtn">🎙️</button><button onclick="sendMsg()" style="width:45px;height:45px;border-radius:50%;border:none;background:#25D366">➤</button></div></div>
+<div id="chatWindow"><div class="chatWinHeader"><button onclick="closeChat()" style="background:#222;border:none;width:35px;height:35px;border-radius:50%;color:white">←</button><div class="avatar"><img id="chatAvatarImg" style="display:none"><span id="chatAvatarEmoji">A</span></div><div style="flex:1"><b id="chatName">Ama</b><br><small style="color:#25D366" id="txtOnline">Online • V84 Luxury Final</small></div></div><div class="msgList" id="msgList"></div><div class="inputBar" style="position:relative;bottom:auto"><input id="msgInput" placeholder="Type a message"><button id="micBtn" class="micBtn">🎙️</button><button onclick="sendMsg()" style="width:45px;height:45px;border-radius:50%;border:none;background:#25D366">➤</button></div></div>
 <div id="settingsPage"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"><h2 id="txtSettings">⚙️ SETTINGS</h2><button onclick="closeSettings()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">X</button></div><div class="set-item" onclick="editProfile()"><h3 id="txtProfile">1. Profile ></h3><small style="color:#FFD700" id="curName">Salvation</small></div><div class="set-item" onclick="openWallpaper()"><h3 id="txtWallpaper">2. Wallpaper ></h3><small style="color:#FFD700" id="curWall">Dark Default</small></div><div class="set-item" onclick="openPrivacy()"><h3 id="txtPrivacy">3. Privacy ></h3><small style="color:#FFD700" id="curPrivacy">All ON</small></div><div class="set-item" onclick="openBackup()"><h3 id="txtBackup">4. Backup ></h3><small style="color:#25D366" id="curBackup">Ready</small></div><div class="set-item" onclick="openMyStatus()" style="border:2px solid #25D366"><h3 id="txtMyStatusSet">5. My Status 📸 ></h3><small style="color:#25D366">Post status</small></div><div class="set-item" onclick="openLanguage()" style="border:2px solid #FFD700;background:#221e00"><h3 id="txtLangSet">6. Language 🌍 ></h3><small style="color:#FFD700" id="curLang">English</small></div></div>
 <div id="languagePage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtLangTitle">🌍 Language</h2><button onclick="closeLanguage()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button></div><p style="color:#25D366;font-size:12px;margin-top:10px;font-weight:bold" id="txtLangDesc">✅ SINGLE TAP FIXED!</p><h3 style="color:#FFD700;margin-top:15px;font-size:12px">🇬🇭 GHANA LOCAL</h3><div id="localLangs"></div><h3 style="color:#25D366;margin-top:15px;font-size:12px">🌍 WORLD</h3><div id="foreignLangs"></div><div style="background:#FFD700;color:black;padding:12px;border-radius:10px;margin-top:20px;text-align:center;font-weight:bold" id="selectedLangBox">Current: Select</div></div>
 <div id="wallpaperPage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtWallTitle">🎨 Wallpaper</h2><button onclick="closeWallpaper()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button></div><div style="margin-top:25px"><h3 id="txtThemeMode">Theme Mode</h3><div style="display:flex;gap:12px;margin-top:10px"><button onclick="setTheme('dark')" style="flex:1;background:#111;color:white;border:2px solid #FFD700;padding:14px;border-radius:12px;font-weight:bold">🌙 Dark</button><button onclick="setTheme('light')" style="flex:1;background:white;color:black;border:2px solid #ccc;padding:14px;border-radius:12px;font-weight:bold">☀️ Light</button></div></div><div style="margin-top:30px"><h3 id="txtChatWall">Chat Wallpaper</h3><div style="margin-top:12px"><div class="wall-option active" style="background:#0f0f0f" onclick="setWall('none','Dark Default',this)"></div><div class="wall-option" style="background:#FFD700" onclick="setWall('#FFD700','Gold Ghana',this)"></div></div><label for="wallUpload" style="display:block;margin-top:20px;background:#1e1e1e;border:1px dashed #FFD700;padding:14px;border-radius:12px;text-align:center;cursor:pointer;font-weight:bold;color:#FFD700">📸 Upload Wallpaper</label><input type="file" id="wallUpload" accept="image/*" style="display:none" onchange="uploadWall(this)"><button onclick="clearWallpaper()" style="width:100%;background:#333;color:white;border:none;padding:12px;border-radius:10px;margin-top:15px">Clear Wallpaper</button></div><button onclick="saveWallpaper()" style="width:100%;background:#FFD700;border:none;padding:16px;border-radius:12px;font-weight:bold;margin-top:30px;">Save ✅</button></div>
@@ -202,8 +219,8 @@ body{background:#0f0f0f;color:white;padding-bottom:75px}
 
 <script>
 const translations={
-  en:{name:"English",flag:"🇬🇧",code:"en",search:"Search chats",myStatus:"My Status",typeMsg:"Type a message...",settings:"⚙️ SETTINGS",profile:"1. Profile >",wallpaper:"2. Wallpaper >",privacy:"3. Privacy >",backup:"4. Backup >",myStatusSet:"5. My Status 📸 >",langSet:"6. Language 🌍 >",langTitle:"🌍 Language",langDesc:"✅ SINGLE TAP FIXED!",online:"Online • V83.5 FINAL ALL TABS",send:"Send",statusTitle:"📸 My Status",tapAdd:"Tap to add status",photoStatus:"📸 Photo Status",myUpdates:"MY STATUS UPDATES — REAL",themeMode:"Theme Mode",chatWall:"Chat Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Privacy",editProf:"👤 Edit Profile",saveProf:"Save ✅",translate:"🌍 Translate",translating:"Translating..."},
-  tw:{name:"Twi - Akan",flag:"🇬🇭",code:"tw",search:"Hwehwɛ nkɔmmɔ",myStatus:"Me Status",typeMsg:"Kyerɛw nkɔmmɔ...",settings:"⚙️ NHYEHYƐEƐ",profile:"1. M'ankasa >",wallpaper:"2. Wallpaper >",privacy:"3. Kokoam >",backup:"4. Backup >",myStatusSet:"5. Me Status 📸 >",langSet:"6. Kasa 🌍 >",langTitle:"🌍 Kasa",langDesc:"✅ TAP BAako pɛ!",online:"Online • V83.5",send:"Mane",statusTitle:"📸 Me Status",tapAdd:"Tap na fa status",photoStatus:"📸 Foto Status",myUpdates:"ME STATUS — REAL",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Kokoam",editProf:"👤 Sesa M'ankasa",saveProf:"Kora M'ankasa ✅",translate:"🌍 Kyerɛ ase",translating:"Ɛrekyerɛ ase..."},
+  en:{name:"English",flag:"🇬🇧",code:"en",search:"Search chats",myStatus:"My Status",typeMsg:"Type a message...",settings:"⚙️ SETTINGS",profile:"1. Profile >",wallpaper:"2. Wallpaper >",privacy:"3. Privacy >",backup:"4. Backup >",myStatusSet:"5. My Status 📸 >",langSet:"6. Language 🌍 >",langTitle:"🌍 Language",langDesc:"✅ SINGLE TAP FIXED!",online:"Online • V84 Luxury Final",send:"Send",statusTitle:"📸 My Status",tapAdd:"Tap to add status",photoStatus:"📸 Photo Status",myUpdates:"MY STATUS UPDATES — REAL",themeMode:"Theme Mode",chatWall:"Chat Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Privacy",editProf:"👤 Edit Profile",saveProf:"Save ✅",translate:"🌍 Translate",translating:"Translating..."},
+  tw:{name:"Twi - Akan",flag:"🇬🇭",code:"tw",search:"Hwehwɛ nkɔmmɔ",myStatus:"Me Status",typeMsg:"Kyerɛw nkɔmmɔ...",settings:"⚙️ NHYEHYƐEƐ",profile:"1. M'ankasa >",wallpaper:"2. Wallpaper >",privacy:"3. Kokoam >",backup:"4. Backup >",myStatusSet:"5. Me Status 📸 >",langSet:"6. Kasa 🌍 >",langTitle:"🌍 Kasa",langDesc:"✅ TAP BAako pɛ!",online:"Online • V84",send:"Mane",statusTitle:"📸 Me Status",tapAdd:"Tap na fa status",photoStatus:"📸 Foto Status",myUpdates:"ME STATUS — REAL",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Kokoam",editProf:"👤 Sesa M'ankasa",saveProf:"Kora M'ankasa ✅",translate:"🌍 Kyerɛ ase",translating:"Ɛrekyerɛ ase..."},
   pidgin:{name:"Ghana Pidgin",flag:"🇬🇭",code:"pcm",search:"Find chats",myStatus:"My Status",typeMsg:"Type how for dey...",settings:"⚙️ SETTINGS",profile:"1. My Body >",wallpaper:"2. Cloth >",privacy:"3. Hide Body >",backup:"4. Save Am >",myStatusSet:"5. My Status 📸 >",langSet:"6. Language 🌍 >",langTitle:"🌍 Language",langDesc:"✅ SINGLE TAP!",online:"Online • Chale!",send:"Send am",statusTitle:"📸 My Status",tapAdd:"Tap add new status",photoStatus:"📸 Photo Status",myUpdates:"MY STATUS DEM — REAL",themeMode:"Dark/Light",chatWall:"Back Cloth",wallTitle:"🎨 Cloth",privTitle:"🔒 Hide Body",editProf:"👤 My Body",saveProf:"Save Am ✅",translate:"🌍 Translate am",translating:"I dey translate..."},
   fr:{name:"Français",flag:"🇫🇷",code:"fr",search:"Chercher chats",myStatus:"Mon Statut",typeMsg:"Tapez message...",settings:"⚙️ PARAMÈTRES",profile:"1. Profil >",wallpaper:"2. Fond >",privacy:"3. Confidentialité >",backup:"4. Sauvegarde >",myStatusSet:"5. Mon Statut 📸 >",langSet:"6. Langue 🌍 >",langTitle:"🌍 Langue",langDesc:"✅ TAP UNIQUE!",online:"En ligne • Français",send:"Envoyer",statusTitle:"📸 Mon Statut",tapAdd:"Appuyez pour ajouter",photoStatus:"📸 Photo Statut",myUpdates:"MES STATUTS — REAL",themeMode:"Thème",chatWall:"Fond Chat",wallTitle:"🎨 Fond",privTitle:"🔒 Confidentialité",editProf:"👤 Modifier Profil",saveProf:"Sauver ✅",translate:"🌍 Traduire",translating:"Traduction..."},
   ga:{name:"Ga",flag:"🇬🇭",code:"gaa",search:"Taomɔ sɛɛmɔi",myStatus:"Mi Status",typeMsg:"Ŋma sɛɛmɔ...",settings:"⚙️ SHIHILƐI",profile:"1. Minuu >",wallpaper:"2. Wallpaper >",privacy:"3. Gbaashikɛ >",backup:"4. Backup >",myStatusSet:"5. Mi Status 📸 >",langSet:"6. Wiemɔ 🌍 >",langTitle:"🌍 Wiemɔ",langDesc:"✅ TAP Kome!",online:"Online • Ga",send:"Tsu",statusTitle:"📸 Mi Status",tapAdd:"Tap okɛ status hee",photoStatus:"📸 Foto Status",myUpdates:"MI STATUS — REAL",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Gbaashikɛ",editProf:"👤 Tsake Minuu",saveProf:"Kɛkɛ Minuu ✅",translate:"🌍 Tsɔɔmɔ",translating:"Miitsɔɔmɔ..."},
@@ -233,6 +250,8 @@ let currentChat='Ama';
 let chatsData=JSON.parse(localStorage.getItem('chale_chats_v79')||'{"Ama":[{"id":1,"text":"Hello","time":"07:57 PM","me":true},{"id":2,"text":"It been long","time":"07:58 PM","me":true},{"id":3,"text":"It not that","time":"07:59 PM","me":true}],"Salvation":[{"id":4,"text":"Real Chat!","time":"6:37 PM","me":false}]}');
 let statusData=JSON.parse(localStorage.getItem('chale_status_v81')||'[]');
 let lastTapTime=0, tapLocked=false;
+let callTimerInterval=null, callSeconds=0, isMuted=false;
+
 function switchTab(tab){
   document.getElementById('chatsTab').style.display=tab==='chats'?'block':'none';
   document.getElementById('updatesTab').style.display=tab==='updates'?'block':'none';
@@ -286,19 +305,41 @@ function createCommunity(){
   if(!name) return;
   alert(`✅ Community "${name}" Created!\n🇬🇭 Ghana Communities!`);
 }
-function openCommunity(name){alert(`🇬🇭 ${name} Community\n👥 Members: Active\n📍 Ghana • ${name}\n🔥 ST Shield Verified\n\nGroups: Announcements, General, Events, Support\n\nV84 FULL coming!`);}
+function openCommunity(name){alert(`🇬🇭 ${name} Community\n👥 Members: Active\n📍 Ghana • ${name}\n🔥 ST Shield Verified\n\nGroups: Announcements, General, Events, Support\n\nV84 FULL!`);}
 function createCallLink(){
-  let link='https://chale.chat/join/'+Math.random().toString(36).substring(2,8).toUpperCase()+'-'+Math.random().toString(36).substring(2,8).toUpperCase();
-  prompt("🔗 Chale Chat Call Link Created! Copy and share:\n🇬🇭 Ghana Calls", link);
+  let code=Math.random().toString(36).substring(2,6).toUpperCase()+'-'+Math.random().toString(36).substring(2,6).toUpperCase()+'-'+Math.random().toString(36).substring(2,6).toUpperCase();
+  let link='https://chale.chat/join/'+code;
+  if(navigator.clipboard){navigator.clipboard.writeText(link).then(()=>{alert(`✅ Chale Chat Call Link COPIED! 📋\n\n🔗 ${link}\n\n🇬🇭 Ghana Calls — Link copied to clipboard!\nShare with your people!`);}).catch(()=>{prompt("🔗 Chale Chat Call Link Created! Copy and share:\n🇬🇭 Ghana Calls\n\nLink copied?", link);});} else {prompt("🔗 Chale Chat Call Link Created! Copy and share:\n🇬🇭 Ghana Calls", link);}
 }
 function makeCall(name, code){
-  if(confirm(`📞 Call ${name}?\n\n🇬🇭 Chale Chat Voice Call\n• End-to-end encrypted\n• Ghana Quality\n\nCall now?`)){
-    alert(`📞 Calling ${name}...\n\n🔴 Connecting via Chale Chat...\n🇬🇭 Ghana Network\n\n(In real app, this would start WebRTC call)`);
-  }
+  document.getElementById('callOverlay').style.display='flex';
+  document.getElementById('callOverlayName').innerText=name;
+  document.getElementById('callOverlayStatus').innerText='🇬🇭 Calling... Ghana Network';
+  document.getElementById('callTimer').innerText='00:00';
+  let ph=localStorage.getItem('chale_photo')||'';
+  if(ph && (code==='ST' || name.includes('Salvation'))){document.getElementById('callBigImg').src=ph; document.getElementById('callBigImg').style.display='block'; document.getElementById('callBigEmoji').style.display='none';} else {document.getElementById('callBigImg').style.display='none'; document.getElementById('callBigEmoji').style.display='block'; document.getElementById('callBigEmoji').innerText=code;}
+  callSeconds=0;
+  clearInterval(callTimerInterval);
+  callTimerInterval=setInterval(()=>{callSeconds++; let m=String(Math.floor(callSeconds/60)).padStart(2,'0'); let s=String(callSeconds%60).padStart(2,'0'); document.getElementById('callTimer').innerText=`${m}:${s}`; if(callSeconds===2){document.getElementById('callOverlayStatus').innerText='🔊 Ringing...';} if(callSeconds===5){document.getElementById('callOverlayStatus').innerText='✅ Connected • Encrypted • Ghana 🇬🇭';}},1000);
+  // fake ring via vibration
+  if(navigator.vibrate) navigator.vibrate([300,200,300]);
 }
+function endCall(){
+  clearInterval(callTimerInterval);
+  document.getElementById('callOverlay').style.display='none';
+  document.getElementById('callTimer').innerText='00:00';
+  if(navigator.vibrate) navigator.vibrate(100);
+}
+function toggleMute(){
+  isMuted=!isMuted;
+  document.getElementById('muteBtn').innerText=isMuted?'🔇':'🎙️';
+  document.getElementById('muteBtn').style.background=isMuted?'#f15c6d':'#333';
+}
+function switchCam(){alert('📹 Switching camera...\n🇬🇭 Video call feature coming in V85!');}
+function answerCall(){endCall();}
 function showDialer(){
-  let num=prompt("📞 Enter Ghana Number:\nExample: 0540042669 or 024XXXXXXX");
-  if(num) alert(`📞 Calling ${num}...\n\n🇬🇭 Chale Chat Dialer\nConnecting...`);
+  let num=prompt("📞 Enter Ghana Number:\nExample: 0540042669 or 024XXXXXXX\nV84 Luxury Dialer 🇬🇭");
+  if(num) makeCall(num, num.substring(0,3));
 }
 async function translateMessage(id, originalText){
   let t=translations[currentLang]||translations['en'];
@@ -414,12 +455,41 @@ function togglePriv(key){privacy[key]=!privacy[key]; let sw=document.getElementB
 function toggleGhost(){privacy.ghost=!privacy.ghost; let sw=document.getElementById('sw_ghost'); if(privacy.ghost) sw.classList.add('on'); else sw.classList.remove('on');}
 function savePrivacy(){localStorage.setItem('chale_privacy', JSON.stringify(privacy)); alert("✅ Privacy Saved"); closePrivacy();}
 function updateBackupInfo(){let count=Object.values(chatsData).reduce((a,b)=>a+b.length,0); document.getElementById('chatCount').innerText=count+' messages'; document.getElementById('lastBackupTime').innerText=localStorage.getItem('chale_last_backup')||'Never';}
-function exportBackup(){let data={}; for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i); data[k]=localStorage.getItem(k);} data['exportDate']=new Date().toISOString(); data['version']='V83.5'; let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); let url=URL.createObjectURL(blob); let a=document.createElement('a'); a.href=url; a.download='ChaleChat-V83.5-FINAL-'+new Date().toISOString().slice(0,10)+'.json'; a.click(); localStorage.setItem('chale_last_backup', new Date().toLocaleString()); alert("✅ Backup Downloaded!");}
+function exportBackup(){let data={}; for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i); data[k]=localStorage.getItem(k);} data['exportDate']=new Date().toISOString(); data['version']='V84'; let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); let url=URL.createObjectURL(blob); let a=document.createElement('a'); a.href=url; a.download='ChaleChat-V84-LUXURY-FINAL-'+new Date().toISOString().slice(0,10)+'.json'; a.click(); localStorage.setItem('chale_last_backup', new Date().toLocaleString()); alert("✅ Backup Downloaded!");}
 function autoBackup(){localStorage.setItem('chale_last_backup', new Date().toLocaleString()); updateBackupInfo(); alert("✅ Auto Backup Saved!");}
-function uploadPhoto(input){if(input.files[0]){let reader=new FileReader(); reader.onload=e=>{document.getElementById('bigAvatarImg').src=e.target.result; document.getElementById('bigAvatarImg').style.display='block'; document.getElementById('bigAvatarEmoji').style.display='none'; document.getElementById('myStatusImg').src=e.target.result; document.getElementById('myStatusImg').style.display='block'; document.getElementById('myStatusEmoji').style.display='none'; document.getElementById('myStatusPageImg').src=e.target.result; document.getElementById('myStatusPageImg').style.display='block'; document.getElementById('myStatusPageEmoji').style.display='none'; let sal=document.getElementById('salImg'); if(sal){sal.src=e.target.result; sal.style.display='block'; document.getElementById('salEmoji').style.display='none';} localStorage.setItem('chale_photo', e.target.result); renderRealUpdates();}; reader.readAsDataURL(input.files[0]);}}
+function uploadPhoto(input){
+  if(input.files[0]){
+    let reader=new FileReader();
+    reader.onload=e=>{
+      let imgData=e.target.result;
+      document.getElementById('bigAvatarImg').src=imgData; document.getElementById('bigAvatarImg').style.display='block'; document.getElementById('bigAvatarEmoji').style.display='none';
+      document.getElementById('myStatusImg').src=imgData; document.getElementById('myStatusImg').style.display='block'; document.getElementById('myStatusEmoji').style.display='none';
+      document.getElementById('myStatusPageImg').src=imgData; document.getElementById('myStatusPageImg').style.display='block'; document.getElementById('myStatusPageEmoji').style.display='none';
+      let sal=document.getElementById('salImg'); if(sal){sal.src=imgData; sal.style.display='block'; document.getElementById('salEmoji').style.display='none';}
+      // V84 LUXURY - Update all ST logos
+      let commLogo=document.getElementById('commSTLogo'); if(commLogo){commLogo.src=imgData; commLogo.style.display='block'; document.getElementById('commSTEmoji').style.display='none';}
+      let chaleLogo=document.getElementById('chaleOfficialLogo'); if(chaleLogo){chaleLogo.src=imgData; chaleLogo.style.display='block'; document.getElementById('chaleOfficialEmoji').style.display='none';}
+      let favLogo=document.getElementById('favSTLogo'); if(favLogo){favLogo.src=imgData; favLogo.style.display='block'; document.getElementById('favSTEmoji').style.display='none';}
+      localStorage.setItem('chale_photo', imgData);
+      renderRealUpdates();
+      alert("✅ V84 LUXURY: ST Shield updated EVERYWHERE! Check Communities, Calls, Channels!");
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
 function saveProfile(){let n=document.getElementById('profileNameInput').value; localStorage.setItem('chale_name',n); document.getElementById('curName').innerText=n; document.getElementById('myStatusName').innerText=n; alert("✅ Saved "+n); closeProfile();}
 window.onload=()=>{
-  let ph=localStorage.getItem('chale_photo'); if(ph){document.getElementById('bigAvatarImg').src=ph; document.getElementById('bigAvatarImg').style.display='block'; document.getElementById('bigAvatarEmoji').style.display='none'; document.getElementById('myStatusImg').src=ph; document.getElementById('myStatusImg').style.display='block'; document.getElementById('myStatusEmoji').style.display='none'; document.getElementById('myStatusPageImg').src=ph; document.getElementById('myStatusPageImg').style.display='block'; document.getElementById('myStatusPageEmoji').style.display='none'; let sal=document.getElementById('salImg'); if(sal){sal.src=ph; document.getElementById('salEmoji').style.display='none';}}
+  let ph=localStorage.getItem('chale_photo');
+  if(ph){
+    document.getElementById('bigAvatarImg').src=ph; document.getElementById('bigAvatarImg').style.display='block'; document.getElementById('bigAvatarEmoji').style.display='none';
+    document.getElementById('myStatusImg').src=ph; document.getElementById('myStatusImg').style.display='block'; document.getElementById('myStatusEmoji').style.display='none';
+    document.getElementById('myStatusPageImg').src=ph; document.getElementById('myStatusPageImg').style.display='block'; document.getElementById('myStatusPageEmoji').style.display='none';
+    let sal=document.getElementById('salImg'); if(sal){sal.src=ph; sal.style.display='block'; document.getElementById('salEmoji').style.display='none';}
+    // V84 luxury logos
+    let commLogo=document.getElementById('commSTLogo'); if(commLogo){commLogo.src=ph; commLogo.style.display='block'; let e=document.getElementById('commSTEmoji'); if(e) e.style.display='none';}
+    let chaleLogo=document.getElementById('chaleOfficialLogo'); if(chaleLogo){chaleLogo.src=ph; chaleLogo.style.display='block'; let e=document.getElementById('chaleOfficialEmoji'); if(e) e.style.display='none';}
+    let favLogo=document.getElementById('favSTLogo'); if(favLogo){favLogo.src=ph; favLogo.style.display='block'; let e=document.getElementById('favSTEmoji'); if(e) e.style.display='none';}
+  }
   let n=localStorage.getItem('chale_name'); if(n){document.getElementById('curName').innerText=n; document.getElementById('profileNameInput').value=n; document.getElementById('myStatusName').innerText=n;}
   let pr=localStorage.getItem('chale_privacy'); if(pr){privacy=JSON.parse(pr); Object.keys(privacy).forEach(k=>{let el=document.getElementById('sw_'+k); if(el){ if(privacy[k]) el.classList.add('on'); else el.classList.remove('on');}});}
   if(statusData.length>0){document.getElementById('myStatusCircle').classList.add('hasStatus'); document.getElementById('salStatus').classList.add('hasStatus');}
@@ -429,4 +499,4 @@ window.onload=()=>{
 }
 </script>
 </body>
-                                                                                                                                                                                                                                                                  </html>
+  </html>
