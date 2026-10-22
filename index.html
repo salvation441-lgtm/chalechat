@@ -2,14 +2,13 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CHALE CHAT V82</title>
+<title>CHALE CHAT V82.1</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
-body{background:#0f0f0f;color:white;transition:0.3s}
+body{background:#0f0f0f;color:white}
 .header{background:#1a1a1a;padding:12px 15px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-weight:bold;font-size:18px}.logo span{color:#FFD700}
 .badge{background:#333;color:#FFD700;font-size:10px;padding:3px 8px;border-radius:10px;margin-left:5px}
-.topBtns{display:flex;gap:10px}
 .topBtns button{width:38px;height:38px;border-radius:50%;border:none;background:#2a2a2a;font-size:16px}
 .search{margin:15px;background:#222;padding:10px 15px;border-radius:10px}
 .search input{background:transparent;border:none;color:white;width:100%;outline:none}
@@ -30,19 +29,22 @@ body{background:#0f0f0f;color:white;transition:0.3s}
 .wall-option{width:65px;height:65px;border-radius:12px;border:3px solid transparent;cursor:pointer;display:inline-block;margin:6px}
 .wall-option.active{border:3px solid #FFD700;transform:scale(1.1)}
 .privacy-card, .backup-card{background:#1e1e1e;padding:15px;border-radius:12px;margin:12px 0;display:flex;justify-content:space-between;align-items:center;border-left:4px solid #FFD700}
-.switch{width:50px;height:28px;background:#333;border-radius:20px;position:relative;cursor:pointer;transition:0.3s}
+.switch{width:50px;height:28px;background:#333;border-radius:20px;position:relative;cursor:pointer}
 .switch.on{background:#FFD700}
 .switch::after{content:'';position:absolute;width:22px;height:22px;background:white;border-radius:50%;top:3px;left:3px;transition:0.3s}
 .switch.on::after{left:25px}
 .chatWinHeader{background:#1a1a1a;padding:12px 15px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:5}
 .msgList{padding:15px;padding-bottom:90px;min-height:calc(100vh - 120px);background-size:cover;background-position:center;display:flex;flex-direction:column;gap:8px}
-.msg{max-width:78%;padding:10px 12px;border-radius:12px;font-size:14px;position:relative}
+.msg{max-width:85%;padding:10px 12px;border-radius:12px;font-size:14px;position:relative;cursor:pointer}
 .msg.me{align-self:flex-end;background:#005c4b;color:white;border-bottom-right-radius:2px}
 .msg.other{align-self:flex-start;background:#1e1e1e;border-bottom-left-radius:2px}
 .msg .time{font-size:10px;color:#aaa;display:block;text-align:right;margin-top:4px}
 .msg .ticks{color:#53bdeb}
+.msg .trans{margin-top:6px;padding:6px 8px;background:rgba(0,0,0,0.3);border-left:3px solid #FFD700;border-radius:6px;font-size:12px;color:#FFD700;display:none}
+.msg .trans.show{display:block}
+.msg .trBtn{font-size:10px;background:#FFD700;color:black;border:none;padding:3px 8px;border-radius:10px;margin-top:5px;cursor:pointer;font-weight:bold}
 .replyBar{background:#222;padding:8px 12px;border-left:3px solid #FFD700;margin-bottom:8px;border-radius:8px;font-size:12px;display:none}
-.micBtn{width:45px;height:45px;border-radius:50%;border:none;background:#25D366;color:white;font-size:20px;transition:0.2s}
+.micBtn{width:45px;height:45px;border-radius:50%;border:none;background:#25D366;color:white;font-size:20px}
 .micBtn.recording{background:#ff4444;animation:pulse 1s infinite}
 @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
 .voiceMsg{display:flex;align-items:center;gap:8px;min-width:180px}
@@ -55,26 +57,24 @@ body{background:#0f0f0f;color:white;transition:0.3s}
 .prog{height:3px;background:rgba(255,255,255,0.4);flex:1;border-radius:2px;overflow:hidden}
 .progFill{height:100%;background:white;width:0%;transition:0.1s}
 .statusViewImg{width:100%;height:100vh;object-fit:contain;background:black}
-.statusOverlay{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.6) 100%);pointer-events:none}
 .lang-card{background:#1e1e1e;padding:14px 16px;border-radius:12px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;border-left:4px solid #444;cursor:pointer}
 .lang-card.active{border-left:4px solid #FFD700;background:#22220f}
-.lang-card small{color:#888}
 </style>
 </head>
 <body id="body">
 
 <div class="header">
-  <div class="logo">CHALE <span>CHAT</span> <span class="badge">V82 LANG</span></div>
+  <div class="logo">CHALE <span>CHAT</span> <span class="badge">V82.1 FIX</span></div>
   <div class="topBtns"><button onclick="openSettings()" style="background:#FFD700">⚙️</button></div>
 </div>
 
 <div class="search"><input id="searchInput" placeholder="Search chats"></div>
 
-<div class="statusRow" id="statusRow">
+<div class="statusRow">
   <div class="sItem" onclick="openMyStatus()"><div class="sCircle" id="myStatusCircle"><img id="myStatusImg" style="display:none"><span id="myStatusEmoji">🇬🇭</span><div class="addStatus">+</div></div><p id="txtMyStatus">My Status</p></div>
-  <div class="sItem" onclick="viewStatus('Salvation')"><div class="sCircle hasStatus" id="salStatus"><img id="salImg"><span id="salEmoji" style="display:none">🇬🇭</span></div><p>Salvation</p></div>
-  <div class="sItem" onclick="viewStatus('Kwame')"><div class="sCircle"><span>👤</span></div><p>Kwame</p></div>
-  <div class="sItem" onclick="viewStatus('Ama')"><div class="sCircle"><span>🙎‍♀️</span></div><p>Ama</p></div>
+  <div class="sItem" onclick="viewStatus()"><div class="sCircle hasStatus" id="salStatus"><img id="salImg"><span id="salEmoji" style="display:none">🇬🇭</span></div><p>Salvation</p></div>
+  <div class="sItem"><div class="sCircle"><span>👤</span></div><p>Kwame</p></div>
+  <div class="sItem"><div class="sCircle"><span>🙎‍♀️</span></div><p>Ama</p></div>
 </div>
 
 <div class="chatList" id="chatList"></div>
@@ -86,27 +86,22 @@ body{background:#0f0f0f;color:white;transition:0.3s}
 
 <div class="recordingBar" id="recBar"><span id="txtRecording">🔴 Recording...</span><span id="recTime">0:00</span><div class="voiceWave"><span></span><span style="animation-delay:0.1s"></span><span style="animation-delay:0.2s"></span><span style="animation-delay:0.3s"></span></div><button onclick="stopRec(true)" style="margin-left:auto;background:white;color:#ff4444;border:none;padding:5px 12px;border-radius:15px;font-weight:bold" id="btnSend">Send</button><button onclick="stopRec(false)" style="background:black;color:white;border:none;padding:5px 10px;border-radius:15px">✕</button></div>
 
-<div id="statusViewer" style="background:black;padding:0;z-index:2000"><div class="statusProgress" id="statusProgress"></div><div class="chatWinHeader" style="position:absolute;top:20px;background:transparent;z-index:10;width:100%"><button onclick="closeStatusViewer()" style="background:rgba(0,0,0,0.5);border:none;width:35px;height:35px;border-radius:50%;color:white">✕</button><div class="avatar"><img id="viewerAvatar" style="display:none"><span id="viewerEmoji">🇬🇭</span></div><div style="flex:1"><b id="viewerName">Salvation</b><br><small style="color:#ccc" id="viewerTime">Today</small></div></div><img id="statusViewImg" class="statusViewImg"><div class="statusOverlay"></div><div style="position:absolute;bottom:20px;left:10px;right:10px;display:flex;gap:10px;z-index:10"><input id="statusReplyInput" placeholder="Reply to status..." style="flex:1;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);padding:12px;border-radius:25px;color:white;outline:none"><button style="width:45px;height:45px;border-radius:50%;border:none;background:#25D366">➤</button></div></div>
+<div id="statusViewer" style="background:black;padding:0;z-index:2000"><div class="statusProgress" id="statusProgress"></div><div class="chatWinHeader" style="position:absolute;top:20px;background:transparent;z-index:10;width:100%"><button onclick="closeStatusViewer()" style="background:rgba(0,0,0,0.5);border:none;width:35px;height:35px;border-radius:50%;color:white">✕</button><div class="avatar"><img id="viewerAvatar" style="display:none"><span id="viewerEmoji">🇬🇭</span></div><div style="flex:1"><b id="viewerName">Salvation</b><br><small style="color:#ccc" id="viewerTime">Today</small></div></div><img id="statusViewImg" class="statusViewImg"><div style="position:absolute;bottom:20px;left:10px;right:10px;display:flex;gap:10px;z-index:10"><input id="statusReplyInput" placeholder="Reply to status..." style="flex:1;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);padding:12px;border-radius:25px;color:white;outline:none"><button style="width:45px;height:45px;border-radius:50%;border:none;background:#25D366">➤</button></div></div>
 
-<div id="statusPage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtStatusTitle">📸 My Status</h2><button onclick="closeMyStatus()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button></div><div style="background:#1a2a1a;border:1px solid #25D366;border-radius:12px;padding:15px;margin-top:20px;text-align:center"><div style="width:80px;height:80px;border-radius:50%;margin:0 auto;background:#222;border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;overflow:hidden"><img id="myStatusPageImg" style="width:100%;height:100%;object-fit:cover;display:none"><span id="myStatusPageEmoji" style="font-size:40px">🇬🇭</span></div><h3 style="margin-top:10px" id="myStatusName">Salvation</h3><small style="color:#888" id="txtTapAdd">Tap to add status update</small><div style="margin-top:15px;display:flex;gap:10px;justify-content:center"><label for="statusUpload" style="background:#25D366;color:white;padding:12px 20px;border-radius:25px;font-weight:bold;cursor:pointer" id="txtPhotoStatus">📸 Photo Status</label><label for="statusUpload2" style="background:#FFD700;color:black;padding:12px 20px;border-radius:25px;font-weight:bold;cursor:pointer" id="txtTextStatus">🎨 Text Status</label></div><input type="file" id="statusUpload" accept="image/*" style="display:none" onchange="uploadStatus(this)"><input type="file" id="statusUpload2" accept="image/*" style="display:none" onchange="uploadStatus(this)"></div><div style="margin-top:25px"><h3 style="color:#FFD700;font-size:13px" id="txtMyUpdates">MY STATUS UPDATES</h3><div id="myStatusList" style="margin-top:10px"></div></div></div>
+<div id="statusPage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtStatusTitle">📸 My Status</h2><button onclick="closeMyStatus()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button></div><div style="background:#1a2a1a;border:1px solid #25D366;border-radius:12px;padding:15px;margin-top:20px;text-align:center"><div style="width:80px;height:80px;border-radius:50%;margin:0 auto;background:#222;border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;overflow:hidden"><img id="myStatusPageImg" style="width:100%;height:100%;object-fit:cover;display:none"><span id="myStatusPageEmoji" style="font-size:40px">🇬🇭</span></div><h3 style="margin-top:10px" id="myStatusName">Salvation</h3><small style="color:#888" id="txtTapAdd">Tap to add status update</small><div style="margin-top:15px;display:flex;gap:10px;justify-content:center"><label for="statusUpload" style="background:#25D366;color:white;padding:12px 20px;border-radius:25px;font-weight:bold;cursor:pointer" id="txtPhotoStatus">📸 Photo Status</label></div><input type="file" id="statusUpload" accept="image/*" style="display:none" onchange="uploadStatus(this)"></div><div style="margin-top:25px"><h3 style="color:#FFD700;font-size:13px" id="txtMyUpdates">MY STATUS UPDATES</h3><div id="myStatusList" style="margin-top:10px"></div></div></div>
 
-<div id="chatWindow"><div class="chatWinHeader"><button onclick="closeChat()" style="background:#222;border:none;width:35px;height:35px;border-radius:50%;color:white">←</button><div class="avatar" id="chatAvatar"><img id="chatAvatarImg" style="display:none"><span id="chatAvatarEmoji">👤</span></div><div style="flex:1"><b id="chatName">Kwame</b><br><small style="color:#25D366" id="txtOnline">Online • V82 Lang ON</small></div></div><div id="replyPreview" class="replyBar"><span id="replyText"></span> <span onclick="cancelReply()" style="float:right;cursor:pointer">✕</span></div><div class="msgList" id="msgList"></div><div class="inputBar" style="position:fixed;bottom:0;left:0;width:100%"><input id="msgInput" placeholder="Type a message"><button id="micBtn" class="micBtn" onmousedown="startRec()" onmouseup="stopRec(true)" ontouchstart="startRec()" ontouchend="stopRec(true)">🎙️</button><button onclick="sendMsg()" style="width:45px;height:45px;border-radius:50%;border:none;background:#25D366">➤</button></div></div>
+<div id="chatWindow"><div class="chatWinHeader"><button onclick="closeChat()" style="background:#222;border:none;width:35px;height:35px;border-radius:50%;color:white">←</button><div class="avatar"><img id="chatAvatarImg" style="display:none"><span id="chatAvatarEmoji">👤</span></div><div style="flex:1"><b id="chatName">Salvation</b><br><small style="color:#25D366" id="txtOnline">Online • V82.1 Trans ON</small></div></div><div id="replyPreview" class="replyBar"><span id="replyText"></span> <span onclick="cancelReply()" style="float:right;cursor:pointer">✕</span></div><div class="msgList" id="msgList"></div><div class="inputBar" style="position:fixed;bottom:0;left:0;width:100%"><input id="msgInput" placeholder="Type a message"><button id="micBtn" class="micBtn" onmousedown="startRec()" onmouseup="stopRec(true)" ontouchstart="startRec()" ontouchend="stopRec(true)">🎙️</button><button onclick="sendMsg()" style="width:45px;height:45px;border-radius:50%;border:none;background:#25D366">➤</button></div></div>
 
-<!-- SETTINGS -->
-<div id="settingsPage"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"><h2 id="txtSettings">⚙️ SETTINGS</h2><button onclick="closeSettings()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">X</button></div><div class="set-item" onclick="editProfile()"><h3 id="txtProfile">1. Profile ></h3><small style="color:#FFD700" id="curName">Salvation</small></div><div class="set-item" onclick="openWallpaper()"><h3 id="txtWallpaper">2. Wallpaper ></h3><small style="color:#FFD700" id="curWall">Dark Default</small></div><div class="set-item" onclick="openPrivacy()"><h3 id="txtPrivacy">3. Privacy ></h3><small style="color:#FFD700" id="curPrivacy">All ON</small></div><div class="set-item" onclick="openBackup()"><h3 id="txtBackup">4. Backup ></h3><small style="color:#25D366" id="curBackup">Ready ✅</small></div><div class="set-item" onclick="openMyStatus()" style="border:2px solid #25D366"><h3 id="txtMyStatusSet">5. My Status 📸 ></h3><small style="color:#25D366" id="curStatus">Post status</small></div><div class="set-item" onclick="openLanguage()" style="border:2px solid #FFD700;background:#221e00"><h3 id="txtLangSet">6. Language 🌍 NEW ></h3><small style="color:#FFD700" id="curLang">English</small></div></div>
+<div id="settingsPage"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"><h2 id="txtSettings">⚙️ SETTINGS</h2><button onclick="closeSettings()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">X</button></div><div class="set-item" onclick="editProfile()"><h3 id="txtProfile">1. Profile ></h3><small style="color:#FFD700" id="curName">Salvation</small></div><div class="set-item" onclick="openWallpaper()"><h3 id="txtWallpaper">2. Wallpaper ></h3><small style="color:#FFD700" id="curWall">Dark Default</small></div><div class="set-item" onclick="openPrivacy()"><h3 id="txtPrivacy">3. Privacy ></h3><small style="color:#FFD700" id="curPrivacy">All ON</small></div><div class="set-item" onclick="openBackup()"><h3 id="txtBackup">4. Backup ></h3><small style="color:#25D366" id="curBackup">Ready</small></div><div class="set-item" onclick="openMyStatus()" style="border:2px solid #25D366"><h3 id="txtMyStatusSet">5. My Status 📸 ></h3><small style="color:#25D366" id="curStatus">Post status</small></div><div class="set-item" onclick="openLanguage()" style="border:2px solid #FFD700;background:#221e00"><h3 id="txtLangSet">6. Language 🌍 ></h3><small style="color:#FFD700" id="curLang">English</small></div></div>
 
-<!-- LANGUAGE PAGE V82 -->
 <div id="languagePage">
   <div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtLangTitle">🌍 Language</h2><button onclick="closeLanguage()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button></div>
-  <p style="color:#888;font-size:12px;margin-top:10px" id="txtLangDesc">Choose your language — Local Ghana + Foreign — All app text will change instantly!</p>
-  
+  <p style="color:#888;font-size:12px;margin-top:10px" id="txtLangDesc">Tap message to translate to this language!</p>
   <h3 style="color:#FFD700;margin-top:20px;font-size:13px">🇬🇭 GHANA LOCAL</h3>
   <div id="localLangs"></div>
-  
-  <h3 style="color:#25D366;margin-top:20px;font-size:13px">🌍 FOREIGN / INTERNATIONAL</h3>
+  <h3 style="color:#25D366;margin-top:20px;font-size:13px">🌍 FOREIGN</h3>
   <div id="foreignLangs"></div>
-  
-  <div style="background:#1a1a1a;border:1px solid #FFD700;border-radius:12px;padding:12px;margin-top:20px"><p style="font-size:11px;color:#FFD700;text-align:center" id="txtLangNote">🔥 V82 All Language — Twi, Ga, Ewe, Hausa, Pidgin + 15 Foreign Languages!<br>Selected language saves forever!</p></div>
+  <div style="background:#1a1a1a;border:1px solid #FFD700;border-radius:12px;padding:12px;margin-top:20px"><p style="font-size:11px;color:#FFD700;text-align:center">🔥 V82.1 FIX — Tap bubble → Translate → Shows your language!<br>Messages auto-translate on tap!</p></div>
 </div>
 
 <div id="wallpaperPage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtWallTitle">🎨 Wallpaper</h2><button onclick="closeWallpaper()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button></div><div style="margin-top:25px"><h3 id="txtThemeMode">Theme Mode</h3><div style="display:flex;gap:12px;margin-top:10px"><button onclick="setTheme('dark')" style="flex:1;background:#111;color:white;border:2px solid #FFD700;padding:14px;border-radius:12px;font-weight:bold">🌙 Dark</button><button onclick="setTheme('light')" style="flex:1;background:white;color:black;border:2px solid #ccc;padding:14px;border-radius:12px;font-weight:bold">☀️ Light</button></div></div><div style="margin-top:30px"><h3 id="txtChatWall">Chat Wallpaper</h3><div style="margin-top:12px"><div class="wall-option active" style="background:#0f0f0f" onclick="setWall('none','Dark Default',this)"></div><div class="wall-option" style="background:#FFD700" onclick="setWall('#FFD700','Gold Ghana',this)"></div><div class="wall-option" style="background:#222;background-image:url('https://i.imgur.com/8Km9tLL.png');background-size:cover" onclick="setWall('doodle','WhatsApp Doodle',this)"></div></div><label for="wallUpload" style="display:block;margin-top:20px;background:#1e1e1e;border:1px dashed #FFD700;padding:14px;border-radius:12px;text-align:center;cursor:pointer;font-weight:bold;color:#FFD700">📸 Upload Custom Wallpaper</label><input type="file" id="wallUpload" accept="image/*" style="display:none" onchange="uploadWall(this)"></div><button onclick="saveWallpaper()" style="width:100%;background:#FFD700;border:none;padding:16px;border-radius:12px;font-weight:bold;margin-top:30px;">Save Theme ✅</button></div>
@@ -115,35 +110,92 @@ body{background:#0f0f0f;color:white;transition:0.3s}
 <div id="profilePage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtEditProf">👤 Edit Profile</h2><button onclick="closeProfile()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button></div><div style="text-align:center;margin-top:25px"><div style="position:relative;width:120px;height:120px;margin:0 auto"><div id="bigAvatar" style="width:120px;height:120px;border-radius:50%;background:#222;border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;font-size:60px;overflow:hidden"><img id="bigAvatarImg" style="width:100%;height:100%;object-fit:cover;display:none"><span id="bigAvatarEmoji">🇬🇭</span></div><label for="photoUpload" style="position:absolute;bottom:0;right:0;background:#FFD700;width:35px;height:35px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;">📷</label><input type="file" id="photoUpload" accept="image/*" style="display:none" onchange="uploadPhoto(this)"></div></div><div style="margin-top:30px"><input id="profileNameInput" value="Salvation" style="width:100%;background:#1e1e1e;border:none;padding:15px;border-radius:10px;color:white;"><button onclick="saveProfile()" style="width:100%;background:#FFD700;border:none;padding:16px;border-radius:12px;font-weight:bold;margin-top:20px;" id="btnSaveProf">Save Profile ✅</button></div></div>
 
 <script>
-// TRANSLATIONS V82 - ALL LANGUAGE
 const translations={
-  en:{name:"English",flag:"🇬🇧",search:"Search chats",myStatus:"My Status",typeMsg:"Type a message...",replyStatus:"Reply to status...",settings:"⚙️ SETTINGS",profile:"1. Profile >",wallpaper:"2. Wallpaper >",privacy:"3. Privacy >",backup:"4. Backup >",myStatusSet:"5. My Status 📸 >",langSet:"6. Language 🌍 >",langTitle:"🌍 Language",langDesc:"Choose your language — Local Ghana + Foreign — All app text will change instantly!",online:"Online • V82 Lang ON",recording:"🔴 Recording...",send:"Send",statusTitle:"📸 My Status",tapAdd:"Tap to add status update",photoStatus:"📸 Photo Status",textStatus:"🎨 Text Status",myUpdates:"MY STATUS UPDATES",themeMode:"Theme Mode",chatWall:"Chat Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Privacy",editProf:"👤 Edit Profile",saveProf:"Save Profile ✅"},
-  tw:{name:"Twi - Akan",flag:"🇬🇭",search:"Hwehwɛ nkɔmmɔ",myStatus:"Me Status",typeMsg:"Kyerɛw nkɔmmɔ...",replyStatus:"Bua status...",settings:"⚙️ NHYEHYƐEƐ",profile:"1. M'ankasa >",wallpaper:"2. Wallpaper >",privacy:"3. Kokoam >",backup:"4. Backup >",myStatusSet:"5. Me Status 📸 >",langSet:"6. Kasa 🌍 >",langTitle:"🌍 Kasa",langDesc:"Paw wo kasa — Ghana + Amanɔne — App no nyinaa bɛsesa!",online:"Online • V82 Kasa ON",recording:"🔴 Ɛrekɔ so...",send:"Mane",statusTitle:"📸 Me Status",tapAdd:"Tap na fa status foforɔ",photoStatus:"📸 Foto Status",textStatus:"🎨 Nsɛm Status",myUpdates:"ME STATUS FOFOFƆ",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Kokoam",editProf:"👤 Sesa M'ankasa",saveProf:"Kora M'ankasa ✅"},
-  pidgin:{name:"Ghana Pidgin",flag:"🇬🇭",search:"Find chats",myStatus:"My Status",typeMsg:"Type how for dey...",replyStatus:"Reply status...",settings:"⚙️ SETTINGS",profile:"1. My Body >",wallpaper:"2. Cloth >",privacy:"3. Hide Body >",backup:"4. Save Am >",myStatusSet:"5. My Status 📸 >",langSet:"6. Language 🌍 >",langTitle:"🌍 Language",langDesc:"Choose how you dey talk — Ghana + Outside — All go change!",online:"Online • Chale dey!",recording:"🔴 I dey record...",send:"Send am",statusTitle:"📸 My Status",tapAdd:"Tap add new status",photoStatus:"📸 Photo Status",textStatus:"🎨 Write Status",myUpdates:"MY STATUS DEM",themeMode:"Dark/Light",chatWall:"Back Cloth",wallTitle:"🎨 Cloth",privTitle:"🔒 Hide Body",editProf:"👤 My Body",saveProf:"Save Am ✅"},
-  ga:{name:"Ga",flag:"🇬🇭",search:"Taomɔ sɛɛmɔi",myStatus:"Mi Status",typeMsg:"Ŋma sɛɛmɔ...",replyStatus:"To hee status...",settings:"⚙️ SHIHILƐI",profile:"1. Minuu >",wallpaper:"2. Wallpaper >",privacy:"3. Gbaashikɛ >",backup:"4. Backup >",myStatusSet:"5. Mi Status 📸 >",langSet:"6. Wiemɔ 🌍 >",langTitle:"🌍 Wiemɔ",langDesc:"Hala bo wiemɔ — Ga + Maŋ Krokomɛi — App fɛɛ ba tsake!",online:"Online • V82 Wiemɔ",recording:"🔴 Emiile...",send:"Tsu",statusTitle:"📸 Mi Status",tapAdd:"Tap okɛ status hee",photoStatus:"📸 Foto Status",textStatus:"🎨 Wiemɔ Status",myUpdates:"MI STATUS HEI",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Gbaashikɛ",editProf:"👤 Tsake Minuu",saveProf:"Kɛkɛ Minuu ✅"},
-  ewe:{name:"Ewe",flag:"🇬🇭",search:"Di nyawo",myStatus:"Nye Status",typeMsg:"Ŋlɔ nya...",replyStatus:"Ɖo eŋu na status...",settings:"⚙️ ɖoɖo",profile:"1. Nyee >",wallpaper:"2. Wallpaper >",privacy:"3. Adzame >",backup:"4. Backup >",myStatusSet:"5. Nye Status 📸 >",langSet:"6. Gbe 🌍 >",langTitle:"🌍 Gbe",langDesc:"Tia wò gbe — Ghana + Dunya — App la katã atrɔ!",online:"Online • V82 Gbe ON",recording:"🔴 Mele edzema...",send:"Dɔ",statusTitle:"📸 Nye Status",tapAdd:"Tap tsɔ status yeye kpe ɖe eŋu",photoStatus:"📸 Foto Status",textStatus:"🎨 Nya Status",myUpdates:"NYE STATUS YEYE",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Adzame",editProf:"👤 Trɔ Nye ŋutinya",saveProf:"Dzra Nye ŋutinya ✅"},
-  hausa:{name:"Hausa",flag:"🇳🇬",search:"Nemo hira",myStatus:"Status Dina",typeMsg:"Rubuta sako...",replyStatus:"Amsa status...",settings:"⚙️ SAITUNA",profile:"1. Bayanina >",wallpaper:"2. Wallpaper >",privacy:"3. Sirri >",backup:"4. Ajiye >",myStatusSet:"5. Status Dina 📸 >",langSet:"6. Harshe 🌍 >",langTitle:"🌍 Harshe",langDesc:"Zaɓi harshenka — Ghana + Waje — Duk app zai canza!",online:"Online • V82 Harshe",recording:"🔴 Ina rikodi...",send:"Aika",statusTitle:"📸 Status Dina",tapAdd:"Tap don saka sabon status",photoStatus:"📸 Hoto Status",textStatus:"🎨 Rubutu Status",myUpdates:"SABON STATUS DINA",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Sirri",editProf:"👤 Gyara Bayanina",saveProf:"Ajiye Bayanina ✅"},
-  fr:{name:"Français",flag:"🇫🇷",search:"Chercher chats",myStatus:"Mon Statut",typeMsg:"Tapez message...",replyStatus:"Répondre au statut...",settings:"⚙️ PARAMÈTRES",profile:"1. Profil >",wallpaper:"2. Fond d'écran >",privacy:"3. Confidentialité >",backup:"4. Sauvegarde >",myStatusSet:"5. Mon Statut 📸 >",langSet:"6. Langue 🌍 >",langTitle:"🌍 Langue",langDesc:"Choisissez langue — Ghana + International — Toute l'app change!",online:"En ligne • V82 Langue",recording:"🔴 Enregistrement...",send:"Envoyer",statusTitle:"📸 Mon Statut",tapAdd:"Appuyez pour ajouter statut",photoStatus:"📸 Photo Statut",textStatus:"🎨 Texte Statut",myUpdates:"MES STATUTS",themeMode:"Thème",chatWall:"Fond Chat",wallTitle:"🎨 Fond",privTitle:"🔒 Confidentialité",editProf:"👤 Modifier Profil",saveProf:"Sauver Profil ✅"},
-  es:{name:"Español",flag:"🇪🇸",search:"Buscar chats",myStatus:"Mi Estado",typeMsg:"Escribe mensaje...",replyStatus:"Responder estado...",settings:"⚙️ AJUSTES",profile:"1. Perfil >",wallpaper:"2. Fondo >",privacy:"3. Privacidad >",backup:"4. Copia >",myStatusSet:"5. Mi Estado 📸 >",langSet:"6. Idioma 🌍 >",langTitle:"🌍 Idioma",langDesc:"Elige idioma — Ghana + Mundial — ¡Toda la app cambia!",online:"En línea • V82 Idioma",recording:"🔴 Grabando...",send:"Enviar",statusTitle:"📸 Mi Estado",tapAdd:"Toca para añadir estado",photoStatus:"📸 Foto Estado",textStatus:"🎨 Texto Estado",myUpdates:"MIS ESTADOS",themeMode:"Tema",chatWall:"Fondo Chat",wallTitle:"🎨 Fondo",privTitle:"🔒 Privacidad",editProf:"👤 Editar Perfil",saveProf:"Guardar Perfil ✅"},
-  pt:{name:"Português",flag:"🇵🇹",search:"Buscar conversas",myStatus:"Meu Status",typeMsg:"Digite mensagem...",replyStatus:"Responder status...",settings:"⚙️ CONFIGURAÇÕES",profile:"1. Perfil >",wallpaper:"2. Papel de parede >",privacy:"3. Privacidade >",backup:"4. Backup >",myStatusSet:"5. Meu Status 📸 >",langSet:"6. Idioma 🌍 >",langTitle:"🌍 Idioma",langDesc:"Escolha idioma — Gana + Internacional — App todo muda!",online:"Online • V82 Idioma",recording:"🔴 Gravando...",send:"Enviar",statusTitle:"📸 Meu Status",tapAdd:"Toque para adicionar status",photoStatus:"📸 Foto Status",textStatus:"🎨 Texto Status",myUpdates:"MEUS STATUS",themeMode:"Tema",chatWall:"Papel Chat",wallTitle:"🎨 Papel",privTitle:"🔒 Privacidade",editProf:"👤 Editar Perfil",saveProf:"Salvar Perfil ✅"},
-  ar:{name:"العربية",flag:"🇸🇦",search:"بحث دردشات",myStatus:"حالتي",typeMsg:"اكتب رسالة...",replyStatus:"رد على الحالة...",settings:"⚙️ الإعدادات",profile:"1. الملف >",wallpaper:"2. الخلفية >",privacy:"3. الخصوصية >",backup:"4. النسخ >",myStatusSet:"5. حالتي 📸 >",langSet:"6. اللغة 🌍 >",langTitle:"🌍 اللغة",langDesc:"اختر لغتك — غانا + عالمي — كل التطبيق يتغير!",online:"متصل • V82 لغة",recording:"🔴 تسجيل...",send:"إرسال",statusTitle:"📸 حالتي",tapAdd:"انقر لإضافة حالة",photoStatus:"📸 صورة حالة",textStatus:"🎨 نص حالة",myUpdates:"حالاتي",themeMode:"المظهر",chatWall:"خلفية الدردشة",wallTitle:"🎨 الخلفية",privTitle:"🔒 الخصوصية",editProf:"👤 تعديل الملف",saveProf:"حفظ الملف ✅"},
-  zh:{name:"中文",flag:"🇨🇳",search:"搜索聊天",myStatus:"我的状态",typeMsg:"输入消息...",replyStatus:"回复状态...",settings:"⚙️ 设置",profile:"1. 资料 >",wallpaper:"2. 壁纸 >",privacy:"3. 隐私 >",backup:"4. 备份 >",myStatusSet:"5. 我的状态 📸 >",langSet:"6. 语言 🌍 >",langTitle:"🌍 语言",langDesc:"选择语言 — 加纳 + 国际 — 整个应用都会改变！",online:"在线 • V82 语言",recording:"🔴 录制中...",send:"发送",statusTitle:"📸 我的状态",tapAdd:"点击添加新状态",photoStatus:"📸 照片状态",textStatus:"🎨 文字状态",myUpdates:"我的状态更新",themeMode:"主题",chatWall:"聊天壁纸",wallTitle:"🎨 壁纸",privTitle:"🔒 隐私",editProf:"👤 编辑资料",saveProf:"保存资料 ✅"},
-  de:{name:"Deutsch",flag:"🇩🇪",search:"Chats suchen",myStatus:"Mein Status",typeMsg:"Nachricht tippen...",replyStatus:"Auf Status antworten...",settings:"⚙️ EINSTELLUNGEN",profile:"1. Profil >",wallpaper:"2. Hintergrund >",privacy:"3. Datenschutz >",backup:"4. Backup >",myStatusSet:"5. Mein Status 📸 >",langSet:"6. Sprache 🌍 >",langTitle:"🌍 Sprache",langDesc:"Wähle Sprache — Ghana + International — Ganze App ändert sich!",online:"Online • V82 Sprache",recording:"🔴 Aufnahme...",send:"Senden",statusTitle:"📸 Mein Status",tapAdd:"Tippen zum Status hinzufügen",photoStatus:"📸 Foto Status",textStatus:"🎨 Text Status",myUpdates:"MEINE STATUS",themeMode:"Thema",chatWall:"Chat Hintergrund",wallTitle:"🎨 Hintergrund",privTitle:"🔒 Datenschutz",editProf:"👤 Profil Bearbeiten",saveProf:"Profil Speichern ✅"},
-  yo:{name:"Yoruba",flag:"🇳🇬",search:"Wa iwire",myStatus:"Ipo Mi",typeMsg:"Kọ ifiranṣẹ...",replyStatus:"Dahun si ipo...",settings:"⚙️ ÈTÒ",profile:"1. Profaili >",wallpaper:"2. Wallpaper >",privacy:"3. Asiri >",backup:"4. Backup >",myStatusSet:"5. Ipo Mi 📸 >",langSet:"6. Èdè 🌍 >",langTitle:"🌍 Èdè",langDesc:"Yan ede re — Ghana + Agbaye — Gbogbo app yi o yipada!",online:"Online • V82 Èdè",recording:"🔴 Mo n gba silẹ...",send:"Firanṣẹ",statusTitle:"📸 Ipo Mi",tapAdd:"Tẹ lati ṣafikun ipo",photoStatus:"📸 Fọto Ipo",textStatus:"🎨 Ọrọ Ipo",myUpdates:"IPO MI",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Asiri",editProf:"👤 Ṣatunṣe Profaili",saveProf:"Fipamọ Profaili ✅"},
-  sw:{name:"Swahili",flag:"🇹🇿",search:"Tafuta chats",myStatus:"Hali Yangu",typeMsg:"Andika ujumbe...",replyStatus:"Jibu hali...",settings:"⚙️ MIPANGILIO",profile:"1. Wasifu >",wallpaper:"2. Ukuta >",privacy:"3. Faragha >",backup:"4. Hifadhi >",myStatusSet:"5. Hali Yangu 📸 >",langSet:"6. Lugha 🌍 >",langTitle:"🌍 Lugha",langDesc:"Chagua lugha — Ghana + Kimataifa — App nzima inabadilika!",online:"Mtandaoni • V82 Lugha",recording:"🔴 Kurekodi...",send:"Tuma",statusTitle:"📸 Hali Yangu",tapAdd:"Gusa kuongeza hali",photoStatus:"📸 Picha Hali",textStatus:"🎨 Maandishi Hali",myUpdates:"HALI ZANGU",themeMode:"Mandhari",chatWall:"Ukuta wa Chat",wallTitle:"🎨 Ukuta",privTitle:"🔒 Faragha",editProf:"👤 Hariri Wasifu",saveProf:"Hifadhi Wasifu ✅"},
-  fante:{name:"Fante - Mfantse",flag:"🇬🇭",search:"Hwehwɛ nkɔmmɔbɔ",myStatus:"Me Status",typeMsg:"Kyerɛw nkɔmmɔ...",replyStatus:"Bua status...",settings:"⚙️ NHYEHYƐE",profile:"1. Me ho >",wallpaper:"2. Wallpaper >",privacy:"3. Kokoam >",backup:"4. Backup >",myStatusSet:"5. Me Status 📸 >",langSet:"6. Kasa 🌍 >",langTitle:"🌍 Kasa",langDesc:"Paw wo kasa — Ghana + Amanone — App no nyinaa bɛsesa!",online:"Online • V82 Kasa",recording:"🔴 Ɔrekɔ so...",send:"Mane",statusTitle:"📸 Me Status",tapAdd:"Tap na fa status fofor",photoStatus:"📸 Foto Status",textStatus:"🎨 Nsɛm Status",myUpdates:"ME STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Kokoam",editProf:"👤 Sesa Me Ho",saveProf:"Kora Me Ho ✅"},
-  dagbani:{name:"Dagbani",flag:"🇬🇭",search:"Bohimi yɛltɔɣa",myStatus:"N Status",typeMsg:"Ŋma yɛltɔɣa...",replyStatus:"Labisi status...",settings:"⚙️ SAɣSIRA",profile:"1. N Maŋa >",wallpaper:"2. Wallpaper >",privacy:"3. Asiri >",backup:"4. Backup >",myStatusSet:"5. N Status 📸 >",langSet:"6. Bala 🌍 >",langTitle:"🌍 Bala",langDesc:"Pii a bala — Ghana + Dunia — App maa zaa yɛn taɣi!",online:"Online • V82 Bala",recording:"🔴 N dihiri...",send:"Tim",statusTitle:"📸 N Status",tapAdd:"Tap ni a zaŋ status pahi",photoStatus:"📸 Anfooni Status",textStatus:"🎨 Sabbu Status",myUpdates:"N STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Asiri",editProf:"👤 Taɣi N Maŋa",saveProf:"Sɔŋ N Maŋa ✅"}
+  en:{name:"English",flag:"🇬🇧",code:"en",search:"Search chats",myStatus:"My Status",typeMsg:"Type a message...",replyStatus:"Reply to status...",settings:"⚙️ SETTINGS",profile:"1. Profile >",wallpaper:"2. Wallpaper >",privacy:"3. Privacy >",backup:"4. Backup >",myStatusSet:"5. My Status 📸 >",langSet:"6. Language 🌍 >",langTitle:"🌍 Language",langDesc:"Tap any bubble to translate to this language!",online:"Online • V82.1 Trans ON",recording:"🔴 Recording...",send:"Send",statusTitle:"📸 My Status",tapAdd:"Tap to add status update",photoStatus:"📸 Photo Status",myUpdates:"MY STATUS UPDATES",themeMode:"Theme Mode",chatWall:"Chat Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Privacy",editProf:"👤 Edit Profile",saveProf:"Save Profile ✅",translate:"🌍 Translate",translating:"Translating..."},
+  tw:{name:"Twi - Akan",flag:"🇬🇭",code:"ak",search:"Hwehwɛ nkɔmmɔ",myStatus:"Me Status",typeMsg:"Kyerɛw nkɔmmɔ...",replyStatus:"Bua status...",settings:"⚙️ NHYEHYƐEƐ",profile:"1. M'ankasa >",wallpaper:"2. Wallpaper >",privacy:"3. Kokoam >",backup:"4. Backup >",myStatusSet:"5. Me Status 📸 >",langSet:"6. Kasa 🌍 >",langTitle:"🌍 Kasa",langDesc:"Tap bubble biara na kyerɛ ase kɔ kasa yi mu!",online:"Online • V82.1 Nkyerɛase ON",recording:"🔴 Ɛrekɔ so...",send:"Mane",statusTitle:"📸 Me Status",tapAdd:"Tap na fa status foforɔ",photoStatus:"📸 Foto Status",myUpdates:"ME STATUS FOFOFƆ",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Kokoam",editProf:"👤 Sesa M'ankasa",saveProf:"Kora M'ankasa ✅",translate:"🌍 Kyerɛ ase",translating:"Ɛrekyerɛ ase..."},
+  pidgin:{name:"Ghana Pidgin",flag:"🇬🇭",code:"en",search:"Find chats",myStatus:"My Status",typeMsg:"Type how for dey...",replyStatus:"Reply status...",settings:"⚙️ SETTINGS",profile:"1. My Body >",wallpaper:"2. Cloth >",privacy:"3. Hide Body >",backup:"4. Save Am >",myStatusSet:"5. My Status 📸 >",langSet:"6. Language 🌍 >",langTitle:"🌍 Language",langDesc:"Tap any bubble make e translate to this talk!",online:"Online • Chale dey!",recording:"🔴 I dey record...",send:"Send am",statusTitle:"📸 My Status",tapAdd:"Tap add new status",photoStatus:"📸 Photo Status",myUpdates:"MY STATUS DEM",themeMode:"Dark/Light",chatWall:"Back Cloth",wallTitle:"🎨 Cloth",privTitle:"🔒 Hide Body",editProf:"👤 My Body",saveProf:"Save Am ✅",translate:"🌍 Translate am",translating:"I dey translate..."},
+  ga:{name:"Ga",flag:"🇬🇭",code:"ak",search:"Taomɔ sɛɛmɔi",myStatus:"Mi Status",typeMsg:"Ŋma sɛɛmɔ...",replyStatus:"To hee status...",settings:"⚙️ SHIHILƐI",profile:"1. Minuu >",wallpaper:"2. Wallpaper >",privacy:"3. Gbaashikɛ >",backup:"4. Backup >",myStatusSet:"5. Mi Status 📸 >",langSet:"6. Wiemɔ 🌍 >",langTitle:"🌍 Wiemɔ",langDesc:"Tap bubble ko fɛɛ koni atsɔmɔ lɛ kɛ wiemɔ nɛɛ mli!",online:"Online • V82 Wiemɔ",recording:"🔴 Emiile...",send:"Tsu",statusTitle:"📸 Mi Status",tapAdd:"Tap okɛ status hee",photoStatus:"📸 Foto Status",myUpdates:"MI STATUS HEI",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Gbaashikɛ",editProf:"👤 Tsake Minuu",saveProf:"Kɛkɛ Minuu ✅",translate:"🌍 Tsɔɔmɔ",translating:"Miitsɔɔmɔ..."},
+  ewe:{name:"Ewe",flag:"🇬🇭",code:"ee",search:"Di nyawo",myStatus:"Nye Status",typeMsg:"Ŋlɔ nya...",replyStatus:"Ɖo eŋu na status...",settings:"⚙️ ɖoɖo",profile:"1. Nyee >",wallpaper:"2. Wallpaper >",privacy:"3. Adzame >",backup:"4. Backup >",myStatusSet:"5. Nye Status 📸 >",langSet:"6. Gbe 🌍 >",langTitle:"🌍 Gbe",langDesc:"Tap bubble aɖe be nàɖe egɔme ayi gbe sia me!",online:"Online • V82 Gbe ON",recording:"🔴 Mele edzema...",send:"Dɔ",statusTitle:"📸 Nye Status",tapAdd:"Tap tsɔ status yeye kpe ɖe eŋu",photoStatus:"📸 Foto Status",myUpdates:"NYE STATUS YEYE",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Adzame",editProf:"👤 Trɔ Nye ŋutinya",saveProf:"Dzra Nye ŋutinya ✅",translate:"🌍 Ɖe gɔme",translating:"Mele gɔmeɖeɖe..."},
+  hausa:{name:"Hausa",flag:"🇳🇬",code:"ha",search:"Nemo hira",myStatus:"Status Dina",typeMsg:"Rubuta sako...",replyStatus:"Amsa status...",settings:"⚙️ SAITUNA",profile:"1. Bayanina >",wallpaper:"2. Wallpaper >",privacy:"3. Sirri >",backup:"4. Ajiye >",myStatusSet:"5. Status Dina 📸 >",langSet:"6. Harshe 🌍 >",langTitle:"🌍 Harshe",langDesc:"Danna kumfa don fassara zuwa wannan harshe!",online:"Online • V82.1 Fassara ON",recording:"🔴 Ina rikodi...",send:"Aika",statusTitle:"📸 Status Dina",tapAdd:"Tap don saka sabon status",photoStatus:"📸 Hoto Status",myUpdates:"SABON STATUS DINA",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Sirri",editProf:"👤 Gyara Bayanina",saveProf:"Ajiye Bayanina ✅",translate:"🌍 Fassara",translating:"Ina fassarawa..."},
+  fr:{name:"Français",flag:"🇫🇷",code:"fr",search:"Chercher chats",myStatus:"Mon Statut",typeMsg:"Tapez message...",replyStatus:"Répondre au statut...",settings:"⚙️ PARAMÈTRES",profile:"1. Profil >",wallpaper:"2. Fond d'écran >",privacy:"3. Confidentialité >",backup:"4. Sauvegarde >",myStatusSet:"5. Mon Statut 📸 >",langSet:"6. Langue 🌍 >",langTitle:"🌍 Langue",langDesc:"Appuyez bulle pour traduire vers cette langue!",online:"En ligne • V82.1 Trad ON",recording:"🔴 Enregistrement...",send:"Envoyer",statusTitle:"📸 Mon Statut",tapAdd:"Appuyez pour ajouter statut",photoStatus:"📸 Photo Statut",myUpdates:"MES STATUTS",themeMode:"Thème",chatWall:"Fond Chat",wallTitle:"🎨 Fond",privTitle:"🔒 Confidentialité",editProf:"👤 Modifier Profil",saveProf:"Sauver Profil ✅",translate:"🌍 Traduire",translating:"Traduction..."},
+  es:{name:"Español",flag:"🇪🇸",code:"es",search:"Buscar chats",myStatus:"Mi Estado",typeMsg:"Escribe mensaje...",replyStatus:"Responder estado...",settings:"⚙️ AJUSTES",profile:"1. Perfil >",wallpaper:"2. Fondo >",privacy:"3. Privacidad >",backup:"4. Copia >",myStatusSet:"5. Mi Estado 📸 >",langSet:"6. Idioma 🌍 >",langTitle:"🌍 Idioma",langDesc:"¡Toca burbuja para traducir a este idioma!",online:"En línea • V82.1 Trad ON",recording:"🔴 Grabando...",send:"Enviar",statusTitle:"📸 Mi Estado",tapAdd:"Toca para añadir estado",photoStatus:"📸 Foto Estado",myUpdates:"MIS ESTADOS",themeMode:"Tema",chatWall:"Fondo Chat",wallTitle:"🎨 Fondo",privTitle:"🔒 Privacidad",editProf:"👤 Editar Perfil",saveProf:"Guardar Perfil ✅",translate:"🌍 Traducir",translating:"Traduciendo..."},
+  yo:{name:"Yoruba",flag:"🇳🇬",code:"yo",search:"Wa iwire",myStatus:"Ipo Mi",typeMsg:"Kọ ifiranṣẹ...",replyStatus:"Dahun si ipo...",settings:"⚙️ ÈTÒ",profile:"1. Profaili >",wallpaper:"2. Wallpaper >",privacy:"3. Asiri >",backup:"4. Backup >",myStatusSet:"5. Ipo Mi 📸 >",langSet:"6. Èdè 🌍 >",langTitle:"🌍 Èdè",langDesc:"Tẹ bubble lati tumọ si ede yi!",online:"Online • V82.1 Tumọ ON",recording:"🔴 Mo n gba silẹ...",send:"Firanṣẹ",statusTitle:"📸 Ipo Mi",tapAdd:"Tẹ lati ṣafikun ipo",photoStatus:"📸 Fọto Ipo",myUpdates:"IPO MI",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Asiri",editProf:"👤 Ṣatunṣe Profaili",saveProf:"Fipamọ Profaili ✅",translate:"🌍 Tumọ",translating:"Mo n tumọ..."},
+  sw:{name:"Swahili",flag:"🇹🇿",code:"sw",search:"Tafuta chats",myStatus:"Hali Yangu",typeMsg:"Andika ujumbe...",replyStatus:"Jibu hali...",settings:"⚙️ MIPANGILIO",profile:"1. Wasifu >",wallpaper:"2. Ukuta >",privacy:"3. Faragha >",backup:"4. Hifadhi >",myStatusSet:"5. Hali Yangu 📸 >",langSet:"6. Lugha 🌍 >",langTitle:"🌍 Lugha",langDesc:"Gusa kiputo kutafsiri kwa lugha hii!",online:"Mtandaoni • V82.1 Tafsiri ON",recording:"🔴 Kurekodi...",send:"Tuma",statusTitle:"📸 Hali Yangu",tapAdd:"Gusa kuongeza hali",photoStatus:"📸 Picha Hali",myUpdates:"HALI ZANGU",themeMode:"Mandhari",chatWall:"Ukuta wa Chat",wallTitle:"🎨 Ukuta",privTitle:"🔒 Faragha",editProf:"👤 Hariri Wasifu",saveProf:"Hifadhi Wasifu ✅",translate:"🌍 Tafsiri",translating:"Inatafsiri..."},
+  fante:{name:"Fante - Mfantse",flag:"🇬🇭",code:"ak",search:"Hwehwɛ nkɔmmɔbɔ",myStatus:"Me Status",typeMsg:"Kyerɛw nkɔmmɔ...",replyStatus:"Bua status...",settings:"⚙️ NHYEHYƐE",profile:"1. Me ho >",wallpaper:"2. Wallpaper >",privacy:"3. Kokoam >",backup:"4. Backup >",myStatusSet:"5. Me Status 📸 >",langSet:"6. Kasa 🌍 >",langTitle:"🌍 Kasa",langDesc:"Tap bubble biara na kyerɛ ase!",online:"Online • V82 Kasa",recording:"🔴 Ɔrekɔ so...",send:"Mane",statusTitle:"📸 Me Status",tapAdd:"Tap na fa status fofor",photoStatus:"📸 Foto Status",myUpdates:"ME STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Kokoam",editProf:"👤 Sesa Me Ho",saveProf:"Kora Me Ho ✅",translate:"🌍 Kyerɛ ase",translating:"Ɔrekyerɛ ase..."},
+  dagbani:{name:"Dagbani",flag:"🇬🇭",code:"ha",search:"Bohimi yɛltɔɣa",myStatus:"N Status",typeMsg:"Ŋma yɛltɔɣa...",replyStatus:"Labisi status...",settings:"⚙️ SAɣSIRA",profile:"1. N Maŋa >",wallpaper:"2. Wallpaper >",privacy:"3. Asiri >",backup:"4. Backup >",myStatusSet:"5. N Status 📸 >",langSet:"6. Bala 🌍 >",langTitle:"🌍 Bala",langDesc:"Tap bubble ni di lɛbigi bala ŋɔ ni!",online:"Online • V82 Bala",recording:"🔴 N dihiri...",send:"Tim",statusTitle:"📸 N Status",tapAdd:"Tap ni a zaŋ status pahi",photoStatus:"📸 Anfooni Status",myUpdates:"N STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Asiri",editProf:"👤 Taɣi N Maŋa",saveProf:"Sɔŋ N Maŋa ✅",translate:"🌍 Lɛbigi",translating:"N lɛbigiri..."}
+};
+
+// Ghana local dictionary for offline fallback
+const ghDict={
+  ha:{"Real Chat!":"Hira ta Gaskiya!","Same here":"Ni ma haka","How are you":"Yaya kake?","Welcome":"Barka da zuwa","Type a message":"Rubuta sako","How for you?":"Yaya gare ku?","Hello":"Sannu","Thank you":"Na gode","Good morning":"Barka da safiya"},
+  ak:{"Real Chat!":"Nkɔmmɔ pa!","Same here":"Me nso saa","How are you":"Wo ho te sɛn?","Welcome":"Akwaaba","Type a message":"Kyerɛw nkɔmmɔ","How for you?":"Wo ho te sɛn?","Hello":"Maakye","Thank you":"Medaase","Good morning":"Maakye"},
+  ee:{"Real Chat!":"Nya teŋ!","Same here":"Nye hã nenema","How are you":"Aleke nè le?","Welcome":"Woezɔ","Thank you":"Akpe","Hello":"Atia"},
+  yo:{"Real Chat!":"Iwire gidi!","Same here":"Bẹẹ ni","How are you":"Bawo ni o?","Welcome":"Kaabo","Thank you":"Ese"},
+  sw:{"Real Chat!":"Mazungumzo halisi!","Same here":"Mimi pia","How are you":"Habari gani?","Welcome":"Karibu","Thank you":"Asante"}
 };
 
 let currentLang=localStorage.getItem('chale_lang')||'en';
 let currentWall='none';
 let privacy={lastseen:true,online:true,photo:true,read:true,typing:true,ghost:false};
-let currentChat='Kwame';
+let currentChat='Salvation';
 let replyTo=null;
-let chatsData=JSON.parse(localStorage.getItem('chale_chats_v79')||'{"Kwame":[],"Ama":[],"Salvation":[]}');
+let chatsData=JSON.parse(localStorage.getItem('chale_chats_v79')||'{"Kwame":[],"Ama":[],"Salvation":[{"id":1,"text":"Real Chat! 🇬🇭","time":"6:37 PM","me":false}]}');
 let statusData=JSON.parse(localStorage.getItem('chale_status_v81')||'[]');
-
 let mediaRecorder=null, audioChunks=[], recStartTime=null, recTimer=null, isRecording=false;
+
+async function translateMessage(id, originalText){
+  let t=translations[currentLang];
+  let targetCode=t.code;
+  let transDiv=document.getElementById('trans_'+id);
+  let btn=document.getElementById('btn_'+id);
+  if(!transDiv) return;
+  if(transDiv.classList.contains('show')){
+    transDiv.classList.remove('show');
+    btn.innerText=t.translate;
+    return;
+  }
+  transDiv.innerText=t.translating;
+  transDiv.classList.add('show');
+  btn.innerText='...';
+  // Try offline Ghana dict first
+  let lowerDict=ghDict[targetCode]||ghDict['ha'];
+  let direct=lowerDict? lowerDict[originalText] : null;
+  // also check exact
+  if(!direct){
+    // try case insensitive
+    for(let k in (ghDict[targetCode]||{})){
+      if(k.toLowerCase()===originalText.toLowerCase()){direct=ghDict[targetCode][k]; break;}
+    }
+  }
+  if(direct){
+    transDiv.innerText='➡️ '+direct;
+    btn.innerText='✅ '+t.name;
+    return;
+  }
+  // Use MyMemory API for foreign langs
+  try{
+    let url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(originalText)}&langpair=en|${targetCode}`;
+    let res=await fetch(url);
+    let data=await res.json();
+    let translated=data.responseData.translatedText;
+    if(translated && translated.toLowerCase()!==originalText.toLowerCase()){
+      transDiv.innerText='➡️ '+translated;
+      btn.innerText='✅ '+t.name;
+    } else {
+      // fallback pidgin style
+      if(currentLang==='pidgin'){
+        transDiv.innerText='➡️ '+originalText+' (How for dey?)';
+      } else {
+        transDiv.innerText='➡️ '+originalText+' ['+t.name+']';
+      }
+      btn.innerText='✅ '+t.name;
+    }
+  }catch(e){
+    transDiv.innerText='➡️ '+originalText+' ['+t.name+'] (offline)';
+    btn.innerText='✅';
+  }
+}
+
 async function startRec(){
   try{
     let stream=await navigator.mediaDevices.getUserMedia({audio:true});
@@ -174,7 +226,6 @@ function saveVoice(dataUrl){
   if(!chatsData[currentChat]) chatsData[currentChat]=[]; chatsData[currentChat].push(msg);
   localStorage.setItem('chale_chats_v79', JSON.stringify(chatsData)); renderMessages(); updateBackupInfo();
 }
-
 function applyLanguage(langCode){
   currentLang=langCode;
   localStorage.setItem('chale_lang', langCode);
@@ -201,7 +252,6 @@ function applyLanguage(langCode){
   document.getElementById('txtStatusTitle').innerText=t.statusTitle;
   document.getElementById('txtTapAdd').innerText=t.tapAdd;
   document.getElementById('txtPhotoStatus').innerText=t.photoStatus;
-  document.getElementById('txtTextStatus').innerText=t.textStatus;
   document.getElementById('txtMyUpdates').innerText=t.myUpdates;
   document.getElementById('txtThemeMode').innerText=t.themeMode;
   document.getElementById('txtChatWall').innerText=t.chatWall;
@@ -210,14 +260,15 @@ function applyLanguage(langCode){
   document.getElementById('txtEditProf').innerText=t.editProf;
   document.getElementById('btnSaveProf').innerText=t.saveProf;
   renderLanguages();
+  renderMessages();
+  renderChatList();
 }
-
 function renderLanguages(){
   let localDiv=document.getElementById('localLangs');
   let foreignDiv=document.getElementById('foreignLangs');
   localDiv.innerHTML=''; foreignDiv.innerHTML='';
   let localCodes=['tw','fante','ga','ewe','hausa','dagbani','pidgin'];
-  let foreignCodes=['en','fr','es','pt','de','ar','zh','yo','sw'];
+  let foreignCodes=['en','fr','es','yo','sw'];
   localCodes.forEach(code=>{
     let t=translations[code];
     let active=currentLang===code?' active':'';
@@ -229,10 +280,8 @@ function renderLanguages(){
     foreignDiv.innerHTML+=`<div class="lang-card${active}" onclick="applyLanguage('${code}')"><div><b>${t.flag} ${t.name}</b><br><small>${t.search} • ${t.myStatus}</small></div><div>${currentLang===code?'✅':'○'}</div></div>`;
   });
 }
-
 function openLanguage(){document.getElementById('settingsPage').style.display='none'; document.getElementById('languagePage').style.display='block'; renderLanguages();}
 function closeLanguage(){document.getElementById('languagePage').style.display='none'; document.getElementById('settingsPage').style.display='block';}
-
 function openMyStatus(){document.getElementById('settingsPage').style.display='none'; document.getElementById('statusPage').style.display='block'; renderMyStatusList();}
 function closeMyStatus(){document.getElementById('statusPage').style.display='none'; document.getElementById('settingsPage').style.display='block';}
 function uploadStatus(input){
@@ -261,7 +310,7 @@ function renderMyStatusList(){
 }
 function deleteStatus(id){statusData=statusData.filter(s=>s.id!==id); localStorage.setItem('chale_status_v81', JSON.stringify(statusData)); renderMyStatusList(); if(statusData.length===0){document.getElementById('myStatusCircle').classList.remove('hasStatus'); document.getElementById('salStatus').classList.remove('hasStatus');}}
 function viewStatusById(id){let s=statusData.find(x=>x.id===id); if(s) openStatusViewer(s);}
-function viewStatus(name){if(statusData.length===0){openMyStatus(); return;} let latest=statusData[statusData.length-1]; openStatusViewer(latest);}
+function viewStatus(){if(statusData.length===0){openMyStatus(); return;} let latest=statusData[statusData.length-1]; openStatusViewer(latest);}
 let statusProgInterval=null;
 function openStatusViewer(statusObj){
   document.getElementById('statusViewer').style.display='block';
@@ -298,17 +347,24 @@ function renderMessages(){
   let wall=localStorage.getItem('chale_wall_custom');
   if(wall){box.style.backgroundImage=`url('${wall}')`; box.style.backgroundSize='cover';}
   box.innerHTML='';
+  let t=translations[currentLang];
   (chatsData[currentChat]||[]).forEach(m=>{
     if(m.type==='voice'){box.innerHTML+=`<div class="msg ${m.me?'me':'other'}"><div class="voiceMsg"><button class="voicePlay" onclick="playVoice('${m.id}')">▶️</button><div class="voiceWave"><span></span><span style="animation-delay:0.1s"></span><span style="animation-delay:0.2s"></span><span style="animation-delay:0.3s"></span></div><small>${m.duration}</small><audio id="audio_${m.id}" src="${m.voiceData}"></audio></div><span class="time">${m.time} <span class="ticks">✓✓</span></span></div>`;}
-    else {let replyHtml=m.reply? `<div style="background:rgba(0,0,0,0.2);border-left:3px solid #FFD700;padding:4px 6px;margin-bottom:4px;border-radius:4px;font-size:11px;opacity:0.8">${m.reply}</div>` : ''; let ticks=m.me? `<span class="ticks"> ✓✓</span>` : ''; box.innerHTML+=`<div class="msg ${m.me?'me':'other'}" onclick="replyMsg('${(m.text||'').replace(/'/g,"")}')">${replyHtml}${m.text}<span class="time">${m.time}${ticks}</span></div>`;}
+    else {
+      let safeText=(m.text||'').replace(/'/g,"");
+      box.innerHTML+=`<div class="msg ${m.me?'me':'other'}">
+        ${m.text}
+        <div id="trans_${m.id}" class="trans"></div>
+        <button id="btn_${m.id}" class="trBtn" onclick="translateMessage(${m.id}, '${safeText}')">${t.translate}</button>
+        <span class="time">${m.time} <span class="ticks">✓✓</span></span>
+      </div>`;
+    }
   });
   box.scrollTop=box.scrollHeight;
 }
 function playVoice(id){let a=document.getElementById('audio_'+id); if(a.paused){a.play();} else {a.pause();}}
-function sendMsg(){let inp=document.getElementById('msgInput'); let txt=inp.value.trim(); if(!txt) return; let time=new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); let msg={id:Date.now(), text:txt, time:time, me:true, reply:replyTo}; if(!chatsData[currentChat]) chatsData[currentChat]=[]; chatsData[currentChat].push(msg); localStorage.setItem('chale_chats_v79', JSON.stringify(chatsData)); inp.value=''; replyTo=null; document.getElementById('replyPreview').style.display='none'; renderMessages(); updateBackupInfo();}
-function quickSend(){let inp=document.getElementById('quickInput'); if(!inp.value.trim()) return; currentChat='Kwame'; document.getElementById('msgInput').value=inp.value; openChat('Kwame'); sendMsg(); inp.value='';}
-function replyMsg(text){replyTo=text; document.getElementById('replyText').innerText="Replying to: "+text.slice(0,25); document.getElementById('replyPreview').style.display='block'; document.getElementById('msgInput').focus();}
-function cancelReply(){replyTo=null; document.getElementById('replyPreview').style.display='none';}
+function sendMsg(){let inp=document.getElementById('msgInput'); let txt=inp.value.trim(); if(!txt) return; let time=new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); let msg={id:Date.now(), text:txt, time:time, me:true}; if(!chatsData[currentChat]) chatsData[currentChat]=[]; chatsData[currentChat].push(msg); localStorage.setItem('chale_chats_v79', JSON.stringify(chatsData)); inp.value=''; renderMessages(); updateBackupInfo();}
+function quickSend(){let inp=document.getElementById('quickInput'); if(!inp.value.trim()) return; currentChat='Salvation'; document.getElementById('msgInput').value=inp.value; openChat('Salvation'); sendMsg(); inp.value='';}
 function openSettings(){document.getElementById('settingsPage').style.display='block'}
 function closeSettings(){document.getElementById('settingsPage').style.display='none'}
 function editProfile(){document.getElementById('settingsPage').style.display='none';document.getElementById('profilePage').style.display='block'}
@@ -327,7 +383,7 @@ function togglePriv(key){privacy[key]=!privacy[key]; let sw=document.getElementB
 function toggleGhost(){privacy.ghost=!privacy.ghost; let sw=document.getElementById('sw_ghost'); if(privacy.ghost) sw.classList.add('on'); else sw.classList.remove('on');}
 function savePrivacy(){localStorage.setItem('chale_privacy', JSON.stringify(privacy)); alert("✅ Privacy Saved"); closePrivacy();}
 function updateBackupInfo(){let count=Object.values(chatsData).reduce((a,b)=>a+b.length,0); document.getElementById('chatCount').innerText=count+' messages'; document.getElementById('lastBackupTime').innerText=localStorage.getItem('chale_last_backup')||'Never';}
-function exportBackup(){let data={}; for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i); data[k]=localStorage.getItem(k);} data['exportDate']=new Date().toISOString(); data['version']='V82'; let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); let url=URL.createObjectURL(blob); let a=document.createElement('a'); a.href=url; a.download='ChaleChat-V82-'+new Date().toISOString().slice(0,10)+'.json'; a.click(); localStorage.setItem('chale_last_backup', new Date().toLocaleString()); alert("✅ Backup Downloaded!");}
+function exportBackup(){let data={}; for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i); data[k]=localStorage.getItem(k);} data['exportDate']=new Date().toISOString(); data['version']='V82.1'; let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); let url=URL.createObjectURL(blob); let a=document.createElement('a'); a.href=url; a.download='ChaleChat-V82.1-'+new Date().toISOString().slice(0,10)+'.json'; a.click(); localStorage.setItem('chale_last_backup', new Date().toLocaleString()); alert("✅ Backup Downloaded!");}
 function autoBackup(){localStorage.setItem('chale_last_backup', new Date().toLocaleString()); updateBackupInfo(); alert("✅ Auto Backup Saved!");}
 function clearChats(){if(confirm("Delete all?")){localStorage.removeItem('chale_chats_v79'); chatsData={}; renderChatList(); alert("Cleared!");}}
 function uploadPhoto(input){if(input.files[0]){let reader=new FileReader(); reader.onload=e=>{document.getElementById('bigAvatarImg').src=e.target.result; document.getElementById('bigAvatarImg').style.display='block'; document.getElementById('bigAvatarEmoji').style.display='none'; document.getElementById('myStatusImg').src=e.target.result; document.getElementById('myStatusImg').style.display='block'; document.getElementById('myStatusEmoji').style.display='none'; document.getElementById('myStatusPageImg').src=e.target.result; document.getElementById('myStatusPageImg').style.display='block'; document.getElementById('myStatusPageEmoji').style.display='none'; let sal=document.getElementById('salImg'); if(sal){sal.src=e.target.result; sal.style.display='block'; document.getElementById('salEmoji').style.display='none';} localStorage.setItem('chale_photo', e.target.result);}; reader.readAsDataURL(input.files[0]);}}
@@ -344,4 +400,4 @@ window.onload=()=>{
 }
 </script>
 </body>
-    </html>
+</html>
