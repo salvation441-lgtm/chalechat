@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>ChaleChat • WhatsApp Pro • SALVATION TECH-GHANA</title>
+<title>ChaleChat • V61 FINAL • SALVATION TECH-GHANA</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--gold:#d4af37;--bg:#0b141a;--header:#202c33;--chat-bg:#0b141a;--bubble:#202c33;--bubble-me:#005c4b;--text:#e9edef;--muted:#8696a0}
-body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto; height:100vh;display:flex;flex-direction:column;overflow:hidden}
-.header{height:59px;background:var(--header);display:flex;justify-content:space-between;align-items:center;padding:0 14px;z-index:10}
+:root{--gold:#d4af37;--bg:#0b141a;--header:#202c33;--bubble:#202c33;--bubble-me:#005c4b;--text:#e9edef;--muted:#8696a0}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+.header{height:59px;background:var(--header);display:flex;justify-content:space-between;align-items:center;padding:0 14px;z-index:10;position:relative}
 .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px}
 .logo b{color:var(--gold)}
 .dot{width:10px;height:10px;background:#00a884;border-radius:50%;box-shadow:0 0 8px #00a884}
@@ -21,11 +21,9 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .menu.show{display:block}
 .menuItem{padding:14px 18px;font-size:14.5px;cursor:pointer;color:#e9edef;display:flex;justify-content:space-between}
 .menuItem:hover{background:#2a3942}
-.menuItem+ .menuItem{border-top:1px solid rgba(255,255,255,.06)}
-
-.app{flex:1;display:flex;overflow:hidden}
-/* CHAT LIST - WhatsApp style */
-.chatListPanel{width:100%;max-width:480px;background:#111b21;border-right:1px solid #222d34;display:flex;flex-direction:column}
+.menuItem+.menuItem{border-top:1px solid rgba(255,255,255,.06)}
+.app{flex:1;display:flex;overflow:hidden;position:relative}
+.chatListPanel{width:100%;max-width:480px;background:#111b21;border-right:1px solid #222d34;display:flex;flex-direction:column;position:relative}
 .searchBox{padding:7px 12px;background:#111b21}
 .searchBox input{width:100%;padding:10px 12px 10px 40px;border-radius:8px;background:#202c33;border:none;color:#d1d7db;outline:none;font-size:14px}
 .searchWrap{position:relative}
@@ -45,21 +43,21 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .time{font-size:11px;color:var(--muted)}
 .lastMsg{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:4px;display:flex;gap:4px}
 .unread{background:#00a884;color:#111b21;font-size:11px;font-weight:700;min-width:20px;height:20px;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:0 6px}
-
-/* CHAT VIEW - WhatsApp wallpaper */
-.chatViewPanel{flex:1;display:flex;flex-direction:column;background:var(--chat-bg);position:relative}
+.fab{position:absolute;bottom:88px;right:18px;width:56px;height:56px;border-radius:50%;background:#00a884;color:#fff;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.4);z-index:5;transition:transform .1s}
+.fab:active{transform:scale(.94)}
+.chatViewPanel{flex:1;display:flex;flex-direction:column;background:var(--bg);position:relative}
 .chatViewHeader{height:59px;background:var(--header);display:flex;align-items:center;gap:12px;padding:0 12px}
 .chatViewHeader .back{display:none;font-size:20px;cursor:pointer}
-.wallpaper{flex:1;overflow-y:auto;padding:12px 8px 12px 12px;display:flex;flex-direction:column;gap:6px;background-color:#0b141a;background-image:url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");background-repeat:repeat;opacity:1}
-.wallpaper::before{content:'';position:absolute;inset:59px 0 62px 0;background:#0b141a;opacity:.92;pointer-events:none}
-.wallpaper > *{position:relative;z-index:1}
+.wallpaper{flex:1;overflow-y:auto;padding:12px 8px 12px 12px;display:flex;flex-direction:column;gap:6px;background-color:#0b141a;background-image:url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");background-repeat:repeat}
+.wallpaper{position:relative}
+.wallpaper::before{content:'';position:absolute;inset:0;background:#0b141a;opacity:.92;pointer-events:none}
+.wallpaper>*{position:relative;z-index:1}
 .dateSep{align-self:center;background:#1f2c34;color:#8696a0;font-size:11.5px;padding:5px 12px;border-radius:7.5px;margin:12px 0;box-shadow:0 1px 1px rgba(0,0,0,.3)}
 .msg{max-width:75%;padding:6px 7px 8px 9px;border-radius:7.5px;font-size:14.2px;line-height:19px;position:relative;box-shadow:0 1px .5px rgba(0,0,0,.13);word-wrap:break-word}
 .msg.other{background:#202c33;border-top-left-radius:0;align-self:flex-start}
 .msg.me{background:#005c4b;border-top-right-radius:0;align-self:flex-end}
 .msg .meta{display:flex;gap:4px;align-items:center;justify-content:flex-end;margin-top:4px;float:right;margin-left:10px}
 .msg .time{font-size:10.5px;color:rgba(255,255,255,.6);white-space:nowrap}
-.msg.me .time{color:rgba(255,255,255,.6)}
 .ticks{font-size:12px;color:#53bdeb}
 .broadcast{align-self:center;background:#182533;color:#ffcc33;padding:8px 12px;border-radius:7.5px;font-size:12.5px;font-weight:600;text-align:center;max-width:90%;box-shadow:0 1px 1px rgba(0,0,0,.3)}
 .inputBar{height:62px;background:var(--header);display:flex;align-items:center;gap:8px;padding:5px 10px}
@@ -74,27 +72,31 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .btn{width:100%;padding:12px;border-radius:8px;border:none;background:var(--gold);color:#000;font-weight:700;margin-top:8px;cursor:pointer}
 .btn-red{background:#f15c6d;color:#fff}
 .stat{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #2a3942;font-size:13px;color:#8696a0}
-/* GOLD POPUP PRO */
 #sTechModal{position:fixed;inset:0;background:rgba(11,20,26,.82);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px}
 #sTechModal.show{display:flex;animation:fadeIn .2s}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.sTechPopup{background:#233138;border:1px solid rgba(212,175,55,.3);border-radius:20px;max-width:340px;width:100%;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6);animation:pop .35s cubic-bezier(.34,1.56,.64,1)}
+.sTechPopup{background:#233138;border:1px solid rgba(212,175,55,.3);border-radius:20px;max-width:360px;width:100%;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6);animation:pop .35s cubic-bezier(.34,1.56,.64,1)}
 @keyframes pop{0%{transform:scale(.85) translateY(10px);opacity:0}100%{transform:scale(1) translateY(0);opacity:1}}
 .sTechPopup::before{content:'';display:block;height:3px;background:linear-gradient(90deg,var(--gold),#f0d060,var(--gold))}
 .top{padding:22px 20px 10px;text-align:center}
 .icon{width:60px;height:60px;background:linear-gradient(145deg,var(--gold),#b8962f);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:26px;color:#000;font-weight:900}
 .top h4{color:var(--gold);font-size:14px;font-weight:800;letter-spacing:.5px}
-.top p{color:#d1d7db;font-size:14px;margin-top:8px;line-height:1.4}
+.top p{color:#d1d7db;font-size:14px;margin-top:8px;line-height:1.4;white-space:pre-line}
 .sub{color:#5a6b74;font-size:9px;margin-top:10px;text-transform:uppercase;letter-spacing:.4px}
 .actions{padding:14px;background:rgba(0,0,0,.2);display:flex;gap:8px;margin-top:14px}
 .actions button{flex:1;padding:12px;border-radius:10px;border:none;background:var(--gold);color:#000;font-weight:800;cursor:pointer}
+.addContactModal .field{margin-top:12px;text-align:left}
+.addContactModal input,.addContactModal select{width:100%;padding:12px;border-radius:8px;background:#111b21;border:1px solid #2a3942;color:#fff;margin-top:6px;outline:none}
+.avatars{display:flex;gap:8px;margin-top:8px;overflow-x:auto;padding-bottom:4px}
+.avatars span{width:44px;height:44px;border-radius:50%;background:#202c33;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;border:2px solid transparent;flex-shrink:0}
+.avatars span.sel{border-color:var(--gold);background:#2a3942}
 @media(max-width:768px){.chatListPanel{position:absolute;inset:0;z-index:2}.chatListPanel.hide{transform:translateX(-100%)}.chatViewPanel .back{display:flex}}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="logo"><div class="dot"></div> CHALE <b>CHAT</b> <span class="badge">V60 PRO</span></div>
+  <div class="logo"><div class="dot"></div> CHALE <b>CHAT</b> <span class="badge">V61 FINAL</span></div>
   <div class="h-actions">
     <div class="iconBtn" onclick="toggleSearch()">🔍</div>
     <div class="iconBtn gold" onclick="toggleMenu()">⋮</div>
@@ -102,7 +104,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
   <div class="menu" id="mainMenu">
     <div class="menuItem" onclick="popup('👤 Salvation\nS TECH HUB • Ghana 🇬🇭\nAdmin • Online','PROFILE')"><span>View profile</span></div>
     <div class="menuItem" onclick="toggleSearch()"><span>Search chat</span></div>
-    <div class="menuItem" onclick="popup('📇 Contacts\nKwame, Ama, Kofi, Salvation\nImport from phone','CONTACTS')"><span>Contacts & Import</span></div>
+    <div class="menuItem" onclick="openAddContact()"><span>📇 New contact</span></div>
     <div class="menuItem" onclick="popup('🖼️ Media, links, docs\n6 files • S TECH','MEDIA')"><span>Media, links, docs</span></div>
     <div class="menuItem" onclick="popup('🌍 Language\nTwi, Ga, Ewe, English\nGhana 🇬🇭','LANGUAGE')"><span>Language — Twi, Ga, Ewe</span></div>
     <div class="menuItem" onclick="popup('🔕 Muted for 8 hours','MUTE')"><span>Mute notifications</span></div>
@@ -111,88 +113,88 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 </div>
 
 <div class="app">
-  <!-- LEFT: CHAT LIST like WhatsApp -->
   <div class="chatListPanel" id="chatListPanel">
     <div class="searchBox"><div class="searchWrap"><input id="searchInput" placeholder="Search or start new chat" oninput="filterChats()"></div></div>
     <div class="statusRow">
       <div class="statusItem" onclick="popup('➕ Add Status\nShare Ghana moment 🇬🇭','STATUS')"><div class="statusRing">➕</div><span style="font-size:11px;color:#8696a0">Add Status</span></div>
       <div class="statusItem" onclick="openChat('Salvation')"><div class="statusRing live">🇬🇭</div><span style="font-size:11px;color:#8696a0">Salvation</span></div>
-      <div class="statusItem" onclick="openChat('Kwame')"><div class="statusRing live" style="border-color:#d4af37">👤</div><span style="font-size:11px;color:#8696a0">Kwame</span></div>
-      <div class="statusItem"><div class="statusRing">👩</div><span style="font-size:11px;color:#8696a0">Ama</span></div>
+      <div class="statusItem" onclick="openChat('Kwame')"><div class="statusRing live" style="border-color:var(--gold)">👤</div><span style="font-size:11px;color:#8696a0">Kwame</span></div>
+      <div class="statusItem" onclick="openChat('Ama')"><div class="statusRing">👩</div><span style="font-size:11px;color:#8696a0">Ama</span></div>
     </div>
     <div class="chatList" id="chatList"></div>
-    <div class="footer" id="footerTap">Powered by SALVATION TECH-GHANA • S TECH HUB • 🇬🇭 • Tap 5x for admin</div>
+    <div class="fab" onclick="openAddContact()">+</div>
+    <div class="footer" id="footerTap">Powered by SALVATION TECH-GHANA • S TECH HUB • 🇬🇭</div>
   </div>
 
-  <!-- RIGHT: CHAT VIEW like WhatsApp -->
   <div class="chatViewPanel">
     <div class="chatViewHeader">
       <div class="back iconBtn" onclick="closeChat()">←</div>
       <div class="avatar" id="chatAvatar">🇬🇭</div>
-      <div style="flex:1">
-        <div style="font-weight:600;font-size:16px" id="chatName">Salvation</div>
-        <div style="font-size:12px;color:#8696a0" id="chatStatus">online • S TECH</div>
-      </div>
-      <div class="iconBtn">📞</div>
-      <div class="iconBtn">📹</div>
-      <div class="iconBtn" onclick="toggleMenu()">⋮</div>
+      <div style="flex:1"><div style="font-weight:600;font-size:16px" id="chatName">Salvation</div><div style="font-size:12px;color:#8696a0" id="chatStatus">online • S TECH</div></div>
+      <div class="iconBtn">📞</div><div class="iconBtn">📹</div><div class="iconBtn" onclick="toggleMenu()">⋮</div>
     </div>
     <div class="wallpaper" id="wallpaper"></div>
     <div class="inputBar">
       <div class="tool" onclick="popup('😊 Emoji picker • S TECH','EMOJI')">😊</div>
       <div class="tool" onclick="popup('📎 Attach file • S TECH','ATTACH')">📎</div>
       <div class="field"><input id="msgInput" placeholder="Message" onkeydown="if(event.key==='Enter')sendMsg()"><div class="tool" onclick="popup('📷 Camera • S TECH','CAMERA')">📷</div></div>
-      <div class="tool" id="micBtn" onclick="popup('🎤 Hold to record • S TECH','VOICE')">🎤</div>
+      <div class="tool" onclick="popup('🎤 Hold to record • S TECH','VOICE')">🎤</div>
       <div class="send" onclick="sendMsg()">➤</div>
     </div>
   </div>
 </div>
 
 <div id="adminOverlay">
-  <div class="header"><div class="logo">🔐 SALVATION ADMIN • V60 PRO</div><div class="iconBtn" onclick="closeAdmin()">✕</div></div>
+  <div class="header"><div class="logo">🔐 SALVATION ADMIN • V61</div><div class="iconBtn" onclick="closeAdmin()">✕</div></div>
   <div id="adminLogin" class="admin-card"><h3 style="color:var(--gold)">🔐 Admin Login</h3><input id="adminCode" type="password" placeholder="Enter code" style="margin-top:12px;width:100%;padding:12px;border-radius:8px;background:#111b21;border:1px solid #2a3942;color:#fff"><button class="btn" onclick="doLogin()">Login • S TECH</button></div>
   <div id="adminPanel" style="display:none"><div class="admin-card"><div class="stat"><span>Online</span><b id="sOnline">1</b></div><div class="stat"><span>Total msgs</span><b id="sTotal">0</b></div><div class="stat"><span>Broadcast</span><b id="sBroad">None</b></div></div><div class="admin-card"><input id="broadInput" placeholder="Broadcast" style="width:100%;padding:12px;border-radius:8px;background:#111b21;border:1px solid #2a3942;color:#fff"><button class="btn" onclick="doBroadcast()">📢 Send Broadcast</button><button class="btn" style="background:#202c33;color:var(--gold);border:1px solid #2a3942" onclick="clearBroadcast()">Clear Broadcast</button></div><div class="admin-card"><div id="adminMsgList"></div><button class="btn btn-red" onclick="clearAll()">Clear ALL</button><button class="btn" style="background:#111b21;color:#8696a0;border:1px solid #2a3942" onclick="logoutAdmin()">Logout</button></div></div>
 </div>
 
 <div id="sTechModal" onclick="if(event.target.id==='sTechModal')closeModal()"><div class="sTechPopup"><div class="top"><div class="icon">S</div><h4 id="modalTitle">SALVATION TECH</h4><p id="modalMsg">Welcome</p><div class="sub">SALVATION TECH-GHANA • S TECH HUB 🇬🇭</div></div><div class="actions"><button onclick="closeModal()">OK • S TECH</button></div></div></div>
 
+<div id="addContactModal" style="position:fixed;inset:0;background:rgba(11,20,26,.85);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;z-index:9999;padding:20px">
+  <div class="sTechPopup addContactModal" style="text-align:left;max-width:380px">
+    <div class="top" style="text-align:center"><div class="icon">+</div><h4>NEW CONTACT</h4><p style="font-size:12px">Add new chat contact • S TECH</p></div>
+    <div style="padding:0 18px 18px">
+      <div class="field"><label style="font-size:12px;color:#8696a0">Name *</label><input id="newName" placeholder="e.g. Kofi"></div>
+      <div class="field"><label style="font-size:12px;color:#8696a0">Phone (optional)</label><input id="newPhone" placeholder="024 123 4567"></div>
+      <div class="field"><label style="font-size:12px;color:#8696a0">Choose avatar</label><div class="avatars" id="avatarPick"><span onclick="pickAvatar(this)" class="sel">👤</span><span onclick="pickAvatar(this)">👩</span><span onclick="pickAvatar(this)">🇬🇭</span><span onclick="pickAvatar(this)">👨‍💼</span><span onclick="pickAvatar(this)">👩‍🎓</span><span onclick="pickAvatar(this)">🧑</span><span onclick="pickAvatar(this)">👨‍🔧</span></div></div>
+      <div class="actions" style="margin-top:16px"><button style="background:#202c33;color:#8696a0;border:1px solid #2a3942" onclick="closeAddContact()">Cancel</button><button onclick="saveContact()">Add • S TECH</button></div>
+      <button onclick="importContacts()" style="width:100%;margin-top:10px;background:transparent;color:var(--gold);border:1px dashed var(--gold);padding:10px;border-radius:8px;font-size:13px;cursor:pointer">📇 Import from phone</button>
+    </div>
+  </div>
+</div>
+
 <script>
 let currentChat='Salvation';
-let chats={
-  Salvation:{avatar:'🇬🇭',msgs:[{t:"Hello 🇬🇭 Welcome to ChaleChat! Powered by SALVATION TECH-GHANA • V60 WhatsApp PRO! 🟡",me:false,time:"08:07"}],online:"online • S TECH"},
+let chats=JSON.parse(localStorage.getItem('v61_chats')||'null')||{
+  Salvation:{avatar:'🇬🇭',msgs:[{t:"Hello 🇬🇭 Welcome to ChaleChat! Powered by SALVATION TECH-GHANA • V61 FINAL! 🟡",me:false,time:"08:07"}],online:"online • S TECH"},
   Kwame:{avatar:'👤',msgs:[{t:"Chale how for do? 🇬🇭",me:false,time:"07:30"},{t:"We dey!",me:true,time:"07:31"}],online:"last seen today 07:31"},
   Ama:{avatar:'👩',msgs:[{t:"Ama sent a photo 📷",me:false,time:"Yesterday"}],online:"online"}
 };
-let broad=localStorage.getItem('v60_broad')||'';
-let isAdmin=localStorage.getItem('v60_admin')==='1';
+let broad=localStorage.getItem('v61_broad')||'';
+let isAdmin=localStorage.getItem('v61_admin')==='1';
 const SECRET=atob("U0FMVkFUSU9OMUJBUg==");
+let selectedAvatar='👤';
 
-function save(){ localStorage.setItem('v60_chats',JSON.stringify(chats)); }
+function save(){ localStorage.setItem('v61_chats',JSON.stringify(chats)); }
 function renderChatList(){
   const list=document.getElementById('chatList');
   const q=document.getElementById('searchInput').value.toLowerCase();
-  let h='';
-  Object.keys(chats).forEach(name=>{
-    const c=chats[name];
-    const last=c.msgs[c.msgs.length-1];
+  let h=''; Object.keys(chats).forEach(name=>{
+    const c=chats[name]; const last=c.msgs[c.msgs.length-1];
     if(q && !name.toLowerCase().includes(q) && !last.t.toLowerCase().includes(q)) return;
-    const unread = name==='Kwame'?1:0;
-    h+=`<div class="chatItem ${name===currentChat?'active':''}" onclick="openChat('${name}')">
-      <div class="avatar">${c.avatar}</div>
-      <div class="chatInfo"><div class="topRow"><div class="name">${name}</div><div class="time">${last.time}</div></div>
-      <div class="topRow"><div class="lastMsg">${last.me?'✓✓ ':''}${last.t.slice(0,32)}</div>${unread?`<div class="unread">${unread}</div>`:''}</div></div></div>`;
-  });
-  list.innerHTML=h;
+    const unread=name==='Kwame'?1:0;
+    h+=`<div class="chatItem ${name===currentChat?'active':''}" onclick="openChat('${name}')"><div class="avatar">${c.avatar}</div><div class="chatInfo"><div class="topRow"><div class="name">${name}</div><div class="time">${last.time}</div></div><div class="topRow"><div class="lastMsg">${last.me?'✓✓ ':''}${last.t.slice(0,32)}</div>${unread?`<div class="unread">${unread}</div>`:''}</div></div></div>`;
+  }); list.innerHTML=h;
 }
 function renderWallpaper(){
   const wall=document.getElementById('wallpaper');
-  let h=`<div class="dateSep">TODAY</div>`;
-  if(broad) h+=`<div class="broadcast">📢 ${broad}</div>`;
+  let h=`<div class="dateSep">TODAY</div>`; if(broad) h+=`<div class="broadcast">📢 ${broad}</div>`;
   chats[currentChat].msgs.forEach(m=>{
-    const ticks = m.me?`<span class="ticks">✓✓</span>`:'';
+    const ticks=m.me?`<span class="ticks">✓✓</span>`:'';
     h+=`<div class="msg ${m.me?'me':'other'}">${m.t}<span class="meta"><span class="time">${m.time}</span>${ticks}</span></div>`;
-  });
-  wall.innerHTML=h; wall.scrollTop=wall.scrollHeight;
+  }); wall.innerHTML=h; wall.scrollTop=wall.scrollHeight;
   document.getElementById('chatName').textContent=currentChat;
   document.getElementById('chatAvatar').textContent=chats[currentChat].avatar;
   document.getElementById('chatStatus').textContent=chats[currentChat].online;
@@ -208,24 +210,45 @@ function sendMsg(){
   const inp=document.getElementById('msgInput'); const t=inp.value.trim(); if(!t) return;
   const time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
   chats[currentChat].msgs.push({t,me:true,time}); inp.value=''; save(); renderChatList(); renderWallpaper();
-  setTimeout(()=>{ chats[currentChat].msgs.push({t:"Chale! You say: "+t+" 🇬🇭",me:false,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}); save(); renderChatList(); renderWallpaper(); },800);
+  setTimeout(()=>{ chats[currentChat].msgs.push({t:"Chale! You say: "+t+" 🇬🇭",me:false,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}); save(); renderChatList(); renderWallpaper(); },700);
 }
 function filterChats(){ renderChatList(); }
 function toggleMenu(){ document.getElementById('mainMenu').classList.toggle('show'); }
 function toggleSearch(){ document.getElementById('searchInput').focus(); popup('Search chats • Type name or message','🔍 SEARCH'); }
+function openAddContact(){ document.getElementById('addContactModal').style.display='flex'; document.getElementById('newName').focus(); document.getElementById('mainMenu').classList.remove('show'); }
+function closeAddContact(){ document.getElementById('addContactModal').style.display='none'; document.getElementById('newName').value=''; document.getElementById('newPhone').value=''; }
+function pickAvatar(el){ document.querySelectorAll('.avatars span').forEach(s=>s.classList.remove('sel')); el.classList.add('sel'); selectedAvatar=el.textContent; }
+function saveContact(){
+  const name=document.getElementById('newName').value.trim();
+  const phone=document.getElementById('newPhone').value.trim();
+  if(!name) return popup('Type name first • e.g. Kofi','CONTACT');
+  if(chats[name]) return popup('Contact '+name+' already exists','CONTACT EXISTS');
+  chats[name]={avatar:selectedAvatar,msgs:[{t:`Hello! ${name} added 🇬🇭 ${phone?'• '+phone:''}`,me:false,time:"now"}],online:phone?phone:"online"};
+  save(); renderChatList(); renderWallpaper(); closeAddContact();
+  popup('✅ '+name+' added!\nTap to start chat • S TECH','CONTACT ADDED');
+  setTimeout(()=>openChat(name),600);
+}
+async function importContacts(){
+  try{
+    if('contacts' in navigator && 'ContactsManager' in window){
+      const props=['name','tel']; const contacts=await navigator.contacts.select(props,{multiple:true});
+      let added=0; contacts.forEach(c=>{ const n=c.name[0]; if(n && !chats[n]){ chats[n]={avatar:'👤',msgs:[{t:"Imported from phone 📱",me:false,time:"now"}],online:c.tel[0]||"imported"}; added++; } });
+      save(); renderChatList(); popup('📇 '+added+' contacts imported • S TECH','IMPORTED');
+    }else{ popup('📇 Import not supported on this browser\nPlease add manually • Use the form above\nS TECH Hub 🇬🇭','IMPORT'); }
+  }catch(e){ popup('Import cancelled','IMPORT'); }
+}
 function delOne(chat,i){ chats[chat].msgs.splice(i,1); save(); renderChatList(); renderWallpaper(); popup('Deleted • S TECH'); }
-function clearAll(){ if(!confirm('Clear all?')) return; chats={Salvation:{avatar:'🇬🇭',msgs:[{t:"Hello 🇬🇭 Welcome to ChaleChat! V60 PRO! 🟡",me:false,time:"now"}],online:"online"}}; broad=''; localStorage.removeItem('v60_broad'); save(); renderChatList(); renderWallpaper(); popup('All cleared'); }
-function doBroadcast(){ const v=document.getElementById('broadInput').value.trim(); if(!v) return popup('Type announcement'); broad=v; localStorage.setItem('v60_broad',v); document.getElementById('broadInput').value=''; renderWallpaper(); popup('📢 Broadcast sent: '+v,'BROADCAST'); }
-function clearBroadcast(){ broad=''; localStorage.removeItem('v60_broad'); renderWallpaper(); popup('Broadcast cleared'); }
-let taps=0,tt=null; document.getElementById('footerTap').addEventListener('click',()=>{ taps++; if(navigator.vibrate) navigator.vibrate(30); clearTimeout(tt); tt=setTimeout(()=>taps=0,3000); if(taps>=5){ taps=0; openAdmin(); } });
+function clearAll(){ if(!confirm('Clear all?')) return; chats={Salvation:{avatar:'🇬🇭',msgs:[{t:"Hello 🇬🇭 Welcome to ChaleChat! V61 FINAL! 🟡",me:false,time:"now"}],online:"online"}}; broad=''; localStorage.removeItem('v61_broad'); save(); renderChatList(); renderWallpaper(); popup('All cleared'); }
+function doBroadcast(){ const v=document.getElementById('broadInput').value.trim(); if(!v) return popup('Type announcement'); broad=v; localStorage.setItem('v61_broad',v); document.getElementById('broadInput').value=''; renderWallpaper(); popup('📢 Broadcast sent: '+v,'BROADCAST'); }
+function clearBroadcast(){ broad=''; localStorage.removeItem('v61_broad'); renderWallpaper(); popup('Broadcast cleared'); }
+let taps=0,tt=null; document.getElementById('footerTap').addEventListener('click',()=>{ taps++; if(navigator.vibrate) navigator.vibrate(30); clearTimeout(tt); tt=setTimeout(()=>taps=0,3000); if(taps>=5){ taps=0; if(navigator.vibrate) navigator.vibrate([80,40,80]); openAdmin(); } });
 function openAdmin(){ document.getElementById('adminOverlay').classList.add('show'); if(isAdmin){ document.getElementById('adminLogin').style.display='none'; document.getElementById('adminPanel').style.display='block'; }else{ document.getElementById('adminLogin').style.display='block'; document.getElementById('adminPanel').style.display='none'; } renderWallpaper(); }
 function closeAdmin(){ document.getElementById('adminOverlay').classList.remove('show'); }
-function doLogin(){ const c=document.getElementById('adminCode').value.trim().toUpperCase(); if(c===SECRET){ isAdmin=true; localStorage.setItem('v60_admin','1'); popup('✅ Welcome Boss! 🔐 V60 PRO Admin','ADMIN'); setTimeout(()=>{ closeModal(); document.getElementById('adminLogin').style.display='none'; document.getElementById('adminPanel').style.display='block'; },700); }else popup('❌ Wrong code','DENIED'); }
-function logoutAdmin(){ isAdmin=false; localStorage.removeItem('v60_admin'); document.getElementById('adminPanel').style.display='none'; document.getElementById('adminLogin').style.display='block'; popup('Logged out'); }
+function doLogin(){ const c=document.getElementById('adminCode').value.trim().toUpperCase(); if(c===SECRET){ isAdmin=true; localStorage.setItem('v61_admin','1'); popup('✅ Welcome Boss! 🔐 V61 FINAL Admin','ADMIN'); setTimeout(()=>{ closeModal(); document.getElementById('adminLogin').style.display='none'; document.getElementById('adminPanel').style.display='block'; },700); }else popup('❌ Wrong code','DENIED'); }
+function logoutAdmin(){ isAdmin=false; localStorage.removeItem('v61_admin'); document.getElementById('adminPanel').style.display='none'; document.getElementById('adminLogin').style.display='block'; popup('Logged out'); }
 function popup(m,t="SALVATION TECH"){ document.getElementById('modalTitle').textContent=t; document.getElementById('modalMsg').innerText=m; document.getElementById('sTechModal').classList.add('show'); if(navigator.vibrate) navigator.vibrate(40); }
 function closeModal(){ document.getElementById('sTechModal').classList.remove('show'); }
 document.addEventListener('click',e=>{ if(!e.target.closest('.header')) document.getElementById('mainMenu').classList.remove('show'); });
-const saved=JSON.parse(localStorage.getItem('v60_chats')||'null'); if(saved) chats=saved;
 renderChatList(); renderWallpaper();
 </script>
 </body>
