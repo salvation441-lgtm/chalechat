@@ -2,7 +2,11 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>CHALE CHAT V86.2 SLIM</title>
+<meta name="theme-color" content="#FFD700">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Chale Chat">
+<link rel="manifest" id="manifestLink">
+<title>CHALE CHAT V87 FINAL APK</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
 body{background:#0f0f0f;color:white;padding-bottom:78px}
@@ -18,19 +22,23 @@ body{background:#0f0f0f;color:white;padding-bottom:78px}
 .sCircle img{width:100%;height:100%;object-fit:cover}
 .addStatus{position:absolute;bottom:-2px;right:-2px;background:#25D366;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;border:2px solid #0f0f0f}
 .chatList{padding:10px;min-height:400px;padding-bottom:125px}
-.chat{background:#1e1e1e;padding:11px;border-radius:10px;margin-bottom:7px;display:flex;gap:10px;cursor:pointer}
+.chat{background:#1e1e1e;padding:11px;border-radius:10px;margin-bottom:7px;display:flex;gap:10px;cursor:pointer;border-left:3px solid transparent}
+.chat.group{border-left:3px solid #FFD700;background:#1a1a0f}
 .avatar{width:38px;height:38px;border-radius:50%;background:#2a5bd7;display:flex;align-items:center;justify-content:center;overflow:hidden;font-weight:bold;font-size:14px}
+.avatar.groupAva{background:#FFD700;color:black}
 .inputBar{position:fixed;left:0;width:100%;background:#111;padding:10px;display:flex;gap:7px;z-index:100;align-items:center;border-top:1px solid #222}
 #quickBar{bottom:58px!important;background:#1a1a1a;border-top:1px solid #333;padding:8px 10px!important;height:58px;z-index:900}
-#quickBar input{padding:11px 14px!important;border-radius:20px;font-size:14px}
-#settingsPage, #profilePage, #wallpaperPage, #privacyPage, #backupPage, #chatWindow, #statusViewer, #statusPage, #languagePage{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f0f0f;z-index:999;display:none;overflow-y:auto;padding:20px;padding-bottom:90px}
+#quickBar input{padding:11px 14px!important;border-radius:20px;font-size:14px;background:#222;border:none;color:white;outline:none;flex:1}
+#settingsPage, #profilePage, #wallpaperPage, #privacyPage, #backupPage, #chatWindow, #statusViewer, #statusPage, #languagePage, #groupPage{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f0f0f;z-index:999;display:none;overflow-y:auto;padding:20px;padding-bottom:90px}
 #chatWindow{background:#0f0f0f;padding:0;z-index:2000;display:none;flex-direction:column}
 #chatWindow.show{display:flex}
 .chatWinHeader{background:#111;padding:11px 14px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100;border-bottom:1px solid #333;width:100%}
 .msgList{flex:1;padding:14px;padding-bottom:135px;background:#0f0f0f;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
 .msg{max-width:85%;padding:9px 13px;border-radius:14px;font-size:15px;word-wrap:break-word;white-space:pre-wrap;position:relative}
 .msg.me{align-self:flex-end;background:#005c4b;color:white;border-bottom-right-radius:4px}
+.msg.other{align-self:flex-start;background:#1e1e1e;border-bottom-left-radius:4px}
 .msg .time{font-size:10px;color:#a0d9c8;display:block;text-align:right;margin-top:5px}
+.msg .sender{font-size:11px;color:#FFD700;font-weight:bold;margin-bottom:3px}
 .msg .trans{margin-top:7px;padding:7px 9px;background:#1a1a00;border:1px solid #FFD700;border-left:3px solid #FFD700;border-radius:8px;font-size:13px;color:#FFD700;display:none;white-space:pre-wrap}
 .msg .trans.show{display:block}
 .msg .trBtn{font-size:11px;background:#FFD700;color:black;border:none;padding:5px 11px;border-radius:11px;margin-top:7px;cursor:pointer;font-weight:bold;display:inline-block}
@@ -80,12 +88,13 @@ body{background:#0f0f0f;color:white;padding-bottom:78px}
 .statusCard img{width:100%;height:100%;object-fit:cover}
 .statusCard .greenBorder{position:absolute;inset:3px;border:2px solid #25D366;border-radius:11px;pointer-events:none}
 #communitiesTab{position:fixed;top:0;left:0;width:100%;height:100%;background:white;color:black;z-index:100;display:none;overflow-y:auto;padding-bottom:70px}
-.commTop{padding:16px 16px 8px 16px;background:white}
+.commTop{padding:16px 16px 8px 16px;background:white;display:flex;justify-content:space-between;align-items:center}
 .commTop h1{font-size:22px;font-weight:400;color:black}
 .commIntro{padding:0 16px 16px 16px;background:white}
-.newCommBtn{width:100%;background:#f0f0f0;border:1px dashed #aaa;padding:13px;border-radius:11px;display:flex;align-items:center;gap:12px;cursor:pointer;margin-bottom:16px}
+.newCommBtn{width:100%;background:#f0f0f0;border:1px dashed #aaa;padding:13px;border-radius:11px;display:flex;align-items:center;gap:12px;cursor:pointer;margin-bottom:12px}
 .newCommIcon{width:42px;height:42px;border-radius:10px;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:20px;color:white}
 .commCard{background:white;border:1px solid #f0f0f0;border-radius:11px;padding:12px;margin-bottom:10px;display:flex;gap:10px;align-items:center;cursor:pointer}
+.commCard.groupCard{border-left:4px solid #FFD700;background:#fffef0}
 #callsTab{position:fixed;top:0;left:0;width:100%;height:100%;background:white;color:black;z-index:100;display:none;overflow-y:auto;padding-bottom:70px}
 .callsTop{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;background:white;position:sticky;top:0;z-index:10}
 .createCallLink{margin:12px 16px;background:white;border:1px solid #f0f0f0;border-radius:11px;padding:12px;display:flex;gap:12px;align-items:center;cursor:pointer}
@@ -102,24 +111,39 @@ body{background:#0f0f0f;color:white;padding-bottom:78px}
 .callBtn.end{background:#f15c6d;color:white}
 .callBtn.mute{background:#333;color:white}
 .recBar{display:none;background:#ff4444;color:white;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:bold;align-items:center;gap:7px;position:absolute;left:10px;right:10px;bottom:60px;justify-content:center;z-index:50}
+.installBar{background:#FFD700;color:black;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;font-weight:bold;font-size:13px;position:fixed;top:0;left:0;width:100%;z-index:7000;transform:translateY(-100%);transition:0.3s}
+.installBar.show{transform:translateY(0)}
 .featureBadge{background:#25D366;color:white;font-size:8px;padding:2px 6px;border-radius:8px;margin-left:5px;font-weight:bold}
 .wall-option{width:60px;height:60px;border-radius:10px;border:3px solid transparent;cursor:pointer;display:inline-block;margin:5px}
 .wall-option.active{border:3px solid #FFD700}
 #msgInput,#quickInput{background:#222;border:none;color:white;outline:none;flex:1;min-width:0}
 #msgInput{padding:11px 14px;border-radius:20px;font-size:14.5px}
+.groupMember{background:#1e1e1e;padding:10px;border-radius:8px;margin:6px 0;display:flex;justify-content:space-between;align-items:center}
 </style>
 </head>
 <body id="body">
+<div class="installBar" id="installBar"><span>📲 Install Chale Chat APK? 🇬🇭</span><div><button onclick="installAPK()" style="background:black;color:#FFD700;border:none;padding:6px 12px;border-radius:6px;font-weight:bold;margin-right:6px">INSTALL</button><button onclick="hideInstall()" style="background:transparent;border:1px solid black;padding:5px 10px;border-radius:6px">X</button></div></div>
+
 <div id="chatsTab">
-<div class="header"><div class="logo">CHALE <span>CHAT</span> <span class="badge">V86.2 SLIM 2/3</span> <span class="featureBadge">FIXED</span></div><button onclick="openSettings()" style="background:#FFD700;width:34px;height:34px;border-radius:50%;border:none">⚙️</button></div>
+<div class="header"><div class="logo">CHALE <span>CHAT</span> <span class="badge">V87 FINAL APK</span> <span class="featureBadge">3/3 DONE!</span></div><button onclick="openSettings()" style="background:#FFD700;width:34px;height:34px;border-radius:50%;border:none">⚙️</button></div>
 <div class="search"><input id="searchInput" placeholder="Search chats"></div>
 <div class="statusRow"><div class="sItem" onclick="openMyStatus()"><div class="sCircle" id="myStatusCircle"><img id="myStatusImg" style="display:none"><span id="myStatusEmoji">🇬🇭</span><div class="addStatus">+</div></div><p id="txtMyStatus" style="font-size:11px">My Status</p></div><div class="sItem" onclick="viewStatus()"><div class="sCircle hasStatus" id="salStatus"><img id="salImg"><span id="salEmoji" style="display:none">🇬🇭</span></div><p style="font-size:11px">Salvation</p></div></div>
 <div class="chatList" id="chatList"></div>
 <div class="inputBar" id="quickBar"><input id="quickInput" placeholder="Type message..."><button class="micBtn" onclick="quickSend()" style="width:42px;height:42px">➤</button></div>
 </div>
 
-<div id="updatesTab"><div class="updatesTop"><h1 style="font-size:20px">Updates</h1></div><div class="statusSection"><h2>Status <span id="realStatusCount">• Real</span></h2><div class="statusScroll" id="updatesStatusScroll"></div></div></div>
-<div id="communitiesTab"><div class="commTop"><h1>Communities</h1></div><div class="commIntro"><div class="newCommBtn" onclick="createCommunity()"><div class="newCommIcon">👥</div><div><b style="color:black">New community</b><br><span style="color:#666;font-size:12px">Create Ghana community 🇬🇭</span></div></div></div></div>
+<div id="updatesTab"><div class="updatesTop"><h1 style="font-size:20px">Updates</h1><button onclick="document.getElementById('installBar').classList.add('show')" style="background:#FFD700;border:none;padding:6px 12px;border-radius:6px;font-weight:bold;font-size:12px">📲 APK</button></div><div class="statusSection"><h2>Status <span id="realStatusCount">• Real</span></h2><div class="statusScroll" id="updatesStatusScroll"></div></div></div>
+
+<div id="communitiesTab">
+<div class="commTop"><h1>Communities</h1><button onclick="openGroupPage()" style="background:#FFD700;border:none;padding:8px 14px;border-radius:8px;font-weight:bold;font-size:12px">+ New Group</button></div>
+<div class="commIntro">
+<div class="newCommBtn" onclick="openGroupPage()"><div class="newCommIcon">👥</div><div><b style="color:black">New Group 🇬🇭</b><br><span style="color:#666;font-size:12px">Create Ghana group • 256 members</span></div></div>
+<div class="newCommBtn" onclick="installAPK()" style="border:2px solid #FFD700;background:#fff8d0"><div class="newCommIcon" style="background:#FFD700;color:black">📲</div><div><b style="color:black">Install APK • Chale Chat 📲</b><br><span style="color:#666;font-size:12px">Add to Home Screen • Works offline!</span></div></div>
+<div id="groupsList"></div>
+<div class="commCard groupCard"><div style="width:44px;height:44px;border-radius:10px;background:#111;border:2px solid #FFD700;display:flex;align-items:center;justify-content:center;font-weight:bold;color:#FFD700;font-size:12px">ST</div><div style="flex:1"><b style="color:black;font-size:13px">Salvation Tech Community 🇬🇭</b><br><span style="color:#666;font-size:11px">Dansoman Accra • 0540042669 • 12 members</span></div></div>
+</div>
+</div>
+
 <div id="callsTab"><div class="callsTop"><h1 style="font-size:20px">Calls</h1></div><div class="createCallLink" onclick="createCallLink()"><div class="callLinkIcon">🔗</div><div style="flex:1"><b style="color:#00a884;font-size:14px">Create call link</b><br><span style="color:#666;font-size:12px">Share link</span></div></div><div class="callsSection"><div class="callRow" onclick="makeCall('Salvation Tech','ST')"><div class="callAva" style="background:#111;border:2px solid #FFD700;color:#FFD700">ST</div><div style="flex:1"><b style="font-size:14px">Salvation Tech 🇬🇭</b><br><small style="color:#666">Favorite</small></div></div></div><button class="callFab" onclick="showDialer()">📞</button></div>
 
 <div class="bottomNav">
@@ -130,8 +154,23 @@ body{background:#0f0f0f;color:white;padding-bottom:78px}
 </div>
 
 <div class="emojiPanel" id="emojiPanel">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><b style="color:#FFD700;font-size:13px">🇬🇭 Emojis — Tap!</b><button onclick="toggleEmoji()" style="background:#333;border:none;color:white;padding:4px 10px;border-radius:6px;font-size:12px">X</button></div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><b style="color:#FFD700;font-size:13px">🇬🇭 Emojis</b><button onclick="toggleEmoji()" style="background:#333;border:none;color:white;padding:4px 10px;border-radius:6px;font-size:12px">X</button></div>
 <div class="emojiGrid" id="emojiGrid"></div>
+</div>
+
+<div id="groupPage">
+<div style="display:flex;justify-content:space-between;align-items:center"><h2>👥 New Group</h2><button onclick="closeGroupPage()" style="background:#FFD700;border:none;padding:6px 10px;border-radius:7px;font-weight:bold;">← Back</button></div>
+<div style="margin-top:20px">
+<input id="groupNameInput" placeholder="Group name e.g. Ghana Devs 🇬🇭" style="width:100%;background:#1e1e1e;border:none;padding:14px;border-radius:10px;color:white;margin-bottom:12px">
+<input id="groupDescInput" placeholder="Description (optional)" style="width:100%;background:#1e1e1e;border:none;padding:14px;border-radius:10px;color:white;margin-bottom:16px">
+<h3 style="color:#FFD700;font-size:12px;margin-bottom:8px">ADD MEMBERS (from chats)</h3>
+<div id="groupMembersSelect" style="max-height:200px;overflow-y:auto"></div>
+<div style="margin-top:16px;display:flex;gap:10px">
+<button onclick="createGroup()" style="flex:1;background:#25D366;border:none;padding:14px;border-radius:10px;color:white;font-weight:bold">✅ Create Group</button>
+<button onclick="closeGroupPage()" style="flex:1;background:#333;border:none;padding:14px;border-radius:10px;color:white">Cancel</button>
+</div>
+<p style="margin-top:12px;font-size:11px;color:#888;text-align:center">Groups support 256 members • Ghana first 🇬🇭<br>After create, group appears in Communities + Chats!</p>
+</div>
 </div>
 
 <div id="callOverlay"><div class="callAvatarBig"><img id="callBigImg" style="display:none"><span id="callBigEmoji">📞</span></div><h2 id="callOverlayName" style="margin-top:16px">Salvation</h2><p id="callOverlayStatus" style="color:#FFD700;margin-top:6px">Calling...</p><p id="callTimer" style="color:#25D366">00:00</p><div class="callButtons"><button class="callBtn mute" onclick="toggleMute()" id="muteBtn">🎙️</button><button class="callBtn end" onclick="endCall()">✕</button><button class="callBtn mute" onclick="switchCam()">📹</button></div></div>
@@ -139,19 +178,19 @@ body{background:#0f0f0f;color:white;padding-bottom:78px}
 <div id="statusPage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtStatusTitle">📸 My Status</h2><button onclick="closeMyStatus()" style="background:#FFD700;border:none;padding:6px 10px;border-radius:7px;font-weight:bold;">← Back</button></div><div style="background:#1a2a1a;border:1px solid #25D366;border-radius:11px;padding:13px;margin-top:16px;text-align:center"><div style="width:72px;height:72px;border-radius:50%;margin:0 auto;background:#222;border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;overflow:hidden"><img id="myStatusPageImg" style="width:100%;height:100%;object-fit:cover;display:none"><span id="myStatusPageEmoji" style="font-size:36px">🇬🇭</span></div><h3 style="margin-top:8px" id="myStatusName">Salvation</h3><small style="color:#888" id="txtTapAdd">Tap to add status</small><div style="margin-top:12px"><label for="statusUpload" style="background:#25D366;color:white;padding:10px 18px;border-radius:20px;font-weight:bold;cursor:pointer;font-size:13px" id="txtPhotoStatus">📸 Photo Status</label></div><input type="file" id="statusUpload" accept="image/*" style="display:none" onchange="uploadStatus(this)"></div><div style="margin-top:20px"><h3 style="color:#FFD700;font-size:12px" id="txtMyUpdates">MY STATUS UPDATES</h3><div id="myStatusList" style="margin-top:8px"></div></div></div>
 
 <div id="chatWindow">
-<div class="chatWinHeader"><button onclick="closeChat()" style="background:#222;border:none;width:32px;height:32px;border-radius:50%;color:white">←</button><div class="avatar"><span id="chatAvatarEmoji">A</span></div><div style="flex:1"><b id="chatName" style="font-size:15px">Ama</b><br><small style="color:#25D366;font-size:11px" id="txtOnline">En ligne • V86.2 Slim</small></div></div>
+<div class="chatWinHeader"><button onclick="closeChat()" style="background:#222;border:none;width:32px;height:32px;border-radius:50%;color:white">←</button><div class="avatar" id="chatHeaderAvatar"><span id="chatAvatarEmoji">A</span></div><div style="flex:1"><b id="chatName" style="font-size:15px">Ama</b><br><small style="color:#25D366;font-size:11px" id="txtOnline">Online • V87 FINAL</small></div><button id="groupInfoBtn" onclick="showGroupInfo()" style="background:#FFD700;border:none;width:32px;height:32px;border-radius:50%;display:none">👥</button></div>
 <div class="msgList" id="msgList"></div>
 <div class="inputBar" style="position:relative;bottom:auto;background:#111;padding:8px 8px;gap:6px;border-top:1px solid #222;height:60px">
 <div class="recBar" id="recIndicator">🔴 <span id="recTime">00:00</span> — Recording...</div>
 <button class="emojiBtn" onclick="toggleEmoji()">😊</button>
 <button class="attachBtn" onclick="document.getElementById('fileUpload').click()">📎</button>
 <input type="file" id="fileUpload" style="display:none" accept="image/*,video/*,.pdf,.doc,.mp3" onchange="uploadFile(this)">
-<input id="msgInput" placeholder="Tapez... 😊📎 BIG NOW!" onkeypress="if(event.key==='Enter')sendMsg()">
+<input id="msgInput" placeholder="Tapez... BIG + GROUPS!" onkeypress="if(event.key==='Enter')sendMsg()">
 <button id="micBtnMain" class="micBtn">🎙️</button>
 <button onclick="sendMsg()" style="width:42px;height:42px;border-radius:50%;border:none;background:#25D366;color:white;font-size:16px;flex-shrink:0">➤</button>
 </div>
 <div style="background:#111;padding:6px 12px;display:flex;justify-content:space-between;font-size:10px;color:#666">
-<span>✅ SLIM TASKBAR • BIG CHAT BAR • 58px nav only!</span><span style="color:#FFD700;font-weight:bold">V86.2</span>
+<span>✅ 123 DONE: Voice + Emoji/File + Groups/APK — Install ready!</span><span style="color:#FFD700;font-weight:bold">V87 FINAL</span>
 </div>
 </div>
 
@@ -162,53 +201,97 @@ body{background:#0f0f0f;color:white;padding-bottom:78px}
 <div class="set-item" onclick="openBackup()"><h3 id="txtBackup" style="font-size:14px">4. Backup ></h3><small style="color:#25D366" id="curBackup">Ready</small></div>
 <div class="set-item" onclick="openMyStatus()" style="border:2px solid #25D366"><h3 id="txtMyStatusSet" style="font-size:14px">5. My Status 📸 ></h3><small style="color:#25D366">Post status</small></div>
 <div class="set-item" onclick="openLanguage()"><h3 id="txtLangSet" style="font-size:14px">6. Language 🌍 ></h3><small style="color:#FFD700" id="curLang">English</small></div>
-<div class="set-item" style="border:2px solid #25D366;background:#0a2210"><h3 style="font-size:13px">1/3 Voice ✅</h3><small style="color:#25D366">Hold mic</small></div>
-<div class="set-item" style="border:2px solid #FFD700;background:#221e00"><h3 style="font-size:13px">2/3 Emoji + Files ✅ SLIM ✅</h3><small style="color:#FFD700">😊📎 Taskbar 58px — BIG input!</small></div>
-<div class="set-item" style="border:1px dashed #666;opacity:0.6"><h3 style="font-size:13px">3/3 Groups + APK ⏳</h3><small>Next V87</small></div>
+<div class="set-item" style="border:2px solid #25D366;background:#0a2210"><h3 style="font-size:13px">1/3 Voice ✅ DONE</h3><small style="color:#25D366">Hold mic 5s wave</small></div>
+<div class="set-item" style="border:2px solid #25D366;background:#0a2210"><h3 style="font-size:13px">2/3 Emoji + Files + Slim ✅ DONE</h3><small style="color:#25D366">😊📎 Taskbar 58px BIG</small></div>
+<div class="set-item" style="border:3px solid #FFD700;background:#221e00"><h3 style="font-size:13px">3/3 Groups + APK ✅ DONE FINAL! 📲</h3><small style="color:#FFD700">👥 Groups + Install — V87!</small></div>
+<div class="set-item" onclick="installAPK()" style="border:2px solid #FFD700;background:#fff8d0"><h3 style="color:black;font-size:13px">📲 Install APK / Add to Home Screen ></h3><small style="color:#333">Tap to install Chale Chat like WhatsApp!</small></div>
 </div>
 
 <div id="languagePage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtLangTitle">🌍 Language</h2><button onclick="closeLanguage()" style="background:#FFD700;border:none;padding:6px 10px;border-radius:7px;font-weight:bold;">← Back</button></div><div style="background:#25D366;color:white;padding:10px;border-radius:8px;margin-top:12px;text-align:center;font-weight:bold;font-size:13px" id="txtLangDesc">✅ ONE TOUCH!</div><div style="background:#FFD700;color:black;padding:8px;border-radius:7px;margin-top:8px;text-align:center;font-weight:bold;font-size:13px">Current: <span id="selectedLangBox">English</span></div><h3 style="color:#FFD700;margin-top:14px;font-size:11px">🇬🇭 GHANA LOCAL</h3><div id="localLangs"></div><h3 style="color:#25D366;margin-top:14px;font-size:11px">🌍 WORLD</h3><div id="foreignLangs"></div></div>
 <div id="wallpaperPage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtWallTitle" style="font-size:18px">🎨 Wallpaper</h2><button onclick="closeWallpaper()" style="background:#FFD700;border:none;padding:6px 10px;border-radius:7px;font-weight:bold;">← Back</button></div><div style="margin-top:20px"><h3 id="txtThemeMode" style="font-size:14px">Theme Mode</h3><div style="display:flex;gap:10px;margin-top:8px"><button onclick="setTheme('dark')" style="flex:1;background:#111;color:white;border:2px solid #FFD700;padding:12px;border-radius:10px;font-weight:bold">🌙 Dark</button><button onclick="setTheme('light')" style="flex:1;background:white;color:black;border:2px solid #ccc;padding:12px;border-radius:10px;font-weight:bold">☀️ Light</button></div></div></div>
 <div id="privacyPage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtPrivTitle" style="font-size:18px">🔒 Privacy</h2><button onclick="closePrivacy()" style="background:#FFD700;border:none;padding:6px 10px;border-radius:7px;font-weight:bold;">← Back</button></div><div style="margin-top:20px"><div class="privacy-card"><div><b>Last Seen</b></div><div class="switch on" id="sw_lastseen" onclick="togglePriv('lastseen')"></div></div></div><button onclick="savePrivacy()" style="width:100%;background:#FFD700;border:none;padding:14px;border-radius:10px;font-weight:bold;margin-top:28px;">Save ✅</button></div>
-<div id="backupPage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 style="font-size:18px">💾 Backup</h2><button onclick="closeBackup()" style="background:#FFD700;border:none;padding:6px 10px;border-radius:7px;font-weight:bold;">← Back</button></div><div style="background:#1a2a1a;border:1px solid #25D366;border-radius:11px;padding:13px;margin-top:16px"><h3 style="color:#25D366;font-size:14px">✅ Backup</h3><p style="font-size:12px">Messages: <span id="chatCount">0</span></p></div><div class="backup-card" onclick="exportBackup()"><div><b>📤 Export</b></div><div>⬇️</div></div></div>
+<div id="backupPage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 style="font-size:18px">💾 Backup</h2><button onclick="closeBackup()" style="background:#FFD700;border:none;padding:6px 10px;border-radius:7px;font-weight:bold;">← Back</button></div><div style="background:#1a2a1a;border:1px solid #25D366;border-radius:11px;padding:13px;margin-top:16px"><h3 style="color:#25D366;font-size:14px">✅ Backup V87 FINAL</h3><p style="font-size:12px">Messages: <span id="chatCount">0</span> • Groups: <span id="groupCount">0</span></p></div><div class="backup-card" onclick="exportBackup()"><div><b>📤 Export</b></div><div>⬇️</div></div><div class="backup-card" onclick="installAPK()" style="border-left:4px solid #FFD700"><div><b>📲 Install APK</b></div><div>📲</div></div></div>
 <div id="profilePage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtEditProf" style="font-size:18px">👤 Edit Profile</h2><button onclick="closeProfile()" style="background:#FFD700;border:none;padding:6px 10px;border-radius:7px;font-weight:bold;">← Back</button></div><div style="text-align:center;margin-top:20px"><div style="position:relative;width:100px;height:100px;margin:0 auto"><div id="bigAvatar" style="width:100px;height:100px;border-radius:50%;background:#222;border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;font-size:48px;overflow:hidden"><img id="bigAvatarImg" style="width:100%;height:100%;object-fit:cover;display:none"><span id="bigAvatarEmoji">🇬🇭</span></div><label for="photoUpload" style="position:absolute;bottom:0;right:0;background:#FFD700;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;">📷</label><input type="file" id="photoUpload" accept="image/*" style="display:none" onchange="uploadPhoto(this)"></div></div><div style="margin-top:24px"><input id="profileNameInput" value="Salvation" style="width:100%;background:#1e1e1e;border:none;padding:13px;border-radius:9px;color:white;"><button onclick="saveProfile()" style="width:100%;background:#FFD700;border:none;padding:14px;border-radius:10px;font-weight:bold;margin-top:16px;" id="btnSaveProf">Save ✅</button></div></div>
 
 <script>
+// APK PWA SETUP
+let deferredPrompt=null;
+const manifest={name:"Chale Chat Ghana 🇬🇭",short_name:"Chale Chat",description:"Ghana Chat - Voice + Emoji + Groups + French Translate - By Salvation Tech",start_url:"./",display:"standalone",background_color:"#0f0f0f",theme_color:"#FFD700",icons:[{src:"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23FFD700'/><text x='50' y='65' font-size='50' text-anchor='middle'>🇬🇭</text></svg>",sizes:"192x192",type:"image/svg+xml"}]};
+const manifestBlob=new Blob([JSON.stringify(manifest)],{type:"application/json"}); 
+document.getElementById('manifestLink').href=URL.createObjectURL(manifestBlob);
+if('serviceWorker' in navigator){navigator.serviceWorker.register(URL.createObjectURL(new Blob([`self.addEventListener('install',e=>{self.skipWaiting()});self.addEventListener('fetch',e=>{e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)))})`],{type:'text/javascript'})).then(()=>console.log("SW OK")));}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBar').classList.add('show');});
+function installAPK(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(r=>{if(r.outcome==='accepted'){alert("✅ Chale Chat Installed! Check Home Screen 🇬🇭📲");}deferredPrompt=null;document.getElementById('installBar').classList.remove('show');});}else{alert("📲 To Install APK:\n\n1. Chrome menu (⋮ top right)\n2. Tap 'Add to Home screen' / 'Install app'\n3. Tap Install\n\nThen Chale Chat will be on your home screen like WhatsApp! 🇬🇭\n\nV87 FINAL — All 3 features done!");}}
+function hideInstall(){document.getElementById('installBar').classList.remove('show');}
+
 const translations={
-  en:{name:"English",flag:"🇬🇧",code:"en",search:"Search chats",myStatus:"My Status",typeMsg:"Tapez... 😊📎 BIG NOW!",settings:"⚙️ SETTINGS",profile:"1. Profile >",wallpaper:"2. Wallpaper >",privacy:"3. Privacy >",backup:"4. Backup >",myStatusSet:"5. My Status 📸 >",langSet:"6. Language 🌍 >",langTitle:"🌍 Language",langDesc:"✅ ONE TOUCH!",online:"En ligne • V86.2 Slim",send:"Send",statusTitle:"📸 My Status",tapAdd:"Tap to add status",photoStatus:"📸 Photo Status",myUpdates:"MY STATUS UPDATES",themeMode:"Theme Mode",chatWall:"Chat Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Privacy",editProf:"👤 Edit Profile",saveProf:"Save ✅",translate:"🌍 Traduire",translating:"Translating..."},
-  tw:{name:"Twi - Akan",flag:"🇬🇭",code:"tw",search:"Hwehwɛ nkɔmmɔ",myStatus:"Me Status",typeMsg:"Kyerɛw nkɔmmɔ... 😊📎",settings:"⚙️ NHYEHYƐEƐ",profile:"1. M'ankasa >",wallpaper:"2. Wallpaper >",privacy:"3. Kokoam >",backup:"4. Backup >",myStatusSet:"5. Me Status 📸 >",langSet:"6. Kasa 🌍 >",langTitle:"🌍 Kasa",langDesc:"✅ ONE TOUCH!",online:"Online • Twi",send:"Mane",statusTitle:"📸 Me Status",tapAdd:"Tap na fa status",photoStatus:"📸 Foto Status",myUpdates:"ME STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Kokoam",editProf:"👤 Sesa M'ankasa",saveProf:"Kora M'ankasa ✅",translate:"🌍 Kyerɛ ase",translating:"Ɛrekyerɛ ase..."},
-  pidgin:{name:"Ghana Pidgin",flag:"🇬🇭",code:"pcm",search:"Find chats",myStatus:"My Status",typeMsg:"Type how for dey... 😊📎",settings:"⚙️ SETTINGS",profile:"1. My Body >",wallpaper:"2. Cloth >",privacy:"3. Hide Body >",backup:"4. Save Am >",myStatusSet:"5. My Status 📸 >",langSet:"6. Language 🌍 >",langTitle:"🌍 Language",langDesc:"✅ ONE TOUCH!",online:"Online • Chale!",send:"Send am",statusTitle:"📸 My Status",tapAdd:"Tap add new status",photoStatus:"📸 Photo Status",myUpdates:"MY STATUS",themeMode:"Dark/Light",chatWall:"Back Cloth",wallTitle:"🎨 Cloth",privTitle:"🔒 Hide Body",editProf:"👤 My Body",saveProf:"Save Am ✅",translate:"🌍 Translate am",translating:"I dey translate..."},
-  ga:{name:"Ga",flag:"🇬🇭",code:"gaa",search:"Taomɔ sɛɛmɔi",myStatus:"Mi Status",typeMsg:"Ŋma sɛɛmɔ... 😊📎",settings:"⚙️ SHIHILƐI",profile:"1. Minuu >",wallpaper:"2. Wallpaper >",privacy:"3. Gbaashikɛ >",backup:"4. Backup >",myStatusSet:"5. Mi Status 📸 >",langSet:"6. Wiemɔ 🌍 >",langTitle:"🌍 Wiemɔ",langDesc:"✅ ONE TOUCH!",online:"Online • Ga",send:"Tsu",statusTitle:"📸 Mi Status",tapAdd:"Tap",photoStatus:"📸 Foto",myUpdates:"MI STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Gbaashikɛ",editProf:"👤 Tsake Minuu",saveProf:"Kɛkɛ Minuu ✅",translate:"🌍 Tsɔɔmɔ",translating:"Miitsɔɔmɔ..."},
-  fr:{name:"Français",flag:"🇫🇷",code:"fr",search:"Chercher chats",myStatus:"Mon Statut",typeMsg:"Tapez... 😊📎 BIG NOW!",settings:"⚙️ PARAMÈTRES",profile:"1. Profil >",wallpaper:"2. Fond >",privacy:"3. Confidentialité >",backup:"4. Sauvegarde >",myStatusSet:"5. Mon Statut 📸 >",langSet:"6. Langue 🌍 >",langTitle:"🌍 Langue",langDesc:"✅ ONE TOUCH!",online:"En ligne • V86.2 Slim",send:"Envoyer",statusTitle:"📸 Mon Statut",tapAdd:"Appuyez",photoStatus:"📸 Photo Statut",myUpdates:"MES STATUTS",themeMode:"Thème",chatWall:"Fond Chat",wallTitle:"🎨 Fond",privTitle:"🔒 Confidentialité",editProf:"👤 Modifier",saveProf:"Sauver ✅",translate:"🌍 Traduire",translating:"Traduction..."},
-  ewe:{name:"Ewe",flag:"🇬🇭",code:"ee",search:"Di nyawo",myStatus:"Nye Status",typeMsg:"Ŋlɔ nya... 😊📎",settings:"⚙️ ɖoɖo",profile:"1. Nyee >",wallpaper:"2. Wallpaper >",privacy:"3. Adzame >",backup:"4. Backup >",myStatusSet:"5. Nye Status 📸 >",langSet:"6. Gbe 🌍 >",langTitle:"🌍 Gbe",langDesc:"✅ ONE TOUCH!",online:"Online • Ewe",send:"Dɔ",statusTitle:"📸 Nye Status",tapAdd:"Tap",photoStatus:"📸 Foto",myUpdates:"NYE STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Adzame",editProf:"👤 Trɔ Nye",saveProf:"Dzra Nye ✅",translate:"🌍 Ɖe gɔme",translating:"Mele gɔme..."},
-  hausa:{name:"Hausa",flag:"🇳🇬",code:"ha",search:"Nemo hira",myStatus:"Status Dina",typeMsg:"Rubuta... 😊📎",settings:"⚙️ SAITUNA",profile:"1. Bayanina >",wallpaper:"2. Wallpaper >",privacy:"3. Sirri >",backup:"4. Ajiye >",myStatusSet:"5. Status Dina 📸 >",langSet:"6. Harshe 🌍 >",langTitle:"🌍 Harshe",langDesc:"✅ ONE TOUCH!",online:"Online • Hausa",send:"Aika",statusTitle:"📸 Status Dina",tapAdd:"Tap",photoStatus:"📸 Hoto",myUpdates:"SABON STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Sirri",editProf:"👤 Gyara",saveProf:"Ajiye ✅",translate:"🌍 Fassara",translating:"Ina fassarawa..."}
+  en:{name:"English",flag:"🇬🇧",code:"en",search:"Search chats",myStatus:"My Status",typeMsg:"Tapez... BIG + GROUPS!",settings:"⚙️ SETTINGS",profile:"1. Profile >",wallpaper:"2. Wallpaper >",privacy:"3. Privacy >",backup:"4. Backup >",myStatusSet:"5. My Status 📸 >",langSet:"6. Language 🌍 >",langTitle:"🌍 Language",langDesc:"✅ ONE TOUCH!",online:"Online • V87 FINAL",send:"Send",statusTitle:"📸 My Status",tapAdd:"Tap to add status",photoStatus:"📸 Photo Status",myUpdates:"MY STATUS UPDATES",themeMode:"Theme Mode",chatWall:"Chat Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Privacy",editProf:"👤 Edit Profile",saveProf:"Save ✅",translate:"🌍 Traduire",translating:"Translating..."},
+  fr:{name:"Français",flag:"🇫🇷",code:"fr",search:"Chercher chats",myStatus:"Mon Statut",typeMsg:"Tapez... BIG + GROUPS!",settings:"⚙️ PARAMÈTRES",profile:"1. Profil >",wallpaper:"2. Fond >",privacy:"3. Confidentialité >",backup:"4. Sauvegarde >",myStatusSet:"5. Mon Statut 📸 >",langSet:"6. Langue 🌍 >",langTitle:"🌍 Langue",langDesc:"✅ ONE TOUCH!",online:"En ligne • V87 FINAL APK",send:"Envoyer",statusTitle:"📸 Mon Statut",tapAdd:"Appuyez",photoStatus:"📸 Photo Statut",myUpdates:"MES STATUTS",themeMode:"Thème",chatWall:"Fond Chat",wallTitle:"🎨 Fond",privTitle:"🔒 Confidentialité",editProf:"👤 Modifier",saveProf:"Sauver ✅",translate:"🌍 Traduire",translating:"Traduction..."},
+  tw:{name:"Twi - Akan",flag:"🇬🇭",code:"tw",search:"Hwehwɛ nkɔmmɔ",myStatus:"Me Status",typeMsg:"Kyerɛw...",settings:"⚙️ NHYEHYƐEƐ",profile:"1. M'ankasa >",wallpaper:"2. Wallpaper >",privacy:"3. Kokoam >",backup:"4. Backup >",myStatusSet:"5. Me Status 📸 >",langSet:"6. Kasa 🌍 >",langTitle:"🌍 Kasa",langDesc:"✅ ONE TOUCH!",online:"Online • Twi",send:"Mane",statusTitle:"📸 Me Status",tapAdd:"Tap na fa status",photoStatus:"📸 Foto Status",myUpdates:"ME STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Kokoam",editProf:"👤 Sesa M'ankasa",saveProf:"Kora M'ankasa ✅",translate:"🌍 Kyerɛ ase",translating:"Ɛrekyerɛ ase..."},
+  ga:{name:"Ga",flag:"🇬🇭",code:"gaa",search:"Taomɔ sɛɛmɔi",myStatus:"Mi Status",typeMsg:"Ŋma...",settings:"⚙️ SHIHILƐI",profile:"1. Minuu >",wallpaper:"2. Wallpaper >",privacy:"3. Gbaashikɛ >",backup:"4. Backup >",myStatusSet:"5. Mi Status 📸 >",langSet:"6. Wiemɔ 🌍 >",langTitle:"🌍 Wiemɔ",langDesc:"✅ ONE TOUCH!",online:"Online • Ga",send:"Tsu",statusTitle:"📸 Mi Status",tapAdd:"Tap",photoStatus:"📸 Foto",myUpdates:"MI STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Gbaashikɛ",editProf:"👤 Tsake Minuu",saveProf:"Kɛkɛ Minuu ✅",translate:"🌍 Tsɔɔmɔ",translating:"Miitsɔɔmɔ..."},
+  pidgin:{name:"Ghana Pidgin",flag:"🇬🇭",code:"pcm",search:"Find chats",myStatus:"My Status",typeMsg:"Type how...",settings:"⚙️ SETTINGS",profile:"1. My Body >",wallpaper:"2. Cloth >",privacy:"3. Hide Body >",backup:"4. Save Am >",myStatusSet:"5. My Status 📸 >",langSet:"6. Language 🌍 >",langTitle:"🌍 Language",langDesc:"✅ ONE TOUCH!",online:"Online • Chale!",send:"Send am",statusTitle:"📸 My Status",tapAdd:"Tap add new status",photoStatus:"📸 Photo Status",myUpdates:"MY STATUS",themeMode:"Dark/Light",chatWall:"Back Cloth",wallTitle:"🎨 Cloth",privTitle:"🔒 Hide Body",editProf:"👤 My Body",saveProf:"Save Am ✅",translate:"🌍 Translate am",translating:"I dey translate..."},
+  ewe:{name:"Ewe",flag:"🇬🇭",code:"ee",search:"Di nyawo",myStatus:"Nye Status",typeMsg:"Ŋlɔ nya...",settings:"⚙️ ɖoɖo",profile:"1. Nyee >",wallpaper:"2. Wallpaper >",privacy:"3. Adzame >",backup:"4. Backup >",myStatusSet:"5. Nye Status 📸 >",langSet:"6. Gbe 🌍 >",langTitle:"🌍 Gbe",langDesc:"✅ ONE TOUCH!",online:"Online • Ewe",send:"Dɔ",statusTitle:"📸 Nye Status",tapAdd:"Tap",photoStatus:"📸 Foto",myUpdates:"NYE STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Adzame",editProf:"👤 Trɔ Nye",saveProf:"Dzra Nye ✅",translate:"🌍 Ɖe gɔme",translating:"Mele gɔme..."},
+  hausa:{name:"Hausa",flag:"🇳🇬",code:"ha",search:"Nemo hira",myStatus:"Status Dina",typeMsg:"Rubuta...",settings:"⚙️ SAITUNA",profile:"1. Bayanina >",wallpaper:"2. Wallpaper >",privacy:"3. Sirri >",backup:"4. Ajiye >",myStatusSet:"5. Status Dina 📸 >",langSet:"6. Harshe 🌍 >",langTitle:"🌍 Harshe",langDesc:"✅ ONE TOUCH!",online:"Online • Hausa",send:"Aika",statusTitle:"📸 Status Dina",tapAdd:"Tap",photoStatus:"📸 Hoto",myUpdates:"SABON STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Sirri",editProf:"👤 Gyara",saveProf:"Ajiye ✅",translate:"🌍 Fassara",translating:"Ina fassarawa..."}
 };
-const localDictionary={tw:{"how far":"Ɛte sɛn?","same here":"Me nso saa","hello":"Maakye","thank you":"Medaase","welcome":"Akwaaba","akwaaba":"Akwaaba!","how are you":"Wo ho te sɛn?","it not that":"Ɛnyɛ saa"},ga:{"how far":"Ami atswa?","same here":"Mi hu gbɛ","hello":"Atuu?","thank you":"Oyiwala donnu","welcome":"Atuu akwaaba","akwaaba":"Akwaaba!"},en:{},fr:{"same here":"Moi aussi","how far":"Comment ça va?","akwaaba":"Bienvenue!","thank you":"Merci","it been long":"Ça fait longtemps","it not that":"Ce n'est pas ça","okyena":"D'accord"}};
+const localDictionary={tw:{"how far":"Ɛte sɛn?","same here":"Me nso saa","hello":"Maakye","thank you":"Medaase","welcome":"Akwaaba","akwaaba":"Akwaaba!","how are you":"Wo ho te sɛn?"},ga:{"how far":"Ami atswa?","same here":"Mi hu gbɛ"},en:{},fr:{"same here":"Moi aussi","how far":"Comment ça va?","akwaaba":"Bienvenue!","thank you":"Merci","it been long":"Ça fait longtemps","it not that":"Ce n'est pas ça","okyena":"D'accord","salvation":"Salut"}};
 let currentLang=localStorage.getItem('chale_lang')||'fr';
 let currentWall=localStorage.getItem('chale_wall')||'none';
 let privacy={lastseen:true,ghost:false};
-let currentChat='Ama';
-let chatsData=JSON.parse(localStorage.getItem('chale_chats_v79')||'{"Ama":[{"id":1,"text":"It been long","time":"07:58 PM","me":true},{"id":2,"text":"It not that","time":"07:59 PM","me":true},{"id":3,"text":"Okyena","time":"08:17 PM","me":true}]}');
+let currentChat='Salvation';
+let chatsData=JSON.parse(localStorage.getItem('chale_chats_v79')||'{"Salvation":[{"id":1,"text":"Voice note • 5s","type":"voice","duration":5,"time":"01:01 AM","me":true}],"Ama":[{"id":1,"text":"It been long","time":"07:58 PM","me":true},{"id":2,"text":"It not that","time":"07:59 PM","me":true}]}');
 let statusData=JSON.parse(localStorage.getItem('chale_status_v81')||'[]');
+let groupsData=JSON.parse(localStorage.getItem('chale_groups_v87')||'{}');
 let callTimerInterval=null, callSeconds=0, isMuted=false;
 let mediaRecorder, audioChunks=[], isRecording=false, recStartTime, recInterval;
-let emojis=["😊","😂","❤️","🔥","🇬🇭","😍","🙏","😭","💛","😎","😅","🥺","😇","🤣","👍","👏","🎉","💯","😃","😁","🥰","😘","🤩","😋","🙌","👌","💪","✌️","👋","🤝","🇬🇭","💚","💛","❤️‍🔥","😴","🤔","😌","🥳","😳","😱","🤗","🫶","🫡","💃","🕺","🍻","🍺","⚽","🏆","🎙️","📎","🥲","😌"];
+let emojis=["😊","😂","❤️","🔥","🇬🇭","😍","🙏","😭","💛","😎","😅","🥺","😇","🤣","👍","👏","🎉","💯","😃","😁","🥰","😘","🤩","😋","🙌","👌","💪","✌️","👋","🤝","🇬🇭","💚","💛","❤️‍🔥","😴","🤔","😌","🥳","😳","😱","🤗","🫶","🫡","💃","🕺","🍻","🍺","⚽","🏆","🎙️","📎","🥲"];
 
 function selectLanguage(code){let t=translations[code]; if(!t) return; currentLang=code; localStorage.setItem('chale_lang', code); document.getElementById('selectedLangBox').innerText=t.flag+' '+t.name+' ✅ DONE!'; document.getElementById('selectedLangBox').style.background='#25D366'; document.getElementById('selectedLangBox').style.color='white'; applyLanguage(code); if(navigator.vibrate) navigator.vibrate(50);}
-function applyLanguage(langCode){currentLang=langCode; let t=translations[langCode]; if(!t) return; document.getElementById('curLang').innerText=t.flag+' '+t.name; document.getElementById('searchInput').placeholder=t.search; document.getElementById('quickInput').placeholder=t.typeMsg; let msgIn=document.getElementById('msgInput'); if(msgIn) msgIn.placeholder=t.typeMsg; document.getElementById('txtMyStatus').innerText=t.myStatus; document.getElementById('txtSettings').innerText=t.settings; document.getElementById('txtProfile').innerText=t.profile; document.getElementById('txtWallpaper').innerText=t.wallpaper; document.getElementById('txtPrivacy').innerText=t.privacy; document.getElementById('txtBackup').innerText=t.backup; document.getElementById('txtMyStatusSet').innerText=t.myStatusSet; document.getElementById('txtLangSet').innerText=t.langSet; document.getElementById('txtLangTitle').innerText=t.langTitle; document.getElementById('txtLangDesc').innerText=t.langDesc; document.getElementById('txtOnline').innerText=t.online; document.getElementById('txtStatusTitle').innerText=t.statusTitle; document.getElementById('txtTapAdd').innerText=t.tapAdd; document.getElementById('txtPhotoStatus').innerText=t.photoStatus; document.getElementById('txtMyUpdates').innerText=t.myUpdates; document.getElementById('txtThemeMode').innerText=t.themeMode; document.getElementById('txtChatWall').innerText=t.chatWall; document.getElementById('txtWallTitle').innerText=t.wallTitle; document.getElementById('txtPrivTitle').innerText=t.privTitle; document.getElementById('txtEditProf').innerText=t.editProf; document.getElementById('btnSaveProf').innerText=t.saveProf; let box=document.getElementById('selectedLangBox'); if(box) box.innerText=t.flag+' '+t.name; renderLanguages(); renderMessages(); renderChatList();}
+function applyLanguage(langCode){currentLang=langCode; let t=translations[langCode]; if(!t) return; document.getElementById('curLang').innerText=t.flag+' '+t.name; document.getElementById('searchInput').placeholder=t.search; document.getElementById('quickInput').placeholder=t.typeMsg; let msgIn=document.getElementById('msgInput'); if(msgIn) msgIn.placeholder=t.typeMsg; document.getElementById('txtMyStatus').innerText=t.myStatus; document.getElementById('txtSettings').innerText=t.settings; document.getElementById('txtProfile').innerText=t.profile; document.getElementById('txtWallpaper').innerText=t.wallpaper; document.getElementById('txtPrivacy').innerText=t.privacy; document.getElementById('txtBackup').innerText=t.backup; document.getElementById('txtMyStatusSet').innerText=t.myStatusSet; document.getElementById('txtLangSet').innerText=t.langSet; document.getElementById('txtLangTitle').innerText=t.langTitle; document.getElementById('txtLangDesc').innerText=t.langDesc; document.getElementById('txtOnline').innerText=t.online; document.getElementById('txtStatusTitle').innerText=t.statusTitle; document.getElementById('txtTapAdd').innerText=t.tapAdd; document.getElementById('txtPhotoStatus').innerText=t.photoStatus; document.getElementById('txtMyUpdates').innerText=t.myUpdates; document.getElementById('txtThemeMode').innerText=t.themeMode; document.getElementById('txtChatWall').innerText=t.chatWall; document.getElementById('txtWallTitle').innerText=t.wallTitle; document.getElementById('txtPrivTitle').innerText=t.privTitle; document.getElementById('txtEditProf').innerText=t.editProf; document.getElementById('btnSaveProf').innerText=t.saveProf; let box=document.getElementById('selectedLangBox'); if(box) box.innerText=t.flag+' '+t.name; renderLanguages(); renderMessages(); renderChatList(); renderGroups();}
 function renderLanguages(){let localDiv=document.getElementById('localLangs'); let foreignDiv=document.getElementById('foreignLangs'); if(!localDiv||!foreignDiv) return; localDiv.innerHTML=''; foreignDiv.innerHTML=''; let localCodes=['en','tw','ga','ewe','hausa','pidgin']; let foreignCodes=['fr']; const allCodes=[...localCodes,...foreignCodes]; allCodes.forEach(code=>{let t=translations[code]; if(!t) return; let active=currentLang===code?' active':''; let div=document.createElement('div'); div.className='lang-card'+active; div.setAttribute('onclick', `selectLanguage('${code}')`); div.innerHTML=`<div><b>${t.flag} ${t.name}</b><br><small>${t.search}</small></div><button class="lang-btn">${currentLang===code?'✅ SELECTED':'TAP!'}</button>`; if(localCodes.includes(code)) localDiv.appendChild(div); else foreignDiv.appendChild(div);});}
 function toggleEmoji(){let panel=document.getElementById('emojiPanel'); panel.classList.toggle('show'); if(panel.classList.contains('show')){renderEmoji();}}
 function renderEmoji(){let grid=document.getElementById('emojiGrid'); grid.innerHTML=''; emojis.forEach(e=>{let span=document.createElement('span'); span.innerText=e; span.onclick=()=>{let inp=document.getElementById('msgInput'); inp.value+=e; inp.focus();}; grid.appendChild(span);});}
-function uploadFile(input){if(!input.files[0]) return; let file=input.files[0]; let reader=new FileReader(); reader.onload=e=>{let time=new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); let msg={id:Date.now(), text:`📎 ${file.name} • ${(file.size/1024).toFixed(1)}KB`, file:e.target.result, fileName:file.name, fileType:file.type, time:time, me:true, type:'file'}; if(!chatsData[currentChat]) chatsData[currentChat]=[]; chatsData[currentChat].push(msg); localStorage.setItem('chale_chats_v79', JSON.stringify(chatsData)); renderMessages(); renderChatList(); updateBackupInfo();}; reader.readAsDataURL(file);}
-function switchTab(tab){document.getElementById('chatsTab').style.display=tab==='chats'?'block':'none'; document.getElementById('updatesTab').style.display=tab==='updates'?'block':'none'; document.getElementById('communitiesTab').style.display=tab==='communities'?'block':'none'; document.getElementById('callsTab').style.display=tab==='calls'?'block':'none'; document.getElementById('quickBar').style.display=tab==='chats'?'flex':'none'; document.querySelectorAll('.navItem').forEach(el=>el.classList.remove('active')); if(tab==='chats') document.getElementById('navChats').classList.add('active'); if(tab==='updates') {document.getElementById('navUpdates').classList.add('active'); renderRealUpdates();} if(tab==='communities') document.getElementById('navCommunities').classList.add('active'); if(tab==='calls') document.getElementById('navCalls').classList.add('active'); document.getElementById('emojiPanel').classList.remove('show');}
+function uploadFile(input){if(!input.files[0]) return; let file=input.files[0]; let reader=new FileReader(); reader.onload=e=>{let time=new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); let msg={id:Date.now(), text:`📎 ${file.name} • ${(file.size/1024).toFixed(1)}KB`, file:e.target.result, fileName:file.name, fileType:file.type, time:time, me:true, type:'file'}; if(!chatsData[currentChat]) chatsData[currentChat]=[]; chatsData[currentChat].push(msg); localStorage.setItem('chale_chats_v79', JSON.stringify(chatsData)); renderMessages(); renderChatList();}; reader.readAsDataURL(file);}
+function switchTab(tab){document.getElementById('chatsTab').style.display=tab==='chats'?'block':'none'; document.getElementById('updatesTab').style.display=tab==='updates'?'block':'none'; document.getElementById('communitiesTab').style.display=tab==='communities'?'block':'none'; document.getElementById('callsTab').style.display=tab==='calls'?'block':'none'; document.getElementById('quickBar').style.display=tab==='chats'?'flex':'none'; document.querySelectorAll('.navItem').forEach(el=>el.classList.remove('active')); if(tab==='chats') document.getElementById('navChats').classList.add('active'); if(tab==='updates') {document.getElementById('navUpdates').classList.add('active'); renderRealUpdates();} if(tab==='communities') {document.getElementById('navCommunities').classList.add('active'); renderGroups();} if(tab==='calls') document.getElementById('navCalls').classList.add('active'); document.getElementById('emojiPanel').classList.remove('show');}
 function renderRealUpdates(){let scroll=document.getElementById('updatesStatusScroll'); if(!scroll) return; scroll.innerHTML=''; let ph=localStorage.getItem('chale_photo')||''; let name=localStorage.getItem('chale_name')||'Salvation'; let addCard=document.createElement('div'); addCard.className='statusCard addCard'; addCard.onclick=()=>openMyStatus(); addCard.innerHTML=`<div style="width:40px;height:40px;border-radius:50%;background:#222;overflow:hidden;display:flex;align-items:center;justify-content:center">${ph?`<img src="${ph}" style="width:100%;height:100%;object-fit:cover">`:`<span>${name[0]}</span>`}</div><div style="margin-top:8px;font-size:11px;color:black;text-align:center">Add status</div>`; scroll.appendChild(addCard); statusData.slice().reverse().forEach(s=>{let card=document.createElement('div'); card.className='statusCard'; card.onclick=()=>viewStatusById(s.id); card.innerHTML=`<img src="${s.img}"><div class="greenBorder"></div>`; scroll.appendChild(card);}); document.getElementById('realStatusCount').innerText=`• ${statusData.length} Real`;}
-function createCommunity(){let n=prompt("Community Name:"); if(n) alert(`✅ ${n} Created!`);}
+function createCommunity(){openGroupPage();}
 function createCallLink(){let code=Math.random().toString(36).substring(2,6).toUpperCase()+'-'+Math.random().toString(36).substring(2,6).toUpperCase(); let link='https://chale.chat/join/'+code; if(navigator.clipboard){navigator.clipboard.writeText(link).then(()=>{alert(`✅ COPIED! ${link}`);});} else {prompt("Copy:", link);}}
 function makeCall(name, code){document.getElementById('callOverlay').style.display='flex'; document.getElementById('callOverlayName').innerText=name; document.getElementById('callOverlayStatus').innerText='🇬🇭 Calling...'; document.getElementById('callTimer').innerText='00:00'; callSeconds=0; clearInterval(callTimerInterval); callTimerInterval=setInterval(()=>{callSeconds++; let m=String(Math.floor(callSeconds/60)).padStart(2,'0'); let s=String(callSeconds%60).padStart(2,'0'); document.getElementById('callTimer').innerText=`${m}:${s}`; if(callSeconds===2) document.getElementById('callOverlayStatus').innerText='🔊 Ringing...'; if(callSeconds===5) document.getElementById('callOverlayStatus').innerText='✅ Connected • Ghana 🇬🇭';},1000);}
 function endCall(){clearInterval(callTimerInterval); document.getElementById('callOverlay').style.display='none';}
 function toggleMute(){isMuted=!isMuted; document.getElementById('muteBtn').innerText=isMuted?'🔇':'🎙️';}
 function switchCam(){alert('Video soon!');}
 function showDialer(){let num=prompt("Ghana Number:"); if(num) makeCall(num, num.substring(0,3));}
+
+// GROUPS LOGIC
+function openGroupPage(){document.getElementById('groupPage').style.display='block'; renderGroupMembersSelect();}
+function closeGroupPage(){document.getElementById('groupPage').style.display='none';}
+function renderGroupMembersSelect(){let div=document.getElementById('groupMembersSelect'); div.innerHTML=''; Object.keys(chatsData).forEach(name=>{div.innerHTML+=`<div class="groupMember"><label><input type="checkbox" value="${name}" class="groupCheck"> ${name}</label><span>🇬🇭</span></div>`;}); if(Object.keys(chatsData).length===0){div.innerHTML='<p style="color:gray;font-size:12px">No chats yet — add friends first!</p>';}}
+function createGroup(){
+  let gName=document.getElementById('groupNameInput').value.trim();
+  let gDesc=document.getElementById('groupDescInput').value.trim();
+  if(!gName){alert("Enter group name!"); return;}
+  let checks=document.querySelectorAll('.groupCheck:checked');
+  let members=Array.from(checks).map(c=>c.value);
+  let id='GRP_'+Date.now();
+  groupsData[id]={id:id,name:gName,desc:gDesc,members:members,created:new Date().toLocaleString()};
+  chatsData[gName]=[{id:Date.now(),text:`👥 Group "${gName}" created by Salvation 🇬🇭 with ${members.length} members!`,time:new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}),me:false,type:'system'}];
+  localStorage.setItem('chale_groups_v87', JSON.stringify(groupsData));
+  localStorage.setItem('chale_chats_v79', JSON.stringify(chatsData));
+  alert(`✅ GROUP "${gName}" CREATED! 🇬🇭👥\nMembers: ${members.join(', ')||'Just you'}\nNow in Communities + Chats!`);
+  document.getElementById('groupNameInput').value=''; document.getElementById('groupDescInput').value='';
+  closeGroupPage(); renderGroups(); renderChatList(); updateBackupInfo();
+}
+function renderGroups(){
+  let list=document.getElementById('groupsList'); if(!list) return; list.innerHTML='';
+  Object.values(groupsData).reverse().forEach(g=>{
+    list.innerHTML+=`<div class="commCard groupCard" onclick="openChat('${g.name}')"><div style="width:44px;height:44px;border-radius:10px;background:#FFD700;display:flex;align-items:center;justify-content:center;font-weight:bold;color:black">👥</div><div style="flex:1"><b style="color:black;font-size:13px">${g.name} 🇬🇭</b><br><span style="color:#666;font-size:11px">${g.members.length+1} members • ${g.desc||'Ghana group'} • ${g.created}</span></div><div style="color:#25D366;font-size:16px">›</div></div>`;
+  });
+  document.getElementById('groupCount').innerText=Object.keys(groupsData).length;
+}
+function showGroupInfo(){
+  let g=groupsData[Object.keys(groupsData).find(k=>groupsData[k].name===currentChat)]||Object.values(groupsData).find(x=>x.name===currentChat);
+  if(!g){alert("Individual chat"); return;}
+  alert(`👥 GROUP: ${g.name}\n\n📝 ${g.desc||'No description'}\n👤 Members (${g.members.length+1}): Salvation (Admin), ${g.members.join(', ')}\n📅 Created: ${g.created}\n\n🇬🇭 Ghana Groups — 256 max!`);
+}
 async function initVoice(){let micBtn=document.getElementById('micBtnMain'); if(!micBtn) return; micBtn.addEventListener('touchstart', startRec, {passive:false}); micBtn.addEventListener('touchend', stopRec, {passive:false}); micBtn.addEventListener('mousedown', startRec); micBtn.addEventListener('mouseup', stopRec); micBtn.addEventListener('mouseleave', cancelRec);}
 async function startRec(e){if(e) e.preventDefault(); if(isRecording) return; try{let stream=await navigator.mediaDevices.getUserMedia({audio:true}); mediaRecorder=new MediaRecorder(stream); audioChunks=[]; mediaRecorder.ondataavailable=ev=>audioChunks.push(ev.data); mediaRecorder.onstop=()=>{let blob=new Blob(audioChunks,{type:'audio/webm'}); let url=URL.createObjectURL(blob); let time=new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); let dur=Math.floor((Date.now()-recStartTime)/1000); if(dur<1) dur=1; if(dur>0){let msg={id:Date.now(), text:`🎙️ Voice note • ${dur}s`, audio:url, time:time, me:true, type:'voice', duration:dur}; if(!chatsData[currentChat]) chatsData[currentChat]=[]; chatsData[currentChat].push(msg); localStorage.setItem('chale_chats_v79', JSON.stringify(chatsData)); renderMessages(); renderChatList();} stream.getTracks().forEach(t=>t.stop());}; mediaRecorder.start(); isRecording=true; recStartTime=Date.now(); document.getElementById('micBtnMain').classList.add('recording'); document.getElementById('micBtnMain').innerText='🔴'; document.getElementById('recIndicator').style.display='flex'; recInterval=setInterval(()=>{let sec=Math.floor((Date.now()-recStartTime)/1000); let m=String(Math.floor(sec/60)).padStart(2,'0'); let s=String(sec%60).padStart(2,'0'); document.getElementById('recTime').innerText=`${m}:${s}`;}, 200); if(navigator.vibrate) navigator.vibrate(50);}catch(err){alert('🎙️ Allow microphone!');}}
 function stopRec(e){if(e) e.preventDefault(); if(!isRecording) return; isRecording=false; clearInterval(recInterval); if(mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop(); document.getElementById('micBtnMain').classList.remove('recording'); document.getElementById('micBtnMain').innerText='🎙️'; document.getElementById('recIndicator').style.display='none'; if(navigator.vibrate) navigator.vibrate(30);}
@@ -227,32 +310,55 @@ function viewStatus(){if(statusData.length===0){openMyStatus(); return;} let lat
 let statusProgInterval=null;
 function openStatusViewer(statusObj){document.getElementById('statusViewer').style.display='block'; document.getElementById('statusViewImg').src=statusObj.img; document.getElementById('viewerName').innerText=localStorage.getItem('chale_name')||'Salvation'; document.getElementById('viewerTime').innerText=statusObj.time; let ph=localStorage.getItem('chale_photo'); if(ph){document.getElementById('viewerAvatar').src=ph; document.getElementById('viewerAvatar').style.display='block'; document.getElementById('viewerEmoji').style.display='none';} let progContainer=document.getElementById('statusProgress'); progContainer.innerHTML='<div class="prog"><div class="progFill" id="progFill"></div></div>'; let fill=document.getElementById('progFill'); let width=0; clearInterval(statusProgInterval); statusProgInterval=setInterval(()=>{width+=0.5; fill.style.width=width+'%'; if(width>=100){clearInterval(statusProgInterval); closeStatusViewer();}},30); statusObj.views++; localStorage.setItem('chale_status_v81', JSON.stringify(statusData)); renderMyStatusList(); renderRealUpdates();}
 function closeStatusViewer(){clearInterval(statusProgInterval); document.getElementById('statusViewer').style.display='none';}
-function renderChatList(){let list=document.getElementById('chatList'); list.innerHTML=''; let keys=Object.keys(chatsData); if(keys.length===0){list.innerHTML='<p style="color:gray;text-align:center;padding:28px">No chats yet — start with Ama!</p>'; return;} keys.forEach(name=>{let msgs=(chatsData[name]||[]).filter(m=>m && m.text && m.text.trim()); let last=msgs[msgs.length-1]; let lastText=last?last.text:'Tap'; if(lastText.length>28) lastText=lastText.slice(0,28)+'...'; let time=last?last.time:''; list.innerHTML+=`<div class="chat" onclick="openChat('${name}')"><div class="avatar">${name[0]}</div><div style="flex:1"><b style="font-size:14px">${name}</b><br><small style="color:gray;font-size:12px">${lastText}</small></div><div><small style="color:gray;font-size:11px">${time}</small></div></div>`;});}
-function openChat(name){currentChat=name; document.getElementById('chatName').innerText=name; document.getElementById('chatAvatarEmoji').innerText=name[0]; document.getElementById('chatWindow').classList.add('show'); document.getElementById('chatWindow').style.display='flex'; renderMessages();}
+function renderChatList(){
+  let list=document.getElementById('chatList'); list.innerHTML='';
+  let allKeys=[...Object.keys(groupsData).map(k=>groupsData[k].name), ...Object.keys(chatsData)];
+  let unique=[...new Set(allKeys)];
+  if(unique.length===0){list.innerHTML='<p style="color:gray;text-align:center;padding:28px">No chats yet<br><small>Create group in Communities!</small></p>'; return;}
+  unique.forEach(name=>{
+    let isGroup=Object.values(groupsData).some(g=>g.name===name);
+    let msgs=(chatsData[name]||[]).filter(m=>m && m.text && m.text.trim());
+    let last=msgs[msgs.length-1]; let lastText=last?last.text:'Tap'; if(lastText.length>28) lastText=lastText.slice(0,28)+'...';
+    let time=last?last.time:''; 
+    list.innerHTML+=`<div class="chat ${isGroup?'group':''}" onclick="openChat('${name}')"><div class="avatar ${isGroup?'groupAva':''}">${isGroup?'👥':name[0]}</div><div style="flex:1"><b style="font-size:14px">${name} ${isGroup?'👥':''}</b><br><small style="color:gray;font-size:12px">${lastText}</small></div><div><small style="color:gray;font-size:11px">${time}</small></div></div>`;
+  });
+}
+function openChat(name){
+  currentChat=name; 
+  document.getElementById('chatName').innerText=name; 
+  let isGroup=Object.values(groupsData).some(g=>g.name===name);
+  document.getElementById('chatAvatarEmoji').innerText=isGroup?'👥':name[0];
+  document.getElementById('chatHeaderAvatar').className=isGroup?'avatar groupAva':'avatar';
+  document.getElementById('groupInfoBtn').style.display=isGroup?'block':'none';
+  document.getElementById('txtOnline').innerText=isGroup?`👥 Group • ${groupsData[Object.keys(groupsData).find(k=>groupsData[k].name===name)]?.members.length+1||1} members • V87 FINAL`:'En ligne • V87 FINAL APK';
+  document.getElementById('chatWindow').classList.add('show'); document.getElementById('chatWindow').style.display='flex'; renderMessages();
+}
 function closeChat(){document.getElementById('chatWindow').classList.remove('show'); document.getElementById('chatWindow').style.display='none'; document.getElementById('emojiPanel').classList.remove('show');}
 function renderMessages(){
   let box=document.getElementById('msgList'); box.innerHTML='';
   let allMsgs=(chatsData[currentChat]||[]).filter(m=>m && m.text && m.text.trim());
-  if(allMsgs.length===0){box.innerHTML='<p style="color:gray;text-align:center;padding:36px">No messages<br><small>😊 Emoji • 📎 Files • 🎙️ Voice — Slim!</small></p>'; return;}
+  if(allMsgs.length===0){box.innerHTML='<p style="color:gray;text-align:center;padding:36px">No messages<br><small>👥 Groups + 😊 Emoji + 📎 Files + 🎙️ Voice — V87 FINAL!</small></p>'; return;}
   let t=translations[currentLang]||translations['en'];
+  let isGroup=Object.values(groupsData).some(g=>g.name===currentChat);
   allMsgs.forEach(m=>{
     let safeText=(m.text||'').replace(/'/g,"\\'").replace(/"/g,'');
+    let senderHtml=isGroup && !m.me?`<div class="sender">${m.sender||'Member'}</div>`:'';
     if(m.type==='voice' && m.audio){
-      box.innerHTML+=`<div class="msg me"><div class="voiceRow"><button class="voicePlay" id="play_${m.id}" onclick="playVoice(${m.id})">▶️</button><div class="voiceWave" style="--p:60%"></div><span class="voiceTime">${m.duration||3}s</span><audio id="aud_${m.id}" src="${m.audio}" style="display:none"></audio></div>${m.text}<div id="trans_${m.id}" class="trans"></div><button id="btn_${m.id}" class="trBtn" onclick="translateMessage(${m.id}, '${safeText}')">🌍 ${t.translate.replace('🌍 ','')}</button><span class="time">${m.time} ✓✓</span></div>`;
+      box.innerHTML+=`<div class="msg ${m.me?'me':'other'}">${senderHtml}<div class="voiceRow"><button class="voicePlay" id="play_${m.id}" onclick="playVoice(${m.id})">▶️</button><div class="voiceWave" style="--p:60%"></div><span class="voiceTime">${m.duration||3}s</span><audio id="aud_${m.id}" src="${m.audio}" style="display:none"></audio></div>${m.text}<div id="trans_${m.id}" class="trans"></div><button id="btn_${m.id}" class="trBtn" onclick="translateMessage(${m.id}, '${safeText}')">🌍 ${t.translate.replace('🌍 ','')}</button><span class="time">${m.time} ✓✓</span></div>`;
     } else if(m.type==='file' && m.file){
       if(m.fileType && m.fileType.startsWith('image/')){
-        box.innerHTML+=`<div class="msg me"><img src="${m.file}" style="max-width:100%;border-radius:11px;margin-bottom:5px"><br>${m.text}<div id="trans_${m.id}" class="trans"></div><button id="btn_${m.id}" class="trBtn" onclick="translateMessage(${m.id}, '${safeText}')">🌍 ${t.translate.replace('🌍 ','')}</button><span class="time">${m.time} ✓✓</span></div>`;
+        box.innerHTML+=`<div class="msg ${m.me?'me':'other'}">${senderHtml}<img src="${m.file}" style="max-width:100%;border-radius:11px;margin-bottom:5px"><br>${m.text}<div id="trans_${m.id}" class="trans"></div><button id="btn_${m.id}" class="trBtn" onclick="translateMessage(${m.id}, '${safeText}')">🌍 ${t.translate.replace('🌍 ','')}</button><span class="time">${m.time} ✓✓</span></div>`;
       } else {
-        box.innerHTML+=`<div class="msg me"><div class="fileMsg"><div class="fileIcon">📎</div><div><b style="font-size:13px">${m.fileName}</b><br><small>${m.text}</small></div></div><div id="trans_${m.id}" class="trans"></div><button id="btn_${m.id}" class="trBtn" onclick="translateMessage(${m.id}, '${safeText}')">🌍 ${t.translate.replace('🌍 ','')}</button><span class="time">${m.time} ✓✓</span></div>`;
+        box.innerHTML+=`<div class="msg ${m.me?'me':'other'}">${senderHtml}<div class="fileMsg"><div class="fileIcon">📎</div><div><b style="font-size:13px">${m.fileName}</b><br><small>${m.text}</small></div></div><div id="trans_${m.id}" class="trans"></div><button id="btn_${m.id}" class="trBtn" onclick="translateMessage(${m.id}, '${safeText}')">🌍 ${t.translate.replace('🌍 ','')}</button><span class="time">${m.time} ✓✓</span></div>`;
       }
     } else {
-      box.innerHTML+=`<div class="msg me">${m.text}<div id="trans_${m.id}" class="trans"></div><button id="btn_${m.id}" class="trBtn" onclick="translateMessage(${m.id}, '${safeText}')">🌍 ${t.translate.replace('🌍 ','')}</button><span class="time">${m.time} ✓✓</span></div>`;
+      box.innerHTML+=`<div class="msg ${m.me?'me':'other'}">${senderHtml}${m.text}<div id="trans_${m.id}" class="trans"></div><button id="btn_${m.id}" class="trBtn" onclick="translateMessage(${m.id}, '${safeText}')">🌍 ${t.translate.replace('🌍 ','')}</button><span class="time">${m.time} ✓✓</span></div>`;
     }
   });
   box.scrollTop=box.scrollHeight;
 }
 function sendMsg(){let inp=document.getElementById('msgInput'); let txt=inp.value.trim(); if(!txt) return; let time=new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); let msg={id:Date.now(), text:txt, time:time, me:true}; if(!chatsData[currentChat]) chatsData[currentChat]=[]; chatsData[currentChat].push(msg); localStorage.setItem('chale_chats_v79', JSON.stringify(chatsData)); inp.value=''; renderMessages(); renderChatList(); updateBackupInfo();}
-function quickSend(){let inp=document.getElementById('quickInput'); let txt=inp.value.trim(); if(!txt) return; currentChat='Ama'; document.getElementById('msgInput').value=txt; openChat('Ama'); sendMsg(); inp.value='';}
+function quickSend(){let inp=document.getElementById('quickInput'); let txt=inp.value.trim(); if(!txt) return; currentChat='Salvation'; document.getElementById('msgInput').value=txt; openChat('Salvation'); sendMsg(); inp.value='';}
 function openSettings(){document.getElementById('settingsPage').style.display='block'}
 function closeSettings(){document.getElementById('settingsPage').style.display='none'}
 function editProfile(){document.getElementById('settingsPage').style.display='none';document.getElementById('profilePage').style.display='block'}
@@ -268,8 +374,8 @@ function setWall(color,name,el){document.querySelectorAll('.wall-option').forEac
 function saveWallpaper(){localStorage.setItem('chale_wall', currentWall); alert("✅ Saved!"); closeWallpaper();}
 function togglePriv(key){privacy[key]=!privacy[key]; let sw=document.getElementById('sw_'+key); if(privacy[key]) sw.classList.add('on'); else sw.classList.remove('on');}
 function savePrivacy(){localStorage.setItem('chale_privacy', JSON.stringify(privacy)); alert("✅ Saved"); closePrivacy();}
-function updateBackupInfo(){let count=Object.values(chatsData).reduce((a,b)=>a+b.length,0); document.getElementById('chatCount').innerText=count+' messages';}
-function exportBackup(){let data={}; for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i); data[k]=localStorage.getItem(k);} data['exportDate']=new Date().toISOString(); data['version']='V86.2 Slim'; let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); let url=URL.createObjectURL(blob); let a=document.createElement('a'); a.href=url; a.download='ChaleChat-V86.2-Slim-'+new Date().toISOString().slice(0,10)+'.json'; a.click(); localStorage.setItem('chale_last_backup', new Date().toLocaleString()); alert("✅ Backup!");}
+function updateBackupInfo(){let count=Object.values(chatsData).reduce((a,b)=>a+b.length,0); document.getElementById('chatCount').innerText=count+' messages'; document.getElementById('groupCount').innerText=Object.keys(groupsData).length+' groups';}
+function exportBackup(){let data={}; for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i); data[k]=localStorage.getItem(k);} data['exportDate']=new Date().toISOString(); data['version']='V87 FINAL APK'; let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); let url=URL.createObjectURL(blob); let a=document.createElement('a'); a.href=url; a.download='ChaleChat-V87-FINAL-APK-'+new Date().toISOString().slice(0,10)+'.json'; a.click(); localStorage.setItem('chale_last_backup', new Date().toLocaleString()); alert("✅ Backup V87 FINAL!");}
 function uploadPhoto(input){if(input.files[0]){let reader=new FileReader(); reader.onload=e=>{let imgData=e.target.result; document.getElementById('bigAvatarImg').src=imgData; document.getElementById('bigAvatarImg').style.display='block'; document.getElementById('bigAvatarEmoji').style.display='none'; document.getElementById('myStatusImg').src=imgData; document.getElementById('myStatusImg').style.display='block'; document.getElementById('myStatusEmoji').style.display='none'; document.getElementById('myStatusPageImg').src=imgData; document.getElementById('myStatusPageImg').style.display='block'; document.getElementById('myStatusPageEmoji').style.display='none'; let sal=document.getElementById('salImg'); if(sal){sal.src=imgData; sal.style.display='block'; document.getElementById('salEmoji').style.display='none';} localStorage.setItem('chale_photo', imgData); renderRealUpdates();}; reader.readAsDataURL(input.files[0]);}}
 function saveProfile(){let n=document.getElementById('profileNameInput').value; localStorage.setItem('chale_name',n); document.getElementById('curName').innerText=n; document.getElementById('myStatusName').innerText=n; alert("✅ Saved "+n); closeProfile();}
 window.onload=()=>{
@@ -283,10 +389,10 @@ window.onload=()=>{
   let n=localStorage.getItem('chale_name'); if(n){document.getElementById('curName').innerText=n; document.getElementById('profileNameInput').value=n; document.getElementById('myStatusName').innerText=n;}
   let pr=localStorage.getItem('chale_privacy'); if(pr){privacy=JSON.parse(pr);}
   if(statusData.length>0){document.getElementById('myStatusCircle').classList.add('hasStatus'); document.getElementById('salStatus').classList.add('hasStatus');}
-  renderChatList(); updateBackupInfo(); renderRealUpdates(); applyLanguage(currentLang);
-  switchTab('chats'); openChat('Ama');
-  setTimeout(()=>{initVoice();}, 800);
+  renderChatList(); updateBackupInfo(); renderRealUpdates(); renderGroups(); applyLanguage(currentLang);
+  switchTab('chats'); openChat('Salvation');
+  setTimeout(()=>{initVoice(); setTimeout(()=>{document.getElementById('installBar').classList.add('show'); setTimeout(()=>{document.getElementById('installBar').classList.remove('show');},6000);},2000);}, 800);
 }
 </script>
 </body>
-                                                                                                                                                                                                                                                                                                  </html>
+</html>
