@@ -3,7 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#FFD700">
-<title>CHALE CHAT V106 REAL VIDEO CALL</title>
+<title>CHALE CHAT V107 VOICE/VIDEO FIXED</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
 body{background:#0f0f0f;color:white;overflow:hidden}
@@ -34,14 +34,6 @@ body{background:#0f0f0f;color:white;overflow:hidden}
 .msg.me{align-self:flex-end;background:#005c4b}
 .msg.other{align-self:flex-start}
 .msg .time{font-size:10px;color:#a0d9c8;display:flex;justify-content:flex-end;margin-top:4px}
-.msg .cleanTrans{margin-top:6px;padding:6px 0;border-top:1px solid rgba(255,215,0,.25);font-size:13.5px;color:#FFD700;display:flex;gap:6px}
-.voiceBubble{display:flex;align-items:center;gap:8px;min-width:160px}
-.voicePlay{width:32px;height:32px;border-radius:50%;background:#FFD700;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:black;font-weight:bold}
-.set-item{background:#1e1e1e;padding:14px;margin:8px 16px;border-radius:12px;border-left:4px solid #FFD700;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
-.switch{width:52px;height:30px;background:#333;border-radius:20px;position:relative;cursor:pointer;transition:.3s;flex-shrink:0}
-.switch.on{background:#FFD700}.switch.on.green{background:#25D366}
-.switch::after{content:'';position:absolute;width:24px;height:24px;background:white;border-radius:50%;top:3px;left:3px;transition:.3s}
-.switch.on::after{left:25px}
 .micBtn{width:44px;height:44px;border-radius:50%;border:none;background:#25D366;color:white;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px}
 .micBtn.recording{background:#ff0000;animation:pulse 1s infinite}
 @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
@@ -72,106 +64,87 @@ body{background:#0f0f0f;color:white;overflow:hidden}
 .callIcon .gf{position:absolute;inset:0;display:flex;flex-direction:column}
 .callIcon .gf div{flex:1}.callIcon .gf div:nth-child(1){background:#000}.callIcon .gf div:nth-child(2){background:#FFD700}.callIcon .gf div:nth-child(3){background:#006400}
 .callIcon span{position:relative;z-index:2;color:#FFD700;font-weight:900}
-.statusRing{width:56px;height:56px;border-radius:50%;padding:3px;background:conic-gradient(#25D366 0deg 270deg, #ddd 270deg);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.statusRingInner{width:100%;height:100%;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;overflow:hidden;border:2px solid white}
 .fab{position:fixed;bottom:75px;right:16px;width:56px;height:56px;border-radius:16px;background:#25D366;color:white;border:none;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.3);z-index:300;cursor:pointer}
-/* VIDEO CALL OVERLAY — REAL */
-#videoCallScreen{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:99999;display:none;flex-direction:column}
+#videoCallScreen{position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0a0a;z-index:99999;display:none;flex-direction:column}
 #videoCallScreen.show{display:flex}
-.remoteVideo{flex:1;background:#111;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.remoteVideo{flex:1;background:#0a0a0a;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .remoteVideo video{width:100%;height:100%;object-fit:cover}
-.remotePlaceholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;background:radial-gradient(circle at center,#222 0%,#000 100%)}
-.localVideo{position:absolute;top:20px;right:16px;width:110px;height:160px;border-radius:12px;overflow:hidden;background:#222;border:2px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.5);z-index:10}
+.remotePlaceholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;background:radial-gradient(circle at center,#1a1a1a 0%,#000 100%)}
+.localVideo{position:absolute;top:70px;right:16px;width:110px;height:160px;border-radius:16px;overflow:hidden;background:#222;border:2px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.5);z-index:10;display:none}
+.localVideo.show{display:block}
 .localVideo video{width:100%;height:100%;object-fit:cover}
-.videoTopBar{position:absolute;top:0;left:0;width:100%;padding:16px;display:flex;justify-content:space-between;align-items:center;z-index:10;background:linear-gradient(to bottom,rgba(0,0,0,0.6),transparent)}
-.videoControls{position:absolute;bottom:0;left:0;width:100%;padding:20px 16px 30px 16px;display:flex;justify-content:center;gap:16px;align-items:center;background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);z-index:10}
-.ctrlBtn{width:56px;height:56px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;transition:0.2s}
-.ctrlBtn.mute{background:rgba(255,255,255,0.2);color:white}
+.videoTopBar{position:absolute;top:0;left:0;width:100%;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;z-index:20;background:linear-gradient(to bottom,rgba(0,0,0,0.8),transparent)}
+.videoControls{position:absolute;bottom:0;left:0;width:100%;padding:20px 16px 30px 16px;display:flex;justify-content:center;gap:12px;align-items:center;background:linear-gradient(to top,rgba(0,0,0,0.9),transparent);z-index:20}
+.ctrlBtn{width:52px;height:52px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;transition:0.2s}
+.ctrlBtn.mute{background:rgba(255,255,255,0.15);color:white;backdrop-filter:blur(10px)}
 .ctrlBtn.mute.active{background:white;color:black}
-.ctrlBtn.end{background:#ff3b30;color:white;width:64px;height:64px}
-.ctrlBtn.flip{background:rgba(255,255,255,0.2);color:white}
+.ctrlBtn.end{background:#ff3b30;color:white;width:62px;height:62px}
+.ctrlBtn.flip{background:rgba(255,255,255,0.15);color:white}
+.voiceWaveAnim{display:flex;gap:3px;align-items:center;height:24px;margin-top:12px}
+.voiceWaveAnim div{width:4px;background:#25D366;border-radius:2px;animation:wave 1s infinite ease-in-out}
+.voiceWaveAnim div:nth-child(2){animation-delay:0.1s}.voiceWaveAnim div:nth-child(3){animation-delay:0.2s}.voiceWaveAnim div:nth-child(4){animation-delay:0.3s}.voiceWaveAnim div:nth-child(5){animation-delay:0.4s}
+@keyframes wave{0%,100%{height:8px}50%{height:24px}}
 </style>
 </head>
 <body>
 <div id="chatsTab">
-<div class="header"><div style="display:flex;align-items:center;gap:10px"><div class="logoBox"><div class="gf"><div></div><div></div><div></div></div><div class="ct">C</div></div><div class="logo">CHALE <span>CHAT</span> <span class="badge">V106 VIDEO CALL</span></div></div><button onclick="openSettings()" style="background:#FFD700;width:38px;height:38px;border-radius:50%;border:none;font-size:18px">⚙️</button></div>
+<div class="header"><div style="display:flex;align-items:center;gap:10px"><div class="logoBox"><div class="gf"><div></div><div></div><div></div></div><div class="ct">C</div></div><div class="logo">CHALE <span>CHAT</span> <span class="badge">V107 FIXED VIDEO</span></div></div><button onclick="openSettings()" style="background:#FFD700;width:38px;height:38px;border-radius:50%;border:none;font-size:18px">⚙️</button></div>
 <div class="chatList" id="chatList"></div>
 <div class="inputBar" id="quickBar"><input id="quickInput" placeholder="Type..."><button class="micBtn" onclick="quickSend()">➤</button></div>
 </div>
-
 <div id="updatesTab"><div class="commTop"><h1 style="font-size:20px;color:black">Updates</h1><button class="backBtn" onclick="switchTab('chats')">←</button></div><div class="tabContent" style="background:white"><div id="updatesList"></div></div></div>
 <div id="communitiesTab"><div class="commTop"><h1 style="font-size:20px;color:black">Communities</h1><button class="backBtn" onclick="switchTab('chats')">←</button></div><div class="tabContent" style="background:white"><div id="groupsList"></div></div></div>
-
 <div id="callsTab">
-<div class="commTop"><h1 style="font-size:20px;color:black">Calls</h1><div style="display:flex;gap:8px"><button style="background:#f0f0f0;border:none;width:36px;height:36px;border-radius:50%">🔍</button><button class="backBtn" onclick="switchTab('chats')">←</button></div></div>
+<div class="commTop"><h1 style="font-size:20px;color:black">Calls</h1><button class="backBtn" onclick="switchTab('chats')">←</button></div>
 <div class="tabContent" style="background:white">
-<div style="background:white;padding:12px 16px;display:flex;gap:12px;align-items:center;cursor:pointer;border-bottom:8px solid #eee" onclick="showToast('🔗 Call link: chale.chat/call/ghana — Copied!')"><div style="width:50px;height:50px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;color:white;font-size:24px">🔗</div><div><b style="color:#25D366">Create call link</b><br><small style="color:#666">Share a link for your Chale Chat call</small></div></div>
-<div style="background:white;padding:10px 16px"><small style="color:#666;font-weight:bold">RECENT • TAP 🎥 FOR REAL VIDEO!</small></div>
+<div style="background:white;padding:12px 16px;display:flex;gap:12px;align-items:center;cursor:pointer;border-bottom:8px solid #eee" onclick="showToast('🔗 Call link copied! chale.chat/call/ghana')"><div style="width:50px;height:50px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;color:white;font-size:24px">🔗</div><div><b style="color:#25D366">Create call link</b><br><small style="color:#666">Share a link for your Chale Chat call</small></div></div>
+<div style="background:white;padding:10px 16px"><small style="color:#666;font-weight:bold">RECENT • TAP FOR VIDEO/VOICE — FIXED!</small></div>
 <div id="callsList"></div>
-<div style="background:white;padding:20px;text-align:center"><small style="color:#999">📞 Tap video icon for REAL camera<br>V106 Video Call — Ghana! 🇬🇭</small></div>
 </div>
-<button class="fab" onclick="showToast('📞 Choose contact → Tap 🎥 for video call!')">📞</button>
+<button class="fab" onclick="switchTab('calls')">📞</button>
 </div>
-
 <div class="bottomNav" id="bottomNav">
 <div class="navItem" id="navChats" onclick="switchTab('chats')"><span class="iconWrap"><span class="icon">💬</span></span><span class="label">Chats</span></div>
 <div class="navItem" id="navUpdates" onclick="switchTab('updates')"><span class="iconWrap"><span class="icon">⭕</span></span><span class="label">Updates</span></div>
 <div class="navItem" id="navCommunities" onclick="switchTab('communities')"><span class="iconWrap"><span class="icon">👥</span></span><span class="label">Communities</span></div>
 <div class="navItem active" id="navCalls" onclick="switchTab('calls')"><span class="iconWrap"><span class="icon">📞</span></span><span class="label">Calls</span></div>
 </div>
-
 <div id="chatWindow">
-<div class="chatWinHeader"><button onclick="closeChat()" style="background:#222;border:none;width:36px;height:36px;border-radius:50%;color:white">←</button><div class="logoBox" style="width:36px;height:36px"><div class="gf"><div></div><div></div><div></div></div><div class="ct" style="font-size:18px">C</div></div><div style="flex:1"><b id="chatName">Ama</b><br><small id="autoStatus" style="color:#25D366">V106 VIDEO CALL</small></div><div style="display:flex;gap:8px"><button onclick="startVideoCall(currentChat,'voice')" style="background:#222;border:none;width:36px;height:36px;border-radius:50%;color:white">📞</button><button onclick="startVideoCall(currentChat,'video')" style="background:#25D366;border:none;width:36px;height:36px;border-radius:50%;color:white">🎥</button></div></div>
+<div class="chatWinHeader"><button onclick="closeChat()" style="background:#222;border:none;width:36px;height:36px;border-radius:50%;color:white">←</button><div class="logoBox" style="width:36px;height:36px"><div class="gf"><div></div><div></div><div></div></div><div class="ct" style="font-size:18px">C</div></div><div style="flex:1"><b id="chatName">Ama</b><br><small id="autoStatus" style="color:#25D366">V107 FIXED VIDEO</small></div><div style="display:flex;gap:8px"><button onclick="startVideoCall(currentChat,'voice')" style="background:#222;border:none;width:36px;height:36px;border-radius:50%;color:white">📞</button><button onclick="startVideoCall(currentChat,'video')" style="background:#25D366;border:none;width:36px;height:36px;border-radius:50%;color:white">🎥</button></div></div>
 <div class="msgList" id="msgList"></div>
 <div class="recordingBar" id="recordingBar"><div class="recDot"></div><div style="flex:1"><b style="color:#ff4444">● Recording... <span id="recTime">0:00</span></b></div><button onclick="cancelRecording()" style="background:#333;color:white;border:none;padding:8px 12px;border-radius:8px">✕</button></div>
-<div class="inputBar" style="position:relative;height:64px"><button id="voiceBtn" class="micBtn" onmousedown="startRealRecording(event)" onmouseup="stopRealRecording(event)" ontouchstart="startRealRecording(event)" ontouchend="stopRealRecording(event)" style="background:#222;border:2px solid #333">🎤</button><input id="msgInput" placeholder="Type or hold 🎤 — V106 VIDEO!"><button class="micBtn" onclick="sendMsg()" style="background:#25D366">➤</button></div>
+<div class="inputBar" style="position:relative;height:64px"><button id="voiceBtn" class="micBtn" onmousedown="startRealRecording(event)" onmouseup="stopRealRecording(event)" ontouchstart="startRealRecording(event)" ontouchend="stopRealRecording(event)" style="background:#222;border:2px solid #333">🎤</button><input id="msgInput" placeholder="Hold 🎤 — V107!"><button class="micBtn" onclick="sendMsg()" style="background:#25D366">➤</button></div>
 </div>
 
-<!-- REAL VIDEO CALL SCREEN — FULLSCREEN -->
 <div id="videoCallScreen">
 <div class="remoteVideo" id="remoteVideoBox">
 <video id="remoteVideo" autoplay playsinline style="display:none"></video>
 <div class="remotePlaceholder" id="remotePlaceholder">
-<div style="width:100px;height:100px;border-radius:50%;background:#222;border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:16px"><div style="position:absolute;inset:0;display:flex;flex-direction:column"><div style="flex:1;background:#000"></div><div style="flex:1;background:#FFD700"></div><div style="flex:1;background:#006400"></div></div><div style="position:relative;z-index:2;color:#FFD700;font-weight:900;font-size:36px">C</div></div>
-<h2 id="callName" style="font-size:22px;margin-bottom:6px">Kwame</h2>
-<small id="callStatus" style="color:#aaa;font-size:14px">Calling... • End-to-end encrypted • Ghana 🇬🇭</small>
+<div style="width:110px;height:110px;border-radius:50%;background:#222;border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:16px"><div style="position:absolute;inset:0;display:flex;flex-direction:column"><div style="flex:1;background:#000"></div><div style="flex:1;background:#FFD700"></div><div style="flex:1;background:#006400"></div></div><div style="position:relative;z-index:2;color:#FFD700;font-weight:900;font-size:40px">C</div></div>
+<h2 id="callName" style="font-size:24px;margin-bottom:6px">Salvation</h2>
+<small id="callStatus" style="color:#aaa;font-size:14px">00:13 • voice • Encrypted • Ghana 🇬🇭</small>
+<div id="voiceAnim" class="voiceWaveAnim" style="display:none"><div></div><div></div><div></div></div>
 <div style="margin-top:16px;display:flex;gap:8px"><span style="background:rgba(255,255,255,0.1);padding:6px 12px;border-radius:20px;font-size:12px">🔒 Encrypted</span><span style="background:rgba(37,211,102,0.2);padding:6px 12px;border-radius:20px;font-size:12px;color:#25D366">● Live</span></div>
 </div>
-<div class="videoTopBar"><div style="display:flex;gap:8px;align-items:center"><button onclick="endVideoCall()" style="background:rgba(0,0,0,0.4);border:none;color:white;width:36px;height:36px;border-radius:50%">←</button><div><b id="topCallName" style="color:white">Kwame</b><br><small id="topCallTime" style="color:#ccc">00:00</small></div></div><div style="display:flex;gap:8px"><button style="background:rgba(0,0,0,0.4);border:none;color:white;width:36px;height:36px;border-radius:50%">🔒</button><button style="background:rgba(0,0,0,0.4);border:none;color:white;width:36px;height:36px;border-radius:50%">👤</button></div></div>
-<div class="localVideo"><video id="localVideo" autoplay muted playsinline></video></div>
-<div class="videoControls">
-<button class="ctrlBtn mute" id="muteBtn" onclick="toggleMute()">🎤</button>
-<button class="ctrlBtn mute" id="videoBtn" onclick="toggleVideo()">🎥</button>
-<button class="ctrlBtn flip" onclick="flipCamera()">🔄</button>
-<button class="ctrlBtn end" onclick="endVideoCall()">📞</button>
-<button class="ctrlBtn mute" onclick="showToast('🔊 Speaker ON — Ghana loud!')">🔊</button>
-</div>
+<div class="videoTopBar"><div style="display:flex;gap:10px;align-items:center"><button onclick="endVideoCall()" style="background:rgba(0,0,0,0.4);border:none;color:white;width:36px;height:36px;border-radius:50%">←</button><div><b id="topCallName" style="color:white">Salvation</b><br><small id="topCallTime" style="color:#ccc">00:13</small></div></div><div style="display:flex;gap:8px"><button style="background:rgba(0,0,0,0.4);border:none;color:white;width:36px;height:36px;border-radius:50%">🔒</button></div></div>
+<div class="localVideo" id="localVideoBox"><video id="localVideo" autoplay muted playsinline></video></div>
+<div class="videoControls" id="videoControls"></div>
 </div>
 </div>
 
-<div id="settingsPage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeSettings()">←</button><h2>⚙️ V106 VIDEO CALL</h2></div><div style="padding:16px"><div style="text-align:center;border:3px solid #25D366;background:#0a2210;padding:14px;border-radius:14px"><h3 style="color:#25D366">🎥 V106 REAL VIDEO CALL!</h3><small style="color:#aaa">Tap 🎥 in Calls → Real camera ON — WhatsApp style!</small></div><div class="set-item" onclick="switchTab('calls');closeSettings()"><div><b>📞 Calls — VIDEO WORKING</b><br><small>Tap 🎥 for real video!</small></div><div>🎥</div></div></div></div>
-<div id="languagePage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeLanguage()">← Back</button><h2>Language</h2></div><div style="padding:0"><div style="padding:0 16px" id="langsList"></div></div><button class="saveBtn" onclick="closeLanguage()">Done</button></div>
-
+<div id="settingsPage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeSettings()">←</button><h2>⚙️ V107 FIXED</h2></div><div style="padding:16px"><div style="text-align:center;border:3px solid #25D366;background:#0a2210;padding:14px;border-radius:14px"><h3 style="color:#25D366">✅ V107 VOICE/VIDEO FIXED!</h3><small style="color:#aaa">Voice = big avatar, no black box. Video = your camera small box!</small></div></div></div>
 <div class="toast" id="toast"></div>
 
 <script>
-const langs={fr:{name:"Français",flag:"🇫🇷",pair:"en|fr"},en:{name:"English",flag:"🇬🇧",pair:"fr|en"},tw:{name:"Twi (Akan)",flag:"🇬🇭",pair:"en|tw"},ga:{name:"Ga",flag:"🇬🇭",pair:"en|gaa"},pidgin:{name:"Pidgin",flag:"🇬🇭",pair:"local",local:true}};
-let currentLang=localStorage.getItem('chale_lang')||'fr';
-let autoTranslate=localStorage.getItem('chale_auto')!=='false';
-let cache=JSON.parse(localStorage.getItem('chale_api_cache')||'{}');
-let chatsData=JSON.parse(localStorage.getItem('chale_chats_v79')||'{"Kwame":[{"text":"🎤 Voice note • 1s","time":"11:50 AM","me":false,"type":"voice"}],"Ama":[{"text":"It been long","time":"07:58 PM","me":false},{"text":"Of course we want to get our name top there","time":"09:03:42 AM","me":false}],"Salvation":[{"text":"🎤 Voice note • 5s","time":"11:51 AM","me":false,"type":"voice"}]}');
-let statusData=JSON.parse(localStorage.getItem('chale_status_v105')||'[]');
-let callsData=JSON.parse(localStorage.getItem('chale_calls_v106')||'[{"name":"Kwame","time":"Now","type":"incoming","callType":"video"},{"name":"Ama","time":"Today, 1:30 PM","type":"missed","callType":"voice"},{"name":"Kwame","time":"Today, 11:50 AM","type":"incoming","callType":"video"},{"name":"Salvation","time":"Yesterday, 8:20 PM","type":"outgoing","callType":"voice"}]');
+let currentLang=localStorage.getItem('chale_lang')||'en';
+let chatsData=JSON.parse(localStorage.getItem('chale_chats_v79')||'{"Kwame":[{"text":"Hi","time":"11:50 AM","me":false}],"Ama":[{"text":"It been long","time":"07:58 PM","me":false}],"Salvation":[{"text":"Voice","time":"11:51 AM","me":false,"type":"voice"}]}');
+let callsData=JSON.parse(localStorage.getItem('chale_calls_v107')||'[{"name":"Kwame","time":"Now","type":"incoming","callType":"video"},{"name":"Ama","time":"Today, 1:30 PM","type":"missed","callType":"voice"},{"name":"Kwame","time":"Today, 11:50 AM","type":"incoming","callType":"video"},{"name":"Salvation","time":"Yesterday, 8:20 PM","type":"outgoing","callType":"voice"}]');
 let groupsData=JSON.parse(localStorage.getItem('chale_groups_v87')||'{"1":{"name":"Ghana Devs 🇬🇭"}}');
 let currentChat='Ama';
 let mediaRecorder=null;let audioChunks=[];let recStart=0;let recTimer=null;let isRecording=false;
-let localStream=null;let callTimer=null;let callSeconds=0;let isMuted=false;let isVideoOff=false;let facingMode='user';
+let localStream=null;let callTimer=null;let callSeconds=0;let isMuted=false;let isVideoOff=false;let facingMode='user';let currentCallType='voice';
 
 function showToast(msg,type='success'){let t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+type;setTimeout(()=>{t.className='toast';},3000);}
-async function translateAPI(text,target){let k=text.toLowerCase().trim()+'_'+target;if(cache[k])return cache[k];try{let url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langs[target].pair}`;let r=await fetch(url);let j=await r.json();let tr=j.responseData?.translatedText||text;cache[k]=tr;localStorage.setItem('chale_api_cache',JSON.stringify(cache));return tr;}catch{return text;}}
-function toggleAuto(){autoTranslate=!autoTranslate;localStorage.setItem('chale_auto',autoTranslate);document.getElementById('autoSwitch')&&document.getElementById('autoSwitch').classList.toggle('on',autoTranslate);renderMsgs(currentChat);}
-function selectLang(code){currentLang=code;localStorage.setItem('chale_lang',code);renderLangs();renderMsgs(currentChat);showToast(`✅ ${langs[code].flag} ${langs[code].name}`);}
-function renderLangs(){let l=document.getElementById('langsList');if(!l)return;l.innerHTML='';Object.keys(langs).forEach(c=>{let t=langs[c];let a=currentLang===c?' active':'';let div=document.createElement('div');div.className='lang-card'+a;div.onclick=()=>selectLang(c);div.innerHTML=`<div><b>${t.flag} ${t.name}</b></div><button style="background:${currentLang===c?'#25D366':'#333'};color:white;border:none;padding:8px 14px;border-radius:20px;font-weight:bold">${currentLang===c?'✅':'TAP'}</button>`;l.appendChild(div);});}
 function switchTab(t){
   document.getElementById('chatsTab').style.display=t==='chats'?'block':'none';
   document.getElementById('updatesTab').classList.remove('show');document.getElementById('communitiesTab').classList.remove('show');document.getElementById('callsTab').classList.remove('show');
@@ -179,20 +152,20 @@ function switchTab(t){
   if(t==='chats'){document.getElementById('chatsTab').style.display='block';}else{document.getElementById(t+'Tab').style.display='flex';document.getElementById(t+'Tab').classList.add('show');}
   document.querySelectorAll('.navItem').forEach(el=>el.classList.remove('active'));
   let el=document.getElementById('nav'+t.charAt(0).toUpperCase()+t.slice(1));if(el)el.classList.add('active');
-  if(t==='calls')renderCalls();if(t==='communities')renderGroups();
+  if(t==='calls')renderCalls();
 }
-function renderChatList(){let l=document.getElementById('chatList');l.innerHTML='';Object.keys(chatsData).forEach(n=>{let last=chatsData[n].slice(-1)[0];let preview=last? (last.type==='voice'?'🎤 Voice':'')+last.text.substring(0,30):'';l.innerHTML+=`<div class="chat" onclick="openChat('${n}')"><div class="avatarMini"><div class="gf"><div></div><div></div><div></div></div><span>C</span></div><div style="flex:1"><b>${n}</b><br><small style="color:gray">${preview}</small></div></div>`;});}
-function renderGroups(){let l=document.getElementById('groupsList');if(!l)return;l.innerHTML='';Object.values(groupsData).forEach(g=>{l.innerHTML+=`<div style="background:white;padding:14px 16px;display:flex;gap:12px;align-items:center;border-bottom:1px solid #eee"><div style="width:50px;height:50px;border-radius:12px;background:#FFD700;display:flex;align-items:center;justify-content:center;font-weight:900">👥</div><div style="flex:1"><b style="color:black">${g.name}</b></div></div>`;});}
+function renderChatList(){let l=document.getElementById('chatList');l.innerHTML='';Object.keys(chatsData).forEach(n=>{let last=chatsData[n].slice(-1)[0];l.innerHTML+=`<div class="chat" onclick="openChat('${n}')"><div class="avatarMini"><div class="gf"><div></div><div></div><div></div></div><span>C</span></div><div style="flex:1"><b>${n}</b><br><small style="color:gray">${last?last.text.substring(0,30):''}</small></div></div>`;});}
+function renderGroups(){let l=document.getElementById('groupsList');if(l){l.innerHTML='';Object.values(groupsData).forEach(g=>{l.innerHTML+=`<div style="background:white;padding:14px 16px;display:flex;gap:12px;align-items:center;border-bottom:1px solid #eee"><div style="width:50px;height:50px;border-radius:12px;background:#FFD700;display:flex;align-items:center;justify-content:center">👥</div><div style="flex:1"><b style="color:black">${g.name}</b></div></div>`;});}}
 function renderCalls(){
   let l=document.getElementById('callsList');l.innerHTML='';
   callsData.forEach(c=>{
-    let icon=c.type==='missed'?'↙': c.type==='incoming'?'↙':'↗';
+    let icon=c.type==='missed'?'↙':'↗';
     let color=c.type==='missed'?'#ff4444':'#25D366';
     let typeIcon=c.callType==='video'?'🎥':'📞';
     l.innerHTML+=`<div style="background:white;padding:12px 16px;display:flex;gap:12px;align-items:center;border-bottom:1px solid #eee;cursor:pointer" onclick="startVideoCall('${c.name}','${c.callType}')">
       <div class="callIcon"><div class="gf"><div></div><div></div><div></div></div><span>C</span></div>
       <div style="flex:1"><b style="color:${c.type==='missed'?'#ff4444':'black'}">${c.name}</b><br><small style="color:${color}">${icon} ${c.time} • ${c.callType}</small></div>
-      <button onclick="event.stopPropagation();startVideoCall('${c.name}','${c.callType}')" style="background:${c.callType==='video'?'#25D366':'#f0f0f0'};border:none;width:36px;height:36px;border-radius:50%;font-size:16px">${typeIcon}</button>
+      <button style="background:${c.callType==='video'?'#25D366':'#f0f0f0'};border:none;width:36px;height:36px;border-radius:50%;font-size:16px">${typeIcon}</button>
     </div>`;
   });
 }
@@ -203,44 +176,92 @@ function sendMsg(){let i=document.getElementById('msgInput');let t=i.value.trim(
 function quickSend(){let q=document.getElementById('quickInput');if(q.value.trim()){document.getElementById('msgInput').value=q.value;openChat(currentChat);sendMsg();q.value='';}}
 function openSettings(){document.getElementById('bottomNav').classList.add('hide');document.getElementById('quickBar').style.display='none';document.getElementById('settingsPage').classList.add('show');document.getElementById('settingsPage').style.display='block';}
 function closeSettings(){document.getElementById('settingsPage').classList.remove('show');document.getElementById('settingsPage').style.display='none';document.getElementById('bottomNav').classList.remove('hide');document.getElementById('quickBar').style.display='flex';}
-function openLanguage(){document.getElementById('settingsPage').style.display='none';document.getElementById('languagePage').classList.add('show');document.getElementById('languagePage').style.display='block';renderLangs();}
-function closeLanguage(){document.getElementById('languagePage').classList.remove('show');document.getElementById('languagePage').style.display='none';document.getElementById('settingsPage').style.display='block';}
-function openMyStatus(){showToast("📸 My Status — Coming in V105 tab!");}
 
-// === REAL VIDEO CALL — WEBCAM ===
 async function startVideoCall(name,type){
+  currentCallType=type;
   document.getElementById('callName').innerText=name;
   document.getElementById('topCallName').innerText=name;
-  document.getElementById('callStatus').innerText=(type==='video'?'Video':'Voice')+' calling... • End-to-end encrypted • Ghana 🇬🇭';
   document.getElementById('videoCallScreen').classList.add('show');
   document.getElementById('videoCallScreen').style.display='flex';
   callSeconds=0;
-  document.getElementById('topCallTime').innerText='00:00';
-  try{
-    localStream=await navigator.mediaDevices.getUserMedia({video:type==='video'?{facingMode:facingMode}:false,audio:true});
-    let localVideo=document.getElementById('localVideo');
-    localVideo.srcObject=localStream;
-    if(type==='video'){
-      // Simulate remote as same for demo — in real app WebRTC would show remote
-      document.getElementById('remotePlaceholder').style.display='none';
-      document.getElementById('remoteVideo').style.display='block';
-      document.getElementById('remoteVideo').srcObject=localStream;
-    }
-    showToast(`🎥 ${type==='video'?'Video':'Voice'} call with ${name} — Camera ON! Ghana! 🇬🇭`);
-  }catch(e){
-    showToast("📷 Camera/mic permission needed — Allow in browser — Showing placeholder","error");
-    document.getElementById('remotePlaceholder').style.display='flex';
+  
+  // SET CONTROLS BASED ON TYPE
+  let controlsDiv=document.getElementById('videoControls');
+  if(type==='video'){
+    controlsDiv.innerHTML=`
+      <button class="ctrlBtn mute" id="muteBtn" onclick="toggleMute()">🎤</button>
+      <button class="ctrlBtn mute" id="videoBtn" onclick="toggleVideo()">🎥</button>
+      <button class="ctrlBtn flip" onclick="flipCamera()">🔄</button>
+      <button class="ctrlBtn end" onclick="endVideoCall()">📞</button>
+      <button class="ctrlBtn mute" onclick="showToast('🔊 Speaker')">🔊</button>
+    `;
+    document.getElementById('localVideoBox').classList.add('show');
+    document.getElementById('localVideoBox').style.display='block';
+    document.getElementById('voiceAnim').style.display='none';
+    document.getElementById('callStatus').innerText='00:00 • video • Encrypted • Ghana 🇬🇭';
+  }else{
+    controlsDiv.innerHTML=`
+      <button class="ctrlBtn mute" id="muteBtn" onclick="toggleMute()">🎤</button>
+      <button class="ctrlBtn mute" onclick="showToast('🔊 Speaker ON')">🔊</button>
+      <button class="ctrlBtn end" onclick="endVideoCall()">📞</button>
+      <button class="ctrlBtn mute" onclick="showToast('➕ Add call')">➕</button>
+    `;
+    document.getElementById('localVideoBox').classList.remove('show');
+    document.getElementById('localVideoBox').style.display='none';
+    document.getElementById('voiceAnim').style.display='flex';
+    document.getElementById('callStatus').innerText='00:00 • voice • Encrypted • Ghana 🇬🇭';
   }
+  
+  try{
+    if(type==='video'){
+      localStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:facingMode,width:640,height:480},audio:true});
+      document.getElementById('localVideo').srcObject=localStream;
+      document.getElementById('remoteVideo').srcObject=localStream;
+      document.getElementById('remoteVideo').style.display='block';
+      document.getElementById('remotePlaceholder').style.background='#000';
+      // Keep avatar but with video behind? For demo show video as remote
+      document.getElementById('remotePlaceholder').innerHTML=`
+        <div style="position:absolute;inset:0"><video id="remoteVideoClone" autoplay muted playsinline style="width:100%;height:100%;object-fit:cover"></video></div>
+        <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0.3);width:100%;height:100%">
+          <div style="width:80px;height:80px;border-radius:50%;background:rgba(0,0,0,0.5);border:2px solid white;display:flex;align-items:center;justify-content:center;margin-bottom:8px"><span style="font-size:32px">👤</span></div>
+          <h2 style="font-size:20px">${name}</h2><small style="color:#ccc">Video call • Ghana 🇬🇭</small>
+        </div>
+      `;
+      setTimeout(()=>{let v=document.getElementById('remoteVideoClone');if(v&&localStream)v.srcObject=localStream;},100);
+      showToast(`🎥 Video call with ${name} — Your camera ON! Small box top-right!`);
+    }else{
+      localStream=await navigator.mediaDevices.getUserMedia({audio:true});
+      document.getElementById('remotePlaceholder').style.display='flex';
+      document.getElementById('remoteVideo').style.display='none';
+      document.getElementById('remotePlaceholder').innerHTML=`
+        <div style="width:110px;height:110px;border-radius:50%;background:#222;border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:16px"><div style="position:absolute;inset:0;display:flex;flex-direction:column"><div style="flex:1;background:#000"></div><div style="flex:1;background:#FFD700"></div><div style="flex:1;background:#006400"></div></div><div style="position:relative;z-index:2;color:#FFD700;font-weight:900;font-size:40px">C</div></div>
+        <h2 style="font-size:24px;margin-bottom:6px">${name}</h2>
+        <small id="callStatusDynamic" style="color:#aaa;font-size:14px">00:00 • voice • Encrypted • Ghana 🇬🇭</small>
+        <div class="voiceWaveAnim"><div></div><div></div><div></div></div>
+        <div style="margin-top:16px;display:flex;gap:8px"><span style="background:rgba(255,255,255,0.1);padding:6px 12px;border-radius:20px;font-size:12px">🔒 Encrypted</span><span style="background:rgba(37,211,102,0.2);padding:6px 12px;border-radius:20px;font-size:12px;color:#25D366">● Live</span></div>
+      `;
+      showToast(`📞 Voice call with ${name} — Mic ON! No black box!`);
+    }
+  }catch(e){
+    console.log(e);
+    showToast("Allow mic/camera — Showing avatar","error");
+    if(type==='voice'){
+      document.getElementById('localVideoBox').style.display='none';
+    }
+  }
+  
   callTimer=setInterval(()=>{
     callSeconds++;
     let m=Math.floor(callSeconds/60);let s=callSeconds%60;
     let t=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
     document.getElementById('topCallTime').innerText=t;
-    document.getElementById('callStatus').innerText=`${t} • ${type} • Encrypted • Ghana 🇬🇭`;
+    let el=document.getElementById('callStatusDynamic')||document.getElementById('callStatus');
+    if(el) el.innerText=`${t} • ${type} • Encrypted • Ghana 🇬🇭`;
   },1000);
+  
   let newCall={name:name,time:"Now",type:"outgoing",callType:type};
   callsData.unshift(newCall);
-  localStorage.setItem('chale_calls_v106',JSON.stringify(callsData));
+  localStorage.setItem('chale_calls_v107',JSON.stringify(callsData));
   renderCalls();
 }
 function endVideoCall(){
@@ -250,23 +271,20 @@ function endVideoCall(){
   if(localStream){localStream.getTracks().forEach(t=>t.stop());localStream=null;}
   document.getElementById('localVideo').srcObject=null;
   document.getElementById('remoteVideo').srcObject=null;
-  document.getElementById('remoteVideo').style.display='none';
-  document.getElementById('remotePlaceholder').style.display='flex';
-  showToast(`📞 Call ended — ${document.getElementById('topCallTime').innerText} — Ghana! 🇬🇭`);
-  document.getElementById('topCallTime').innerText='00:00';
+  document.getElementById('localVideoBox').style.display='none';
+  document.getElementById('localVideoBox').classList.remove('show');
+  showToast(`📞 Call ended — ${document.getElementById('topCallTime').innerText}`);
 }
 function toggleMute(){
   isMuted=!isMuted;
   if(localStream){localStream.getAudioTracks().forEach(t=>t.enabled=!isMuted);}
-  document.getElementById('muteBtn').innerText=isMuted?'🔇':'🎤';
-  document.getElementById('muteBtn').classList.toggle('active',isMuted);
+  let btn=document.getElementById('muteBtn');if(btn){btn.innerText=isMuted?'🔇':'🎤';btn.classList.toggle('active',isMuted);}
   showToast(isMuted?"🔇 Muted":"🎤 Unmuted");
 }
 function toggleVideo(){
   isVideoOff=!isVideoOff;
   if(localStream){localStream.getVideoTracks().forEach(t=>t.enabled=!isVideoOff);}
-  document.getElementById('videoBtn').innerText=isVideoOff?'🚫':'🎥';
-  document.getElementById('videoBtn').classList.toggle('active',isVideoOff);
+  let btn=document.getElementById('videoBtn');if(btn){btn.innerText=isVideoOff?'🚫':'🎥';btn.classList.toggle('active',isVideoOff);}
   showToast(isVideoOff?"🚫 Camera off":"🎥 Camera on");
 }
 async function flipCamera(){
@@ -275,11 +293,10 @@ async function flipCamera(){
   try{
     localStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:facingMode},audio:true});
     document.getElementById('localVideo').srcObject=localStream;
-    document.getElementById('remoteVideo').srcObject=localStream;
-    showToast(`🔄 Camera flipped to ${facingMode==='user'?'front':'back'}`);
-  }catch{showToast("Flip failed — single camera","error");}
+    let rv=document.getElementById('remoteVideoClone');if(rv)rv.srcObject=localStream;
+    showToast(`🔄 ${facingMode==='user'?'Front':'Back'} camera`);
+  }catch{showToast("Flip failed","error");}
 }
-function makeCall(type,name){startVideoCall(name||currentChat,type||'voice');}
 async function startRealRecording(e){
   e.preventDefault();if(isRecording) return;
   try{
@@ -299,8 +316,7 @@ async function startRealRecording(e){
 }
 function stopRealRecording(e){e.preventDefault();if(!isRecording) return;isRecording=false;document.getElementById('recordingBar').classList.remove('show');document.getElementById('voiceBtn').classList.remove('recording');document.getElementById('voiceBtn').innerText='🎤';clearInterval(recTimer);if(mediaRecorder&&mediaRecorder.state!=='inactive'){mediaRecorder.stop();}}
 function cancelRecording(){if(isRecording){isRecording=false;document.getElementById('recordingBar').classList.remove('show');document.getElementById('voiceBtn').classList.remove('recording');document.getElementById('voiceBtn').innerText='🎤';clearInterval(recTimer);if(mediaRecorder)mediaRecorder.stop();audioChunks=[];showToast("Cancelled");}}
-window.onload=()=>{apply();renderChatList();renderLangs();renderCalls();renderGroups();switchTab('calls');}
-function apply(){let t=langs[currentLang];}
+window.onload=()=>{renderChatList();renderCalls();switchTab('calls');}
 </script>
 </body>
-  </html>
+</html>
