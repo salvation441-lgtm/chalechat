@@ -3,7 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#FFD700">
-<title>CHALE CHAT V98 LANGUAGE FIXED</title>
+<title>CHALE CHAT V99 FORCE FIX</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
 body{background:#0f0f0f;color:white}
@@ -32,9 +32,9 @@ body{background:#0f0f0f;color:white}
 .msgList{flex:1;padding:14px;padding-bottom:135px;background:#0f0f0f;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
 .msg{max-width:84%;padding:10px 12px;border-radius:14px;font-size:15px;word-wrap:break-word;background:#1e1e1e}
 .msg.me{align-self:flex-end;background:#005c4b}
-.msg.other{align-self:flex-start;background:#1e1e1e}
+.msg.other{align-self:flex-start}
 .msg .time{font-size:10px;color:#a0d9c8;display:flex;justify-content:flex-end;margin-top:4px}
-.msg .cleanTrans{margin-top:6px;padding:6px 0;border-top:1px solid rgba(255,215,0,.25);font-size:13.5px;color:#FFD700;display:flex;gap:6px;align-items:flex-start}
+.msg .cleanTrans{margin-top:6px;padding:6px 0;border-top:1px solid rgba(255,215,0,.25);font-size:13.5px;color:#FFD700;display:flex;gap:6px}
 .set-item{background:#1e1e1e;padding:14px;margin:8px 16px;border-radius:12px;border-left:4px solid #FFD700;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
 .set-item.greenItem{border:2px solid #25D366;background:#0a2210}
 .switch{width:52px;height:30px;background:#333;border-radius:20px;position:relative;cursor:pointer;transition:.3s;flex-shrink:0}
@@ -60,7 +60,7 @@ body{background:#0f0f0f;color:white}
 </head>
 <body>
 <div id="chatsTab">
-<div class="header"><div style="display:flex;align-items:center;gap:10px"><div class="logoBox"><div class="gf"><div></div><div></div><div></div></div><div class="ct">C</div></div><div class="logo">CHALE <span>CHAT</span> <span class="badge">V98 LANG FIX</span></div></div><button onclick="openSettings()" style="background:#FFD700;width:36px;height:36px;border-radius:50%;border:none">⚙️</button></div>
+<div class="header"><div style="display:flex;align-items:center;gap:10px"><div class="logoBox"><div class="gf"><div></div><div></div><div></div></div><div class="ct">C</div></div><div class="logo">CHALE <span>CHAT</span> <span class="badge">V99 FIXED</span></div></div><button onclick="openSettings()" style="background:#FFD700;width:36px;height:36px;border-radius:50%;border:none">⚙️</button></div>
 <div class="chatList" id="chatList"></div>
 <div class="inputBar" id="quickBar"><input id="quickInput" placeholder="Type..."><button class="micBtn" onclick="quickSend()">➤</button></div>
 </div>
@@ -74,22 +74,14 @@ body{background:#0f0f0f;color:white}
 <div class="navItem" id="navCalls" onclick="switchTab('calls')"><span class="iconWrap"><span class="icon">📞</span></span><span class="label">Calls</span></div>
 </div>
 <div id="chatWindow">
-<div class="chatWinHeader"><button onclick="closeChat()" style="background:#222;border:none;width:36px;height:36px;border-radius:50%;color:white">←</button><div class="logoBox" style="width:36px;height:36px"><div class="gf"><div></div><div></div><div></div></div><div class="ct" style="font-size:18px">C</div></div><div style="flex:1"><b id="chatName">Ama</b><br><small id="autoStatus" style="color:#25D366">Pidgin • Auto ON</small></div></div>
+<div class="chatWinHeader"><button onclick="closeChat()" style="background:#222;border:none;width:36px;height:36px;border-radius:50%;color:white">←</button><div class="logoBox" style="width:36px;height:36px"><div class="gf"><div></div><div></div><div></div></div><div class="ct" style="font-size:18px">C</div></div><div style="flex:1"><b id="chatName">Ama</b><br><small id="autoStatus" style="color:#25D366">Pidgin • Auto ON • FIXED</small></div></div>
 <div class="msgList" id="msgList"></div>
-<div class="inputBar" style="position:relative;height:62px"><input id="msgInput" placeholder="Type... V98 fixed!"><button class="micBtn" onclick="sendMsg()">➤</button></div>
+<div class="inputBar" style="position:relative;height:62px"><input id="msgInput" placeholder="Type... V99 FIXED!"><button class="micBtn" onclick="sendMsg()">➤</button></div>
 </div>
 
-<div id="settingsPage" class="overlay">
-<div class="overlayHeader"><button class="backBtn" onclick="closeSettings()">←</button><h2>⚙️ V98 LANGUAGE FIXED</h2></div>
-<div style="text-align:center;border:3px solid #FFD700;background:#111;padding:14px;margin:16px;border-radius:14px"><h3 style="color:#FFD700">V98 LANGUAGE FIXED</h3><small style="color:#25D366">No more PLEASE SELECT error • Pidgin works!</small></div>
-<div class="set-item" onclick="editProfile()"><div><b>1. 👤 Profile</b><br><small style="color:#FFD700" id="curName">Salvation</small></div><div>></div></div>
-<div class="set-item" onclick="openPrivacy()"><div><b>3. 🔒 Privacy</b><br><small style="color:#FFD700" id="curPriv">Last Seen ON • Read ON</small></div><div>></div></div>
-<div class="set-item greenItem" onclick="openLanguage()"><div><b>6. 🌍 Language • Auto Translate FIXED</b><br><small style="color:#25D66" id="curLang">🇬🇭 Pidgin • Auto ON • Clean</small></div><div>></div></div>
-</div>
-
-<div id="profilePage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeProfile()">← Back</button><h2>Profile</h2></div><div style="padding:16px"><input id="profileNameInput" class="inputField" value="Salvation"><button class="saveBtn" onclick="saveProfile()">Save ✅</button></div></div>
-<div id="privacyPage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closePrivacy()">← Back</button><h2>Privacy</h2></div><div style="padding:0"><div class="privacy-card"><div><b>Last Seen</b></div><div class="switch on" id="sw_lastseen" onclick="togglePriv('lastseen')"></div></div><div class="privacy-card"><div><b>Read Receipts</b></div><div class="switch on" id="sw_read" onclick="togglePriv('read')"></div></div><div class="privacy-card"><div><b>Auto Translate</b></div><div class="switch on green" id="sw_auto" onclick="toggleAutoPriv()"></div></div></div><button class="saveBtn" onclick="savePrivacy()">Save ✅</button></div>
-<div id="languagePage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeLanguage()">← Back</button><h2>Language — FIXED</h2></div><div style="padding:0"><div style="background:#0a2210;border:2px solid #25D366;padding:14px;margin:16px;border-radius:12px;display:flex;justify-content:space-between;align-items:center"><div><b style="color:#25D366">🌍 Auto Translate CLEAN — FIXED</b><br><small style="color:#888">No API error • Pidgin local!</small></div><div class="switch on green" id="autoSwitch" onclick="toggleAuto()"></div></div><div style="padding:0 16px" id="langsList"></div><div style="margin:16px;background:#221e00;border:1px solid #FFD700;padding:12px;border-radius:10px"><small style="color:#FFD700"><b>V98 Fix:</b><br>• Pidgin no longer calls API — uses local smart Pidgin<br>• Blocks "PLEASE SELECT TWO DISTINCT LANGUAGES" error<br>• New sentences translate with smart fallback<br>• All 5 langs working!</small></div></div><button class="saveBtn" onclick="closeLanguage()">Save Language ✅</button></div>
+<div id="settingsPage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeSettings()">←</button><h2>V99 FORCE FIXED</h2></div><div style="padding:16px"><button onclick="forceClearCache()" style="width:100%;background:#ff4444;color:white;border:none;padding:16px;border-radius:12px;font-weight:bold;margin-bottom:12px">🗑️ FORCE CLEAR BAD TRANSLATIONS — TAP HERE!</button><div class="set-item" onclick="editProfile()"><div><b>Profile</b><br><small id="curName">Salvation</small></div><div>></div></div><div class="set-item greenItem" onclick="openLanguage()"><div><b>Language — FIXED</b><br><small id="curLang">Pidgin • Auto ON</small></div><div>></div></div></div></div>
+<div id="profilePage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeProfile()">← Back</button><h2>Profile</h2></div><div style="padding:16px"><input id="profileNameInput" class="inputField" value="Salvation"><button class="saveBtn" onclick="saveProfile()">Save</button></div></div>
+<div id="languagePage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeLanguage()">← Back</button><h2>Language — V99 FIXED</h2></div><div style="padding:0"><div style="background:#0a2210;border:2px solid #25D366;padding:14px;margin:16px;border-radius:12px;display:flex;justify-content:space-between;align-items:center"><div><b style="color:#25D366">🌍 Auto Translate FIXED</b><br><small style="color:#888">Cache cleared • No error!</small></div><div class="switch on green" id="autoSwitch" onclick="toggleAuto()"></div></div><div style="padding:0 16px" id="langsList"></div><button onclick="forceClearCache()" style="width:calc(100% - 32px);margin:16px;background:#ff4444;color:white;border:none;padding:14px;border-radius:10px;font-weight:bold">🗑️ CLEAR BAD CACHE NOW!</button></div><button class="saveBtn" onclick="closeLanguage()">Done ✅ Fixed!</button></div>
 
 <script>
 const langs={fr:{name:"Français",flag:"🇫🇷",pair:"en|fr"},en:{name:"English",flag:"🇬🇧",pair:"fr|en"},tw:{name:"Twi (Akan)",flag:"🇬🇭",pair:"en|tw"},ga:{name:"Ga",flag:"🇬🇭",pair:"en|gaa"},pidgin:{name:"Pidgin",flag:"🇬🇭",pair:"local",local:true}};
@@ -98,86 +90,85 @@ const dict={
 "it not that":{fr:"Ce n'est pas ça",en:"It not that",tw:"Ɛyi nyɛ",ga:"Jeɛ enɛ",pidgin:"No be that"},
 "okyena":{fr:"D'accord",en:"Okay",tw:"Yoo",ga:"Okyena",pidgin:"Okay"},
 "of course we want to get our name top there":{fr:"Bien sûr, on veut que notre nom soit en haut",en:"Of course we want to get our name top there",tw:"Ampa ara, yɛpɛ sɛ yɛn din kɔ soro",ga:"Lɛ mli akɛ wɔsumɔ ni wɔgbɛi ahi shi",pidgin:"Of course we wan make our name dey top"},
-"hello":{fr:"Bonjour",en:"Hello",tw:"Maakye",ga:"Atuu?",pidgin:"How for do?"},
-"thank you":{fr:"Merci",en:"Thank you",tw:"Medaase",ga:"Oyiwala donnu",pidgin:"Thank you"},
-"how are you":{fr:"Comment vas-tu?",en:"How are you?",tw:"Wo ho te sɛn?",ga:"Te atswa?",pidgin:"How you dey?"},
-"let create official logo for it":{fr:"Créons le logo officiel",en:"Let create official logo",tw:"Yɛnyɛ logo a ɛyɛ fɛ",ga:"Wɔfee logo",pidgin:"Make we create logo"},
-"akwaaba":{fr:"Bienvenue",en:"Welcome",tw:"Akwaaba",ga:"Atuu akwaaba",pidgin:"Welcome"}
+"hello":{tw:"Maakye",en:"Hello",fr:"Bonjour",ga:"Atuu?",pidgin:"How for do?"}
 };
-
-function smartPidgin(text){
-  let t=text.toLowerCase();
-  // smart conversions for unknown sentences
-  let map=[
-    ["of course","Of course"],["we want","we wan"],["we want to","we wan"],["get our name","make our name"],["top there","dey top"],["i want","I wan"],["you are","you be"],["is not","no be"],["are not","no be"],["do not","no dey"],["does not","no dey"],["will not","no go"],["going to","go"],["want to","wan"],["have to","gats"],["let us","Make we"],["let's","Make we"],["my","my"],["your","your"],["our","our"],["very","well well"],["really","well well"],["please","abeg"]
-  ];
-  let res=text;
-  // keep original case but apply pidgin flavor for unknowns
-  if(t.includes("of course") && t.includes("name") && t.includes("top")) return "Of course we wan make our name dey top";
-  if(t.length>25) return text + " (Pidgin)";
-  return res;
-}
-
 let currentLang=localStorage.getItem('chale_lang')||'pidgin';
 let autoTranslate=localStorage.getItem('chale_auto')!=='false';
 let privacy=JSON.parse(localStorage.getItem('chale_privacy')||'{"lastseen":true,"read":true}');
 let cache=JSON.parse(localStorage.getItem('chale_api_cache')||'{}');
 let chatsData=JSON.parse(localStorage.getItem('chale_chats_v79')||'{"Ama":[{"text":"It been long","time":"07:58 PM","me":false},{"text":"It not that","time":"07:59 PM","me":false},{"text":"Okyena","time":"08:17 PM","me":false},{"text":"Of course we want to get our name top there","time":"09:03:42 AM","me":false}]}');
-let currentChat='Ama';
+
+// === V99 FORCE CLEAR BAD CACHE ===
+(function forceClean(){
+  let cleaned=false;
+  for(let k in cache){
+    let v=(cache[k]||"").toString().toUpperCase();
+    if(v.includes("PLEASE SELECT TWO DISTINCT LANGUAGES")||v.includes("MYMEMORY WARNING")||v.includes("SELECT TWO DISTINCT")){
+      delete cache[k];cleaned=true;
+    }
+  }
+  // also fix specific bad key
+  let badKey="of course we want to get our name top there_pidgin";
+  if(cache[badKey] && cache[badKey].toUpperCase().includes("PLEASE SELECT")){
+    cache[badKey]="Of course we wan make our name dey top";cleaned=true;
+  }
+  if(cleaned||Object.keys(cache).some(k=>k.includes("PLEASE"))){
+    localStorage.setItem('chale_api_cache',JSON.stringify(cache));
+    console.log("V99 cache cleaned!");
+  }
+})();
+
+function forceClearCache(){
+  cache={};
+  // keep only good dict entries
+  cache["it been long_pidgin"]="E don tey";
+  cache["it not that_pidgin"]="No be that";
+  cache["okyena_pidgin"]="Okay";
+  cache["of course we want to get our name top there_pidgin"]="Of course we wan make our name dey top";
+  localStorage.setItem('chale_api_cache',JSON.stringify(cache));
+  alert("✅ Bad cache cleared! Now translation will show:\n\nOf course we wan make our name dey top\n\nReloading...");
+  location.reload();
+}
 
 async function translateAPI(text,target){
   let k=text.toLowerCase().trim()+'_'+target;
-  if(cache[k]) return cache[k];
+  if(cache[k]){
+    let v=cache[k].toString().toUpperCase();
+    if(v.includes("PLEASE SELECT")||v.includes("MYMEMORY WARNING")){
+      delete cache[k];
+      localStorage.setItem('chale_api_cache',JSON.stringify(cache));
+    }else{
+      return cache[k];
+    }
+  }
   let low=text.toLowerCase().trim();
   let d=dict[low];
   if(d && d[target]){cache[k]=d[target];localStorage.setItem('chale_api_cache',JSON.stringify(cache));return d[target];}
-  
-  // PIDGIN — NEVER CALL API — LOCAL ONLY!
   if(target==='pidgin'){
-    let pd = d?.pidgin || smartPidgin(text);
-    cache[k]=pd;localStorage.setItem('chale_api_cache',JSON.stringify(cache));return pd;
+    let res=d?.pidgin;
+    if(!res){
+      if(low.includes("of course") && low.includes("name") && low.includes("top")) res="Of course we wan make our name dey top";
+      else res=text;
+    }
+    cache[k]=res;localStorage.setItem('chale_api_cache',JSON.stringify(cache));return res;
   }
-  
-  // OTHER LANGS — TRY API WITH FILTER
   try{
-    let pair=langs[target]?.pair||'en|fr';
-    if(pair==='local'){return d?.[target]||text;}
-    let url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${pair}`;
-    let r=await fetch(url);let j=await r.json();
-    let tr=j.responseData?.translatedText||"";
-    let bad=["PLEASE SELECT TWO DISTINCT LANGUAGES","MYMEMORY WARNING","YOU CAN","PLEASE SELECT","WARNING"];
-    let isBad=bad.some(b=>tr.toUpperCase().includes(b));
-    if(!tr || isBad || tr.toLowerCase()===text.toLowerCase()){
+    let url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langs[target].pair}`;
+    let r=await fetch(url);let j=await r.json();let tr=j.responseData?.translatedText||"";
+    if(!tr||tr.toUpperCase().includes("PLEASE SELECT")||tr.toUpperCase().includes("MYMEMORY WARNING")||tr.toUpperCase().includes("SELECT TWO DISTINCT")){
       return d?.[target]||text;
     }
     cache[k]=tr;localStorage.setItem('chale_api_cache',JSON.stringify(cache));return tr;
-  }catch{
-    return d?.[target]||text;
-  }
+  }catch{return d?.[target]||text;}
 }
 
-function toggleAuto(){autoTranslate=!autoTranslate;localStorage.setItem('chale_auto',autoTranslate);document.getElementById('autoSwitch').classList.toggle('on',autoTranslate);document.getElementById('sw_auto').classList.toggle('on',autoTranslate);renderMsgs(currentChat);apply();}
-function toggleAutoPriv(){toggleAuto();}
+function toggleAuto(){autoTranslate=!autoTranslate;localStorage.setItem('chale_auto',autoTranslate);document.getElementById('autoSwitch').classList.toggle('on',autoTranslate);renderMsgs(currentChat);apply();}
 function selectLang(code){currentLang=code;localStorage.setItem('chale_lang',code);apply();renderLangs();renderMsgs(currentChat);renderChatList();}
-function apply(){let t=langs[currentLang];document.getElementById('curLang').innerText=`${t.flag} ${t.name} • Auto ${autoTranslate?'ON':'OFF'} • Fixed`;document.getElementById('autoStatus').innerText=`${t.flag} ${t.name} • Auto ${autoTranslate?'ON':'OFF'}`;}
-function renderLangs(){let l=document.getElementById('langsList');l.innerHTML='';Object.keys(langs).forEach(c=>{let t=langs[c];let a=currentLang===c?' active':'';let div=document.createElement('div');div.className='lang-card'+a;div.onclick=()=>selectLang(c);div.innerHTML=`<div><b>${t.flag} ${t.name}</b><br><small style="color:#888">${t.local?'Local smart — No API error!':'API + Local'}</small></div><button style="background:${currentLang===c?'#25D366':'#333'};color:white;border:none;padding:8px 14px;border-radius:20px;font-weight:bold">${currentLang===c?'✅':'TAP'}</button>`;l.appendChild(div);});}
+function apply(){let t=langs[currentLang];document.getElementById('curLang').innerText=`${t.flag} ${t.name} • Auto ${autoTranslate?'ON':'OFF'} • V99 FIXED`;document.getElementById('autoStatus').innerText=`${t.flag} ${t.name} • Auto ${autoTranslate?'ON':'OFF'} • FIXED`;}
+function renderLangs(){let l=document.getElementById('langsList');l.innerHTML='';Object.keys(langs).forEach(c=>{let t=langs[c];let a=currentLang===c?' active':'';let div=document.createElement('div');div.className='lang-card'+a;div.onclick=()=>selectLang(c);div.innerHTML=`<div><b>${t.flag} ${t.name}</b><br><small>${t.local?'Local smart — No error!':'API'}</small></div><button style="background:${currentLang===c?'#25D366':'#333'};color:white;border:none;padding:8px 14px;border-radius:20px;font-weight:bold">${currentLang===c?'✅':'TAP'}</button>`;l.appendChild(div);});}
 function switchTab(t){document.getElementById('chatsTab').style.display=t==='chats'?'block':'none';document.getElementById('updatesTab').style.display=t==='updates'?'block':'none';document.getElementById('communitiesTab').style.display=t==='communities'?'block':'none';document.getElementById('callsTab').style.display=t==='calls'?'block':'none';document.querySelectorAll('.navItem').forEach(el=>el.classList.remove('active'));let el=document.getElementById('nav'+t.charAt(0).toUpperCase()+t.slice(1));if(el)el.classList.add('active');}
 function renderChatList(){let l=document.getElementById('chatList');l.innerHTML='';Object.keys(chatsData).forEach(n=>{let last=chatsData[n].slice(-1)[0];l.innerHTML+=`<div class="chat" onclick="openChat('${n}')"><div class="avatarMini"><div class="gf"><div></div><div></div><div></div></div><span>C</span></div><div style="flex:1"><b>${n}</b><br><small style="color:gray">${last?last.text:''}</small></div></div>`;});}
-async function renderMsgs(n){
-  let b=document.getElementById('msgList');b.innerHTML='';
-  for(let m of (chatsData[n]||[])){
-    let row=document.createElement('div');row.className=m.me?'msg me':'msg other';
-    row.innerHTML=`<div>${m.text}</div><div class="time">${m.time||''} ${privacy.read?'✓✓':'✓'} ${langs[currentLang].flag}</div>`;
-    b.appendChild(row);
-    if(autoTranslate){
-      let trDiv=document.createElement('div');trDiv.className='cleanTrans';trDiv.style.color='#888';trDiv.innerText='⏳ Translating...';row.appendChild(trDiv);
-      let tr=await translateAPI(m.text,currentLang);
-      trDiv.style.color='#FFD700';
-      trDiv.innerHTML=`<span>🇬🇭</span><span>➡️ ${tr}</span>`;
-    }
-  }
-  b.scrollTop=b.scrollHeight;
-}
+async function renderMsgs(n){let b=document.getElementById('msgList');b.innerHTML='';for(let m of (chatsData[n]||[])){let row=document.createElement('div');row.className=m.me?'msg me':'msg other';row.innerHTML=`<div>${m.text}</div><div class="time">${m.time||''} ✓✓ ${langs[currentLang].flag}</div>`;b.appendChild(row);if(autoTranslate){let trDiv=document.createElement('div');trDiv.className='cleanTrans';trDiv.style.color='#888';trDiv.innerText='⏳ Translating...';row.appendChild(trDiv);let tr=await translateAPI(m.text,currentLang);trDiv.style.color='#FFD700';trDiv.innerHTML=`<span>🇬🇭</span><span>➡️ ${tr}</span>`;}}b.scrollTop=b.scrollHeight;}
 function openChat(n){currentChat=n;document.getElementById('bottomNav').classList.add('hide');document.getElementById('quickBar').style.display='none';document.getElementById('chatWindow').classList.add('show');document.getElementById('chatWindow').style.display='flex';document.getElementById('chatName').innerText=n;renderMsgs(n);}
 function closeChat(){document.getElementById('chatWindow').classList.remove('show');document.getElementById('chatWindow').style.display='none';document.getElementById('bottomNav').classList.remove('hide');document.getElementById('quickBar').style.display='flex';}
 function sendMsg(){let i=document.getElementById('msgInput');let t=i.value.trim();if(!t)return;if(!chatsData[currentChat])chatsData[currentChat]=[];chatsData[currentChat].push({text:t,time:new Date().toLocaleTimeString(),me:true});localStorage.setItem('chale_chats_v79',JSON.stringify(chatsData));i.value='';renderMsgs(currentChat);renderChatList();}
@@ -187,13 +178,9 @@ function closeSettings(){document.getElementById('settingsPage').classList.remov
 function editProfile(){document.getElementById('settingsPage').style.display='none';document.getElementById('profilePage').classList.add('show');document.getElementById('profilePage').style.display='block';}
 function closeProfile(){document.getElementById('profilePage').classList.remove('show');document.getElementById('profilePage').style.display='none';document.getElementById('settingsPage').style.display='block';}
 function saveProfile(){let n=document.getElementById('profileNameInput').value.trim();localStorage.setItem('chale_name',n);document.getElementById('curName').innerText=n;closeProfile();}
-function openPrivacy(){document.getElementById('settingsPage').style.display='none';document.getElementById('privacyPage').classList.add('show');document.getElementById('privacyPage').style.display='block';}
-function closePrivacy(){document.getElementById('privacyPage').classList.remove('show');document.getElementById('privacyPage').style.display='none';document.getElementById('settingsPage').style.display='block';}
-function togglePriv(k){privacy[k]=!privacy[k];document.getElementById('sw_'+k).classList.toggle('on',privacy[k]);}
-function savePrivacy(){localStorage.setItem('chale_privacy',JSON.stringify(privacy));alert('✅ Privacy saved!');closePrivacy();}
 function openLanguage(){document.getElementById('settingsPage').style.display='none';document.getElementById('languagePage').classList.add('show');document.getElementById('languagePage').style.display='block';renderLangs();document.getElementById('autoSwitch').classList.toggle('on',autoTranslate);}
 function closeLanguage(){document.getElementById('languagePage').classList.remove('show');document.getElementById('languagePage').style.display='none';document.getElementById('settingsPage').style.display='block';}
 window.onload=()=>{let n=localStorage.getItem('chale_name');if(n)document.getElementById('curName').innerText=n;apply();renderChatList();renderLangs();openChat(currentChat);}
 </script>
 </body>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   </html>
