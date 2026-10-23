@@ -2,10 +2,10 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CHALE CHAT V85 VOICE NOTES</title>
+<title>CHALE CHAT V86 EMOJI + RAISED</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
-body{background:#0f0f0f;color:white;padding-bottom:75px}
+body{background:#0f0f0f;color:white;padding-bottom:95px}
 .header{background:#1a1a1a;padding:12px 15px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-weight:bold;font-size:18px}.logo span{color:#FFD700}
 .badge{background:#FFD700;color:black;font-size:9px;padding:4px 10px;border-radius:10px;margin-left:5px;font-weight:bold}
@@ -17,27 +17,34 @@ body{background:#0f0f0f;color:white;padding-bottom:75px}
 .sCircle.hasStatus{border:3px solid #25D366}
 .sCircle img{width:100%;height:100%;object-fit:cover}
 .addStatus{position:absolute;bottom:-2px;right:-2px;background:#25D366;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;border:2px solid #0f0f0f}
-.chatList{padding:10px;min-height:400px;padding-bottom:20px}
+.chatList{padding:10px;min-height:400px;padding-bottom:130px}
 .chat{background:#1e1e1e;padding:12px;border-radius:10px;margin-bottom:8px;display:flex;gap:10px;cursor:pointer}
 .avatar{width:40px;height:40px;border-radius:50%;background:#2a5bd7;display:flex;align-items:center;justify-content:center;overflow:hidden;font-weight:bold}
-.inputBar{position:fixed;bottom:75px;left:0;width:100%;background:#1a1a1a;padding:10px;display:flex;gap:8px;z-index:10;align-items:center}
-.inputBar input{flex:1;background:#222;border:none;padding:12px;border-radius:25px;color:white;outline:none;min-width:0}
-#settingsPage, #profilePage, #wallpaperPage, #privacyPage, #backupPage, #chatWindow, #statusViewer, #statusPage, #languagePage{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f0f0f;z-index:999;display:none;overflow-y:auto;padding:20px;padding-bottom:90px}
+.inputBar{position:fixed;left:0;width:100%;background:#1a1a1a;padding:10px 12px;display:flex;gap:8px;z-index:10;align-items:center}
+#quickBar{bottom:92px!important;background:#111;border-top:1px solid #222;padding-bottom:12px}
+#chatWindow .inputBar{position:relative;bottom:auto;background:#111}
+#settingsPage, #profilePage, #wallpaperPage, #privacyPage, #backupPage, #chatWindow, #statusViewer, #statusPage, #languagePage{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f0f0f;z-index:999;display:none;overflow-y:auto;padding:20px;padding-bottom:100px}
 #chatWindow{background:#0f0f0f;padding:0;z-index:2000;display:none;flex-direction:column}
 #chatWindow.show{display:flex}
 .chatWinHeader{background:#111;padding:12px 15px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;border-bottom:1px solid #333;width:100%}
-.msgList{flex:1;padding:15px;padding-bottom:120px;background:#0f0f0f;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
+.msgList{flex:1;padding:15px;padding-bottom:160px;background:#0f0f0f;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
 .msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:15px;word-wrap:break-word;white-space:pre-wrap;position:relative}
 .msg.me{align-self:flex-end;background:#005c4b;color:white;border-bottom-right-radius:4px}
-.msg.other{align-self:flex-start;background:#1e1e1e;border-bottom-left-radius:4px}
 .msg .time{font-size:10px;color:#a0d9c8;display:block;text-align:right;margin-top:6px}
 .msg .trans{margin-top:8px;padding:8px 10px;background:#1a1a00;border:1px solid #FFD700;border-left:3px solid #FFD700;border-radius:8px;font-size:13px;color:#FFD700;display:none;white-space:pre-wrap}
 .msg .trans.show{display:block}
 .msg .trBtn{font-size:11px;background:#FFD700;color:black;border:none;padding:5px 12px;border-radius:12px;margin-top:8px;cursor:pointer;font-weight:bold;display:inline-block}
 .voiceRow{display:flex;gap:10px;align-items:center;background:#0a332a;padding:8px 12px;border-radius:20px;margin-bottom:4px}
 .voicePlay{width:36px;height:36px;border-radius:50%;background:#25D366;border:none;display:flex;align-items:center;justify-content:center;color:white;font-size:16px;cursor:pointer;flex-shrink:0}
-.voiceWave{flex:1;height:24px;background:linear-gradient(90deg,#25D366 0%, #25D366 var(--p), #2a5a4a var(--p), #2a5a4a 100%);border-radius:4px;position:relative;overflow:hidden}
+.voiceWave{flex:1;height:24px;background:linear-gradient(90deg,#25D366 0%, #25D366 var(--p), #2a5a4a var(--p), #2a5a4a 100%);border-radius:4px}
 .voiceTime{font-size:11px;color:#a0d9c8;flex-shrink:0}
+.fileMsg{display:flex;gap:10px;align-items:center;background:#0a332a;padding:10px;border-radius:12px;margin-bottom:4px;border:1px solid #25D366}
+.fileIcon{width:40px;height:40px;border-radius:8px;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.emojiPanel{position:fixed;bottom:92px;left:0;width:100%;background:#1e1e1e;border-top:1px solid #333;padding:10px;display:none;z-index:4000;max-height:220px;overflow-y:auto}
+.emojiPanel.show{display:block}
+.emojiGrid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
+.emojiGrid span{font-size:24px;text-align:center;padding:8px;cursor:pointer;border-radius:8px}
+.emojiGrid span:active{background:#333}
 .set-item{background:#1e1e1e;padding:16px;margin:12px 0;border-radius:12px;border-left:4px solid #FFD700;cursor:pointer}
 .wall-option{width:65px;height:65px;border-radius:12px;border:3px solid transparent;cursor:pointer;display:inline-block;margin:6px}
 .wall-option.active{border:3px solid #FFD700}
@@ -46,25 +53,26 @@ body{background:#0f0f0f;color:white;padding-bottom:75px}
 .switch.on{background:#FFD700}
 .switch::after{content:'';position:absolute;width:22px;height:22px;background:white;border-radius:50%;top:3px;left:3px;transition:0.3s}
 .switch.on::after{left:25px}
-.micBtn{width:46px;height:46px;border-radius:50%;border:none;background:#25D366;color:white;font-size:20px;cursor:pointer;flex-shrink:0;transition:0.2s;user-select:none;-webkit-user-select:none}
+.micBtn{width:46px;height:46px;border-radius:50%;border:none;background:#25D366;color:white;font-size:20px;cursor:pointer;flex-shrink:0;transition:0.2s}
 .micBtn.recording{background:#ff4444!important;transform:scale(1.15);box-shadow:0 0 15px rgba(255,68,68,0.5)}
+.attachBtn{width:46px;height:46px;border-radius:50%;border:none;background:#333;color:white;font-size:20px;cursor:pointer;flex-shrink:0}
+.emojiBtn{width:46px;height:46px;border-radius:50%;border:none;background:#333;color:white;font-size:20px;cursor:pointer;flex-shrink:0}
 .statusProgress{position:absolute;top:10px;left:10px;right:10px;display:flex;gap:4px;z-index:10}
 .prog{height:3px;background:rgba(255,255,255,0.4);flex:1;border-radius:2px;overflow:hidden}
 .progFill{height:100%;background:white;width:0%;transition:0.1s}
 .statusViewImg{width:100%;height:100vh;object-fit:contain;background:black}
-.lang-card{background:#1e1e1e;padding:20px 16px;border-radius:14px;margin:12px 0;display:flex;justify-content:space-between;align-items:center;border-left:5px solid #444;cursor:pointer;min-height:72px;transition:0.2s}
-.lang-card:active{transform:scale(0.98)}
-.lang-card.active{border-left:5px solid #FFD700;background:#2a2a0f;box-shadow:0 0 12px rgba(255,215,0,0.2)}
+.lang-card{background:#1e1e1e;padding:20px 16px;border-radius:14px;margin:12px 0;display:flex;justify-content:space-between;align-items:center;border-left:5px solid #444;cursor:pointer;min-height:72px}
+.lang-card.active{border-left:5px solid #FFD700;background:#2a2a0f}
 .lang-btn{background:#FFD700;color:black;border:none;padding:8px 16px;border-radius:20px;font-weight:bold;font-size:12px;pointer-events:none}
-.bottomNav{position:fixed;bottom:0;left:0;width:100%;background:white;display:flex;justify-content:space-around;padding:6px 0;z-index:5000;border-top:1px solid #e0e0e0}
-.navItem{flex:1;text-align:center;cursor:pointer;padding:4px 0;color:#666}
+.bottomNav{position:fixed;bottom:0;left:0;width:100%;background:white;display:flex;justify-content:space-around;padding:8px 0 10px 0;z-index:5000;border-top:1px solid #e0e0e0;height:68px}
+.navItem{flex:1;text-align:center;cursor:pointer;padding:2px 0;color:#666}
 .navItem.active{color:#000}
 .navItem .iconWrap{display:inline-block;padding:5px 18px;border-radius:20px}
 .navItem.active .iconWrap{background:#d4f8d4}
 .navItem .icon{font-size:22px;display:block}
 .navItem .label{font-size:11px;margin-top:2px;display:block}
 .navItem.active .label{font-weight:700}
-#updatesTab{position:fixed;top:0;left:0;width:100%;height:100%;background:white;color:black;z-index:100;display:none;overflow-y:auto;padding-bottom:90px}
+#updatesTab{position:fixed;top:0;left:0;width:100%;height:100%;background:white;color:black;z-index:100;display:none;overflow-y:auto;padding-bottom:100px}
 .updatesTop{padding:15px 20px;display:flex;justify-content:space-between;align-items:center;background:white;position:sticky;top:0;z-index:10}
 .statusSection{padding:0 15px}
 .statusSection h2{font-size:18px;font-weight:700;color:black;margin:10px 0}
@@ -73,21 +81,21 @@ body{background:#0f0f0f;color:white;padding-bottom:75px}
 .statusCard.addCard{background:#f0f0f0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px}
 .statusCard img{width:100%;height:100%;object-fit:cover}
 .statusCard .greenBorder{position:absolute;inset:3px;border:3px solid #25D366;border-radius:13px;pointer-events:none}
-#communitiesTab{position:fixed;top:0;left:0;width:100%;height:100%;background:white;color:black;z-index:100;display:none;overflow-y:auto;padding-bottom:90px}
+#communitiesTab{position:fixed;top:0;left:0;width:100%;height:100%;background:white;color:black;z-index:100;display:none;overflow-y:auto;padding-bottom:100px}
 .commTop{padding:20px 20px 10px 20px;background:white}
 .commTop h1{font-size:26px;font-weight:400;color:black}
 .commIntro{padding:0 20px 20px 20px;background:white}
 .newCommBtn{width:100%;background:#f0f0f0;border:1px dashed #aaa;padding:16px;border-radius:12px;display:flex;align-items:center;gap:15px;cursor:pointer;margin-bottom:20px}
 .newCommIcon{width:48px;height:48px;border-radius:12px;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:24px;color:white}
 .commCard{background:white;border:1px solid #f0f0f0;border-radius:12px;padding:15px;margin-bottom:12px;display:flex;gap:12px;align-items:center;cursor:pointer}
-#callsTab{position:fixed;top:0;left:0;width:100%;height:100%;background:white;color:black;z-index:100;display:none;overflow-y:auto;padding-bottom:90px}
+#callsTab{position:fixed;top:0;left:0;width:100%;height:100%;background:white;color:black;z-index:100;display:none;overflow-y:auto;padding-bottom:100px}
 .callsTop{padding:15px 20px;display:flex;justify-content:space-between;align-items:center;background:white;position:sticky;top:0;z-index:10}
 .createCallLink{margin:15px 20px;background:white;border:1px solid #f0f0f0;border-radius:12px;padding:15px;display:flex;gap:15px;align-items:center;cursor:pointer}
 .callLinkIcon{width:48px;height:48px;border-radius:50%;background:#00a884;display:flex;align-items:center;justify-content:center;font-size:24px;color:white}
 .callsSection{padding:0 20px}
 .callRow{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #f5f5f5;align-items:center;cursor:pointer}
 .callAva{width:48px;height:48px;border-radius:50%;background:#eee;display:flex;align-items:center;justify-content:center;font-weight:bold}
-.callFab{position:fixed;bottom:85px;right:15px;width:56px;height:56px;border-radius:16px;background:#00a884;border:none;display:flex;align-items:center;justify-content:center;font-size:26px;color:white;cursor:pointer}
+.callFab{position:fixed;bottom:95px;right:15px;width:56px;height:56px;border-radius:16px;background:#00a884;border:none;display:flex;align-items:center;justify-content:center;font-size:26px;color:white;cursor:pointer}
 #callOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f0f0f;z-index:8000;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;color:white}
 .callAvatarBig{width:110px;height:110px;border-radius:50%;background:#222;border:4px solid #FFD700;display:flex;align-items:center;justify-content:center;font-size:50px;overflow:hidden}
 .callAvatarBig img{width:100%;height:100%;object-fit:cover}
@@ -102,17 +110,18 @@ body{background:#0f0f0f;color:white;padding-bottom:75px}
 </head>
 <body id="body">
 <div id="chatsTab">
-<div class="header"><div class="logo">CHALE <span>CHAT</span> <span class="badge">V85 VOICE 1/3</span> <span class="featureBadge">🎙️ NEW</span></div><button onclick="openSettings()" style="background:#FFD700;width:38px;height:38px;border-radius:50%;border:none">⚙️</button></div>
+<div class="header"><div class="logo">CHALE <span>CHAT</span> <span class="badge">V86 RAISED + EMOJI 2/3</span> <span class="featureBadge">😊📎 NEW</span></div><button onclick="openSettings()" style="background:#FFD700;width:38px;height:38px;border-radius:50%;border:none">⚙️</button></div>
 <div class="search"><input id="searchInput" placeholder="Search chats"></div>
 <div class="statusRow"><div class="sItem" onclick="openMyStatus()"><div class="sCircle" id="myStatusCircle"><img id="myStatusImg" style="display:none"><span id="myStatusEmoji">🇬🇭</span><div class="addStatus">+</div></div><p id="txtMyStatus">My Status</p></div><div class="sItem" onclick="viewStatus()"><div class="sCircle hasStatus" id="salStatus"><img id="salImg"><span id="salEmoji" style="display:none">🇬🇭</span></div><p>Salvation</p></div></div>
 <div class="chatList" id="chatList"></div>
 <div class="inputBar" id="quickBar"><input id="quickInput" placeholder="Type message..."><button class="micBtn" onclick="quickSend()">➤</button></div>
 </div>
 
-<div id="updatesTab"><div class="updatesTop"><h1>Updates</h1></div><div class="statusSection"><h2>Status <span id="realStatusCount">• Real</span></h2><div class="statusScroll" id="updatesStatusScroll"></div></div><div style="padding:15px"><div style="background:#FFD70020;border-radius:10px;padding:12px;display:flex;gap:12px;align-items:center"><div style="width:48px;height:48px;border-radius:50%;background:#FFD700;display:flex;align-items:center;justify-content:center;overflow:hidden"><img id="chaleOfficialLogo" style="width:100%;height:100%;object-fit:cover;display:none"><span id="chaleOfficialEmoji">🇬🇭</span></div><div><b>Chale Chat Official</b><br><span id="liveChannelText" style="font-size:13px;color:#666">Welcome</span></div></div></div></div>
-<div id="communitiesTab"><div class="commTop"><h1>Communities</h1></div><div class="commIntro"><div class="newCommBtn" onclick="createCommunity()"><div class="newCommIcon">👥</div><div><b style="color:black">New community</b><br><span style="color:#666;font-size:13px">Create Ghana community 🇬🇭</span></div></div><div class="commCard"><div style="width:54px;height:54px;border-radius:14px;background:#111;border:2px solid #FFD700;display:flex;align-items:center;justify-content:center;overflow:hidden"><img id="commSTLogo" style="width:100%;height:100%;object-fit:cover;display:none"><span id="commSTEmoji" style="font-weight:bold;color:#FFD700">ST</span></div><div style="flex:1"><b style="color:black">Salvation Tech Community 🇬🇭</b><br><span style="color:#666;font-size:13px">Dansoman Accra • 0540042669</span></div></div></div></div>
-<div id="callsTab"><div class="callsTop"><h1>Calls</h1></div><div class="createCallLink" onclick="createCallLink()"><div class="callLinkIcon">🔗</div><div style="flex:1"><b style="color:#00a884">Create call link</b><br><span style="color:#666;font-size:13px">Share link</span></div></div><div class="callsSection"><div class="callRow" onclick="makeCall('Salvation Tech','ST')"><div class="callAva" style="background:#111;border:2px solid #FFD700;color:#FFD700;overflow:hidden"><img id="favSTLogo" style="width:100%;height:100%;object-fit:cover;display:none"><span id="favSTEmoji">ST</span></div><div style="flex:1"><b>Salvation Tech 🇬🇭</b><br><small style="color:#666">Favorite</small></div></div></div><button class="callFab" onclick="showDialer()">📞</button></div>
+<div id="updatesTab"><div class="updatesTop"><h1>Updates</h1></div><div class="statusSection"><h2>Status <span id="realStatusCount">• Real</span></h2><div class="statusScroll" id="updatesStatusScroll"></div></div></div>
+<div id="communitiesTab"><div class="commTop"><h1>Communities</h1></div><div class="commIntro"><div class="newCommBtn" onclick="createCommunity()"><div class="newCommIcon">👥</div><div><b style="color:black">New community</b><br><span style="color:#666;font-size:13px">Create Ghana community 🇬🇭</span></div></div></div></div>
+<div id="callsTab"><div class="callsTop"><h1>Calls</h1></div><div class="createCallLink" onclick="createCallLink()"><div class="callLinkIcon">🔗</div><div style="flex:1"><b style="color:#00a884">Create call link</b><br><span style="color:#666;font-size:13px">Share link</span></div></div></div>
 
+<!-- RAISED BOTTOM NAV -->
 <div class="bottomNav">
 <div class="navItem active" id="navChats" onclick="switchTab('chats')"><span class="iconWrap"><span class="icon">💬</span></span><span class="label">Chats</span></div>
 <div class="navItem" id="navUpdates" onclick="switchTab('updates')"><span class="iconWrap"><span class="icon">⭕</span></span><span class="label">Updates</span></div>
@@ -120,110 +129,107 @@ body{background:#0f0f0f;color:white;padding-bottom:75px}
 <div class="navItem" id="navCalls" onclick="switchTab('calls')"><span class="iconWrap"><span class="icon">📞</span></span><span class="label">Calls</span></div>
 </div>
 
+<!-- EMOJI PANEL -->
+<div class="emojiPanel" id="emojiPanel">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b style="color:#FFD700">🇬🇭 Ghana Emojis</b><button onclick="toggleEmoji()" style="background:#333;border:none;color:white;padding:4px 10px;border-radius:6px">X</button></div>
+<div class="emojiGrid" id="emojiGrid"></div>
+</div>
+
 <div id="callOverlay"><div class="callAvatarBig"><img id="callBigImg" style="display:none"><span id="callBigEmoji">📞</span></div><h2 id="callOverlayName" style="margin-top:20px">Salvation</h2><p id="callOverlayStatus" style="color:#FFD700;margin-top:8px">Calling...</p><p id="callTimer" style="color:#25D366">00:00</p><div class="callButtons"><button class="callBtn mute" onclick="toggleMute()" id="muteBtn">🎙️</button><button class="callBtn end" onclick="endCall()">✕</button><button class="callBtn mute" onclick="switchCam()">📹</button></div></div>
 <div id="statusViewer" style="background:black;padding:0;z-index:6000"><div class="statusProgress" id="statusProgress"></div><div class="chatWinHeader" style="position:absolute;top:20px;background:transparent;z-index:10;width:100%;border:none"><button onclick="closeStatusViewer()" style="background:rgba(0,0,0,0.5);border:none;width:35px;height:35px;border-radius:50%;color:white">✕</button><div class="avatar"><img id="viewerAvatar" style="display:none"><span id="viewerEmoji">🇬🇭</span></div><div style="flex:1"><b id="viewerName">Salvation</b><br><small style="color:#ccc" id="viewerTime">Today</small></div></div><img id="statusViewImg" class="statusViewImg"></div>
 <div id="statusPage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtStatusTitle">📸 My Status</h2><button onclick="closeMyStatus()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button></div><div style="background:#1a2a1a;border:1px solid #25D366;border-radius:12px;padding:15px;margin-top:20px;text-align:center"><div style="width:80px;height:80px;border-radius:50%;margin:0 auto;background:#222;border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;overflow:hidden"><img id="myStatusPageImg" style="width:100%;height:100%;object-fit:cover;display:none"><span id="myStatusPageEmoji" style="font-size:40px">🇬🇭</span></div><h3 style="margin-top:10px" id="myStatusName">Salvation</h3><small style="color:#888" id="txtTapAdd">Tap to add status</small><div style="margin-top:15px"><label for="statusUpload" style="background:#25D366;color:white;padding:12px 20px;border-radius:25px;font-weight:bold;cursor:pointer" id="txtPhotoStatus">📸 Photo Status</label></div><input type="file" id="statusUpload" accept="image/*" style="display:none" onchange="uploadStatus(this)"></div><div style="margin-top:25px"><h3 style="color:#FFD700;font-size:13px" id="txtMyUpdates">MY STATUS UPDATES</h3><div id="myStatusList" style="margin-top:10px"></div></div></div>
 
-<!-- CHAT WINDOW WITH VOICE -->
+<!-- CHAT WINDOW RAISED + EMOJI + FILE -->
 <div id="chatWindow">
-<div class="chatWinHeader"><button onclick="closeChat()" style="background:#222;border:none;width:35px;height:35px;border-radius:50%;color:white">←</button><div class="avatar"><span id="chatAvatarEmoji">A</span></div><div style="flex:1"><b id="chatName">Ama</b><br><small style="color:#25D366" id="txtOnline">Online • V85 Voice 1/3</small></div></div>
+<div class="chatWinHeader"><button onclick="closeChat()" style="background:#222;border:none;width:35px;height:35px;border-radius:50%;color:white">←</button><div class="avatar"><span id="chatAvatarEmoji">A</span></div><div style="flex:1"><b id="chatName">Ama</b><br><small style="color:#25D366" id="txtOnline">Online • V86 Raised 2/3</small></div></div>
 <div class="msgList" id="msgList"></div>
-<div class="inputBar" style="position:relative;bottom:auto;background:#111;padding:10px 12px">
-<div class="recBar" id="recIndicator">🔴 <span id="recTime">00:03</span> — Slide to cancel • Hold to talk</div>
-<input id="msgInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter')sendMsg()" style="flex:1">
+<div class="inputBar" style="background:#111;padding:10px 12px;gap:6px;border-top:1px solid #222">
+<div class="recBar" id="recIndicator" style="position:absolute;bottom:60px;left:10px;right:10px;justify-content:center">🔴 <span id="recTime">00:03</span> — Recording...</div>
+<button class="emojiBtn" onclick="toggleEmoji()">😊</button>
+<button class="attachBtn" onclick="document.getElementById('fileUpload').click()">📎</button>
+<input type="file" id="fileUpload" style="display:none" accept="image/*,video/*,.pdf,.doc,.mp3" onchange="uploadFile(this)">
+<input id="msgInput" placeholder="Type a message... 😊📎" onkeypress="if(event.key==='Enter')sendMsg()">
 <button id="micBtnMain" class="micBtn">🎙️</button>
 <button onclick="sendMsg()" style="width:46px;height:46px;border-radius:50%;border:none;background:#25D366;color:white;font-size:18px;flex-shrink:0">➤</button>
 </div>
-<div style="background:#111;padding:6px 15px;display:flex;gap:8px;font-size:11px;color:#888">
-<span>🎙️ Hold mic to record voice note • Tap once for keyboard • V85 Feature 1/3</span>
+<div style="background:#111;padding:8px 15px;display:flex;gap:8px;font-size:11px;color:#888;justify-content:space-between">
+<span>⬆️ Chat raised 20px • 😊 Emoji • 📎 Files • 🎙️ Voice</span><span style="color:#FFD700">V86 2/3</span>
 </div>
 </div>
 
-<div id="settingsPage"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"><h2 id="txtSettings">⚙️ SETTINGS</h2><button onclick="closeSettings()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">X</button></div><div class="set-item" onclick="editProfile()"><h3 id="txtProfile">1. Profile ></h3><small style="color:#FFD700" id="curName">Salvation</small></div><div class="set-item" onclick="openWallpaper()"><h3 id="txtWallpaper">2. Wallpaper ></h3><small style="color:#FFD700" id="curWall">Dark Default</small></div><div class="set-item" onclick="openPrivacy()"><h3 id="txtPrivacy">3. Privacy ></h3><small style="color:#FFD700" id="curPrivacy">All ON</small></div><div class="set-item" onclick="openBackup()"><h3 id="txtBackup">4. Backup ></h3><small style="color:#25D366" id="curBackup">Ready</small></div><div class="set-item" onclick="openMyStatus()" style="border:2px solid #25D366"><h3 id="txtMyStatusSet">5. My Status 📸 ></h3><small style="color:#25D366">Post status</small></div><div class="set-item" onclick="openLanguage()" style="border:3px solid #FFD700;background:#221e00"><h3 id="txtLangSet">6. Language 🌍 ></h3><small style="color:#FFD700" id="curLang">English</small></div><div class="set-item" style="border:2px solid #25D366;background:#0a2210"><h3>🎙️ 1/3 Voice Notes ✅ ></h3><small style="color:#25D366">Hold mic to record — NEW!</small></div><div class="set-item" style="border:1px dashed #666;opacity:0.6"><h3>2/3 Emoji + Files ⏳</h3><small>Next build</small></div><div class="set-item" style="border:1px dashed #666;opacity:0.6"><h3>3/3 Groups + APK ⏳</h3><small>Next build</small></div></div>
+<div id="settingsPage"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"><h2 id="txtSettings">⚙️ SETTINGS</h2><button onclick="closeSettings()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">X</button></div><div class="set-item" onclick="editProfile()"><h3 id="txtProfile">1. Profile ></h3><small style="color:#FFD700" id="curName">Salvation</small></div><div class="set-item" onclick="openWallpaper()"><h3 id="txtWallpaper">2. Wallpaper ></h3><small style="color:#FFD700" id="curWall">Dark Default</small></div><div class="set-item" onclick="openPrivacy()"><h3 id="txtPrivacy">3. Privacy ></h3><small style="color:#FFD700" id="curPrivacy">All ON</small></div><div class="set-item" onclick="openBackup()"><h3 id="txtBackup">4. Backup ></h3><small style="color:#25D366" id="curBackup">Ready</small></div><div class="set-item" onclick="openMyStatus()" style="border:2px solid #25D366"><h3 id="txtMyStatusSet">5. My Status 📸 ></h3><small style="color:#25D366">Post status</small></div><div class="set-item" onclick="openLanguage()"><h3 id="txtLangSet">6. Language 🌍 ></h3><small style="color:#FFD700" id="curLang">English</small></div><div class="set-item" style="border:2px solid #25D366;background:#0a2210"><h3>1/3 Voice Notes ✅</h3><small style="color:#25D366">Hold mic</small></div><div class="set-item" style="border:2px solid #FFD700;background:#221e00"><h3>2/3 Emoji + Files ✅ NEW ></h3><small style="color:#FFD700">😊📎 Raised tab!</small></div><div class="set-item" style="border:1px dashed #666;opacity:0.6"><h3>3/3 Groups + APK ⏳</h3><small>Next build</small></div></div>
 <div id="languagePage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtLangTitle">🌍 Language</h2><button onclick="closeLanguage()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button></div><div style="background:#25D366;color:white;padding:12px;border-radius:10px;margin-top:15px;text-align:center;font-weight:bold" id="txtLangDesc">✅ ONE TOUCH!</div><div style="background:#FFD700;color:black;padding:10px;border-radius:8px;margin-top:10px;text-align:center;font-weight:bold">Current: <span id="selectedLangBox">English</span></div><h3 style="color:#FFD700;margin-top:18px;font-size:12px">🇬🇭 GHANA LOCAL</h3><div id="localLangs"></div><h3 style="color:#25D366;margin-top:18px;font-size:12px">🌍 WORLD</h3><div id="foreignLangs"></div></div>
-<div id="wallpaperPage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtWallTitle">🎨 Wallpaper</h2><button onclick="closeWallpaper()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button></div><div style="margin-top:25px"><h3 id="txtThemeMode">Theme Mode</h3><div style="display:flex;gap:12px;margin-top:10px"><button onclick="setTheme('dark')" style="flex:1;background:#111;color:white;border:2px solid #FFD700;padding:14px;border-radius:12px;font-weight:bold">🌙 Dark</button><button onclick="setTheme('light')" style="flex:1;background:white;color:black;border:2px solid #ccc;padding:14px;border-radius:12px;font-weight:bold">☀️ Light</button></div></div><div style="margin-top:30px"><h3 id="txtChatWall">Chat Wallpaper</h3><div style="margin-top:12px"><div class="wall-option active" style="background:#0f0f0f" onclick="setWall('none','Dark Default',this)"></div><div class="wall-option" style="background:#FFD700" onclick="setWall('#FFD700','Gold Ghana',this)"></div></div></div><button onclick="saveWallpaper()" style="width:100%;background:#FFD700;border:none;padding:16px;border-radius:12px;font-weight:bold;margin-top:30px;">Save ✅</button></div>
-<div id="privacyPage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtPrivTitle">🔒 Privacy</h2><button onclick="closePrivacy()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button></div><div style="margin-top:25px"><div class="privacy-card"><div><b>Last Seen</b></div><div class="switch on" id="sw_lastseen" onclick="togglePriv('lastseen')"></div></div><div class="privacy-card"><div><b>Ghost Mode 🇬🇭</b></div><div class="switch" id="sw_ghost" onclick="toggleGhost()"></div></div></div><button onclick="savePrivacy()" style="width:100%;background:#FFD700;border:none;padding:16px;border-radius:12px;font-weight:bold;margin-top:35px;">Save ✅</button></div>
-<div id="backupPage"><div style="display:flex;justify-content:space-between;align-items:center"><h2>💾 Backup</h2><button onclick="closeBackup()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button></div><div style="background:#1a2a1a;border:1px solid #25D366;border-radius:12px;padding:15px;margin-top:20px"><h3 style="color:#25D366">✅ Backup</h3><p style="margin-top:8px;font-size:13px">Last: <span id="lastBackupTime">Never</span></p><p style="font-size:13px">Messages: <span id="chatCount">0</span> • Status: <span id="statusCount">0</span></p></div><div class="backup-card" onclick="exportBackup()"><div><b>📤 Export</b></div><div>⬇️</div></div></div>
+<div id="wallpaperPage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtWallTitle">🎨 Wallpaper</h2><button onclick="closeWallpaper()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button></div><div style="margin-top:25px"><h3 id="txtThemeMode">Theme Mode</h3><div style="display:flex;gap:12px;margin-top:10px"><button onclick="setTheme('dark')" style="flex:1;background:#111;color:white;border:2px solid #FFD700;padding:14px;border-radius:12px;font-weight:bold">🌙 Dark</button><button onclick="setTheme('light')" style="flex:1;background:white;color:black;border:2px solid #ccc;padding:14px;border-radius:12px;font-weight:bold">☀️ Light</button></div></div></div>
+<div id="privacyPage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtPrivTitle">🔒 Privacy</h2><button onclick="closePrivacy()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button></div><div style="margin-top:25px"><div class="privacy-card"><div><b>Last Seen</b></div><div class="switch on" id="sw_lastseen" onclick="togglePriv('lastseen')"></div></div></div><button onclick="savePrivacy()" style="width:100%;background:#FFD700;border:none;padding:16px;border-radius:12px;font-weight:bold;margin-top:35px;">Save ✅</button></div>
+<div id="backupPage"><div style="display:flex;justify-content:space-between;align-items:center"><h2>💾 Backup</h2><button onclick="closeBackup()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button></div><div style="background:#1a2a1a;border:1px solid #25D366;border-radius:12px;padding:15px;margin-top:20px"><h3 style="color:#25D366">✅ Backup</h3><p style="font-size:13px">Messages: <span id="chatCount">0</span></p></div></div>
 <div id="profilePage"><div style="display:flex;justify-content:space-between;align-items:center"><h2 id="txtEditProf">👤 Edit Profile</h2><button onclick="closeProfile()" style="background:#FFD700;border:none;padding:8px 12px;border-radius:8px;font-weight:bold;">← Back</button></div><div style="text-align:center;margin-top:25px"><div style="position:relative;width:120px;height:120px;margin:0 auto"><div id="bigAvatar" style="width:120px;height:120px;border-radius:50%;background:#222;border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;font-size:60px;overflow:hidden"><img id="bigAvatarImg" style="width:100%;height:100%;object-fit:cover;display:none"><span id="bigAvatarEmoji">🇬🇭</span></div><label for="photoUpload" style="position:absolute;bottom:0;right:0;background:#FFD700;width:35px;height:35px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;">📷</label><input type="file" id="photoUpload" accept="image/*" style="display:none" onchange="uploadPhoto(this)"></div></div><div style="margin-top:30px"><input id="profileNameInput" value="Salvation" style="width:100%;background:#1e1e1e;border:none;padding:15px;border-radius:10px;color:white;"><button onclick="saveProfile()" style="width:100%;background:#FFD700;border:none;padding:16px;border-radius:12px;font-weight:bold;margin-top:20px;" id="btnSaveProf">Save ✅</button></div></div>
 
 <script>
 const translations={
-  en:{name:"English",flag:"🇬🇧",code:"en",search:"Search chats",myStatus:"My Status",typeMsg:"Type a message...",settings:"⚙️ SETTINGS",profile:"1. Profile >",wallpaper:"2. Wallpaper >",privacy:"3. Privacy >",backup:"4. Backup >",myStatusSet:"5. My Status 📸 >",langSet:"6. Language 🌍 >",langTitle:"🌍 Language",langDesc:"✅ ONE TOUCH!",online:"Online • V85 Voice 1/3",send:"Send",statusTitle:"📸 My Status",tapAdd:"Tap to add status",photoStatus:"📸 Photo Status",myUpdates:"MY STATUS UPDATES",themeMode:"Theme Mode",chatWall:"Chat Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Privacy",editProf:"👤 Edit Profile",saveProf:"Save ✅",translate:"🌍 Translate",translating:"Translating..."},
-  tw:{name:"Twi - Akan",flag:"🇬🇭",code:"tw",search:"Hwehwɛ nkɔmmɔ",myStatus:"Me Status",typeMsg:"Kyerɛw nkɔmmɔ...",settings:"⚙️ NHYEHYƐEƐ",profile:"1. M'ankasa >",wallpaper:"2. Wallpaper >",privacy:"3. Kokoam >",backup:"4. Backup >",myStatusSet:"5. Me Status 📸 >",langSet:"6. Kasa 🌍 >",langTitle:"🌍 Kasa",langDesc:"✅ ONE TOUCH!",online:"Online • Twi",send:"Mane",statusTitle:"📸 Me Status",tapAdd:"Tap na fa status",photoStatus:"📸 Foto Status",myUpdates:"ME STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Kokoam",editProf:"👤 Sesa M'ankasa",saveProf:"Kora M'ankasa ✅",translate:"🌍 Kyerɛ ase",translating:"Ɛrekyerɛ ase..."},
-  pidgin:{name:"Ghana Pidgin",flag:"🇬🇭",code:"pcm",search:"Find chats",myStatus:"My Status",typeMsg:"Type how for dey...",settings:"⚙️ SETTINGS",profile:"1. My Body >",wallpaper:"2. Cloth >",privacy:"3. Hide Body >",backup:"4. Save Am >",myStatusSet:"5. My Status 📸 >",langSet:"6. Language 🌍 >",langTitle:"🌍 Language",langDesc:"✅ ONE TOUCH!",online:"Online • Chale!",send:"Send am",statusTitle:"📸 My Status",tapAdd:"Tap add new status",photoStatus:"📸 Photo Status",myUpdates:"MY STATUS",themeMode:"Dark/Light",chatWall:"Back Cloth",wallTitle:"🎨 Cloth",privTitle:"🔒 Hide Body",editProf:"👤 My Body",saveProf:"Save Am ✅",translate:"🌍 Translate am",translating:"I dey translate..."},
-  fr:{name:"Français",flag:"🇫🇷",code:"fr",search:"Chercher chats",myStatus:"Mon Statut",typeMsg:"Tapez message...",settings:"⚙️ PARAMÈTRES",profile:"1. Profil >",wallpaper:"2. Fond >",privacy:"3. Confidentialité >",backup:"4. Sauvegarde >",myStatusSet:"5. Mon Statut 📸 >",langSet:"6. Langue 🌍 >",langTitle:"🌍 Langue",langDesc:"✅ ONE TOUCH!",online:"En ligne",send:"Envoyer",statusTitle:"📸 Mon Statut",tapAdd:"Appuyez",photoStatus:"📸 Photo Statut",myUpdates:"MES STATUTS",themeMode:"Thème",chatWall:"Fond Chat",wallTitle:"🎨 Fond",privTitle:"🔒 Confidentialité",editProf:"👤 Modifier",saveProf:"Sauver ✅",translate:"🌍 Traduire",translating:"Traduction..."},
-  ga:{name:"Ga",flag:"🇬🇭",code:"gaa",search:"Taomɔ sɛɛmɔi",myStatus:"Mi Status",typeMsg:"Ŋma sɛɛmɔ...",settings:"⚙️ SHIHILƐI",profile:"1. Minuu >",wallpaper:"2. Wallpaper >",privacy:"3. Gbaashikɛ >",backup:"4. Backup >",myStatusSet:"5. Mi Status 📸 >",langSet:"6. Wiemɔ 🌍 >",langTitle:"🌍 Wiemɔ",langDesc:"✅ ONE TOUCH!",online:"Online • Ga",send:"Tsu",statusTitle:"📸 Mi Status",tapAdd:"Tap",photoStatus:"📸 Foto",myUpdates:"MI STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Gbaashikɛ",editProf:"👤 Tsake Minuu",saveProf:"Kɛkɛ Minuu ✅",translate:"🌍 Tsɔɔmɔ",translating:"Miitsɔɔmɔ..."},
-  ewe:{name:"Ewe",flag:"🇬🇭",code:"ee",search:"Di nyawo",myStatus:"Nye Status",typeMsg:"Ŋlɔ nya...",settings:"⚙️ ɖoɖo",profile:"1. Nyee >",wallpaper:"2. Wallpaper >",privacy:"3. Adzame >",backup:"4. Backup >",myStatusSet:"5. Nye Status 📸 >",langSet:"6. Gbe 🌍 >",langTitle:"🌍 Gbe",langDesc:"✅ ONE TOUCH!",online:"Online • Ewe",send:"Dɔ",statusTitle:"📸 Nye Status",tapAdd:"Tap",photoStatus:"📸 Foto",myUpdates:"NYE STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Adzame",editProf:"👤 Trɔ Nye",saveProf:"Dzra Nye ✅",translate:"🌍 Ɖe gɔme",translating:"Mele gɔme..."},
-  hausa:{name:"Hausa",flag:"🇳🇬",code:"ha",search:"Nemo hira",myStatus:"Status Dina",typeMsg:"Rubuta sako...",settings:"⚙️ SAITUNA",profile:"1. Bayanina >",wallpaper:"2. Wallpaper >",privacy:"3. Sirri >",backup:"4. Ajiye >",myStatusSet:"5. Status Dina 📸 >",langSet:"6. Harshe 🌍 >",langTitle:"🌍 Harshe",langDesc:"✅ ONE TOUCH!",online:"Online • Hausa",send:"Aika",statusTitle:"📸 Status Dina",tapAdd:"Tap",photoStatus:"📸 Hoto",myUpdates:"SABON STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Sirri",editProf:"👤 Gyara",saveProf:"Ajiye ✅",translate:"🌍 Fassara",translating:"Ina fassarawa..."},
-  fante:{name:"Fante - Mfantse",flag:"🇬🇭",code:"ak",search:"Hwehwɛ nkɔmmɔbɔ",myStatus:"Me Status",typeMsg:"Kyerɛw nkɔmmɔ...",settings:"⚙️ NHYEHYƐE",profile:"1. Me ho >",wallpaper:"2. Wallpaper >",privacy:"3. Kokoam >",backup:"4. Backup >",myStatusSet:"5. Me Status 📸 >",langSet:"6. Kasa 🌍 >",langTitle:"🌍 Kasa",langDesc:"✅ ONE TOUCH!",online:"Online • Fante",send:"Mane",statusTitle:"📸 Me Status",tapAdd:"Tap",photoStatus:"📸 Foto",myUpdates:"ME STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Kokoam",editProf:"👤 Sesa",saveProf:"Kora ✅",translate:"🌍 Kyerɛ ase",translating:"Ɔrekyerɛ ase..."},
-  dagbani:{name:"Dagbani",flag:"🇬🇭",code:"dag",search:"Bohimi yɛltɔɣa",myStatus:"N Status",typeMsg:"Ŋma yɛltɔɣa...",settings:"⚙️ SAɣSIRA",profile:"1. N Maŋa >",wallpaper:"2. Wallpaper >",privacy:"3. Asiri >",backup:"4. Backup >",myStatusSet:"5. N Status 📸 >",langSet:"6. Bala 🌍 >",langTitle:"🌍 Bala",langDesc:"✅ ONE TOUCH!",online:"Online • Dagbani",send:"Tim",statusTitle:"📸 N Status",tapAdd:"Tap",photoStatus:"📸 Anfooni",myUpdates:"N STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Asiri",editProf:"👤 Taɣi",saveProf:"Sɔŋ ✅",translate:"🌍 Lɛbigi",translating:"N lɛbigiri..."},
-  nzema:{name:"Nzema",flag:"🇬🇭",code:"nzi",search:"Kpondɛ kɔmmɔle",myStatus:"Me Status",typeMsg:"Kɛlɛ kɔmmɔle...",settings:"⚙️ NHYEHYƐLE",profile:"1. Me ho >",wallpaper:"2. Wallpaper >",privacy:"3. Kokoam >",backup:"4. Backup >",myStatusSet:"5. Me Status 📸 >",langSet:"6. Anu Evele 🌍 >",langTitle:"🌍 Anu Evele",langDesc:"✅ ONE TOUCH!",online:"Online • Nzema",send:"Manle",statusTitle:"📸 Me Status",tapAdd:"Tap",photoStatus:"📸 Foto",myUpdates:"ME STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Kokoam",editProf:"👤 Sesa",saveProf:"Kora ✅",translate:"🌍 Kilehile",translating:"Ɛlɛkilehile..."},
-  dagaare:{name:"Dagaare",flag:"🇬🇭",code:"dga",search:"Boɔrɔ yɛlɛ",myStatus:"N Status",typeMsg:"Sɛgɛ yɛlɛ...",settings:"⚙️ YELYIE",profile:"1. N Menga >",wallpaper:"2. Wallpaper >",privacy:"3. Asiri >",backup:"4. Backup >",myStatusSet:"5. N Status 📸 >",langSet:"6. Kɔkɔre 🌍 >",langTitle:"🌍 Kɔkɔre",langDesc:"✅ ONE TOUCH!",online:"Online • Dagaare",send:"Toma",statusTitle:"📸 N Status",tapAdd:"Tap",photoStatus:"📸 Foto",myUpdates:"N STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Asiri",editProf:"👤 Leɛre",saveProf:"Su ✅",translate:"🌍 Leɛre",translating:"N leɛrɛ..."},
-  yo:{name:"Yoruba",flag:"🇳🇬",code:"yo",search:"Wa iwire",myStatus:"Ipo Mi",typeMsg:"Kọ ifiranṣẹ...",settings:"⚙️ ÈTÒ",profile:"1. Profaili >",wallpaper:"2. Wallpaper >",privacy:"3. Asiri >",backup:"4. Backup >",myStatusSet:"5. Ipo Mi 📸 >",langSet:"6. Èdè 🌍 >",langTitle:"🌍 Èdè",langDesc:"✅ ONE TOUCH!",online:"Online • Yoruba",send:"Firanṣẹ",statusTitle:"📸 Ipo Mi",tapAdd:"Tẹ",photoStatus:"📸 Fọto",myUpdates:"IPO MI",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Asiri",editProf:"👤 Ṣatunṣe",saveProf:"Fipamọ ✅",translate:"🌍 Tumọ",translating:"Mo n tumọ..."},
-  ig:{name:"Igbo",flag:"🇳🇬",code:"ig",search:"Chọ nkata",myStatus:"Ọnọdụ M",typeMsg:"Pịnye ozi...",settings:"⚙️ NTỌALA",profile:"1. Profaịlụ >",wallpaper:"2. Akwụkwọ ahụaja >",privacy:"3. Nzuzo >",backup:"4. Ndabere >",myStatusSet:"5. Ọnọdụ M 📸 >",langSet:"6. Asụsụ 🌍 >",langTitle:"🌍 Asụsụ",langDesc:"✅ ONE TOUCH!",online:"Online • Igbo",send:"Zipu",statusTitle:"📸 Ọnọdụ M",tapAdd:"Pịa",photoStatus:"📸 Foto",myUpdates:"ỌNỌDỤ M",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Nzuzo",editProf:"👤 Dezie",saveProf:"Chekwaa ✅",translate:"🌍 Tụgharịa",translating:"Na-atụgharị..."},
-  sw:{name:"Swahili",flag:"🇹🇿",code:"sw",search:"Tafuta chats",myStatus:"Hali Yangu",typeMsg:"Andika ujumbe...",settings:"⚙️ MIPANGILIO",profile:"1. Wasifu >",wallpaper:"2. Ukuta >",privacy:"3. Faragha >",backup:"4. Hifadhi >",myStatusSet:"5. Hali Yangu 📸 >",langSet:"6. Lugha 🌍 >",langTitle:"🌍 Lugha",langDesc:"✅ ONE TOUCH!",online:"Mtandaoni",send:"Tuma",statusTitle:"📸 Hali Yangu",tapAdd:"Gusa",photoStatus:"📸 Picha",myUpdates:"HALI ZANGU",themeMode:"Mandhari",chatWall:"Ukuta",wallTitle:"🎨 Ukuta",privTitle:"🔒 Faragha",editProf:"👤 Hariri",saveProf:"Hifadhi ✅",translate:"🌍 Tafsiri",translating:"Inatafsiri..."},
-  es:{name:"Español",flag:"🇪🇸",code:"es",search:"Buscar chats",myStatus:"Mi Estado",typeMsg:"Escribe...",settings:"⚙️ AJUSTES",profile:"1. Perfil >",wallpaper:"2. Fondo >",privacy:"3. Privacidad >",backup:"4. Copia >",myStatusSet:"5. Mi Estado 📸 >",langSet:"6. Idioma 🌍 >",langTitle:"🌍 Idioma",langDesc:"✅ ONE TOUCH!",online:"En línea",send:"Enviar",statusTitle:"📸 Mi Estado",tapAdd:"Toca",photoStatus:"📸 Foto",myUpdates:"MIS ESTADOS",themeMode:"Tema",chatWall:"Fondo",wallTitle:"🎨 Fondo",privTitle:"🔒 Privacidad",editProf:"👤 Editar",saveProf:"Guardar ✅",translate:"🌍 Traducir",translating:"Traduciendo..."},
-  ar:{name:"العربية",flag:"🇸🇦",code:"ar",search:"بحث",myStatus:"حالتي",typeMsg:"اكتب رسالة...",settings:"⚙️ الإعدادات",profile:"1. الملف >",wallpaper:"2. الخلفية >",privacy:"3. الخصوصية >",backup:"4. النسخ >",myStatusSet:"5. حالتي 📸 >",langSet:"6. اللغة 🌍 >",langTitle:"🌍 اللغة",langDesc:"✅ ONE TOUCH!",online:"متصل",send:"إرسال",statusTitle:"📸 حالتي",tapAdd:"انقر",photoStatus:"📸 صورة",myUpdates:"حالاتي",themeMode:"المظهر",chatWall:"خلفية",wallTitle:"🎨 الخلفية",privTitle:"🔒 الخصوصية",editProf:"👤 تعديل",saveProf:"حفظ ✅",translate:"🌍 ترجم",translating:"ترجمة..."},
-  zh:{name:"中文",flag:"🇨🇳",code:"zh",search:"搜索聊天",myStatus:"我的状态",typeMsg:"输入消息...",settings:"⚙️ 设置",profile:"1. 资料 >",wallpaper:"2. 壁纸 >",privacy:"3. 隐私 >",backup:"4. 备份 >",myStatusSet:"5. 我的状态 📸 >",langSet:"6. 语言 🌍 >",langTitle:"🌍 语言",langDesc:"✅ ONE TOUCH!",online:"在线",send:"发送",statusTitle:"📸 我的状态",tapAdd:"点击",photoStatus:"📸 照片",myUpdates:"我的状态",themeMode:"主题",chatWall:"聊天壁纸",wallTitle:"🎨 壁纸",privTitle:"🔒 隐私",editProf:"👤 编辑",saveProf:"保存 ✅",translate:"🌍 翻译",translating:"翻译中..."}
+  en:{name:"English",flag:"🇬🇧",code:"en",search:"Search chats",myStatus:"My Status",typeMsg:"Type a message... 😊📎",settings:"⚙️ SETTINGS",profile:"1. Profile >",wallpaper:"2. Wallpaper >",privacy:"3. Privacy >",backup:"4. Backup >",myStatusSet:"5. My Status 📸 >",langSet:"6. Language 🌍 >",langTitle:"🌍 Language",langDesc:"✅ ONE TOUCH!",online:"Online • V86 Raised 2/3",send:"Send",statusTitle:"📸 My Status",tapAdd:"Tap to add status",photoStatus:"📸 Photo Status",myUpdates:"MY STATUS UPDATES",themeMode:"Theme Mode",chatWall:"Chat Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Privacy",editProf:"👤 Edit Profile",saveProf:"Save ✅",translate:"🌍 Translate",translating:"Translating..."},
+  tw:{name:"Twi - Akan",flag:"🇬🇭",code:"tw",search:"Hwehwɛ nkɔmmɔ",myStatus:"Me Status",typeMsg:"Kyerɛw nkɔmmɔ... 😊📎",settings:"⚙️ NHYEHYƐEƐ",profile:"1. M'ankasa >",wallpaper:"2. Wallpaper >",privacy:"3. Kokoam >",backup:"4. Backup >",myStatusSet:"5. Me Status 📸 >",langSet:"6. Kasa 🌍 >",langTitle:"🌍 Kasa",langDesc:"✅ ONE TOUCH!",online:"Online • Twi",send:"Mane",statusTitle:"📸 Me Status",tapAdd:"Tap na fa status",photoStatus:"📸 Foto Status",myUpdates:"ME STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Kokoam",editProf:"👤 Sesa M'ankasa",saveProf:"Kora M'ankasa ✅",translate:"🌍 Kyerɛ ase",translating:"Ɛrekyerɛ ase..."},
+  pidgin:{name:"Ghana Pidgin",flag:"🇬🇭",code:"pcm",search:"Find chats",myStatus:"My Status",typeMsg:"Type how for dey... 😊📎",settings:"⚙️ SETTINGS",profile:"1. My Body >",wallpaper:"2. Cloth >",privacy:"3. Hide Body >",backup:"4. Save Am >",myStatusSet:"5. My Status 📸 >",langSet:"6. Language 🌍 >",langTitle:"🌍 Language",langDesc:"✅ ONE TOUCH!",online:"Online • Chale!",send:"Send am",statusTitle:"📸 My Status",tapAdd:"Tap add new status",photoStatus:"📸 Photo Status",myUpdates:"MY STATUS",themeMode:"Dark/Light",chatWall:"Back Cloth",wallTitle:"🎨 Cloth",privTitle:"🔒 Hide Body",editProf:"👤 My Body",saveProf:"Save Am ✅",translate:"🌍 Translate am",translating:"I dey translate..."},
+  ga:{name:"Ga",flag:"🇬🇭",code:"gaa",search:"Taomɔ sɛɛmɔi",myStatus:"Mi Status",typeMsg:"Ŋma sɛɛmɔ... 😊📎",settings:"⚙️ SHIHILƐI",profile:"1. Minuu >",wallpaper:"2. Wallpaper >",privacy:"3. Gbaashikɛ >",backup:"4. Backup >",myStatusSet:"5. Mi Status 📸 >",langSet:"6. Wiemɔ 🌍 >",langTitle:"🌍 Wiemɔ",langDesc:"✅ ONE TOUCH!",online:"Online • Ga",send:"Tsu",statusTitle:"📸 Mi Status",tapAdd:"Tap",photoStatus:"📸 Foto",myUpdates:"MI STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Gbaashikɛ",editProf:"👤 Tsake Minuu",saveProf:"Kɛkɛ Minuu ✅",translate:"🌍 Tsɔɔmɔ",translating:"Miitsɔɔmɔ..."},
+  fr:{name:"Français",flag:"🇫🇷",code:"fr",search:"Chercher chats",myStatus:"Mon Statut",typeMsg:"Tapez message... 😊📎",settings:"⚙️ PARAMÈTRES",profile:"1. Profil >",wallpaper:"2. Fond >",privacy:"3. Confidentialité >",backup:"4. Sauvegarde >",myStatusSet:"5. Mon Statut 📸 >",langSet:"6. Langue 🌍 >",langTitle:"🌍 Langue",langDesc:"✅ ONE TOUCH!",online:"En ligne",send:"Envoyer",statusTitle:"📸 Mon Statut",tapAdd:"Appuyez",photoStatus:"📸 Photo Statut",myUpdates:"MES STATUTS",themeMode:"Thème",chatWall:"Fond Chat",wallTitle:"🎨 Fond",privTitle:"🔒 Confidentialité",editProf:"👤 Modifier",saveProf:"Sauver ✅",translate:"🌍 Traduire",translating:"Traduction..."},
+  ewe:{name:"Ewe",flag:"🇬🇭",code:"ee",search:"Di nyawo",myStatus:"Nye Status",typeMsg:"Ŋlɔ nya... 😊📎",settings:"⚙️ ɖoɖo",profile:"1. Nyee >",wallpaper:"2. Wallpaper >",privacy:"3. Adzame >",backup:"4. Backup >",myStatusSet:"5. Nye Status 📸 >",langSet:"6. Gbe 🌍 >",langTitle:"🌍 Gbe",langDesc:"✅ ONE TOUCH!",online:"Online • Ewe",send:"Dɔ",statusTitle:"📸 Nye Status",tapAdd:"Tap",photoStatus:"📸 Foto",myUpdates:"NYE STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Adzame",editProf:"👤 Trɔ Nye",saveProf:"Dzra Nye ✅",translate:"🌍 Ɖe gɔme",translating:"Mele gɔme..."},
+  hausa:{name:"Hausa",flag:"🇳🇬",code:"ha",search:"Nemo hira",myStatus:"Status Dina",typeMsg:"Rubuta sako... 😊📎",settings:"⚙️ SAITUNA",profile:"1. Bayanina >",wallpaper:"2. Wallpaper >",privacy:"3. Sirri >",backup:"4. Ajiye >",myStatusSet:"5. Status Dina 📸 >",langSet:"6. Harshe 🌍 >",langTitle:"🌍 Harshe",langDesc:"✅ ONE TOUCH!",online:"Online • Hausa",send:"Aika",statusTitle:"📸 Status Dina",tapAdd:"Tap",photoStatus:"📸 Hoto",myUpdates:"SABON STATUS",themeMode:"Theme",chatWall:"Wallpaper",wallTitle:"🎨 Wallpaper",privTitle:"🔒 Sirri",editProf:"👤 Gyara",saveProf:"Ajiye ✅",translate:"🌍 Fassara",translating:"Ina fassarawa..."}
 };
-const localDictionary={tw:{"how far":"Ɛte sɛn?","same here":"Me nso saa","hello":"Maakye","thank you":"Medaase","welcome":"Akwaaba","akwaaba":"Akwaaba!","how are you":"Wo ho te sɛn?","it not that":"Ɛnyɛ saa","it been long":"Akyɛ a yɛanhyia"},pidgin:{"how far":"How far? How you dey?","same here":"Me self same","hello":"Chale how for do?","thank you":"Thank you boss","welcome":"You welcome","akwaaba":"Chale Akwaaba!","it not that":"No be so","it been long":"E don tey"},en:{"akwaaba":"Welcome!","how far":"How far?","same here":"Same here","it not that":"It is not that","it been long":"It has been a long time"}};
+const localDictionary={tw:{"how far":"Ɛte sɛn?","same here":"Me nso saa","hello":"Maakye","thank you":"Medaase","welcome":"Akwaaba","akwaaba":"Akwaaba!","how are you":"Wo ho te sɛn?","it not that":"Ɛnyɛ saa"},ga:{"how far":"Ami atswa?","same here":"Mi hu gbɛ","hello":"Atuu?","thank you":"Oyiwala donnu","welcome":"Atuu akwaaba","akwaaba":"Akwaaba!"},en:{},fr:{}};
 let currentLang=localStorage.getItem('chale_lang')||'en';
 let currentWall=localStorage.getItem('chale_wall')||'none';
-let currentWallCustom=localStorage.getItem('chale_wall_custom')||'';
 let privacy={lastseen:true,ghost:false};
 let currentChat='Kwame';
 let chatsData=JSON.parse(localStorage.getItem('chale_chats_v79')||'{}');
 let statusData=JSON.parse(localStorage.getItem('chale_status_v81')||'[]');
 let callTimerInterval=null, callSeconds=0, isMuted=false;
 let mediaRecorder, audioChunks=[], isRecording=false, recStartTime, recInterval;
+let emojis=["😊","😂","❤️","🔥","🇬🇭","😍","🙏","😭","💛","😎","😅","🥺","😇","🤣","👍","👏","🎉","💯","😃","😁","🥰","😘","🤩","😋","🙌","👌","💪","✌️","👋","🤝","🇬🇭","💚","💛","❤️‍🔥","😴","🤔","😌","🥳","😳","😱","🤗","🫶","🫡","💃","🕺","🍻","🍺","⚽","🏆","🎙️","📎","😊","🫶","😎","😂","🔥"];
 
-function selectLanguage(code){
-  let t=translations[code]; if(!t) return;
-  currentLang=code; localStorage.setItem('chale_lang', code);
-  document.getElementById('selectedLangBox').innerText=t.flag+' '+t.name+' ✅ DONE!';
-  document.getElementById('selectedLangBox').style.background='#25D366'; document.getElementById('selectedLangBox').style.color='white';
-  applyLanguage(code);
-  if(navigator.vibrate) navigator.vibrate(50);
-}
+function selectLanguage(code){let t=translations[code]; if(!t) return; currentLang=code; localStorage.setItem('chale_lang', code); document.getElementById('selectedLangBox').innerText=t.flag+' '+t.name+' ✅ DONE!'; document.getElementById('selectedLangBox').style.background='#25D366'; document.getElementById('selectedLangBox').style.color='white'; applyLanguage(code); if(navigator.vibrate) navigator.vibrate(50);}
 function applyLanguage(langCode){
-  currentLang=langCode;
-  let t=translations[langCode]; if(!t) return;
-  document.getElementById('curLang').innerText=t.flag+' '+t.name;
-  document.getElementById('searchInput').placeholder=t.search;
-  document.getElementById('quickInput').placeholder=t.typeMsg;
+  currentLang=langCode; let t=translations[langCode]; if(!t) return;
+  document.getElementById('curLang').innerText=t.flag+' '+t.name; document.getElementById('searchInput').placeholder=t.search; document.getElementById('quickInput').placeholder=t.typeMsg;
   let msgIn=document.getElementById('msgInput'); if(msgIn) msgIn.placeholder=t.typeMsg;
-  document.getElementById('txtMyStatus').innerText=t.myStatus;
-  document.getElementById('txtSettings').innerText=t.settings;
-  document.getElementById('txtProfile').innerText=t.profile;
-  document.getElementById('txtWallpaper').innerText=t.wallpaper;
-  document.getElementById('txtPrivacy').innerText=t.privacy;
-  document.getElementById('txtBackup').innerText=t.backup;
-  document.getElementById('txtMyStatusSet').innerText=t.myStatusSet;
-  document.getElementById('txtLangSet').innerText=t.langSet;
-  document.getElementById('txtLangTitle').innerText=t.langTitle;
-  document.getElementById('txtLangDesc').innerText=t.langDesc;
-  document.getElementById('txtOnline').innerText=t.online;
-  document.getElementById('txtStatusTitle').innerText=t.statusTitle;
-  document.getElementById('txtTapAdd').innerText=t.tapAdd;
-  document.getElementById('txtPhotoStatus').innerText=t.photoStatus;
-  document.getElementById('txtMyUpdates').innerText=t.myUpdates;
-  document.getElementById('txtThemeMode').innerText=t.themeMode;
-  document.getElementById('txtChatWall').innerText=t.chatWall;
-  document.getElementById('txtWallTitle').innerText=t.wallTitle;
-  document.getElementById('txtPrivTitle').innerText=t.privTitle;
-  document.getElementById('txtEditProf').innerText=t.editProf;
-  document.getElementById('btnSaveProf').innerText=t.saveProf;
-  let box=document.getElementById('selectedLangBox'); if(box) box.innerText=t.flag+' '+t.name;
-  renderLanguages(); renderMessages(); renderChatList();
+  document.getElementById('txtMyStatus').innerText=t.myStatus; document.getElementById('txtSettings').innerText=t.settings; document.getElementById('txtProfile').innerText=t.profile; document.getElementById('txtWallpaper').innerText=t.wallpaper; document.getElementById('txtPrivacy').innerText=t.privacy; document.getElementById('txtBackup').innerText=t.backup; document.getElementById('txtMyStatusSet').innerText=t.myStatusSet; document.getElementById('txtLangSet').innerText=t.langSet; document.getElementById('txtLangTitle').innerText=t.langTitle; document.getElementById('txtLangDesc').innerText=t.langDesc; document.getElementById('txtOnline').innerText=t.online; document.getElementById('txtStatusTitle').innerText=t.statusTitle; document.getElementById('txtTapAdd').innerText=t.tapAdd; document.getElementById('txtPhotoStatus').innerText=t.photoStatus; document.getElementById('txtMyUpdates').innerText=t.myUpdates; document.getElementById('txtThemeMode').innerText=t.themeMode; document.getElementById('txtChatWall').innerText=t.chatWall; document.getElementById('txtWallTitle').innerText=t.wallTitle; document.getElementById('txtPrivTitle').innerText=t.privTitle; document.getElementById('txtEditProf').innerText=t.editProf; document.getElementById('btnSaveProf').innerText=t.saveProf;
+  let box=document.getElementById('selectedLangBox'); if(box) box.innerText=t.flag+' '+t.name; renderLanguages(); renderMessages(); renderChatList();
 }
 function renderLanguages(){
-  let localDiv=document.getElementById('localLangs'); let foreignDiv=document.getElementById('foreignLangs');
-  if(!localDiv||!foreignDiv) return; localDiv.innerHTML=''; foreignDiv.innerHTML='';
-  let localCodes=['en','tw','fante','ga','ewe','hausa','pidgin','dagbani','nzema','dagaare'];
-  let foreignCodes=['fr','yo','sw','ig','ar','zh','es'];
-  localCodes.forEach(code=>{let t=translations[code]; if(!t) return; let active=currentLang===code?' active':''; let div=document.createElement('div'); div.className='lang-card'+active; div.setAttribute('onclick', `selectLanguage('${code}')`); div.innerHTML=`<div><b>${t.flag} ${t.name}</b><br><small>${t.search}</small></div><button class="lang-btn">${currentLang===code?'✅ SELECTED':'TAP!'}</button>`; localDiv.appendChild(div);});
-  foreignCodes.forEach(code=>{let t=translations[code]; if(!t) return; let active=currentLang===code?' active':''; let div=document.createElement('div'); div.className='lang-card'+active; div.setAttribute('onclick', `selectLanguage('${code}')`); div.innerHTML=`<div><b>${t.flag} ${t.name}</b><br><small>${t.search}</small></div><button class="lang-btn">${currentLang===code?'✅ SELECTED':'TAP!'}</button>`; foreignDiv.appendChild(div);});
+  let localDiv=document.getElementById('localLangs'); let foreignDiv=document.getElementById('foreignLangs'); if(!localDiv||!foreignDiv) return; localDiv.innerHTML=''; foreignDiv.innerHTML='';
+  let localCodes=['en','tw','ga','ewe','hausa','pidgin']; let foreignCodes=['fr','yo','sw','ig','ar','zh','es'];
+  const allCodes=[...localCodes, ...foreignCodes];
+  allCodes.forEach(code=>{let t=translations[code]; if(!t) return; let active=currentLang===code?' active':''; let div=document.createElement('div'); div.className='lang-card'+active; div.setAttribute('onclick', `selectLanguage('${code}')`); div.innerHTML=`<div><b>${t.flag} ${t.name}</b><br><small>${t.search}</small></div><button class="lang-btn">${currentLang===code?'✅ SELECTED':'TAP!'}</button>`; if(localCodes.includes(code)) localDiv.appendChild(div); else foreignDiv.appendChild(div);});
 }
+
+function toggleEmoji(){
+  let panel=document.getElementById('emojiPanel');
+  panel.classList.toggle('show');
+  if(panel.classList.contains('show')){renderEmoji();}
+}
+function renderEmoji(){
+  let grid=document.getElementById('emojiGrid'); grid.innerHTML='';
+  emojis.forEach(e=>{
+    let span=document.createElement('span'); span.innerText=e;
+    span.onclick=()=>{let inp=document.getElementById('msgInput'); inp.value+=e; inp.focus();};
+    grid.appendChild(span);
+  });
+}
+function uploadFile(input){
+  if(!input.files[0]) return;
+  let file=input.files[0];
+  let reader=new FileReader();
+  reader.onload=e=>{
+    let time=new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    let msg={id:Date.now(), text:`📎 ${file.name} • ${(file.size/1024).toFixed(1)}KB`, file:e.target.result, fileName:file.name, fileType:file.type, time:time, me:true, type:'file'};
+    if(!chatsData[currentChat]) chatsData[currentChat]=[];
+    chatsData[currentChat].push(msg);
+    localStorage.setItem('chale_chats_v79', JSON.stringify(chatsData));
+    renderMessages(); renderChatList(); updateBackupInfo();
+    alert(`✅ File ${file.name} sent!`);
+  };
+  if(file.type.startsWith('image/')||file.type.startsWith('video/')) reader.readAsDataURL(file);
+  else reader.readAsDataURL(file);
+}
+
 function switchTab(tab){
   document.getElementById('chatsTab').style.display=tab==='chats'?'block':'none';
   document.getElementById('updatesTab').style.display=tab==='updates'?'block':'none';
@@ -235,26 +241,23 @@ function switchTab(tab){
   if(tab==='updates') {document.getElementById('navUpdates').classList.add('active'); renderRealUpdates();}
   if(tab==='communities') document.getElementById('navCommunities').classList.add('active');
   if(tab==='calls') document.getElementById('navCalls').classList.add('active');
+  document.getElementById('emojiPanel').classList.remove('show');
 }
 function renderRealUpdates(){
   let scroll=document.getElementById('updatesStatusScroll'); if(!scroll) return; scroll.innerHTML='';
   let ph=localStorage.getItem('chale_photo')||''; let name=localStorage.getItem('chale_name')||'Salvation';
   let addCard=document.createElement('div'); addCard.className='statusCard addCard'; addCard.onclick=()=>openMyStatus(); addCard.innerHTML=`<div style="width:48px;height:48px;border-radius:50%;background:#222;overflow:hidden;display:flex;align-items:center;justify-content:center">${ph?`<img src="${ph}" style="width:100%;height:100%;object-fit:cover">`:`<span>${name[0]}</span>`}<div style="position:absolute;bottom:-3px;right:-3px;background:white;border:2px solid #25D366;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#25D366;font-size:12px;font-weight:bold">+</div></div><div style="margin-top:10px;font-size:13px;color:black;text-align:center">Add status</div>`; scroll.appendChild(addCard);
-  statusData.slice().reverse().forEach(s=>{let card=document.createElement('div'); card.className='statusCard'; card.onclick=()=>viewStatusById(s.id); card.innerHTML=`<img src="${s.img}"><div class="greenBorder"></div><div style="position:absolute;top:6px;right:6px;background:#FFD700;color:black;font-size:9px;padding:2px 6px;border-radius:8px;font-weight:bold">REAL</div>`; scroll.appendChild(card);});
-  document.getElementById('realStatusCount').innerText=`• ${statusData.length} Real`; document.getElementById('liveChannelText').innerText=`${statusData.length>0?`🔴 LIVE: ${statusData.length} status`:'Welcome'}`;
+  statusData.slice().reverse().forEach(s=>{let card=document.createElement('div'); card.className='statusCard'; card.onclick=()=>viewStatusById(s.id); card.innerHTML=`<img src="${s.img}"><div class="greenBorder"></div>`; scroll.appendChild(card);});
 }
 function createCommunity(){let n=prompt("Community Name:"); if(n) alert(`✅ ${n} Created!`);}
 function createCallLink(){let code=Math.random().toString(36).substring(2,6).toUpperCase()+'-'+Math.random().toString(36).substring(2,6).toUpperCase(); let link='https://chale.chat/join/'+code; if(navigator.clipboard){navigator.clipboard.writeText(link).then(()=>{alert(`✅ COPIED! ${link}`);});} else {prompt("Copy:", link);}}
-function makeCall(name, code){document.getElementById('callOverlay').style.display='flex'; document.getElementById('callOverlayName').innerText=name; document.getElementById('callOverlayStatus').innerText='🇬🇭 Calling...'; document.getElementById('callTimer').innerText='00:00'; let ph=localStorage.getItem('chale_photo')||''; if(ph && code==='ST'){document.getElementById('callBigImg').src=ph; document.getElementById('callBigImg').style.display='block'; document.getElementById('callBigEmoji').style.display='none';} else {document.getElementById('callBigImg').style.display='none'; document.getElementById('callBigEmoji').style.display='block'; document.getElementById('callBigEmoji').innerText=code;} callSeconds=0; clearInterval(callTimerInterval); callTimerInterval=setInterval(()=>{callSeconds++; let m=String(Math.floor(callSeconds/60)).padStart(2,'0'); let s=String(callSeconds%60).padStart(2,'0'); document.getElementById('callTimer').innerText=`${m}:${s}`; if(callSeconds===2) document.getElementById('callOverlayStatus').innerText='🔊 Ringing...'; if(callSeconds===5) document.getElementById('callOverlayStatus').innerText='✅ Connected • Ghana 🇬🇭';},1000);}
+function makeCall(name, code){document.getElementById('callOverlay').style.display='flex'; document.getElementById('callOverlayName').innerText=name; document.getElementById('callOverlayStatus').innerText='🇬🇭 Calling...'; document.getElementById('callTimer').innerText='00:00'; callSeconds=0; clearInterval(callTimerInterval); callTimerInterval=setInterval(()=>{callSeconds++; let m=String(Math.floor(callSeconds/60)).padStart(2,'0'); let s=String(callSeconds%60).padStart(2,'0'); document.getElementById('callTimer').innerText=`${m}:${s}`; if(callSeconds===2) document.getElementById('callOverlayStatus').innerText='🔊 Ringing...'; if(callSeconds===5) document.getElementById('callOverlayStatus').innerText='✅ Connected • Ghana 🇬🇭';},1000);}
 function endCall(){clearInterval(callTimerInterval); document.getElementById('callOverlay').style.display='none';}
 function toggleMute(){isMuted=!isMuted; document.getElementById('muteBtn').innerText=isMuted?'🔇':'🎙️';}
 function switchCam(){alert('Video soon!');}
-function showDialer(){let num=prompt("Ghana Number:"); if(num) makeCall(num, num.substring(0,3));}
 
-// VOICE NOTES - FEATURE 1 CORE
 async function initVoice(){
-  let micBtn=document.getElementById('micBtnMain');
-  if(!micBtn) return;
+  let micBtn=document.getElementById('micBtnMain'); if(!micBtn) return;
   micBtn.addEventListener('touchstart', startRec, {passive:false});
   micBtn.addEventListener('touchend', stopRec, {passive:false});
   micBtn.addEventListener('mousedown', startRec);
@@ -262,73 +265,28 @@ async function initVoice(){
   micBtn.addEventListener('mouseleave', cancelRec);
 }
 async function startRec(e){
-  if(e) e.preventDefault();
-  if(isRecording) return;
+  if(e) e.preventDefault(); if(isRecording) return;
   try{
     let stream=await navigator.mediaDevices.getUserMedia({audio:true});
-    mediaRecorder=new MediaRecorder(stream);
-    audioChunks=[];
+    mediaRecorder=new MediaRecorder(stream); audioChunks=[];
     mediaRecorder.ondataavailable=ev=>audioChunks.push(ev.data);
     mediaRecorder.onstop=()=>{
-      let blob=new Blob(audioChunks,{type:'audio/webm'});
-      let url=URL.createObjectURL(blob);
+      let blob=new Blob(audioChunks,{type:'audio/webm'}); let url=URL.createObjectURL(blob);
       let time=new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
       let dur=Math.floor((Date.now()-recStartTime)/1000); if(dur<1) dur=1;
-      if(dur>0){
-        let msg={id:Date.now(), text:`🎙️ Voice note • ${dur}s`, audio:url, time:time, me:true, type:'voice', duration:dur};
-        if(!chatsData[currentChat]) chatsData[currentChat]=[];
-        chatsData[currentChat].push(msg);
-        localStorage.setItem('chale_chats_v79', JSON.stringify(chatsData));
-        renderMessages(); renderChatList(); updateBackupInfo();
-      }
+      if(dur>0){let msg={id:Date.now(), text:`🎙️ Voice note • ${dur}s`, audio:url, time:time, me:true, type:'voice', duration:dur}; if(!chatsData[currentChat]) chatsData[currentChat]=[]; chatsData[currentChat].push(msg); localStorage.setItem('chale_chats_v79', JSON.stringify(chatsData)); renderMessages(); renderChatList();}
       stream.getTracks().forEach(t=>t.stop());
     };
-    mediaRecorder.start();
-    isRecording=true; recStartTime=Date.now();
-    document.getElementById('micBtnMain').classList.add('recording');
-    document.getElementById('micBtnMain').innerText='🔴';
-    document.getElementById('recIndicator').style.display='flex';
+    mediaRecorder.start(); isRecording=true; recStartTime=Date.now();
+    document.getElementById('micBtnMain').classList.add('recording'); document.getElementById('micBtnMain').innerText='🔴'; document.getElementById('recIndicator').style.display='flex';
     recInterval=setInterval(()=>{let sec=Math.floor((Date.now()-recStartTime)/1000); let m=String(Math.floor(sec/60)).padStart(2,'0'); let s=String(sec%60).padStart(2,'0'); document.getElementById('recTime').innerText=`${m}:${s}`;}, 200);
     if(navigator.vibrate) navigator.vibrate(50);
-  }catch(err){alert('🎙️ Allow microphone in browser settings!');}
+  }catch(err){alert('🎙️ Allow microphone!');}
 }
-function stopRec(e){
-  if(e) e.preventDefault();
-  if(!isRecording) return;
-  isRecording=false; clearInterval(recInterval);
-  if(mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop();
-  document.getElementById('micBtnMain').classList.remove('recording');
-  document.getElementById('micBtnMain').innerText='🎙️';
-  document.getElementById('recIndicator').style.display='none';
-  document.getElementById('recTime').innerText='00:00';
-  if(navigator.vibrate) navigator.vibrate(30);
-}
-function cancelRec(){
-  if(isRecording){isRecording=false; clearInterval(recInterval); if(mediaRecorder) mediaRecorder.stop(); audioChunks=[]; document.getElementById('micBtnMain').classList.remove('recording'); document.getElementById('micBtnMain').innerText='🎙️'; document.getElementById('recIndicator').style.display='none';}
-}
-function playVoice(id, url){
-  let aud=document.getElementById('aud_'+id);
-  let btn=document.getElementById('play_'+id);
-  if(!aud) return;
-  if(aud.paused){aud.play(); btn.innerText='⏸️';} else {aud.pause(); btn.innerText='▶️';}
-  aud.onended=()=>{btn.innerText='▶️';};
-}
-
-async function translateMessage(id, originalText){
-  let t=translations[currentLang]||translations['en'];
-  let transDiv=document.getElementById('trans_'+id);
-  let btn=document.getElementById('btn_'+id);
-  if(!transDiv) return;
-  if(transDiv.classList.contains('show')){transDiv.classList.remove('show'); btn.innerText=t.translate; return;}
-  transDiv.classList.add('show'); transDiv.innerText=t.translating;
-  let key=originalText.trim().toLowerCase();
-  let dictToUse=localDictionary[currentLang]||localDictionary['en'];
-  if(currentLang==='fante') dictToUse=localDictionary['tw'];
-  if(currentLang==='pidgin') dictToUse={...localDictionary['tw'],...localDictionary['pidgin']};
-  let direct=dictToUse[key]||localDictionary['en'][key];
-  if(direct){transDiv.innerText='➡️ '+direct; btn.innerText='✅ '+t.name; return;}
-  transDiv.innerText='➡️ '+originalText; btn.innerText='✅ '+t.name;
-}
+function stopRec(e){if(e) e.preventDefault(); if(!isRecording) return; isRecording=false; clearInterval(recInterval); if(mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop(); document.getElementById('micBtnMain').classList.remove('recording'); document.getElementById('micBtnMain').innerText='🎙️'; document.getElementById('recIndicator').style.display='none'; if(navigator.vibrate) navigator.vibrate(30);}
+function cancelRec(){if(isRecording){isRecording=false; clearInterval(recInterval); if(mediaRecorder) mediaRecorder.stop(); audioChunks=[]; document.getElementById('micBtnMain').classList.remove('recording'); document.getElementById('micBtnMain').innerText='🎙️'; document.getElementById('recIndicator').style.display='none';}}
+function playVoice(id, url){let aud=document.getElementById('aud_'+id); let btn=document.getElementById('play_'+id); if(!aud) return; if(aud.paused){aud.play(); btn.innerText='⏸️';} else {aud.pause(); btn.innerText='▶️';} aud.onended=()=>{btn.innerText='▶️';};}
+async function translateMessage(id, originalText){let t=translations[currentLang]||translations['en']; let transDiv=document.getElementById('trans_'+id); let btn=document.getElementById('btn_'+id); if(!transDiv) return; if(transDiv.classList.contains('show')){transDiv.classList.remove('show'); btn.innerText=t.translate; return;} transDiv.classList.add('show'); transDiv.innerText=t.translating; let key=originalText.trim().toLowerCase(); let direct=localDictionary[currentLang]?.[key]||localDictionary['en']?.[key]; if(direct){transDiv.innerText='➡️ '+direct; btn.innerText='✅ '+t.name; return;} transDiv.innerText='➡️ '+originalText; btn.innerText='✅ '+t.name;}
 function openLanguage(){document.getElementById('settingsPage').style.display='none'; document.getElementById('languagePage').style.display='block'; renderLanguages();}
 function closeLanguage(){document.getElementById('languagePage').style.display='none'; document.getElementById('settingsPage').style.display='block';}
 function openMyStatus(){document.getElementById('statusPage').style.display='block'; renderMyStatusList();}
@@ -343,16 +301,22 @@ function openStatusViewer(statusObj){document.getElementById('statusViewer').sty
 function closeStatusViewer(){clearInterval(statusProgInterval); document.getElementById('statusViewer').style.display='none';}
 function renderChatList(){let list=document.getElementById('chatList'); list.innerHTML=''; let keys=Object.keys(chatsData); if(keys.length===0){list.innerHTML='<p style="color:gray;text-align:center;padding:30px">No chats yet — start with Kwame!</p>'; return;} keys.forEach(name=>{let msgs=(chatsData[name]||[]).filter(m=>m && m.text && m.text.trim()); let last=msgs[msgs.length-1]; let lastText=last?last.text:'Tap'; if(lastText.length>30) lastText=lastText.slice(0,30)+'...'; let time=last?last.time:''; list.innerHTML+=`<div class="chat" onclick="openChat('${name}')"><div class="avatar">${name[0]}</div><div style="flex:1"><b>${name}</b><br><small style="color:gray">${lastText}</small></div><div><small style="color:gray">${time}</small></div></div>`;});}
 function openChat(name){currentChat=name; document.getElementById('chatName').innerText=name; document.getElementById('chatAvatarEmoji').innerText=name[0]; document.getElementById('chatWindow').classList.add('show'); document.getElementById('chatWindow').style.display='flex'; renderMessages();}
-function closeChat(){document.getElementById('chatWindow').classList.remove('show'); document.getElementById('chatWindow').style.display='none';}
+function closeChat(){document.getElementById('chatWindow').classList.remove('show'); document.getElementById('chatWindow').style.display='none'; document.getElementById('emojiPanel').classList.remove('show');}
 function renderMessages(){
   let box=document.getElementById('msgList'); box.innerHTML='';
   let allMsgs=(chatsData[currentChat]||[]).filter(m=>m && m.text && m.text.trim());
-  if(allMsgs.length===0){box.innerHTML='<p style="color:gray;text-align:center;padding:40px">No messages<br><small>🎙️ Hold mic to send voice note!</small></p>'; return;}
+  if(allMsgs.length===0){box.innerHTML='<p style="color:gray;text-align:center;padding:40px">No messages<br><small>😊 Emoji • 📎 Files • 🎙️ Voice</small></p>'; return;}
   let t=translations[currentLang]||translations['en'];
   allMsgs.forEach(m=>{
     let safeText=(m.text||'').replace(/'/g,"\\'").replace(/"/g,'');
     if(m.type==='voice' && m.audio){
-      box.innerHTML+=`<div class="msg me"><div class="voiceRow"><button class="voicePlay" id="play_${m.id}" onclick="playVoice(${m.id}, '${m.audio}')">▶️</button><div class="voiceWave" style="--p:60%"></div><span class="voiceTime">${m.duration||3}s</span><audio id="aud_${m.id}" src="${m.audio}" style="display:none"></audio></div>${m.text}<div id="trans_${m.id}" class="trans"></div><button id="btn_${m.id}" class="trBtn" onclick="translateMessage(${m.id}, '${safeText}')">${t.translate}</button><span class="time">${m.time} ✓✓</span></div>`;
+      box.innerHTML+=`<div class="msg me"><div class="voiceRow"><button class="voicePlay" id="play_${m.id}" onclick="playVoice(${m.id})">▶️</button><div class="voiceWave" style="--p:60%"></div><span class="voiceTime">${m.duration||3}s</span><audio id="aud_${m.id}" src="${m.audio}" style="display:none"></audio></div>${m.text}<div id="trans_${m.id}" class="trans"></div><button id="btn_${m.id}" class="trBtn" onclick="translateMessage(${m.id}, '${safeText}')">${t.translate}</button><span class="time">${m.time} ✓✓</span></div>`;
+    } else if(m.type==='file' && m.file){
+      if(m.fileType && m.fileType.startsWith('image/')){
+        box.innerHTML+=`<div class="msg me"><img src="${m.file}" style="max-width:100%;border-radius:12px;margin-bottom:6px"><br>${m.text}<div id="trans_${m.id}" class="trans"></div><button id="btn_${m.id}" class="trBtn" onclick="translateMessage(${m.id}, '${safeText}')">${t.translate}</button><span class="time">${m.time} ✓✓</span></div>`;
+      } else {
+        box.innerHTML+=`<div class="msg me"><div class="fileMsg"><div class="fileIcon">📎</div><div><b>${m.fileName}</b><br><small>${m.text}</small></div></div><div id="trans_${m.id}" class="trans"></div><button id="btn_${m.id}" class="trBtn" onclick="translateMessage(${m.id}, '${safeText}')">${t.translate}</button><span class="time">${m.time} ✓✓</span></div>`;
+      }
     } else {
       box.innerHTML+=`<div class="msg me">${m.text}<div id="trans_${m.id}" class="trans"></div><button id="btn_${m.id}" class="trBtn" onclick="translateMessage(${m.id}, '${safeText}')">${t.translate}</button><span class="time">${m.time} ✓✓</span></div>`;
     }
@@ -372,14 +336,12 @@ function closePrivacy(){document.getElementById('privacyPage').style.display='no
 function openBackup(){document.getElementById('settingsPage').style.display='none';document.getElementById('backupPage').style.display='block'; updateBackupInfo();}
 function closeBackup(){document.getElementById('backupPage').style.display='none';document.getElementById('settingsPage').style.display='block'}
 function setTheme(mode){if(mode==='light'){document.getElementById('body').className='light'; localStorage.setItem('chale_theme','light')}else{document.getElementById('body').className=''; localStorage.setItem('chale_theme','dark')}}
-function setWall(color,name,el){document.querySelectorAll('.wall-option').forEach(e=>e.classList.remove('active')); if(el) el.classList.add('active'); currentWall=color; currentWallCustom=''; localStorage.removeItem('chale_wall_custom'); document.getElementById('curWall').innerText=name;}
-function saveWallpaper(){localStorage.setItem('chale_wall', currentWall); if(currentWallCustom) localStorage.setItem('chale_wall_custom', currentWallCustom); alert("✅ Saved!"); closeWallpaper();}
+function setWall(color,name,el){document.querySelectorAll('.wall-option').forEach(e=>e.classList.remove('active')); if(el) el.classList.add('active'); currentWall=color; document.getElementById('curWall').innerText=name;}
+function saveWallpaper(){localStorage.setItem('chale_wall', currentWall); alert("✅ Saved!"); closeWallpaper();}
 function togglePriv(key){privacy[key]=!privacy[key]; let sw=document.getElementById('sw_'+key); if(privacy[key]) sw.classList.add('on'); else sw.classList.remove('on');}
-function toggleGhost(){privacy.ghost=!privacy.ghost; let sw=document.getElementById('sw_ghost'); if(privacy.ghost) sw.classList.add('on'); else sw.classList.remove('on');}
 function savePrivacy(){localStorage.setItem('chale_privacy', JSON.stringify(privacy)); alert("✅ Saved"); closePrivacy();}
-function updateBackupInfo(){let count=Object.values(chatsData).reduce((a,b)=>a+b.length,0); document.getElementById('chatCount').innerText=count+' messages'; document.getElementById('lastBackupTime').innerText=localStorage.getItem('chale_last_backup')||'Never';}
-function exportBackup(){let data={}; for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i); data[k]=localStorage.getItem(k);} data['exportDate']=new Date().toISOString(); data['version']='V85'; let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); let url=URL.createObjectURL(blob); let a=document.createElement('a'); a.href=url; a.download='ChaleChat-V85-Voice-'+new Date().toISOString().slice(0,10)+'.json'; a.click(); localStorage.setItem('chale_last_backup', new Date().toLocaleString()); alert("✅ Backup!");}
-function uploadPhoto(input){if(input.files[0]){let reader=new FileReader(); reader.onload=e=>{let imgData=e.target.result; document.getElementById('bigAvatarImg').src=imgData; document.getElementById('bigAvatarImg').style.display='block'; document.getElementById('bigAvatarEmoji').style.display='none'; document.getElementById('myStatusImg').src=imgData; document.getElementById('myStatusImg').style.display='block'; document.getElementById('myStatusEmoji').style.display='none'; document.getElementById('myStatusPageImg').src=imgData; document.getElementById('myStatusPageImg').style.display='block'; document.getElementById('myStatusPageEmoji').style.display='none'; let sal=document.getElementById('salImg'); if(sal){sal.src=imgData; sal.style.display='block'; document.getElementById('salEmoji').style.display='none';} let commLogo=document.getElementById('commSTLogo'); if(commLogo){commLogo.src=imgData; commLogo.style.display='block'; document.getElementById('commSTEmoji').style.display='none';} let chaleLogo=document.getElementById('chaleOfficialLogo'); if(chaleLogo){chaleLogo.src=imgData; chaleLogo.style.display='block'; document.getElementById('chaleOfficialEmoji').style.display='none';} let favLogo=document.getElementById('favSTLogo'); if(favLogo){favLogo.src=imgData; favLogo.style.display='block'; document.getElementById('favSTEmoji').style.display='none';} localStorage.setItem('chale_photo', imgData); renderRealUpdates();}; reader.readAsDataURL(input.files[0]);}}
+function updateBackupInfo(){let count=Object.values(chatsData).reduce((a,b)=>a+b.length,0); document.getElementById('chatCount').innerText=count+' messages';}
+function uploadPhoto(input){if(input.files[0]){let reader=new FileReader(); reader.onload=e=>{let imgData=e.target.result; document.getElementById('bigAvatarImg').src=imgData; document.getElementById('bigAvatarImg').style.display='block'; document.getElementById('bigAvatarEmoji').style.display='none'; document.getElementById('myStatusImg').src=imgData; document.getElementById('myStatusImg').style.display='block'; document.getElementById('myStatusEmoji').style.display='none'; document.getElementById('myStatusPageImg').src=imgData; document.getElementById('myStatusPageImg').style.display='block'; document.getElementById('myStatusPageEmoji').style.display='none'; let sal=document.getElementById('salImg'); if(sal){sal.src=imgData; sal.style.display='block'; document.getElementById('salEmoji').style.display='none';} localStorage.setItem('chale_photo', imgData); renderRealUpdates();}; reader.readAsDataURL(input.files[0]);}}
 function saveProfile(){let n=document.getElementById('profileNameInput').value; localStorage.setItem('chale_name',n); document.getElementById('curName').innerText=n; document.getElementById('myStatusName').innerText=n; alert("✅ Saved "+n); closeProfile();}
 window.onload=()=>{
   let ph=localStorage.getItem('chale_photo');
@@ -388,9 +350,6 @@ window.onload=()=>{
     document.getElementById('myStatusImg').src=ph; document.getElementById('myStatusImg').style.display='block'; document.getElementById('myStatusEmoji').style.display='none';
     document.getElementById('myStatusPageImg').src=ph; document.getElementById('myStatusPageImg').style.display='block'; document.getElementById('myStatusPageEmoji').style.display='none';
     let sal=document.getElementById('salImg'); if(sal){sal.src=ph; sal.style.display='block'; document.getElementById('salEmoji').style.display='none';}
-    let commLogo=document.getElementById('commSTLogo'); if(commLogo){commLogo.src=ph; commLogo.style.display='block'; let e=document.getElementById('commSTEmoji'); if(e) e.style.display='none';}
-    let chaleLogo=document.getElementById('chaleOfficialLogo'); if(chaleLogo){chaleLogo.src=ph; chaleLogo.style.display='block'; let e=document.getElementById('chaleOfficialEmoji'); if(e) e.style.display='none';}
-    let favLogo=document.getElementById('favSTLogo'); if(favLogo){favLogo.src=ph; favLogo.style.display='block'; let e=document.getElementById('favSTEmoji'); if(e) e.style.display='none';}
   }
   let n=localStorage.getItem('chale_name'); if(n){document.getElementById('curName').innerText=n; document.getElementById('profileNameInput').value=n; document.getElementById('myStatusName').innerText=n;}
   let pr=localStorage.getItem('chale_privacy'); if(pr){privacy=JSON.parse(pr);}
@@ -401,4 +360,4 @@ window.onload=()=>{
 }
 </script>
 </body>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              </html>
+  </html>
