@@ -3,7 +3,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#FFD700">
-<title>CHALE CHAT V100 ULTIMATE</title>
+<title>CHALE CHAT V103 MODERN ZERO ALERT</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
 body{background:#0f0f0f;color:white}
@@ -11,15 +11,15 @@ body{background:#0f0f0f;color:white}
 .logoBox{width:42px;height:42px;border-radius:12px;background:#000;border:2.5px solid #FFD700;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .logoBox .gf{position:absolute;inset:0;display:flex;flex-direction:column}
 .logoBox .gf div{flex:1}.logoBox .gf div:nth-child(1){background:#000}.logoBox .gf div:nth-child(2){background:#FFD700}.logoBox .gf div:nth-child(3){background:#006400}
-.logoBox .ct{position:relative;z-index:2;font-weight:900;font-size:22px;color:#FFD700;text-shadow:0 1px 2px black}
+.logoBox .ct{position:relative;z-index:2;font-weight:900;font-size:22px;color:#FFD700}
 .logo{font-weight:bold;font-size:16px;display:flex;align-items:center;gap:6px}.logo span{color:#FFD700}
-.badge{background:#FFD700;color:black;font-size:7px;padding:3px 7px;border-radius:8px;font-weight:900;white-space:nowrap}
+.badge{background:#FFD700;color:black;font-size:7px;padding:3px 7px;border-radius:8px;font-weight:900}
 .chatList{padding:10px;padding-bottom:130px}
 .chat{background:#1e1e1e;padding:11px;border-radius:12px;margin-bottom:8px;display:flex;gap:11px;cursor:pointer;border:1px solid #222}
-.avatarMini{width:42px;height:42px;border-radius:12px;background:#111;border:2px solid #FFD700;display:flex;align-items:center;justify-content:center;font-weight:900;color:#FFD700;position:relative;overflow:hidden;flex-shrink:0}
+.avatarMini{width:42px;height:42px;border-radius:12px;background:#111;border:2px solid #FFD700;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;flex-shrink:0}
 .avatarMini .gf{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0.95}
 .avatarMini .gf div{flex:1}.avatarMini .gf div:nth-child(1){background:#000}.avatarMini .gf div:nth-child(2){background:#FFD700}.avatarMini .gf div:nth-child(3){background:#006400}
-.avatarMini span{position:relative;z-index:2;font-size:18px}
+.avatarMini span{position:relative;z-index:2}
 .inputBar{position:fixed;left:0;width:100%;background:#111;padding:10px;display:flex;gap:7px;z-index:100;align-items:center;border-top:1px solid #222}
 #quickBar{bottom:58px!important;background:#1a1a1a;padding:8px 10px!important;height:58px;z-index:900}
 #quickBar input{padding:11px 14px!important;border-radius:20px;background:#222;border:none;color:white;outline:none;flex:1}
@@ -35,14 +35,18 @@ body{background:#0f0f0f;color:white}
 .msg.other{align-self:flex-start}
 .msg .time{font-size:10px;color:#a0d9c8;display:flex;justify-content:flex-end;margin-top:4px}
 .msg .cleanTrans{margin-top:6px;padding:6px 0;border-top:1px solid rgba(255,215,0,.25);font-size:13.5px;color:#FFD700;display:flex;gap:6px}
+.voiceBubble{display:flex;align-items:center;gap:8px;min-width:160px}
+.voicePlay{width:32px;height:32px;border-radius:50%;background:#FFD700;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:black;font-weight:bold}
 .set-item{background:#1e1e1e;padding:14px;margin:8px 16px;border-radius:12px;border-left:4px solid #FFD700;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
 .set-item.greenItem{border:2px solid #25D366;background:#0a2210}
-.set-item.goldItem{border:2px solid #FFD700;background:#221e00}
+.set-item.redItem{border:2px solid #ff4444;background:#1a0f0f}
 .switch{width:52px;height:30px;background:#333;border-radius:20px;position:relative;cursor:pointer;transition:.3s;flex-shrink:0}
 .switch.on{background:#FFD700}.switch.on.green{background:#25D366}
 .switch::after{content:'';position:absolute;width:24px;height:24px;background:white;border-radius:50%;top:3px;left:3px;transition:.3s}
 .switch.on::after{left:25px}
-.micBtn{width:42px;height:42px;border-radius:50%;border:none;background:#25D366;color:white;cursor:pointer;flex-shrink:0}
+.micBtn{width:44px;height:44px;border-radius:50%;border:none;background:#25D366;color:white;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;transition:0.2s;user-select:none}
+.micBtn.recording{background:#ff0000;animation:pulse 1s infinite}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
 .bottomNav{position:fixed;bottom:0;left:0;width:100%;background:white;display:flex;justify-content:space-around;padding:5px 0 4px 0;z-index:5000;height:58px;border-top:1px solid #e0e0e0}
 .bottomNav.hide{display:none!important}
 .navItem{flex:1;text-align:center;cursor:pointer;color:#666}.navItem.active{color:#000}
@@ -57,18 +61,35 @@ body{background:#0f0f0f;color:white}
 .saveBtn{width:calc(100% - 32px);margin:20px 16px 0 16px;background:#FFD700;color:black;border:none;padding:16px;border-radius:12px;font-weight:900;font-size:16px;cursor:pointer}
 .backBtn{background:#FFD700;color:black;border:none;padding:8px 14px;border-radius:8px;font-weight:bold;cursor:pointer}
 .inputField{width:100%;background:#1e1e1e;border:1px solid #333;padding:14px;border-radius:10px;color:white;font-size:15px;outline:none;margin:8px 0}
-.sectionTitle{color:#FFD700;font-size:11px;font-weight:900;letter-spacing:1px;margin:20px 16px 8px 16px;text-transform:uppercase}
+.inputField:focus{border-color:#FFD700}
+.recordingBar{position:fixed;bottom:70px;left:0;width:100%;background:#111;padding:12px 16px;display:none;align-items:center;gap:12px;z-index:1000;border-top:2px solid #ff0000}
+.recordingBar.show{display:flex}
+.recDot{width:10px;height:10px;background:red;border-radius:50%;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%) translateY(150px);background:#323232;color:white;padding:14px 22px;border-radius:28px;font-size:14px;z-index:99999;opacity:0;transition:0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);pointer-events:none;max-width:92%;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,0.6);border:1px solid #444}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.success{background:#0a5a2a;border:1px solid #25D366;color:#aaffc8}
+.toast.error{background:#5a0a0a;border:1px solid #ff5555;color:#ffaaaa}
+.statusCard{background:#1e1e1e;border-radius:12px;margin:8px 0;overflow:hidden;border-left:4px solid #25D366;animation:fadeIn 0.3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.statusCard img{width:100%;max-height:300px;object-fit:cover}
+.statusHeader{padding:10px 12px;display:flex;justify-content:space-between;align-items:center}
+.statusText{padding:0 12px 12px 12px;font-size:15px}
+.confirmBox{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:99999;display:none;align-items:center;justify-content:center;padding:20px}
+.confirmBox.show{display:flex}
+.confirmCard{background:#1e1e1e;border-radius:16px;padding:20px;width:100%;max-width:320px;border:1px solid #333;animation:pop 0.3s}
+@keyframes pop{0%{transform:scale(0.8);opacity:0}100%{transform:scale(1);opacity:1}}
 </style>
 </head>
 <body>
 <div id="chatsTab">
-<div class="header"><div style="display:flex;align-items:center;gap:10px"><div class="logoBox"><div class="gf"><div></div><div></div><div></div></div><div class="ct">C</div></div><div class="logo">CHALE <span>CHAT</span> <span class="badge">V100 ULTIMATE</span></div></div><button onclick="openSettings()" style="background:#FFD700;width:38px;height:38px;border-radius:50%;border:none;font-size:18px">⚙️</button></div>
+<div class="header"><div style="display:flex;align-items:center;gap:10px"><div class="logoBox"><div class="gf"><div></div><div></div><div></div></div><div class="ct">C</div></div><div class="logo">CHALE <span>CHAT</span> <span class="badge">V103 NO ALERT</span></div></div><button onclick="openSettings()" style="background:#FFD700;width:38px;height:38px;border-radius:50%;border:none;font-size:18px">⚙️</button></div>
 <div class="chatList" id="chatList"></div>
 <div class="inputBar" id="quickBar"><input id="quickInput" placeholder="Type..."><button class="micBtn" onclick="quickSend()">➤</button></div>
 </div>
-<div id="updatesTab"><div class="commTop"><h1>Updates</h1><button class="backBtn" onclick="switchTab('chats')">←</button></div><div style="padding:16px;color:#666">Status updates — Ghana style</div></div>
-<div id="communitiesTab"><div class="commTop"><h1>Communities</h1><button class="backBtn" onclick="switchTab('chats')">←</button></div><div style="padding:0 16px"><div id="groupsList"></div><button onclick="openGroupPage()" style="width:100%;background:#25D366;color:white;border:none;padding:14px;border-radius:10px;font-weight:bold;margin-top:10px">+ New Group</button></div></div>
-<div id="callsTab"><div class="commTop"><h1>Calls</h1><button class="backBtn" onclick="switchTab('chats')">←</button></div><div style="padding:16px;color:#666">Call history</div></div>
+<div id="updatesTab"><div class="commTop"><h1>Updates</h1><button class="backBtn" onclick="switchTab('chats')">←</button></div><div id="updatesList" style="padding:16px"></div></div>
+<div id="communitiesTab"><div class="commTop"><h1>Communities</h1><button class="backBtn" onclick="switchTab('chats')">←</button></div><div style="padding:0 16px"><div id="groupsList"></div></div></div>
+<div id="callsTab"><div class="commTop"><h1>Calls</h1><button class="backBtn" onclick="switchTab('chats')">←</button></div></div>
 <div class="bottomNav" id="bottomNav">
 <div class="navItem active" id="navChats" onclick="switchTab('chats')"><span class="iconWrap"><span class="icon">💬</span></span><span class="label">Chats</span></div>
 <div class="navItem" id="navUpdates" onclick="switchTab('updates')"><span class="iconWrap"><span class="icon">⭕</span></span><span class="label">Updates</span></div>
@@ -76,35 +97,25 @@ body{background:#0f0f0f;color:white}
 <div class="navItem" id="navCalls" onclick="switchTab('calls')"><span class="iconWrap"><span class="icon">📞</span></span><span class="label">Calls</span></div>
 </div>
 <div id="chatWindow">
-<div class="chatWinHeader"><button onclick="closeChat()" style="background:#222;border:none;width:36px;height:36px;border-radius:50%;color:white">←</button><div class="logoBox" style="width:36px;height:36px"><div class="gf"><div></div><div></div><div></div></div><div class="ct" style="font-size:18px">C</div></div><div style="flex:1"><b id="chatName">Ama</b><br><small id="autoStatus" style="color:#25D366">🇬🇭 Pidgin • Auto ON • FIXED</small></div></div>
+<div class="chatWinHeader"><button onclick="closeChat()" style="background:#222;border:none;width:36px;height:36px;border-radius:50%;color:white">←</button><div class="logoBox" style="width:36px;height:36px"><div class="gf"><div></div><div></div><div></div></div><div class="ct" style="font-size:18px">C</div></div><div style="flex:1"><b id="chatName">Ama</b><br><small id="autoStatus" style="color:#25D366">MODERN • NO ALERT • V103</small></div></div>
 <div class="msgList" id="msgList"></div>
-<div class="inputBar" style="position:relative;height:62px"><button onclick="startVoice()" style="width:38px;height:38px;border-radius:50%;border:none;background:#333;color:white">🎤</button><input id="msgInput" placeholder="Type... V100 ULTIMATE!"><button class="micBtn" onclick="sendMsg()">➤</button></div>
+<div class="recordingBar" id="recordingBar"><div class="recDot"></div><div style="flex:1"><b style="color:#ff4444">● Recording... <span id="recTime">0:00</span></b><br><small style="color:#888">Release to send — Modern!</small></div><button onclick="cancelRecording()" style="background:#333;color:white;border:none;padding:8px 12px;border-radius:8px">✕ Cancel</button></div>
+<div class="inputBar" style="position:relative;height:64px"><button id="voiceBtn" class="micBtn" onmousedown="startRealRecording(event)" onmouseup="stopRealRecording(event)" ontouchstart="startRealRecording(event)" ontouchend="stopRealRecording(event)" style="background:#222;border:2px solid #333">🎤</button><input id="msgInput" placeholder="Type or hold 🎤 — V103 MODERN!"><button class="micBtn" onclick="sendMsg()" style="background:#25D366">➤</button></div>
 </div>
 
-<div id="settingsPage" class="overlay">
-<div class="overlayHeader"><button class="backBtn" onclick="closeSettings()">←</button><h2>⚙️ Settings — V100 ULTIMATE</h2></div>
-<div style="text-align:center;border:3px solid #FFD700;background:#111;padding:14px;margin:16px;border-radius:14px"><div style="margin:0 auto;width:80px;height:80px;border-radius:16px;background:#000;border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden"><div style="position:absolute;inset:0;display:flex;flex-direction:column"><div style="flex:1;background:#000"></div><div style="flex:1;background:#FFD700"></div><div style="flex:1;background:#006400"></div></div><div style="position:relative;z-index:2;font-weight:900;font-size:40px;color:#FFD700">C</div></div><h3 style="color:#FFD700;margin-top:8px">V100 ULTIMATE SETTINGS</h3><small style="color:#25D366">All working • Bottom nav hidden • Language fixed!</small><br><button onclick="forceClearCache()" style="margin-top:10px;background:#ff4444;color:white;border:none;padding:8px 14px;border-radius:8px;font-weight:bold">🗑️ CLEAR BAD LANGUAGE CACHE</button></div>
-<div class="set-item" onclick="editProfile()"><div><b>1. 👤 Profile — WORKING</b><br><small style="color:#FFD700" id="curName">Salvation</small></div><div>></div></div>
-<div class="set-item" onclick="openWallpaper()"><div><b>2. 🎨 Wallpaper — WORKING</b><br><small style="color:#FFD700" id="curWall">Dark Default</small></div><div>></div></div>
-<div class="set-item" onclick="openPrivacy()"><div><b>3. 🔒 Privacy — WORKING</b><br><small style="color:#FFD700" id="curPriv">Last Seen ON • Read ON</small></div><div>></div></div>
-<div class="set-item" onclick="openBackup()"><div><b>4. 💾 Backup — WORKING</b><br><small style="color:#25D366" id="curBackup">Ready</small></div><div>></div></div>
-<div class="set-item" onclick="openMyStatus()"><div><b>5. 📸 My Status — WORKING</b><br><small style="color:#25D366">Post Ghana status</small></div><div>></div></div>
-<div class="set-item greenItem" onclick="openLanguage()"><div><b>6. 🌍 Language • Auto Translate — FIXED</b><br><small style="color:#25D66" id="curLang">🇬🇭 Pidgin • Auto ON • No error!</small></div><div>></div></div>
-<div class="set-item" onclick="openGroupPage()" style="background:#fff8d0;border:2px solid #FFD700"><div><b style="color:black">7. 👥 Create Group — WORKING</b></div><div style="color:black">></div></div>
-<div class="set-item" onclick="installAPK()" style="background:#fff8d0;border:2px solid #FFD700"><div><b style="color:black">8. 📲 Install APK — WORKING</b></div><div style="color:black">></div></div>
-<div class="sectionTitle">Advanced</div>
-<div class="set-item" onclick="openNotifications()"><div><b>🔔 Notifications — WORKING</b><br><small>Test tone</small></div><div>></div></div>
-<div class="set-item" onclick="forceClearCache()" style="border-left-color:#ff4444"><div><b style="color:#ff5555">🗑️ Fix Language Error — TAP</b><br><small>Clears PLEASE SELECT error!</small></div><div>🗑️</div></div>
-</div>
+<div id="settingsPage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeSettings()">←</button><h2>⚙️ V103 — ZERO 2005 POPUP!</h2></div><div style="padding:16px"><div style="text-align:center;border:3px solid #25D366;background:#0a2210;padding:14px;border-radius:14px"><h3 style="color:#25D366">✅ V103 MODERN — NO alert()!</h3><small style="color:#aaa">All popups replaced with toast + modern modal — 2026 style!</small><div style="margin-top:10px;background:#111;padding:8px;border-radius:8px"><small style="color:#FFD700">Before: alert("Bad cache cleared!") ❌<br>Now: Toast slides up ✅</small></div></div>
+<div class="set-item greenItem" onclick="forceClearCacheModern()"><div><b>🗑️ Fix Language Error — MODERN</b><br><small style="color:#aaffc8">No popup — toast + reload — modern!</small></div><div>✨</div></div>
+<div class="set-item" onclick="openMyStatus()"><div><b>📸 My Status — MODERN</b><br><small>Toast — no alert!</small></div><div>></div></div>
+<div class="set-item" onclick="openLanguage()"><div><b>Language — FIXED</b><br><small id="curLang">Français • Auto ON</small></div><div>></div></div>
+<div class="set-item" onclick="editProfile()"><div><b>Profile</b><br><small id="curName">Salvation</small></div><div>></div></div>
+<div class="set-item redItem" onclick="showConfirm('Clear all data? This deletes everything!', clearAllModern)"><div><b style="color:#ff5555">⚠️ Clear All — MODERN CONFIRM</b><br><small>Modern card — no alert!</small></div><div>🗑️</div></div>
+</div></div>
+<div id="profilePage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeProfile()">← Back</button><h2>Profile — MODERN</h2></div><div style="padding:16px"><input id="profileNameInput" class="inputField" value="Salvation"><button class="saveBtn" onclick="saveProfile()">Save Profile ✅</button></div></div>
+<div id="languagePage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeLanguage()">← Back</button><h2>Language — MODERN</h2></div><div style="padding:0"><div style="background:#0a2210;border:2px solid #25D366;padding:14px;margin:16px;border-radius:12px;display:flex;justify-content:space-between;align-items:center"><div><b style="color:#25D366">🌍 Auto Translate</b></div><div class="switch on green" id="autoSwitch" onclick="toggleAuto()"></div></div><div style="padding:0 16px" id="langsList"></div><button onclick="forceClearCacheModern()" style="width:calc(100% - 32px);margin:16px;background:#25D366;color:white;border:none;padding:14px;border-radius:12px;font-weight:bold">✨ FIX LANGUAGE — MODERN TOAST!</button></div><button class="saveBtn" onclick="closeLanguage()">Done ✅</button></div>
+<div id="statusPage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeStatusPage()">← Back</button><h2>📸 My Status — MODERN NO ALERT</h2></div><div style="padding:16px"><div style="background:#1e1e1e;border-radius:16px;padding:16px;border:1px solid #333"><input id="statusInput" class="inputField" placeholder="What's on your mind? e.g. Hello world 🇬🇭" style="background:#111"><div style="display:flex;gap:8px;margin-top:12px"><button onclick="document.getElementById('statusFile').click()" style="flex:1;background:#1a1a1a;border:1px solid #333;color:white;padding:12px;border-radius:12px">📷 Photo</button><button onclick="postStatusModern()" style="flex:1;background:#25D366;border:none;color:white;padding:12px;border-radius:12px;font-weight:900">➤ Post</button></div><input type="file" id="statusFile" style="display:none" accept="image/*" onchange="postStatusImageModern(this)"><div id="statusImagePreview" style="display:none;margin-top:12px;border-radius:12px;overflow:hidden;position:relative"><img id="previewImg" style="width:100%;max-height:200px;object-fit:cover"><button onclick="clearPreview()" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.7);color:white;border:none;width:32px;height:32px;border-radius:50%">✕</button></div></div><div style="margin-top:20px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><b style="color:#888;font-size:12px">MY STATUS</b><small style="color:#25D366" id="statusCount">0 status</small></div><div id="myStatusList"></div></div></div></div>
 
-<div id="profilePage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeProfile()">← Back</button><h2>Profile — WORKING</h2></div><div style="padding:16px"><div style="text-align:center"><div id="settingsAvatar" style="width:100px;height:100px;margin:0 auto;border-radius:50%;background:#222;border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;font-size:48px">🇬🇭</div></div><div class="sectionTitle">Name</div><input id="profileNameInput" class="inputField" value="Salvation"><div class="sectionTitle">About</div><input id="profileAboutInput" class="inputField" value="Hey there! I'm using Chale Chat 🇬🇭"><div class="sectionTitle">Phone</div><input id="profilePhoneInput" class="inputField" value="+233 24 123 4567"><button class="saveBtn" onclick="saveProfile()">Save Profile ✅</button></div></div>
-<div id="wallpaperPage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeWallpaper()">← Back</button><h2>Wallpaper — WORKING</h2></div><div style="padding:16px"><div style="display:flex;gap:10px"><div style="flex:1;height:80px;background:#0f0f0f;border:3px solid #FFD700;border-radius:10px" onclick="setWallpaper('dark')"></div><div style="flex:1;height:80px;background:#efe7dd;border:3px solid #ccc;border-radius:10px" onclick="setWallpaper('light')"></div><div style="flex:1;height:80px;background:linear-gradient(to bottom,#000 33%,#FFD700 33%,#FFD700 66%,#006400 66%);border-radius:10px" onclick="setWallpaper('ghana')"></div></div><button class="saveBtn" onclick="closeWallpaper()">Done ✅</button></div></div>
-<div id="privacyPage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closePrivacy()">← Back</button><h2>Privacy — WORKING</h2></div><div style="padding:0"><div class="privacy-card"><div><b>Last Seen</b></div><div class="switch on" id="sw_lastseen" onclick="togglePriv('lastseen')"></div></div><div class="privacy-card"><div><b>Read Receipts</b><br><small id="readDesc">ON ✓✓</small></div><div class="switch on" id="sw_read" onclick="togglePriv('read')"></div></div><div class="privacy-card"><div><b>Auto Translate</b></div><div class="switch on green" id="sw_auto" onclick="toggleAutoPriv()"></div></div></div><button class="saveBtn" onclick="savePrivacy()">Save Privacy ✅</button></div>
-<div id="backupPage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeBackup()">← Back</button><h2>Backup — WORKING</h2></div><div style="padding:0"><div style="background:#1a2a1a;border:1px solid #25D366;border-radius:12px;padding:16px;margin:16px"><p>Messages: <b id="chatCount">0</b><br>Groups: <b id="groupCount">0</b><br>Storage: <b id="backupStorage">0 KB</b></p></div><div class="set-item" onclick="exportBackup()"><div><b>📁 Export JSON</b></div><div>⬇️</div></div></div><button class="saveBtn" onclick="closeBackup()">Done ✅</button></div>
-<div id="languagePage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeLanguage()">← Back</button><h2>Language — V100 FIXED</h2></div><div style="padding:0"><div style="background:#0a2210;border:2px solid #25D366;padding:14px;margin:16px;border-radius:12px;display:flex;justify-content:space-between;align-items:center"><div><b style="color:#25D366">🌍 Auto Translate — V100 FIXED</b><br><small style="color:#888">No PLEASE SELECT error!</small></div><div class="switch on green" id="autoSwitch" onclick="toggleAuto()"></div></div><div style="padding:0 16px" id="langsList"></div><button onclick="forceClearCache()" style="width:calc(100% - 32px);margin:16px;background:#ff4444;color:white;border:none;padding:14px;border-radius:10px;font-weight:bold">🗑️ CLEAR BAD CACHE — FIX LANGUAGE!</button></div><button class="saveBtn" onclick="closeLanguage()">Save ✅ Fixed!</button></div>
-<div id="groupPage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeGroupPage()">← Back</button><h2>New Group — WORKING</h2></div><div style="padding:16px"><input id="groupNameInput" class="inputField" placeholder="Group name e.g. Ghana Devs 🇬🇭"><button class="saveBtn" onclick="createGroup()">✅ Create Group</button></div></div>
-<div id="statusPage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeStatusPage()">← Back</button><h2>My Status — WORKING</h2></div><div style="padding:16px"><input id="statusInput" class="inputField" placeholder="What's on your mind? 🇬🇭"><button class="saveBtn" onclick="postStatus()">Post Status ✅</button><div id="myStatusList" style="margin-top:16px"></div></div></div>
-<div id="notificationsPage" class="overlay"><div class="overlayHeader"><button class="backBtn" onclick="closeNotifications()">← Back</button><h2>Notifications — WORKING</h2></div><div style="padding:0"><div class="set-item" onclick="testNotification()"><div><b>🔔 Test notification</b></div><div>🔔</div></div></div><button class="saveBtn" onclick="closeNotifications()">Done ✅</button></div>
+<div class="toast" id="toast"></div>
+<div class="confirmBox" id="confirmBox"><div class="confirmCard"><h3 id="confirmText" style="color:white;margin-bottom:16px">Confirm?</h3><div style="display:flex;gap:10px"><button onclick="hideConfirm()" style="flex:1;background:#333;color:white;border:none;padding:12px;border-radius:10px">Cancel</button><button id="confirmOk" style="flex:1;background:#ff4444;color:white;border:none;padding:12px;border-radius:10px;font-weight:bold">OK Delete</button></div></div></div>
 
 <script>
 const langs={fr:{name:"Français",flag:"🇫🇷",pair:"en|fr"},en:{name:"English",flag:"🇬🇧",pair:"fr|en"},tw:{name:"Twi (Akan)",flag:"🇬🇭",pair:"en|tw"},ga:{name:"Ga",flag:"🇬🇭",pair:"en|gaa"},pidgin:{name:"Pidgin",flag:"🇬🇭",pair:"local",local:true}};
@@ -112,102 +123,157 @@ const dict={
 "it been long":{fr:"Ça fait longtemps",en:"It been long",tw:"Ɛyɛ bere tenten bi a atwam.",ga:"Etsɛɛ tsɔ",pidgin:"E don tey"},
 "it not that":{fr:"Ce n'est pas ça",en:"It not that",tw:"Ɛyi nyɛ",ga:"Jeɛ enɛ",pidgin:"No be that"},
 "okyena":{fr:"D'accord",en:"Okay",tw:"Yoo",ga:"Okyena",pidgin:"Okay"},
-"of course we want to get our name top there":{fr:"Bien sûr, on veut que notre nom soit en haut",en:"Of course we want to get our name top there",tw:"Ampa ara, yɛpɛ sɛ yɛn din kɔ soro",ga:"Lɛ mli akɛ wɔsumɔ",pidgin:"Of course we wan make our name dey top"}
+"of course we want to get our name top there":{fr:"Bien sûr, on veut que notre nom soit en haut",en:"Of course we want to get our name top there",tw:"Ampa ara",ga:"Lɛ mli",pidgin:"Of course we wan make our name dey top"},
+"hello world":{fr:"Bonjour le monde",en:"Hello world",tw:"Maakye wiase",ga:"Atuu",pidgin:"Hello world"}
 };
-let currentLang=localStorage.getItem('chale_lang')||'pidgin';
+let currentLang=localStorage.getItem('chale_lang')||'fr';
 let autoTranslate=localStorage.getItem('chale_auto')!=='false';
-let privacy=JSON.parse(localStorage.getItem('chale_privacy')||'{"lastseen":true,"read":true}');
 let cache=JSON.parse(localStorage.getItem('chale_api_cache')||'{}');
-let chatsData=JSON.parse(localStorage.getItem('chale_chats_v79')||'{"Kwame":[{"text":"🎤 Voice note • 1s","time":"11:50 AM","me":false,"type":"voice"}],"Ama":[{"text":"It been long","time":"07:58 PM","me":false},{"text":"It not that","time":"07:59 PM","me":false},{"text":"Okyena","time":"08:17 PM","me":false},{"text":"Of course we want to get our name top there","time":"09:03:42 AM","me":false}],"Salvation":[{"text":"🎤 Voice note • 5s","time":"11:51 AM","me":false,"type":"voice"}]}');
-let groupsData=JSON.parse(localStorage.getItem('chale_groups_v87')||'{}');
-let statusData=JSON.parse(localStorage.getItem('chale_status')||'[]');
+let chatsData=JSON.parse(localStorage.getItem('chale_chats_v79')||'{"Ama":[{"text":"It been long","time":"07:58 PM","me":false},{"text":"It not that","time":"07:59 PM","me":false},{"text":"Of course we want to get our name top there","time":"09:03:42 AM","me":false}]}');
+let statusData=JSON.parse(localStorage.getItem('chale_status_v103')||'[]');
 let currentChat='Ama';
+let mediaRecorder=null;let audioChunks=[];let recStart=0;let recTimer=null;let isRecording=false;
+let pendingImage=null;let confirmAction=null;
 
-// AUTO CLEAN BAD CACHE ON LOAD — V100
-(function(){
-  let bad=false;
-  for(let k in cache){
-    let v=(cache[k]||"").toString().toUpperCase();
-    if(v.includes("PLEASE SELECT")||v.includes("MYMEMORY WARNING")||v.includes("SELECT TWO DISTINCT")){
-      delete cache[k];bad=true;
-    }
-  }
-  if(bad) localStorage.setItem('chale_api_cache',JSON.stringify(cache));
-})();
+(function(){let bad=false;for(let k in cache){let v=(cache[k]||"").toString().toUpperCase();if(v.includes("PLEASE SELECT")||v.includes("MYMEMORY")){delete cache[k];bad=true;}}if(bad)localStorage.setItem('chale_api_cache',JSON.stringify(cache));})();
 
-function forceClearCache(){
-  cache={
-    "it been long_pidgin":"E don tey",
-    "it not that_pidgin":"No be that",
-    "okyena_pidgin":"Okay",
-    "of course we want to get our name top there_pidgin":"Of course we wan make our name dey top"
-  };
-  localStorage.setItem('chale_api_cache',JSON.stringify(cache));
-  alert("✅ Bad cache cleared!\n\nNow:\nOf course we want... → Of course we wan make our name dey top\n\nReloading...");
-  location.reload();
+function showToast(msg,type='success'){
+  let t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='toast show '+type;
+  setTimeout(()=>{t.className='toast';},3500);
 }
+function showConfirm(text,action){
+  document.getElementById('confirmText').innerText=text;
+  document.getElementById('confirmBox').classList.add('show');
+  confirmAction=action;
+}
+function hideConfirm(){document.getElementById('confirmBox').classList.remove('show');confirmAction=null;}
+document.getElementById('confirmOk').onclick=()=>{if(confirmAction)confirmAction();hideConfirm();};
+document.getElementById('confirmBox').onclick=(e)=>{if(e.target.id==='confirmBox')hideConfirm();};
+
+function forceClearCacheModern(){
+  cache={"it been long_pidgin":"E don tey","it not that_pidgin":"No be that","okyena_pidgin":"Okay","of course we want to get our name top there_pidgin":"Of course we wan make our name dey top","it been long_fr":"Ça fait longtemps","of course we want to get our name top there_fr":"Bien sûr, on veut que notre nom soit en haut","hello world_fr":"Bonjour le monde"};
+  localStorage.setItem('chale_api_cache',JSON.stringify(cache));
+  showToast("✅ Bad cache cleared! Reloading — Modern toast, no 2005 popup!");
+  setTimeout(()=>location.reload(),1200);
+}
+function clearAllModern(){localStorage.clear();showToast("🗑️ Cleared! Reloading...");setTimeout(()=>location.reload(),1000);}
 
 async function translateAPI(text,target){
   let k=text.toLowerCase().trim()+'_'+target;
-  if(cache[k]){
-    let v=cache[k].toString().toUpperCase();
-    if(v.includes("PLEASE SELECT")||v.includes("MYMEMORY")){delete cache[k];}else return cache[k];
-  }
+  if(cache[k]){let v=cache[k].toString().toUpperCase();if(v.includes("PLEASE SELECT")||v.includes("MYMEMORY")){delete cache[k];}else return cache[k];}
   let low=text.toLowerCase().trim();let d=dict[low];
   if(d&&d[target]){cache[k]=d[target];localStorage.setItem('chale_api_cache',JSON.stringify(cache));return d[target];}
-  if(target==='pidgin'){
-    let res=d?.pidgin|| (low.includes("of course")&&low.includes("name")&&low.includes("top") ? "Of course we wan make our name dey top" : text);
-    cache[k]=res;localStorage.setItem('chale_api_cache',JSON.stringify(cache));return res;
-  }
-  try{
-    let url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langs[target].pair}`;
-    let r=await fetch(url);let j=await r.json();let tr=j.responseData?.translatedText||"";
-    if(!tr||tr.toUpperCase().includes("PLEASE SELECT")||tr.toUpperCase().includes("MYMEMORY")) return d?.[target]||text;
-    cache[k]=tr;localStorage.setItem('chale_api_cache',JSON.stringify(cache));return tr;
-  }catch{return d?.[target]||text;}
+  if(target==='pidgin'){let res=d?.pidgin||text;cache[k]=res;localStorage.setItem('chale_api_cache',JSON.stringify(cache));return res;}
+  try{let url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langs[target].pair}`;let r=await fetch(url);let j=await r.json();let tr=j.responseData?.translatedText||"";if(!tr||tr.toUpperCase().includes("PLEASE SELECT")||tr.toUpperCase().includes("MYMEMORY")) return d?.[target]||text;cache[k]=tr;localStorage.setItem('chale_api_cache',JSON.stringify(cache));return tr;}catch{return d?.[target]||text;}
 }
-function toggleAuto(){autoTranslate=!autoTranslate;localStorage.setItem('chale_auto',autoTranslate);document.getElementById('autoSwitch').classList.toggle('on',autoTranslate);document.getElementById('sw_auto').classList.toggle('on',autoTranslate);renderMsgs(currentChat);apply();}
-function toggleAutoPriv(){toggleAuto();}
-function selectLang(code){currentLang=code;localStorage.setItem('chale_lang',code);apply();renderLangs();renderMsgs(currentChat);renderChatList();}
-function apply(){let t=langs[currentLang];document.getElementById('curLang').innerText=`${t.flag} ${t.name} • Auto ${autoTranslate?'ON':'OFF'} • V100 FIXED`;document.getElementById('autoStatus').innerText=`${t.flag} ${t.name} • Auto ${autoTranslate?'ON':'OFF'} • FIXED`;document.getElementById('curPriv').innerText=`Last Seen ${privacy.lastseen?'ON':'OFF'} • Read ${privacy.read?'ON':'OFF'}`;}
+function toggleAuto(){autoTranslate=!autoTranslate;localStorage.setItem('chale_auto',autoTranslate);document.getElementById('autoSwitch').classList.toggle('on',autoTranslate);renderMsgs(currentChat);apply();showToast(autoTranslate?"✅ Auto translate ON":"Auto translate OFF");}
+function selectLang(code){currentLang=code;localStorage.setItem('chale_lang',code);apply();renderLangs();renderMsgs(currentChat);renderChatList();showToast(`✅ ${langs[code].flag} ${langs[code].name} selected`);}
+function apply(){let t=langs[currentLang];document.getElementById('curLang').innerText=`${t.flag} ${t.name} • Auto ${autoTranslate?'ON':'OFF'} • MODERN`;document.getElementById('autoStatus').innerText=`${t.flag} ${t.name} • Auto ON • MODERN NO ALERT`;}
 function renderLangs(){let l=document.getElementById('langsList');l.innerHTML='';Object.keys(langs).forEach(c=>{let t=langs[c];let a=currentLang===c?' active':'';let div=document.createElement('div');div.className='lang-card'+a;div.onclick=()=>selectLang(c);div.innerHTML=`<div><b>${t.flag} ${t.name}</b></div><button style="background:${currentLang===c?'#25D366':'#333'};color:white;border:none;padding:8px 14px;border-radius:20px;font-weight:bold">${currentLang===c?'✅':'TAP'}</button>`;l.appendChild(div);});}
-function switchTab(t){document.getElementById('chatsTab').style.display=t==='chats'?'block':'none';document.getElementById('updatesTab').style.display=t==='updates'?'block':'none';document.getElementById('communitiesTab').style.display=t==='communities'?'block':'none';document.getElementById('callsTab').style.display=t==='calls'?'block':'none';document.querySelectorAll('.navItem').forEach(el=>el.classList.remove('active'));let el=document.getElementById('nav'+t.charAt(0).toUpperCase()+t.slice(1));if(el)el.classList.add('active');}
-function renderChatList(){let l=document.getElementById('chatList');l.innerHTML='';Object.keys(chatsData).forEach(n=>{let last=chatsData[n].slice(-1)[0];let preview=last? (last.type==='voice'?`🎤 Voice note • ${last.text.match(/\\d+s/)||'1s'}`: last.text) : '';l.innerHTML+=`<div class="chat" onclick="openChat('${n}')"><div class="avatarMini"><div class="gf"><div></div><div></div><div></div></div><span>C</span></div><div style="flex:1"><b>${n}</b><br><small style="color:gray">${preview}</small></div><div style="text-align:right"><small style="color:#888">${last?last.time:''}</small></div></div>`;});}
-async function renderMsgs(n){let b=document.getElementById('msgList');b.innerHTML='';for(let m of (chatsData[n]||[])){let row=document.createElement('div');row.className=m.me?'msg me':'msg other';row.innerHTML=`<div>${m.text}</div><div class="time">${m.time||''} ✓✓ ${langs[currentLang].flag}</div>`;b.appendChild(row);if(autoTranslate){let trDiv=document.createElement('div');trDiv.className='cleanTrans';trDiv.style.color='#888';trDiv.innerText='⏳ Translating...';row.appendChild(trDiv);let tr=await translateAPI(m.text,currentLang);trDiv.style.color='#FFD700';trDiv.innerHTML=`<span>🇬🇭</span><span>➡️ ${tr}</span>`;}}b.scrollTop=b.scrollHeight;}
+function switchTab(t){document.getElementById('chatsTab').style.display=t==='chats'?'block':'none';document.getElementById('updatesTab').style.display=t==='updates'?'block':'none';document.getElementById('communitiesTab').style.display=t==='communities'?'block':'none';document.getElementById('callsTab').style.display=t==='calls'?'block':'none';document.querySelectorAll('.navItem').forEach(el=>el.classList.remove('active'));let el=document.getElementById('nav'+t.charAt(0).toUpperCase()+t.slice(1));if(el)el.classList.add('active');if(t==='updates')renderUpdates();}
+function renderChatList(){let l=document.getElementById('chatList');l.innerHTML='';Object.keys(chatsData).forEach(n=>{let last=chatsData[n].slice(-1)[0];l.innerHTML+=`<div class="chat" onclick="openChat('${n}')"><div class="avatarMini"><div class="gf"><div></div><div></div><div></div></div><span>C</span></div><div style="flex:1"><b>${n}</b><br><small style="color:gray">${last?last.text.substring(0,40):''}</small></div></div>`;});}
+function renderUpdates(){let l=document.getElementById('updatesList');if(!l)return;if(statusData.length===0){l.innerHTML=`<div style="text-align:center;padding:40px;color:#888"><div style="font-size:48px">⭕</div><p>No status yet</p></div>`;return;}l.innerHTML='';statusData.forEach(s=>{l.innerHTML+=`<div class="statusCard"><div class="statusHeader"><b>🇬🇭 My Status</b><small>${s.time}</small></div>${s.file?`<img src="${s.file}">`:''}<div class="statusText">${s.text}</div></div>`;});}
+async function renderMsgs(n){let b=document.getElementById('msgList');b.innerHTML='';for(let m of (chatsData[n]||[])){let row=document.createElement('div');row.className=m.me?'msg me':'msg other';if(m.type==='voice'&&m.audio){row.innerHTML=`<div class="voiceBubble"><button class="voicePlay" onclick="new Audio('${m.audio}').play();showToast('▶ Playing voice')">▶</button><div>${m.duration||'0:05'}</div></div><div class="time">${m.time||''} ✓✓</div>`;}else if(m.type==='voice'){row.innerHTML=`<div class="voiceBubble"><button class="voicePlay">🎤</button><div>Voice • ${m.duration||'5s'}</div></div><div class="time">${m.time||''} ✓✓</div>`;}else{row.innerHTML=`<div>${m.text}</div><div class="time">${m.time||''} ✓✓ ${langs[currentLang].flag}</div>`;}b.appendChild(row);if(autoTranslate&&m.text&&!m.type){let trDiv=document.createElement('div');trDiv.className='cleanTrans';trDiv.style.color='#888';trDiv.innerText='⏳';row.appendChild(trDiv);let tr=await translateAPI(m.text,currentLang);trDiv.style.color='#FFD700';trDiv.innerHTML=`<span>🇬🇭</span><span>➡️ ${tr}</span>`;}}b.scrollTop=b.scrollHeight;}
 function openChat(n){currentChat=n;document.getElementById('bottomNav').classList.add('hide');document.getElementById('quickBar').style.display='none';document.getElementById('chatWindow').classList.add('show');document.getElementById('chatWindow').style.display='flex';document.getElementById('chatName').innerText=n;renderMsgs(n);}
 function closeChat(){document.getElementById('chatWindow').classList.remove('show');document.getElementById('chatWindow').style.display='none';document.getElementById('bottomNav').classList.remove('hide');document.getElementById('quickBar').style.display='flex';}
-function sendMsg(){let i=document.getElementById('msgInput');let t=i.value.trim();if(!t)return;if(!chatsData[currentChat])chatsData[currentChat]=[];chatsData[currentChat].push({text:t,time:new Date().toLocaleTimeString(),me:true});localStorage.setItem('chale_chats_v79',JSON.stringify(chatsData));i.value='';renderMsgs(currentChat);renderChatList();}
+function sendMsg(){let i=document.getElementById('msgInput');let t=i.value.trim();if(!t){showToast("Type a message","error");return;}if(!chatsData[currentChat])chatsData[currentChat]=[];chatsData[currentChat].push({text:t,time:new Date().toLocaleTimeString(),me:true});localStorage.setItem('chale_chats_v79',JSON.stringify(chatsData));i.value='';renderMsgs(currentChat);renderChatList();showToast("✅ Message sent");}
 function quickSend(){let q=document.getElementById('quickInput');if(q.value.trim()){document.getElementById('msgInput').value=q.value;openChat(currentChat);sendMsg();q.value='';}}
 function openSettings(){document.getElementById('bottomNav').classList.add('hide');document.getElementById('quickBar').style.display='none';document.getElementById('settingsPage').classList.add('show');document.getElementById('settingsPage').style.display='block';}
 function closeSettings(){document.getElementById('settingsPage').classList.remove('show');document.getElementById('settingsPage').style.display='none';document.getElementById('bottomNav').classList.remove('hide');document.getElementById('quickBar').style.display='flex';}
 function editProfile(){document.getElementById('settingsPage').style.display='none';document.getElementById('profilePage').classList.add('show');document.getElementById('profilePage').style.display='block';}
 function closeProfile(){document.getElementById('profilePage').classList.remove('show');document.getElementById('profilePage').style.display='none';document.getElementById('settingsPage').style.display='block';}
-function saveProfile(){let n=document.getElementById('profileNameInput').value.trim();let about=document.getElementById('profileAboutInput').value.trim();localStorage.setItem('chale_name',n);localStorage.setItem('chale_about',about);document.getElementById('curName').innerText=n;alert('✅ Profile saved!');closeProfile();}
-function openWallpaper(){document.getElementById('settingsPage').style.display='none';document.getElementById('wallpaperPage').classList.add('show');document.getElementById('wallpaperPage').style.display='block';}
-function closeWallpaper(){document.getElementById('wallpaperPage').classList.remove('show');document.getElementById('wallpaperPage').style.display='none';document.getElementById('settingsPage').style.display='block';}
-function setWallpaper(t){localStorage.setItem('chale_wall',t);document.getElementById('curWall').innerText=t+' — WORKING!';let bg=t==='light'?'#efe7dd': t==='ghana'?'linear-gradient(to bottom,#000 33%,#FFD700 33%,#FFD700 66%,#006400 66%)':'#0f0f0f';document.getElementById('msgList').style.background=bg;alert('✅ Wallpaper '+t+' saved!');}
-function openPrivacy(){document.getElementById('settingsPage').style.display='none';document.getElementById('privacyPage').classList.add('show');document.getElementById('privacyPage').style.display='block';}
-function closePrivacy(){document.getElementById('privacyPage').classList.remove('show');document.getElementById('privacyPage').style.display='none';document.getElementById('settingsPage').style.display='block';}
-function togglePriv(k){privacy[k]=!privacy[k];document.getElementById('sw_'+k).classList.toggle('on',privacy[k]);}
-function savePrivacy(){localStorage.setItem('chale_privacy',JSON.stringify(privacy));alert('✅ Privacy saved!');closePrivacy();}
-function openBackup(){document.getElementById('settingsPage').style.display='none';document.getElementById('backupPage').classList.add('show');document.getElementById('backupPage').style.display='block';let c=Object.values(chatsData).reduce((a,b)=>a+b.length,0);document.getElementById('chatCount').innerText=c;document.getElementById('groupCount').innerText=Object.keys(groupsData).length;document.getElementById('backupStorage').innerText=(JSON.stringify(localStorage).length/1024).toFixed(1)+' KB';}
-function closeBackup(){document.getElementById('backupPage').classList.remove('show');document.getElementById('backupPage').style.display='none';document.getElementById('settingsPage').style.display='block';}
-function exportBackup(){let d={};for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i);d[k]=localStorage.getItem(k);}let blob=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});let url=URL.createObjectURL(blob);let a=document.createElement('a');a.href=url;a.download='Chale-V100-BACKUP.json';a.click();}
+function saveProfile(){let n=document.getElementById('profileNameInput').value.trim();if(!n){showToast("Enter name","error");return;}localStorage.setItem('chale_name',n);document.getElementById('curName').innerText=n;showToast(`✅ Profile saved: ${n}`);closeProfile();}
 function openLanguage(){document.getElementById('settingsPage').style.display='none';document.getElementById('languagePage').classList.add('show');document.getElementById('languagePage').style.display='block';renderLangs();document.getElementById('autoSwitch').classList.toggle('on',autoTranslate);}
 function closeLanguage(){document.getElementById('languagePage').classList.remove('show');document.getElementById('languagePage').style.display='none';document.getElementById('settingsPage').style.display='block';}
-function openGroupPage(){document.getElementById('settingsPage').style.display='none';document.getElementById('groupPage').classList.add('show');document.getElementById('groupPage').style.display='block';}
-function closeGroupPage(){document.getElementById('groupPage').classList.remove('show');document.getElementById('groupPage').style.display='none';document.getElementById('settingsPage').style.display='block';}
-function createGroup(){let n=document.getElementById('groupNameInput').value.trim();if(!n)return alert('Enter name');groupsData[Date.now()]={name:n};chatsData[n]=[{text:`Group ${n} created 🇬🇭`,time:new Date().toLocaleTimeString(),me:false}];localStorage.setItem('chale_groups_v87',JSON.stringify(groupsData));localStorage.setItem('chale_chats_v79',JSON.stringify(chatsData));alert('✅ Group '+n+' created!');document.getElementById('groupNameInput').value='';closeGroupPage();renderChatList();}
-function openMyStatus(){document.getElementById('settingsPage').style.display='none';document.getElementById('statusPage').classList.add('show');document.getElementById('statusPage').style.display='block';renderStatus();}
+function openMyStatus(){document.getElementById('settingsPage').style.display='none';document.getElementById('statusPage').classList.add('show');document.getElementById('statusPage').style.display='block';renderMyStatus();}
 function closeStatusPage(){document.getElementById('statusPage').classList.remove('show');document.getElementById('statusPage').style.display='none';document.getElementById('settingsPage').style.display='block';}
-function postStatus(){let t=document.getElementById('statusInput').value.trim();if(!t)return;statusData.unshift({text:t,time:new Date().toLocaleTimeString()});localStorage.setItem('chale_status',JSON.stringify(statusData));document.getElementById('statusInput').value='';renderStatus();alert('✅ Status posted!');}
-function renderStatus(){let l=document.getElementById('myStatusList');l.innerHTML='';statusData.forEach(s=>{l.innerHTML+=`<div style="background:#1e1e1e;padding:12px;border-radius:10px;margin-bottom:8px;border-left:4px solid #25D366">${s.text}<br><small style="color:#888">${s.time}</small></div>`;});}
-function openNotifications(){document.getElementById('settingsPage').style.display='none';document.getElementById('notificationsPage').classList.add('show');document.getElementById('notificationsPage').style.display='block';}
-function closeNotifications(){document.getElementById('notificationsPage').classList.remove('show');document.getElementById('notificationsPage').style.display='none';document.getElementById('settingsPage').style.display='block';}
-function testNotification(){alert('🔔 Notification — WORKING!');}
-function startVoice(){let t=prompt('Voice note duration? e.g. 5s');if(t){if(!chatsData[currentChat])chatsData[currentChat]=[];chatsData[currentChat].push({text:`🎤 Voice note • ${t}`,time:new Date().toLocaleTimeString(),me:true,type:'voice'});localStorage.setItem('chale_chats_v79',JSON.stringify(chatsData));renderMsgs(currentChat);renderChatList();}}
-function installAPK(){alert('📲 Install: Chrome ⋮ → Add to Home Screen');}
-window.onload=()=>{let n=localStorage.getItem('chale_name');if(n)document.getElementById('curName').innerText=n;apply();renderChatList();renderLangs();renderStatus();openChat(currentChat);}
+function postStatusModern(){
+  let t=document.getElementById('statusInput').value.trim();
+  if(!t && !pendingImage){showToast("Type something or add photo","error");return;}
+  let newStatus={text:t||"📷 Photo status",time:new Date().toLocaleTimeString(),file:pendingImage,timestamp:Date.now()};
+  statusData.unshift(newStatus);
+  localStorage.setItem('chale_status_v103',JSON.stringify(statusData));
+  document.getElementById('statusInput').value='';
+  clearPreview();
+  renderMyStatus();
+  renderUpdates();
+  showToast("✅ Status posted! WhatsApp style — No 2005 popup!");
+}
+function postStatusImageModern(inp){
+  if(inp.files[0]){
+    let r=new FileReader();
+    r.onload=e=>{
+      pendingImage=e.target.result;
+      document.getElementById('previewImg').src=pendingImage;
+      document.getElementById('statusImagePreview').style.display='block';
+      showToast("📷 Photo ready — tap Post!");
+    };
+    r.readAsDataURL(inp.files[0]);
+  }
+}
+function clearPreview(){pendingImage=null;document.getElementById('statusImagePreview').style.display='none';document.getElementById('statusFile').value='';}
+function renderMyStatus(){
+  let l=document.getElementById('myStatusList');
+  document.getElementById('statusCount').innerText=`${statusData.length} status`;
+  if(statusData.length===0){l.innerHTML=`<div style="text-align:center;padding:20px;color:#666;background:#111;border-radius:12px;border:1px dashed #333">No status yet<br><small>Your status will appear here</small></div>`;return;}
+  l.innerHTML='';
+  statusData.forEach((s,i)=>{
+    let div=document.createElement('div');
+    div.className='statusCard';
+    div.innerHTML=`<div class="statusHeader"><b>🇬🇭 My Status • ${s.time}</b><button onclick="deleteStatus(${i})" style="background:#ff4444;color:white;border:none;padding:6px 10px;border-radius:8px;font-size:11px">🗑️</button></div>${s.file?`<img src="${s.file}">`:''}<div class="statusText">${s.text}</div>`;
+    l.appendChild(div);
+  });
+}
+function deleteStatus(i){
+  showConfirm(`Delete this status? "${statusData[i].text.substring(0,30)}"`, ()=>{
+    statusData.splice(i,1);
+    localStorage.setItem('chale_status_v103',JSON.stringify(statusData));
+    renderMyStatus();renderUpdates();
+    showToast("🗑️ Status deleted — Modern!");
+  });
+}
+async function startRealRecording(e){
+  e.preventDefault();
+  if(isRecording) return;
+  try{
+    let stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    mediaRecorder=new MediaRecorder(stream);
+    audioChunks=[];
+    mediaRecorder.ondataavailable=ev=>audioChunks.push(ev.data);
+    mediaRecorder.onstop=()=>{
+      let blob=new Blob(audioChunks,{type:'audio/webm'});
+      let url=URL.createObjectURL(blob);
+      let dur=Math.round((Date.now()-recStart)/1000);
+      let secs=`${Math.floor(dur/60)}:${String(dur%60).padStart(2,'0')}`;
+      if(!chatsData[currentChat])chatsData[currentChat]=[];
+      chatsData[currentChat].push({text:`Voice`,type:'voice',audio:url,duration:secs,time:new Date().toLocaleTimeString(),me:true});
+      localStorage.setItem('chale_chats_v79',JSON.stringify(chatsData));
+      renderMsgs(currentChat);renderChatList();showToast(`🎤 Voice ${secs} sent! Modern!`);
+      stream.getTracks().forEach(t=>t.stop());
+    };
+    mediaRecorder.start();isRecording=true;recStart=Date.now();
+    document.getElementById('recordingBar').classList.add('show');
+    document.getElementById('voiceBtn').classList.add('recording');
+    document.getElementById('voiceBtn').innerText='🔴';
+    recTimer=setInterval(()=>{let s=Math.floor((Date.now()-recStart)/1000);document.getElementById('recTime').innerText=`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;},500);
+  }catch(err){showToast("🎤 Mic blocked — Allow mic in browser","error");}
+}
+function stopRealRecording(e){
+  e.preventDefault();
+  if(!isRecording) return;
+  isRecording=false;
+  document.getElementById('recordingBar').classList.remove('show');
+  document.getElementById('voiceBtn').classList.remove('recording');
+  document.getElementById('voiceBtn').innerText='🎤';
+  clearInterval(recTimer);
+  if(mediaRecorder && mediaRecorder.state!=='inactive'){mediaRecorder.stop();}
+}
+function cancelRecording(){
+  if(isRecording){isRecording=false;document.getElementById('recordingBar').classList.remove('show');document.getElementById('voiceBtn').classList.remove('recording');document.getElementById('voiceBtn').innerText='🎤';clearInterval(recTimer);if(mediaRecorder)mediaRecorder.stop();audioChunks=[];showToast("Recording cancelled — Modern!");}
+}
+window.onload=()=>{let n=localStorage.getItem('chale_name');if(n)document.getElementById('curName').innerText=n;apply();renderChatList();renderLangs();renderMyStatus();renderUpdates();openChat(currentChat);}
 </script>
 </body>
-                                                                                                                                                              </html>
+</html>
