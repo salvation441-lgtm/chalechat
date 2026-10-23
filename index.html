@@ -3,20 +3,19 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#FFD700">
-<title>CHALE CHAT V93 API TRANSLATE</title>
+<title>CHALE CHAT V94 CLEAN</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
 body{background:#0f0f0f;color:white;padding-bottom:78px}
 .header{background:#1a1a1a;padding:10px 15px;display:flex;justify-content:space-between;align-items:center}
-.logoBox{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#111,#000);border:2.5px solid #FFD700;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.logoWrap{display:flex;align-items:center;gap:10px}
+.logoBox{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#111,#000);border:2.5px solid #FFD700;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .logoBox .ghFlag{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0.95}
 .logoBox .ghFlag div{flex:1}.logoBox .ghFlag div:nth-child(1){background:#000}.logoBox .ghFlag div:nth-child(2){background:#FFD700}.logoBox .ghFlag div:nth-child(3){background:#006400}
-.logoBox .cText{position:relative;z-index:2;font-weight:900;font-size:26px;color:#FFD700}
-.logoBox .star{position:absolute;top:1px;right:5px;z-index:3;color:#ff0000;font-size:8px}
+.logoBox .cText{position:relative;z-index:2;font-weight:900;font-size:24px;color:#FFD700}
+.logoBox .star{position:absolute;top:1px;right:5px;z-index:3;color:red;font-size:8px}
 .logo{font-weight:bold;font-size:17px}.logo span{color:#FFD700}
 .badge{background:#FFD700;color:black;font-size:8px;padding:3px 8px;border-radius:8px;font-weight:bold}
-.search{margin:12px;background:#222;padding:9px 14px;border-radius:10px}
-.search input{background:transparent;border:none;color:white;width:100%;outline:none}
 .chatList{padding:10px;padding-bottom:125px}
 .chat{background:#1e1e1e;padding:11px;border-radius:10px;margin-bottom:7px;display:flex;gap:10px;cursor:pointer}
 .avatarMini{width:38px;height:38px;border-radius:12px;background:#111;border:2px solid #FFD700;display:flex;align-items:center;justify-content:center;font-weight:900;color:#FFD700;position:relative;overflow:hidden;flex-shrink:0}
@@ -26,244 +25,161 @@ body{background:#0f0f0f;color:white;padding-bottom:78px}
 .inputBar{position:fixed;left:0;width:100%;background:#111;padding:10px;display:flex;gap:7px;z-index:100;align-items:center;border-top:1px solid #222}
 #quickBar{bottom:58px!important;background:#1a1a1a;border-top:1px solid #333;padding:8px 10px!important;height:58px;z-index:900}
 #quickBar input{padding:11px 14px!important;border-radius:20px;font-size:14px;background:#222;border:none;color:white;outline:none;flex:1}
-#settingsPage, #profilePage, #chatWindow, #languagePage, #groupPage{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f0f0f;z-index:999;display:none;overflow-y:auto;padding:20px;padding-bottom:90px}
+#settingsPage,#chatWindow,#languagePage,#groupPage{position:fixed;top:0;left:0;width:100%;height:100%;background:#0f0f0f;z-index:999;display:none;overflow-y:auto;padding:20px;padding-bottom:90px}
 #chatWindow.show{display:flex;background:#0f0f0f;padding:0;z-index:2000;flex-direction:column}
 .chatWinHeader{background:#111;padding:11px 14px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100;border-bottom:1px solid #333}
 .msgList{flex:1;padding:14px;padding-bottom:135px;background:#0f0f0f;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
-.msg{max-width:85%;padding:9px 13px;border-radius:14px;font-size:15px;word-wrap:break-word}
+.msg{max-width:84%;padding:10px 12px;border-radius:14px;font-size:15px;word-wrap:break-word;position:relative;background:#1e1e1e;align-self:flex-start}
 .msg.me{align-self:flex-end;background:#005c4b;color:white;border-bottom-right-radius:4px}
-.msg .time{font-size:10px;color:#a0d9c8;display:block;text-align:right;margin-top:5px}
-.msg .autoTrans{margin-top:8px;padding:8px 10px;background:#1a1a00;border:1px solid #FFD700;border-left:4px solid #FFD700;border-radius:8px;font-size:13px;color:#FFD700}
-.msg .autoTrans.loading{background:#222;border-color:#555;color:#aaa}
-.msg .autoTrans .label{font-size:10px;color:#25D366;font-weight:bold;display:block;margin-bottom:3px}
-.msg .autoTrans.apiLabel{border-left:4px solid #25D366;background:#0a1a00}
+.msg.other{background:#1e1e1e;border-bottom-left-radius:4px}
+.msg .txt{white-space:pre-wrap}
+.msg .time{font-size:10px;color:#a0d9c8;display:flex;justify-content:flex-end;gap:4px;margin-top:4px;align-items:center}
+.msg .cleanTrans{margin-top:6px;padding:6px 0;border-top:1px solid rgba(255,215,0,0.25);font-size:13.5px;color:#FFD700;display:flex;gap:6px;align-items:flex-start}
+.msg .cleanTrans .flag{font-size:14px;flex-shrink:0}
+.msg .cleanTrans .tr{flex:1}
+.msg .cleanTrans.loading{color:#888;font-style:italic;font-size:12px;border-top:none}
 .set-item{background:#1e1e1e;padding:14px;margin:10px 0;border-radius:11px;border-left:4px solid #FFD700;cursor:pointer}
-.set-item.greenItem{border:2px solid #25D366;background:#0a2210}
 .set-item.goldItem{border:2px solid #FFD700;background:#221e00}
+.set-item.greenItem{border:2px solid #25D366;background:#0a2210}
 .switch{width:46px;height:26px;background:#333;border-radius:20px;position:relative;cursor:pointer}
 .switch.on{background:#FFD700}
 .switch::after{content:'';position:absolute;width:20px;height:20px;background:white;border-radius:50%;top:3px;left:3px;transition:0.3s}
 .switch.on::after{left:23px}
 .micBtn{width:42px;height:42px;border-radius:50%;border:none;background:#25D366;color:white;cursor:pointer;flex-shrink:0}
-.attachBtn, .emojiBtn{width:42px;height:42px;border-radius:50%;border:none;background:#333;color:white;font-size:18px;cursor:pointer;flex-shrink:0}
 .bottomNav{position:fixed;bottom:0;left:0;width:100%;background:white;display:flex;justify-content:space-around;padding:5px 0 4px 0;z-index:5000;border-top:1px solid #e0e0e0;height:58px}
 .navItem{flex:1;text-align:center;cursor:pointer;color:#666}.navItem.active{color:#000}
 .navItem .iconWrap{display:inline-block;padding:2px 16px;border-radius:16px}.navItem.active .iconWrap{background:#d4f8d4}
 .navItem .icon{font-size:20px;display:block}.navItem .label{font-size:9.5px;display:block}
-#updatesTab, #communitiesTab, #callsTab{position:fixed;top:0;left:0;width:100%;height:100%;background:white;color:black;z-index:100;display:none;overflow-y:auto;padding-bottom:70px}
+#updatesTab,#communitiesTab,#callsTab{position:fixed;top:0;left:0;width:100%;height:100%;background:white;color:black;z-index:100;display:none;overflow-y:auto;padding-bottom:70px}
 .commTop{padding:16px;background:white;display:flex;justify-content:space-between;align-items:center}
-.lang-card{background:#1e1e1e;padding:14px;border-radius:11px;margin:10px 0;display:flex;justify-content:space-between;align-items:center;border-left:4px solid #444;cursor:pointer}
+.lang-card{background:#1e1e1e;padding:14px;border-radius:11px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;border-left:4px solid #444;cursor:pointer}
 .lang-card.active{border-left:4px solid #FFD700;background:#2a2a0f}
-.lang-card.apiActive{border-left:4px solid #25D366;background:#0a1a0f}
 #msgInput{padding:11px 14px;border-radius:20px;font-size:14.5px;background:#222;border:none;color:white;outline:none;flex:1}
-.installBar{background:#FFD700;color:black;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;font-weight:bold;font-size:13px;position:fixed;top:0;left:0;width:100%;z-index:7000;transform:translateY(-100%);transition:0.3s}
-.installBar.show{transform:translateY(0)}
-.apiBox{background:#111;border:2px dashed #25D366;padding:12px;border-radius:10px;margin:12px 0}
 </style>
 </head>
 <body>
-<div class="installBar" id="installBar"><span>🌍 V93 API TRANSLATE LIVE! 🇬🇭</span><button onclick="hideInstall()" style="background:black;color:#FFD700;border:none;padding:6px 12px;border-radius:6px">X</button></div>
 
 <div id="chatsTab">
-<div class="header"><div style="display:flex;align-items:center;gap:10px"><div class="logoBox"><div class="ghFlag"><div></div><div></div><div></div></div><div class="star">★</div><div class="cText">C</div></div><div class="logo">CHALE <span>CHAT</span> <span class="badge">V93 API</span></div></div><button onclick="openSettings()" style="background:#FFD700;width:34px;height:34px;border-radius:50%;border:none">⚙️</button></div>
-<div class="search"><input id="searchInput" placeholder="Search chats"></div>
+<div class="header"><div class="logoWrap"><div class="logoBox"><div class="ghFlag"><div></div><div></div><div></div></div><div class="star">★</div><div class="cText">C</div></div><div class="logo">CHALE <span>CHAT</span> <span class="badge">V94 CLEAN</span></div></div><button onclick="openSettings()" style="background:#FFD700;width:34px;height:34px;border-radius:50%;border:none">⚙️</button></div>
 <div class="chatList" id="chatList"></div>
-<div class="inputBar" id="quickBar"><input id="quickInput" placeholder="Type... API auto translate!"><button class="micBtn" onclick="quickSend()">➤</button></div>
+<div class="inputBar" id="quickBar"><input id="quickInput" placeholder="Type message..."><button class="micBtn" onclick="quickSend()">➤</button></div>
 </div>
 
 <div id="updatesTab"><div class="commTop"><h1>Updates</h1></div></div>
-<div id="communitiesTab"><div class="commTop"><h1>Communities</h1><button onclick="openGroupPage()" style="background:#FFD700;border:none;padding:8px 14px;border-radius:8px;font-weight:bold">+ New Group</button></div><div style="padding:0 16px"><div id="groupsList"></div></div></div>
+<div id="communitiesTab"><div class="commTop"><h1>Communities</h1></div></div>
 <div id="callsTab"><div class="commTop"><h1>Calls</h1></div></div>
 
 <div class="bottomNav">
-<div class="navItem active" id="navChats" onclick="switchTab('chats')"><span class="iconWrap"><span class="icon">💬</span></span><span class="label">Chats</span></div>
-<div class="navItem" id="navUpdates" onclick="switchTab('updates')"><span class="iconWrap"><span class="icon">⭕</span></span><span class="label">Updates</span></div>
-<div class="navItem" id="navCommunities" onclick="switchTab('communities')"><span class="iconWrap"><span class="icon">👥</span></span><span class="label">Communities</span></div>
-<div class="navItem" id="navCalls" onclick="switchTab('calls')"><span class="iconWrap"><span class="icon">📞</span></span><span class="label">Calls</span></div>
+<div class="navItem active" onclick="switchTab('chats')"><span class="iconWrap"><span class="icon">💬</span></span><span class="label">Chats</span></div>
+<div class="navItem" onclick="switchTab('updates')"><span class="iconWrap"><span class="icon">⭕</span></span><span class="label">Updates</span></div>
+<div class="navItem" onclick="switchTab('communities')"><span class="iconWrap"><span class="icon">👥</span></span><span class="label">Communities</span></div>
+<div class="navItem" onclick="switchTab('calls')"><span class="iconWrap"><span class="icon">📞</span></span><span class="label">Calls</span></div>
 </div>
 
 <div id="chatWindow">
-<div class="chatWinHeader"><button onclick="closeChat()" style="background:#222;border:none;width:32px;height:32px;border-radius:50%;color:white">←</button><div class="logoBox" style="width:36px;height:36px"><div class="ghFlag"><div></div><div></div><div></div></div><div class="cText" style="font-size:18px">C</div></div><div style="flex:1"><b id="chatName">Chat</b><br><small style="color:#25D366" id="autoStatus">🌍 API: ON • Français</small></div></div>
+<div class="chatWinHeader"><button onclick="closeChat()" style="background:#222;border:none;width:32px;height:32px;border-radius:50%;color:white">←</button><div class="logoBox" style="width:36px;height:36px"><div class="ghFlag"><div></div><div></div><div></div></div><div class="cText" style="font-size:18px">C</div></div><div style="flex:1"><b id="chatName">Ama</b><br><small id="autoStatus" style="color:#25D366">🇬🇭 Twi (Akan) • Auto ON</small></div></div>
 <div class="msgList" id="msgList"></div>
-<div class="inputBar" style="position:relative;height:60px"><button class="emojiBtn">😊</button><button class="attachBtn">📎</button><input id="msgInput" placeholder="Tapez... API translate!"><button id="micBtnMain" class="micBtn">🎙️</button><button onclick="sendMsg()" style="width:42px;height:42px;border-radius:50%;border:none;background:#25D366;color:white">➤</button></div>
+<div class="inputBar" style="position:relative;height:60px"><input id="msgInput" placeholder="Type..."><button class="micBtn" onclick="sendMsg()">➤</button></div>
 </div>
 
 <div id="settingsPage">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><h2>⚙️ V93 API SETTINGS</h2><button onclick="closeSettings()" style="background:#FFD700;border:none;padding:6px 10px;border-radius:7px;font-weight:bold">X</button></div>
-<div style="text-align:center;border:3px solid #FFD700;background:#111;padding:14px;border-radius:14px;margin-bottom:12px">
-<div style="margin:0 auto;width:80px;height:80px;border-radius:16px;background:#000;border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden"><div style="position:absolute;inset:0;display:flex;flex-direction:column"><div style="flex:1;background:#000"></div><div style="flex:1;background:#FFD700"></div><div style="flex:1;background:#006400"></div></div><div style="position:relative;z-index:2;font-weight:900;font-size:42px;color:#FFD700">C</div></div>
-<h3 style="margin-top:8px;color:#FFD700">V93 API TRANSLATE</h3><small style="color:#25D366">FREE API • Local + Foreign • Both ways!</small>
-</div>
-<div class="set-item" onclick="openLanguage()" style="border:3px solid #25D366;background:#0a2210"><h3>🌍 Language API Auto ></h3><small style="color:#25D366" id="curLang">Français • API ON</small></div>
-<div class="set-item" onclick="openGroupPage()"><h3>👥 Groups</h3><small>256 members</small></div>
-<div class="set-item greenItem"><h3>✅ V93 API ACTIVE</h3><small>MyMemory FREE API • No key needed • Any text auto translate!</small></div>
+<div style="display:flex;justify-content:space-between;margin-bottom:16px"><h2>⚙️ V94 CLEAN</h2><button onclick="closeSettings()" style="background:#FFD700;border:none;padding:6px 10px;border-radius:7px;font-weight:bold">X</button></div>
+<div style="text-align:center;border:3px solid #FFD700;background:#111;padding:14px;border-radius:14px;margin-bottom:12px"><div style="margin:0 auto;width:70px;height:70px;border-radius:14px;background:#000;border:3px solid #FFD700;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden"><div style="position:absolute;inset:0;display:flex;flex-direction:column"><div style="flex:1;background:#000"></div><div style="flex:1;background:#FFD700"></div><div style="flex:1;background:#006400"></div></div><div style="position:relative;z-index:2;font-weight:900;font-size:36px;color:#FFD700">C</div></div><h3 style="color:#FFD700;margin-top:8px">V94 CLEAN FINAL</h3><small style="color:#888">WhatsApp style • No long label</small></div>
+<div class="set-item" onclick="openLanguage()" style="border:3px solid #25D366;background:#0a2210"><h3>🌍 Language • Auto Translate</h3><small id="curLang" style="color:#25D366">Twi • Auto ON</small></div>
+<div class="set-item" onclick="openGroupPage()"><h3>👥 Groups</h3></div>
+<div class="set-item greenItem"><h3>✅ V94 CLEAN — WhatsApp style translations</h3><small>Flag + text only • No API spam</small></div>
 </div>
 
 <div id="languagePage">
-<div style="display:flex;justify-content:space-between;align-items:center"><h2>🌍 API Language</h2><button onclick="closeLanguage()" style="background:#FFD700;border:none;padding:6px 10px;border-radius:7px;font-weight:bold">← Back</button></div>
+<div style="display:flex;justify-content:space-between;align-items:center"><h2>🌍 Language</h2><button onclick="closeLanguage()" style="background:#FFD700;border:none;padding:6px 10px;border-radius:7px;font-weight:bold">← Back</button></div>
 
-<div class="apiBox">
-<div style="display:flex;justify-content:space-between;align-items:center"><div><b style="color:#25D366">🌍 API Auto Translate</b><br><small style="color:#888">Local + Foreign via API</small></div><div class="switch on" id="autoSwitch" onclick="toggleAuto()"></div></div>
-<small style="color:#FFD700;display:block;margin-top:8px" id="autoDesc">✅ API ON — Any message via free API!</small>
-<div style="margin-top:10px;display:flex;gap:6px"><button onclick="testAPI()" style="background:#25D366;color:white;border:none;padding:6px 12px;border-radius:6px;font-size:11px;font-weight:bold">🧪 TEST API</button><button onclick="clearCache()" style="background:#333;color:white;border:none;padding:6px 12px;border-radius:6px;font-size:11px">🗑️ Clear Cache</button></div>
-<div id="apiStatus" style="margin-top:8px;font-size:11px;color:#25D366"></div>
+<div style="background:#0a2210;border:2px solid #25D366;padding:12px;border-radius:10px;margin-top:12px;display:flex;justify-content:space-between;align-items:center">
+<div><b style="color:#25D366">🌍 Auto Translate</b><br><small style="color:#888">Clean style</small></div><div class="switch on" id="autoSwitch" onclick="toggleAuto()"></div>
 </div>
 
-<div style="background:#25D366;color:white;padding:10px;border-radius:8px;text-align:center;font-weight:bold">✅ ONE TOUCH = API TRANSLATE!</div>
-
-<div id="langsList"></div>
-
-<div style="background:#221e00;border:2px solid #FFD700;padding:10px;border-radius:8px;margin-top:16px">
-<small style="color:#FFD700"><b>API HOW IT WORKS:</b><br>• Select language → Tap → All chats call FREE API: https://api.mymemory.translated.net<br>• Example: "Let create official logo" → FR via API auto!<br>• For Twi/Ga/Pidgin: API + local dictionary fallback<br>• Cache saved in phone — fast next time!<br>• NO API KEY NEEDED — FREE!</small>
-</div>
+<div style="margin-top:14px" id="langsList"></div>
 </div>
 
-<div id="groupPage"><div style="display:flex;justify-content:space-between"><h2>👥 New Group</h2><button onclick="closeGroupPage()" style="background:#FFD700;border:none;padding:6px 10px;border-radius:7px;font-weight:bold">← Back</button></div><input id="groupNameInput" placeholder="Group name" style="width:100%;background:#1e1e1e;border:none;padding:14px;border-radius:10px;color:white;margin-top:16px"><button onclick="createGroup()" style="width:100%;background:#25D366;border:none;padding:14px;border-radius:10px;color:white;font-weight:bold;margin-top:12px">Create ✅</button></div>
-<div id="profilePage"><div style="display:flex;justify-content:space-between"><h2>Profile</h2><button onclick="closeProfile()" style="background:#FFD700;border:none;padding:6px 10px;border-radius:7px;font-weight:bold">← Back</button></div></div>
+<div id="groupPage"><div style="display:flex;justify-content:space-between"><h2>New Group</h2><button onclick="closeGroupPage()" style="background:#FFD700;border:none;padding:6px 10px;border-radius:7px;font-weight:bold">← Back</button></div><input id="groupNameInput" placeholder="Group name" style="width:100%;background:#1e1e1e;border:none;padding:14px;border-radius:10px;color:white;margin-top:16px"><button onclick="createGroup()" style="width:100%;background:#25D366;border:none;padding:14px;border-radius:10px;color:white;font-weight:bold;margin-top:12px">Create ✅</button></div>
 
 <script>
-const translations={
-  fr:{name:"Français",flag:"🇫🇷",langpair:"en|fr",myMemory:"fr",search:"Chercher chats",typeMsg:"Tapez... API FR!",select:"SELECTED"},
-  en:{name:"English",flag:"🇬🇧",langpair:"fr|en",myMemory:"en",search:"Search chats",typeMsg:"Type... API EN!",select:"SELECTED"},
-  tw:{name:"Twi (Akan)",flag:"🇬🇭",langpair:"en|tw",myMemory:"ak",search:"Hwehwɛ nkɔmmɔ",typeMsg:"Kyerɛw... API Twi!",select:"SELECTED"},
-  ga:{name:"Ga",flag:"🇬🇭",langpair:"en|ga",myMemory:"ga",search:"Taomɔ sɛɛmɔi",typeMsg:"Ŋma... API Ga!",select:"SELECTED"},
-  pidgin:{name:"Pidgin",flag:"🇬🇭",langpair:"en|en",myMemory:"en",search:"Find chats Pidgin",typeMsg:"Type... API Pidgin!",select:"SELECTED"}
+const langs={
+  fr:{name:"Français",flag:"🇫🇷",pair:"en|fr"},
+  en:{name:"English",flag:"🇬🇧",pair:"fr|en"},
+  tw:{name:"Twi (Akan)",flag:"🇬🇭",pair:"en|fr",ak:"tw"},
+  ga:{name:"Ga",flag:"🇬🇭",pair:"en|fr",ak:"ga"},
+  pidgin:{name:"Pidgin",flag:"🇬🇭",pair:"en|en"}
 };
-
-const localDict={
-  "let create official logo for it":{fr:"Créons le logo officiel pour ça",en:"Let create official logo for it",tw:"Yɛnyɛ logo a ɛyɛ fɛ mma no",ga:"Wɔfee logo ni hiɛ nɔ",pidgin:"Make we create official logo for am"},
+const dict={
+  "let create official logo for it":{fr:"Créons le logo officiel",en:"Let create official logo for it",tw:"Yɛnyɛ logo a ɛyɛ fɛ",ga:"Wɔfee logo ni hiɛ nɔ",pidgin:"Make we create logo"},
   "hello":{fr:"Bonjour",en:"Hello",tw:"Maakye",ga:"Atuu?",pidgin:"How for do?"},
-  "thank you":{fr:"Merci",en:"Thank you",tw:"Medaase",ga:"Oyiwala donnu",pidgin:"Thank you boss"},
+  "thank you":{fr:"Merci",en:"Thank you",tw:"Medaase",ga:"Oyiwala donnu",pidgin:"Thank you"},
   "how are you":{fr:"Comment vas-tu?",en:"How are you?",tw:"Wo ho te sɛn?",ga:"Te atswa?",pidgin:"How you dey?"},
+  "it been long":{fr:"Ça fait longtemps",en:"It been long",tw:"Ɛyɛ bere tenten bi a atwam.",ga:"Etsɛɛ tsɔ",pidgin:"E don tey"},
+  "it not that":{fr:"Ce n'est pas ça",en:"It not that",tw:"Ɛyi nyɛ",ga:"Jeɛ enɛ",pidgin:"No be that"},
+  "okyena":{fr:"D'accord",en:"Okay",tw:"Yoo",ga:"Okyena",pidgin:"Okay"},
   "akwaaba":{fr:"Bienvenue",en:"Welcome",tw:"Akwaaba",ga:"Atuu akwaaba",pidgin:"Welcome"},
-  "how far":{fr:"Comment ça va?",en:"How far?",tw:"Ɛte sɛn?",ga:"Ami atswa?",pidgin:"How far?"},
-  "okyena":{fr:"D'accord",en:"Okay",tw:"Yoo",ga:"Okyena",pidgin:"Okay"}
+  "how far":{fr:"Ça va?",en:"How far?",tw:"Ɛte sɛn?",ga:"Ami atswa?",pidgin:"How far?"},
+  "same here":{fr:"Moi aussi",en:"Same here",tw:"Me nso saa",ga:"Mi hu",pidgin:"Same here"}
 };
-
-let currentLang=localStorage.getItem('chale_lang')||'fr';
+let currentLang=localStorage.getItem('chale_lang')||'tw';
 let autoTranslate=localStorage.getItem('chale_auto')!=='false';
 let cache=JSON.parse(localStorage.getItem('chale_api_cache')||'{}');
-let chatsData=JSON.parse(localStorage.getItem('chale_chats_v79')||'{"Salvation":[{"text":"Let create official logo for it","time":"02:00 AM","me":false},{"text":"Hello thank you","time":"02:00 AM","me":false},{"text":"How are you","time":"02:00 AM","me":false}]}');
-let currentChat='Salvation';
+let chatsData=JSON.parse(localStorage.getItem('chale_chats_v79')||'{"Ama":[{"text":"It been long","time":"07:58 PM","me":false},{"text":"It not that","time":"07:59 PM","me":false},{"text":"Okyena","time":"08:17 PM","me":false}]}');
+let currentChat='Ama';
 
-async function translateViaAPI(text, targetCode){
-  let key=text.toLowerCase()+'_'+targetCode;
-  if(cache[key]) return cache[key];
-  // check local dict first (instant, no internet)
-  let dictEntry=localDict[text.toLowerCase().trim()];
-  if(dictEntry && dictEntry[currentLang]){cache[key]=dictEntry[currentLang]; localStorage.setItem('chale_api_cache',JSON.stringify(cache)); return dictEntry[currentLang];}
-  // For Pidgin, just keep English + pidgin slang
-  if(targetCode==='pidgin'){
-    let pid=localDict[text.toLowerCase().trim()]?.pidgin || text+' (Pidgin: How for do?)';
-    cache[key]=pid; localStorage.setItem('chale_api_cache',JSON.stringify(cache)); return pid;
-  }
+async function translateAPI(text, target){
+  let k=text.toLowerCase().trim()+'_'+target;
+  if(cache[k]) return cache[k];
+  let d=dict[text.toLowerCase().trim()];
+  if(d && d[target]){cache[k]=d[target];localStorage.setItem('chale_api_cache',JSON.stringify(cache));return d[target];}
+  if(target==='pidgin'){let p=dict[text.toLowerCase().trim()]?.pidgin||text;cache[k]=p;localStorage.setItem('chale_api_cache',JSON.stringify(cache));return p;}
   try{
-    // MyMemory FREE API — no key!
-    // Try English -> target
-    let pair=translations[currentLang].langpair || 'en|fr';
-    // MyMemory uses q= text & langpair= en|fr
+    let pair=langs[target]?.pair||'en|fr';
+    // MyMemory
     let url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${pair}`;
-    let res=await fetch(url);
-    let data=await res.json();
-    let translated=data.responseData?.translatedText;
-    if(translated && translated!==text){
-      cache[key]=translated;
-      localStorage.setItem('chale_api_cache',JSON.stringify(cache));
-      return translated;
-    }
-    // fallback: dictionary
-    return localDict[text.toLowerCase().trim()]?.[currentLang] || text;
-  }catch(e){
-    console.log('API fail',e);
-    return localDict[text.toLowerCase().trim()]?.[currentLang] || text+' [API offline — dict used]';
-  }
+    let r=await fetch(url); let j=await r.json();
+    let tr=j.responseData?.translatedText;
+    if(tr && tr.toLowerCase()!==text.toLowerCase()){cache[k]=tr;localStorage.setItem('chale_api_cache',JSON.stringify(cache));return tr;}
+    return d?.[target]||text;
+  }catch{return d?.[target]||text;}
 }
 
-function toggleAuto(){
-  autoTranslate=!autoTranslate;
-  localStorage.setItem('chale_auto', autoTranslate);
-  document.getElementById('autoSwitch').classList.toggle('on', autoTranslate);
-  document.getElementById('autoDesc').innerText=autoTranslate?'✅ API ON — Any message via free API!':'❌ OFF — No auto';
-  document.getElementById('autoStatus').innerText=`🌍 API: ${autoTranslate?'ON':'OFF'} • ${translations[currentLang].name}`;
-  renderMsgs(currentChat);
-}
-
-function selectLanguage(code){
-  currentLang=code;
-  localStorage.setItem('chale_lang', code);
-  applyLanguage();
-  renderLanguages();
-  renderMsgs(currentChat);
-  renderChatList();
-}
-
-function applyLanguage(){
-  let t=translations[currentLang];
-  document.getElementById('curLang').innerText=`${t.flag} ${t.name} • API ${autoTranslate?'ON':'OFF'}`;
-  document.getElementById('autoStatus').innerText=`🌍 API: ${autoTranslate?'ON':'OFF'} • ${t.flag} ${t.name}`;
-}
-
-function renderLanguages(){
-  let list=document.getElementById('langsList'); list.innerHTML='';
-  Object.keys(translations).forEach(code=>{
-    let t=translations[code];
-    let active=currentLang===code?' apiActive':'';
-    let card=document.createElement('div');
-    card.className='lang-card'+active;
-    card.onclick=()=>selectLanguage(code);
-    card.innerHTML=`<div><b>${t.flag} ${t.name}</b><br><small style="color:#888;font-size:11px">API pair: ${t.langpair} • ${t.search}</small><br><small style="color:#25D366;font-size:10px" id="cache_${code}">${cache['hello_'+code]?'✅ Cached':'⏳ No cache yet'}</small></div><button style="background:${currentLang===code?'#25D366':'#333'};color:white;border:none;padding:6px 12px;border-radius:12px;font-weight:bold;font-size:11px">${currentLang===code?'✅ SELECTED + API':'TAP FOR API'}</button>`;
-    list.appendChild(card);
-  });
-}
-
+function toggleAuto(){autoTranslate=!autoTranslate;localStorage.setItem('chale_auto',autoTranslate);document.getElementById('autoSwitch').classList.toggle('on',autoTranslate);renderMsgs(currentChat);}
+function selectLang(code){currentLang=code;localStorage.setItem('chale_lang',code);apply();renderLangs();renderMsgs(currentChat);renderChatList();}
+function apply(){let t=langs[currentLang];document.getElementById('curLang').innerText=`${t.flag} ${t.name} • Auto ${autoTranslate?'ON':'OFF'}`;document.getElementById('autoStatus').innerText=`${t.flag} ${t.name} • Auto ${autoTranslate?'ON':'OFF'}`;}
+function renderLangs(){let l=document.getElementById('langsList');l.innerHTML='';Object.keys(langs).forEach(c=>{let t=langs[c];let a=currentLang===c?' active':'';let div=document.createElement('div');div.className='lang-card'+a;div.onclick=()=>selectLang(c);div.innerHTML=`<div><b>${t.flag} ${t.name}</b></div><button style="background:${currentLang===c?'#25D366':'#333'};color:white;border:none;padding:6px 12px;border-radius:12px;font-weight:bold">${currentLang===c?'✅':'TAP'}</button>`;l.appendChild(div);});}
+function switchTab(t){document.getElementById('chatsTab').style.display=t==='chats'?'block':'none';document.getElementById('updatesTab').style.display=t==='updates'?'block':'none';document.getElementById('communitiesTab').style.display=t==='communities'?'block':'none';document.getElementById('callsTab').style.display=t==='calls'?'block':'none';}
+function renderChatList(){let l=document.getElementById('chatList');l.innerHTML='';Object.keys(chatsData).forEach(n=>{let last=chatsData[n].slice(-1)[0];l.innerHTML+=`<div class="chat" onclick="openChat('${n}')"><div class="avatarMini"><div class="gf"><div></div><div></div><div></div></div><span>C</span></div><div style="flex:1"><b>${n}</b><br><small style="color:gray">${last?last.text:''}</small></div></div>`;});}
 async function renderMsgs(n){
-  let b=document.getElementById('msgList'); b.innerHTML='';
-  let msgs=chatsData[n]||[];
-  for(let m of msgs){
-    let msgDiv=document.createElement('div');
-    msgDiv.className='msg me';
-    msgDiv.innerHTML=`${m.text}<span class="time">${m.time||''} ✓✓ • ${translations[currentLang].flag}</span>`;
-    b.appendChild(msgDiv);
+  let b=document.getElementById('msgList');b.innerHTML='';
+  for(let m of (chatsData[n]||[])){
+    let row=document.createElement('div');row.className='msg other';
+    if(m.me) row.className='msg me';
+    row.innerHTML=`<div class="txt">${m.text}</div><div class="time">${m.time||''} ✓✓ ${langs[currentLang].flag}</div>`;
+    b.appendChild(row);
     if(autoTranslate){
-      let transDiv=document.createElement('div');
-      transDiv.className='autoTrans loading';
-      transDiv.innerHTML=`<span class="label">🌍 API ${translations[currentLang].flag} Translating...</span>⏳ Calling MyMemory API...`;
-      msgDiv.appendChild(transDiv);
-      // async translate
-      let translated=await translateViaAPI(m.text, currentLang);
-      transDiv.classList.remove('loading');
-      transDiv.classList.add('apiLabel');
-      transDiv.innerHTML=`<span class="label">🌍 API ${translations[currentLang].flag} ${translations[currentLang].name} — Local+Foreign via FREE API</span>➡️ ${translated}<br><small style="font-size:9px;color:#888">Source: MyMemory API • Cached ✅</small>`;
+      let trDiv=document.createElement('div');trDiv.className='cleanTrans loading';trDiv.innerText='⏳ Translating...';
+      row.appendChild(trDiv);
+      let tr=await translateAPI(m.text,currentLang);
+      trDiv.classList.remove('loading');
+      trDiv.innerHTML=`<span class="flag">${langs[currentLang].flag}</span><span class="tr">➡️ ${tr}</span>`;
     }
   }
   b.scrollTop=b.scrollHeight;
 }
-
-function switchTab(t){document.getElementById('chatsTab').style.display=t==='chats'?'block':'none';document.getElementById('updatesTab').style.display=t==='updates'?'block':'none';document.getElementById('communitiesTab').style.display=t==='communities'?'block':'none';document.getElementById('callsTab').style.display=t==='calls'?'block':'none';document.querySelectorAll('.navItem').forEach(el=>el.classList.remove('active'));document.getElementById('nav'+t.charAt(0).toUpperCase()+t.slice(1)).classList.add('active');}
-function renderChatList(){let l=document.getElementById('chatList');l.innerHTML='';Object.keys(chatsData).forEach(n=>{let last=chatsData[n].slice(-1)[0];let txt=last?last.text:'';if(txt.length>28)txt=txt.slice(0,28)+'...';l.innerHTML+=`<div class="chat" onclick="openChat('${n}')"><div class="avatarMini"><div class="gf"><div></div><div></div><div></div></div><span>C</span></div><div style="flex:1"><b>${n}</b><br><small style="color:gray">${txt}</small><br><small style="color:#25D366;font-size:9px">🌍 API ${translations[currentLang].flag} auto</small></div></div>`;});}
 function openChat(n){currentChat=n;document.getElementById('chatWindow').classList.add('show');document.getElementById('chatWindow').style.display='flex';document.getElementById('chatName').innerText=n;renderMsgs(n);}
 function closeChat(){document.getElementById('chatWindow').classList.remove('show');document.getElementById('chatWindow').style.display='none';}
 function sendMsg(){let i=document.getElementById('msgInput');let t=i.value.trim();if(!t)return;if(!chatsData[currentChat])chatsData[currentChat]=[];chatsData[currentChat].push({text:t,time:new Date().toLocaleTimeString(),me:true});localStorage.setItem('chale_chats_v79',JSON.stringify(chatsData));i.value='';renderMsgs(currentChat);renderChatList();}
 function quickSend(){let q=document.getElementById('quickInput');if(q.value.trim()){document.getElementById('msgInput').value=q.value;openChat(currentChat);sendMsg();q.value='';}}
 function openSettings(){document.getElementById('settingsPage').style.display='block';}
 function closeSettings(){document.getElementById('settingsPage').style.display='none';}
-function openLanguage(){document.getElementById('settingsPage').style.display='none';document.getElementById('languagePage').style.display='block';renderLanguages();}
+function openLanguage(){document.getElementById('settingsPage').style.display='none';document.getElementById('languagePage').style.display='block';renderLangs();}
 function closeLanguage(){document.getElementById('languagePage').style.display='none';document.getElementById('settingsPage').style.display='block';}
 function openGroupPage(){document.getElementById('groupPage').style.display='block';}
 function closeGroupPage(){document.getElementById('groupPage').style.display='none';}
 function createGroup(){let n=document.getElementById('groupNameInput').value.trim();if(!n)return;if(!chatsData[n])chatsData[n]=[];localStorage.setItem('chale_chats_v79',JSON.stringify(chatsData));closeGroupPage();renderChatList();}
-function closeProfile(){document.getElementById('profilePage').style.display='none';document.getElementById('settingsPage').style.display='block';}
-function hideInstall(){document.getElementById('installBar').classList.remove('show');}
-async function testAPI(){
-  document.getElementById('apiStatus').innerText='🧪 Testing API...';
-  try{
-    let r=await fetch('https://api.mymemory.translated.net/get?q=Hello%20world&langpair=en|fr');
-    let d=await r.json();
-    document.getElementById('apiStatus').innerText='✅ API WORKS! Response: '+d.responseData.translatedText+' — FREE, no key!';
-  }catch(e){document.getElementById('apiStatus').innerText='❌ API offline — check internet. Dict fallback active.';}
-}
-function clearCache(){cache={};localStorage.setItem('chale_api_cache','{}');document.getElementById('apiStatus').innerText='🗑️ Cache cleared!';renderLanguages();}
-window.onload=()=>{applyLanguage();renderChatList();renderLanguages();openChat(currentChat);document.getElementById('installBar').classList.add('show');setTimeout(()=>hideInstall(),5000);}
+window.onload=()=>{apply();renderChatList();renderLangs();openChat(currentChat);}
 </script>
 </body>
-                                                                                                                                                                                                                         </html>
+                                                                                                </html>
