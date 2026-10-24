@@ -254,7 +254,10 @@ function clearStore(){toast('📦 Storage — 1.2GB used — Manage: Clear image
 function renderLangs(){let l=document.getElementById('langList');l.innerHTML='';Object.keys(langs).forEach(k=>{let active=curLang===k;let div=document.createElement('div');div.className='row';div.style.background=active?'#2a3942':'';div.onclick=()=>{curLang=k;localStorage.setItem('lang',k);document.getElementById('curLang').innerText=langs[k].flag+' '+langs[k].name;document.getElementById('transStat').innerText='ON • '+langs[k].name+' • Real';renderLangs();renderMsgs();toast(langs[k].flag+' '+langs[k].name+' — Real');};div.innerHTML=`<div><b>${langs[k].flag} ${langs[k].name}</b><br><small style='color:#8696a0'>${k} • Real</small></div><span style='color:${active?'#00a884':'transparent'}'>✓</span>`;l.appendChild(div);});}
 function openProfile(){toast('Profile — Change name/about — Tap rows — Working');}
 
-window.onload=()=>{
+window.onload=()=>{255  function openProfile(){...}
+256  
+      👉 PASTE HERE — V140 PATCH
+257  window.onload=()=>{
  renderChats();
  document.getElementById('curLang').innerText=langs[curLang].flag+' '+langs[curLang].name;
  let sws=['read','sec','enter','noti','groupnoti'];
@@ -268,4 +271,33 @@ document.getElementById('msgOptions').onclick=e=>{if(e.target.id==='msgOptions')
 document.getElementById('delConfirm').onclick=e=>{if(e.target.id==='delConfirm')closeDelConfirm();};
 document.getElementById('attach').onclick=e=>{if(e.target.id==='attach')closeAttach();};
 document.getElementById('add').onclick=e=>{if(e.target.id==='add')closeAdd();};
-</script></body></html>
+</script>// V140 UNSTUCK PATCH - PASTE AT VERY BOTTOM
+function forceCloseAll(){
+ document.querySelectorAll('.overlay, .modal').forEach(el=>{
+  el.style.display='none'; el.classList.remove('show');
+ });
+}
+function closeSet(){ forceCloseAll(); document.querySelector('.main').style.display='block'; toast('Settings closed — Unstuck ✅'); }
+function closeLang(){ document.getElementById('lang').style.display='none'; document.getElementById('settings').style.display='flex'; document.getElementById('settings').classList.add('show'); }
+function closeAbout(){ document.getElementById('about').style.display='none'; }
+function closeHelp(){ document.getElementById('help').style.display='none'; }
+function closeAdd(){ document.getElementById('add').style.display='none'; document.getElementById('add').classList.remove('show'); }
+function closeAttach(){ document.getElementById('attach').style.display='none'; document.getElementById('attach').classList.remove('show'); }
+function closeMsgOpt(){ document.getElementById('msgOptions').style.display='none'; }
+function closeDelConfirm(){ document.getElementById('delConfirm').style.display='none'; }
+window.addEventListener('keydown', e=>{ if(e.key==='Escape') forceCloseAll(); });
+document.addEventListener('click', e=>{
+ if(e.target.classList.contains('overlay') || e.target.classList.contains('modal')) forceCloseAll();
+});
+// FIX SCROLL LOCK
+document.querySelectorAll('.overlay .content').forEach(c=>{ c.style.overflowY='auto'; c.style.webkitOverflowScrolling='touch'; c.style.height='calc(100vh - 60px)'; });
+// FIX LOCALSTORAGE FULL STUCK
+try{
+ let chats=JSON.parse(localStorage.getItem('chats_v139')||'{}');
+ if(JSON.stringify(chats).length > 4000000){
+   localStorage.removeItem('chats_v139');
+   localStorage.setItem('chats_v139', JSON.stringify({Ama:[{text:'Hey wat dey happened',time:'10:06 PM',me:true}]}));
+   toast('Storage cleared — Unstuck — Reloading');
+   setTimeout(()=>location.reload(),1000);
+ }
+}catch(e){ localStorage.clear(); location.reload(); }</body></html>
