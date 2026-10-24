@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CHALE CHAT V136 TRANSLATION LIVE</title>
+<title>CHALE CHAT V137 DELETE REPLY</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
 body{background:#111b21;color:#e9edef;height:100vh;overflow:hidden}
@@ -47,16 +47,27 @@ body{background:#111b21;color:#e9edef;height:100vh;overflow:hidden}
 #chatWin{position:fixed;top:0;left:0;width:100%;height:100%;background:#0b141a;z-index:998;display:none;flex-direction:column}
 #chatWin.show{display:flex}
 .msgList{flex:1;padding:12px;display:flex;flex-direction:column;gap:4px;overflow-y:auto}
-.msg{max-width:80%;padding:6px 8px;border-radius:8px;font-size:14.2px;line-height:1.3;position:relative}
+.msg{max-width:80%;padding:6px 8px;border-radius:8px;font-size:14.2px;line-height:1.3;position:relative;cursor:pointer;user-select:none}
 .msg.me{align-self:flex-end;background:#005c4b;border-top-right-radius:0}
 .msg.other{align-self:flex-start;background:#202c33;border-top-left-radius:0}
+.msg.selected{outline:2px solid #00a884;transform:scale(0.98)}
+.replyBox{margin:-6px -8px 6px -8px;padding:6px 8px;border-left:4px solid #00a884;background:rgba(0,0,0,0.2);border-radius:4px 8px 4px;font-size:12px}
+.replyBox b{color:#00a884;font-size:11px;display:block}
+.replyBox small{color:#8696a0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
 .trans{margin-top:8px;background:#0a332c;padding:8px 10px;border-radius:8px;border-left:3px solid #00a884;font-size:12px;color:#d1f4cc;line-height:1.4}
 .transHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-weight:600;font-size:11px}
 .transLang{font-size:9px;padding:2px 7px;border-radius:10px;font-weight:800}
 .transLang.offline{background:#FFD700;color:#111b21}
 .transLang.live{background:#00a884;color:#111b21}
 .transLang.pidgin{background:#FCD116;color:#111b21}
-.inputBar{background:#202c33;padding:6px 8px;display:flex;gap:6px;align-items:flex-end}
+.replyPreview{position:absolute;bottom:52px;left:0;width:100%;background:#202c33;border-top:1px solid #2a3942;padding:8px 12px;display:none;align-items:center;gap:12px;z-index:5}
+.replyPreview.show{display:flex}
+.replyPreview .bar{width:4px;height:36px;background:#00a884;border-radius:2px;flex-shrink:0}
+.replyPreview .txt{flex:1;min-width:0}
+.replyPreview .txt b{color:#00a884;font-size:12px}
+.replyPreview .txt small{display:block;color:#8696a0;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.replyPreview .close{width:32px;height:32px;border-radius:50%;background:#2a3942;border:none;color:#aebac1;font-size:18px;display:flex;align-items:center;justify-content:center}
+.inputBar{background:#202c33;padding:6px 8px;display:flex;gap:6px;align-items:flex-end;position:relative}
 .inputBar .box{flex:1;background:#2a3942;border-radius:20px;padding:8px 12px;display:flex}
 .inputBar textarea{flex:1;background:transparent;border:none;color:#fff;outline:none;resize:none;max-height:100px}
 .mic{width:36px;height:36px;border-radius:50%;background:#00a884;border:none;color:#111b21;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -80,6 +91,13 @@ body{background:#111b21;color:#e9edef;height:100vh;overflow:hidden}
 .voice .play{width:36px;height:36px;border-radius:50%;background:#00a884;color:#111b21;display:flex;align-items:center;justify-content:center}
 .wave{flex:1;display:flex;gap:2px;align-items:center;height:32px}
 .wave span{width:3px;background:#00a884;border-radius:2px}
+.optRow{padding:18px 20px;display:flex;gap:16px;align-items:center;border-bottom:1px solid #111b21;cursor:pointer}
+.optRow:active{background:#2a3942}
+.optRow .ic{width:40px;height:40px;border-radius:50%;background:#2a3942;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.optRow b{font-weight:400;color:#e9edef}
+.optRow small{color:#8696a0;font-size:12px}
+.del{color:#f15c6d}
+.del .ic{background:rgba(241,92,109,0.15);color:#f15c6d}
 </style>
 </head>
 <body>
@@ -87,7 +105,7 @@ body{background:#111b21;color:#e9edef;height:100vh;overflow:hidden}
 <div class="header"><div style="display:flex;gap:10px;align-items:center;font-weight:800"><div class="brand"><div class="gf"><div></div><div></div><div></div></div><b>C</b></div> CHALE CHAT</div><button onclick="openSet()" style="background:none;border:none;color:#aebac1;font-size:22px">⚙️</button></div>
 
 <div class="main">
-<div id="tabChats" class="tab active"><div class="scroll" id="scrollMain"><div id="list"></div><div class="footer"><div style="color:#667781;font-size:12px">🔒 End-to-end encrypted</div><div class="pow">⚡ POWERED BY <b>SALVATION TECH-GHANA</b> 🇬🇭</div><div style="color:#344049;font-size:9px;margin-top:10px">V136 • Translation LIVE • Local + Foreign API</div></div></div></div>
+<div id="tabChats" class="tab active"><div class="scroll" id="scrollMain"><div id="list"></div><div class="footer"><div style="color:#667781;font-size:12px">🔒 End-to-end encrypted</div><div class="pow">⚡ POWERED BY <b>SALVATION TECH-GHANA</b> 🇬🇭</div><div style="color:#344049;font-size:9px;margin-top:10px">V137 • Reply + Delete • Translation Live</div></div></div></div>
 <div id="tabCalls" class="tab"><div class="scroll"><div style="padding:12px 16px;display:flex;gap:12px;align-items:center;background:#202c33" onclick="createLink()"><div style="width:46px;height:46px;border-radius:50%;background:#00a884;display:flex;align-items:center;justify-content:center">🔗</div><div><b style="color:#00a884;font-weight:400">Create call link</b><br><small style="color:#8696a0">Share link for call</small></div></div><div id="callList" style="padding:20px;text-align:center;color:#8696a0">No recent calls</div><div class="footer"><div class="pow">⚡ POWERED BY SALVATION TECH-GHANA 🇬🇭</div></div></div></div>
 </div>
 
@@ -95,21 +113,56 @@ body{background:#111b21;color:#e9edef;height:100vh;overflow:hidden}
 <div class="nav"><div class="navItem active" id="navC" onclick="switchTab('Chats')"><span>💬</span><small>Chats</small></div><div class="navItem" id="navCa" onclick="switchTab('Calls')"><span>📞</span><small>Calls</small></div></div>
 <button class="fab" onclick="openAdd()">+</button>
 
-<div id="chatWin"><div class="head"><button onclick="closeChat()" style="background:none;border:none;color:#fff;font-size:20px;width:32px">←</button><div class="avatar" id="chatAv" style="width:36px;height:36px"><b>C</b></div><div style="flex:1" onclick="openInfo()"><b id="chatName">Ama</b><br><small id="chatStat" style="color:#8696a0;font-size:12px">tap for info • Translation ON</small></div><button onclick="voiceCall()" style="background:none;border:none;font-size:20px">📞</button><button onclick="videoCall()" style="background:none;border:none;font-size:20px">📹</button><button onclick="toggleTrans()" id="transBtn" style="background:#00a884;border:none;color:#111b21;font-size:10px;padding:6px 10px;border-radius:12px;font-weight:700">🌍 ON</button></div><div class="msgList" id="msgList"></div><div class="inputBar"><button onclick="openAttach()" style="background:none;border:none;font-size:22px">📎</button><div class="box"><textarea id="msgInput" placeholder="Message" rows="1" oninput="autoR(this)"></textarea></div><button class="mic" id="micBtn" onmousedown="startRec(event)" onmouseup="stopRec(event)" ontouchstart="startRec(event)" ontouchend="stopRec(event)">🎤</button><button class="mic" id="sendBtn" style="display:none" onclick="send()">➤</button></div></div>
+<div id="chatWin">
+<div class="head"><button onclick="closeChat()" style="background:none;border:none;color:#fff;font-size:20px;width:32px">←</button><div class="avatar" id="chatAv" style="width:36px;height:36px"><b>C</b></div><div style="flex:1" onclick="openInfo()"><b id="chatName">Ama</b><br><small id="chatStat" style="color:#8696a0;font-size:12px">tap for info • Translation ON</small></div><button onclick="voiceCall()" style="background:none;border:none;font-size:20px">📞</button><button onclick="videoCall()" style="background:none;border:none;font-size:20px">📹</button><button onclick="toggleTrans()" id="transBtn" style="background:#00a884;border:none;color:#111b21;font-size:10px;padding:6px 10px;border-radius:12px;font-weight:700">🌍 ON</button></div>
+<div class="msgList" id="msgList"></div>
+
+<div class="replyPreview" id="replyPreview">
+<div class="bar"></div>
+<div class="txt"><b id="replyName">Ama</b><small id="replyText">An we have it done</small></div>
+<button class="close" onclick="cancelReply()">✕</button>
+</div>
+
+<div class="inputBar"><button onclick="openAttach()" style="background:none;border:none;font-size:22px">📎</button><div class="box"><textarea id="msgInput" placeholder="Message" rows="1" oninput="autoR(this)"></textarea></div><button class="mic" id="micBtn" onmousedown="startRec(event)" onmouseup="stopRec(event)" ontouchstart="startRec(event)" ontouchend="stopRec(event)">🎤</button><button class="mic" id="sendBtn" style="display:none" onclick="send()">➤</button></div>
+</div>
+
+<!-- MESSAGE OPTIONS — REPLY DELETE COPY -->
+<div id="msgOptions" class="modal"><div class="sheet">
+<div style="width:40px;height:4px;background:#344049;border-radius:2px;margin:12px auto 0"></div>
+<div style="padding:16px 20px"><b id="optTitle">Message options</b><br><small id="optSub" style="color:#8696a0">Choose action</small></div>
+<div>
+<div class="optRow" onclick="doReply()"><div class="ic">↩️</div><div><b>Reply</b><br><small>Reply to this message</small></div></div>
+<div class="optRow" onclick="doCopy()"><div class="ic">📋</div><div><b>Copy</b><br><small>Copy text to clipboard</small></div></div>
+<div class="optRow" onclick="doForward()"><div class="ic">➡️</div><div><b>Forward</b><br><small>Forward to another chat</small></div></div>
+<div class="optRow" onclick="doInfo()"><div class="ic">ℹ️</div><div><b>Info</b><br><small>Message info</small></div></div>
+<div class="optRow del" onclick="doDelete()"><div class="ic">🗑️</div><div><b style="color:#f15c6d">Delete</b><br><small>Delete this message</small></div></div>
+</div>
+<div style="padding:16px 20px"><button onclick="closeMsgOpt()" style="width:100%;padding:14px;background:#2a3942;border:none;border-radius:8px;color:#fff">Cancel</button></div>
+</div></div>
+
+<div id="delConfirm" class="modal"><div class="sheet">
+<div style="width:40px;height:4px;background:#344049;border-radius:2px;margin:12px auto 0"></div>
+<div style="padding:20px"><b>Delete message?</b><br><small style="color:#8696a0;display:block;margin-top:8px">This will delete the message. Choose how to delete.</small></div>
+<div style="padding:0 20px;display:flex;flex-direction:column;gap:10px">
+<button onclick="confirmDelete('me')" style="padding:14px;background:#2a3942;border:none;border-radius:8px;color:#fff;text-align:left"><b>🗑️ Delete for me</b><br><small style="color:#8696a0">Delete from your chat only</small></button>
+<button onclick="confirmDelete('everyone')" style="padding:14px;background:rgba(241,92,109,0.15);border:1px solid #f15c6d;border-radius:8px;color:#f15c6d;text-align:left"><b>🗑️ Delete for everyone</b><br><small>This message will be deleted for everyone in this chat</small></button>
+</div>
+<div style="padding:16px 20px"><button onclick="closeDelConfirm()" style="width:100%;padding:14px;background:#2a3942;border:none;border-radius:8px;color:#fff">Cancel</button></div>
+</div></div>
 
 <div id="attach" class="modal"><div class="sheet"><div style="padding:20px 20px 8px"><b>Share</b><br><small style="color:#8696a0">Camera, Gallery, Document, Audio, Location, Contact, Video Note, Poll</small></div><div class="grid"><div class="gridItem" onclick="pickCam()"><div class="ic" style="background:#0eabf4">📷</div><small>Camera</small></div><div class="gridItem" onclick="pickGal()"><div class="ic" style="background:#bf59cf">🖼️</div><small>Gallery</small></div><div class="gridItem" onclick="pickDoc()"><div class="ic" style="background:#5f66cd">📄</div><small>Document</small></div><div class="gridItem" onclick="pickAud()"><div class="ic" style="background:#f57c00">🎵</div><small>Audio</small></div><div class="gridItem" onclick="pickLoc()"><div class="ic" style="background:#1ea952">📍</div><small>Location</small></div><div class="gridItem" onclick="pickCon()"><div class="ic" style="background:#0eabf4">👤</div><small>Contact</small></div><div class="gridItem" onclick="pickVNote()"><div class="ic" style="background:#f15c6d">🎥</div><small>Video Note</small></div><div class="gridItem" onclick="pickPoll()"><div class="ic" style="background:#00a884">📊</div><small>Poll</small></div></div><div style="padding:0 20px 20px"><button onclick="closeAttach()" style="width:100%;padding:12px;border-radius:8px;border:none;background:#2a3942;color:#fff">Cancel</button></div></div></div>
 
 <div id="call" class="call"><div class="callVid"><video id="localV" autoplay muted playsinline style="display:none"></video><div id="callAvWrap" style="display:flex;flex-direction:column;align-items:center;gap:16px"><div class="avatar" id="callAv" style="width:120px;height:120px;border-width:4px"><b style="font-size:48px">A</b></div><b id="callName" style="color:#fff;font-size:22px">Ama</b><small id="callTimer" style="color:#8696a0">Calling...</small></div></div><div class="callCtrl"><button class="callBtn" style="background:#2a3942;color:#fff" id="muteBtn" onclick="togMute()">🎤</button><button class="callBtn" style="background:#2a3942;color:#fff" id="vidBtn" onclick="togVid()">📹</button><button class="callBtn end" onclick="endCall()">📞</button><button class="callBtn" style="background:#2a3942;color:#fff" onclick="togSpk()">🔊</button></div></div>
 
-<div id="settings" class="overlay"><div class="head"><button onclick="closeSet()" style="background:none;border:none;color:#fff;font-size:20px">←</button><b>Settings</b></div><div class="content"><div style="padding:16px;display:flex;gap:16px;align-items:center;background:#202c33;margin-bottom:8px" onclick="openProfile()"><div style="position:relative"><div class="avatar" id="setAv" style="width:64px;height:64px"><b>S</b></div><div style="position:absolute;bottom:0;right:0;width:20px;height:20px;background:#00a884;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px">📷</div></div><div style="flex:1"><b id="setName">Salvation</b><br><small id="setAbout" style="color:#8696a0">Hey there! I'm using Chale Chat 🇬🇭</small><br><small style="color:#00a884;font-size:11px">Tap to change DP</small></div><span>›</span></div><div class="card"><div class="row" onclick="openLang()"><div><b>App language</b><br><small id="curLang" style="color:#8696a0">English (phone)</small></div><span>›</span></div><div class="row"><div><b>Translation</b><br><small id="transStat" style="color:#8696a0">English • Offline + Live API • Never stops</small></div><div class="switch on" id="swTrans" onclick="toggleTrans()"></div></div><div class="row"><div><b>Live Translation API</b><br><small id="apiStat" style="color:#8696a0">ON • Local + Foreign • MyMemory Live</small></div><div class="switch on" id="swApi" onclick="togApi()"></div></div></div><div class="section">Support</div><div class="card"><div class="row" onclick="openAbout()"><div><b>About</b><br><small style="color:#8696a0">V136 Translation Live</small></div><span>›</span></div><div class="row" onclick="openHelp()"><div><b>Help centre</b><br><small style="color:#8696a0">Translation help</small></div><span>›</span></div></div><div class="footer"><div class="pow">⚡ POWERED BY <b>SALVATION TECH-GHANA</b> 🇬🇭</div></div></div></div>
+<div id="settings" class="overlay"><div class="head"><button onclick="closeSet()" style="background:none;border:none;color:#fff;font-size:20px">←</button><b>Settings</b></div><div class="content"><div style="padding:16px;display:flex;gap:16px;align-items:center;background:#202c33;margin-bottom:8px" onclick="openProfile()"><div class="avatar" id="setAv" style="width:64px;height:64px"><b>S</b></div><div style="flex:1"><b id="setName">Salvation</b><br><small id="setAbout" style="color:#8696a0">Hey there! I'm using Chale Chat 🇬🇭</small></div><span>›</span></div><div class="card"><div class="row" onclick="openLang()"><div><b>App language</b><br><small id="curLang" style="color:#8696a0">English</small></div><span>›</span></div><div class="row"><div><b>Translation</b><br><small id="transStat" style="color:#8696a0">Ewe • Offline + Live</small></div><div class="switch on" id="swTrans" onclick="toggleTrans()"></div></div></div><div class="footer"><div class="pow">⚡ POWERED BY <b>SALVATION TECH-GHANA</b> 🇬🇭</div></div></div></div>
 
-<div id="profile" class="overlay"><div class="head"><button onclick="closeProfile()" style="background:none;border:none;color:#fff;font-size:20px">←</button><b>Profile</b></div><div class="content"><div style="padding:24px;display:flex;flex-direction:column;align-items:center;background:#202c33;margin-bottom:8px"><div style="position:relative" onclick="changeDP()"><div class="avatar" id="profAv" style="width:120px;height:120px;border-width:4px"><b style="font-size:56px">S</b></div><div style="position:absolute;bottom:4px;right:4px;width:32px;height:32px;background:#00a884;border-radius:50%;display:flex;align-items:center;justify-content:center">📷</div></div><div style="display:flex;gap:12px;margin-top:16px"><button onclick="changeDP()" style="background:#00a884;color:#111b21;border:none;padding:8px 16px;border-radius:20px">📷 Gallery</button><button onclick="takeDP()" style="background:#2a3942;color:#fff;border:none;padding:8px 16px;border-radius:20px">📸 Camera</button><button onclick="removeDP()" style="background:#2a3942;color:#f15c6d;border:none;padding:8px 16px;border-radius:20px">Remove</button></div></div><div class="card"><div class="row" onclick="editName()"><div><small style="color:#00a884">Name</small><br><b id="profName">Salvation</b></div><span>✏️</span></div><div class="row" onclick="editAbout()"><div><small style="color:#00a884">About</small><br><b id="profAbout">Hey there! I'm using Chale Chat 🇬🇭</b></div><span>✏️</span></div></div></div></div>
+<div id="profile" class="overlay"><div class="head"><button onclick="closeProfile()" style="background:none;border:none;color:#fff;font-size:20px">←</button><b>Profile</b></div><div class="content"><div style="padding:24px;display:flex;flex-direction:column;align-items:center;background:#202c33;margin-bottom:8px"><div class="avatar" id="profAv" style="width:120px;height:120px;border-width:4px"><b style="font-size:56px">S</b></div><div style="display:flex;gap:12px;margin-top:16px"><button onclick="changeDP()" style="background:#00a884;color:#111b21;border:none;padding:8px 16px;border-radius:20px">📷 Gallery</button><button onclick="takeDP()" style="background:#2a3942;color:#fff;border:none;padding:8px 16px;border-radius:20px">📸 Camera</button><button onclick="removeDP()" style="background:#2a3942;color:#f15c6d;border:none;padding:8px 16px;border-radius:20px">Remove</button></div></div><div class="card"><div class="row" onclick="editName()"><div><small style="color:#00a884">Name</small><br><b id="profName">Salvation</b></div><span>✏️</span></div></div></div></div>
 
-<div id="about" class="overlay"><div class="head"><button onclick="closeAbout()" style="background:none;border:none;color:#fff;font-size:20px">←</button><b>About</b></div><div class="content"><div style="text-align:center;padding:32px 20px;background:#202c33"><div class="brand" style="margin:0 auto;width:64px;height:64px;border-radius:14px"><div class="gf"><div></div><div></div><div></div></div><b>C</b></div><div style="margin-top:12px;font-weight:700;font-size:22px">CHALE <span style="color:#FCD116">CHAT</span></div><div style="color:#00a884;font-size:13px">Translation LIVE 🇬🇭🌍</div><div style="color:#8696a0;font-size:12px;margin-top:8px">V136 • Local Twi Ga Ewe + Foreign French Spanish • Live API</div></div><div class="card"><div class="row"><div><b>Offline Dict</b><br><small style="color:#8696a0">Pidgin fix + 50+ phrases • Never stops</small></div></div><div class="row"><div><b>Live API</b><br><small style="color:#8696a0">MyMemory + Libre • Auto fallback offline</small></div></div></div><div class="footer"><div class="pow">⚡ POWERED BY SALVATION TECH-GHANA 🇬🇭</div></div></div></div>
+<div id="about" class="overlay"><div class="head"><button onclick="closeAbout()" style="background:none;border:none;color:#fff;font-size:20px">←</button><b>About</b></div><div class="content"><div style="text-align:center;padding:32px 20px;background:#202c33"><div class="brand" style="margin:0 auto;width:64px;height:64px;border-radius:14px"><div class="gf"><div></div><div></div><div></div></div><b>C</b></div><div style="margin-top:12px;font-weight:700">CHALE CHAT</div><div style="color:#00a884;font-size:13px">V137 Reply + Delete 🇬🇭</div></div><div class="footer"><div class="pow">⚡ POWERED BY SALVATION TECH-GHANA 🇬🇭</div></div></div></div>
 
-<div id="help" class="overlay"><div class="head"><button onclick="closeHelp()" style="background:none;border:none;color:#fff;font-size:20px">←</button><b>Help centre</b></div><div class="content"><div class="card"><div class="row" onclick="toggleFaq('f1')"><div><b>Why translation no dey work?</b><br><small style="color:#8696a0">Fix for Hey wat dey happened</small></div><span id="f1a">›</span></div><div id="f1" style="display:none;padding:0 16px 16px;background:#111b21"><small style="color:#8696a0">V136 fix: Before we hide when text same. Now we ALWAYS show translation box. Pidgin "Hey wat dey happened" → normalized to "what happened" → Shows: 🌍 Ga Atɛŋ ni ba? / Twi Dɛn na asi? / French Que s'est-il passé? Plus live API. Toggle 🌍 ON in chat header + Settings → Translation ON. If offline → Yellow OFFLINE badge. If online → Green LIVE badge.</small></div><div class="row" onclick="toggleFaq('f2')"><div><b>How does live API work?</b><br><small style="color:#8696a0">Local + Foreign</small></div><span id="f2a">›</span></div><div id="f2" style="display:none;padding:0 16px 16px;background:#111b21"><small style="color:#8696a0">1. Offline dict first — Pidgin fix, Twi, Ga, Ewe, Hausa, Fante, Dagbani, French etc. Fast, never stops, no internet.<br><br>2. If not in dict + internet + Live API ON → Calls MyMemory API live: https://api.mymemory.translated.net/get?q=TEXT&langpair=en|fr — Returns live translation. Badge GREEN LIVE.<br><br>3. If offline or API fail → Fallback to offline original with YELLOW OFFLINE badge.<br><br>Supports: Ghana 7 + Global 11 = 18 languages. All live.</small></div></div><div class="footer"><div class="pow">⚡ POWERED BY SALVATION TECH-GHANA 🇬🇭</div></div></div></div>
+<div id="help" class="overlay"><div class="head"><button onclick="closeHelp()" style="background:none;border:none;color:#fff;font-size:20px">←</button><b>Help centre</b></div><div class="content"><div class="card"><div class="row" onclick="toggleFaq('f1')"><div><b>How to reply?</b><br><small style="color:#8696a0">Tap message → Reply</small></div><span id="f1a">›</span></div><div id="f1" style="display:none;padding:0 16px 16px;background:#111b21"><small style="color:#8696a0">Long press any message → Tap Reply → Type above preview shows "Replying to: ..." → Send → Shows quoted reply. Or swipe right on message to quick reply.</small></div><div class="row" onclick="toggleFaq('f2')"><div><b>How to delete?</b><br><small style="color:#8696a0">Tap → Delete</small></div><span id="f2a">›</span></div><div id="f2" style="display:none;padding:0 16px 16px;background:#111b21"><small style="color:#8696a0">Long press message → Delete → Choose Delete for me (only you) or Delete for everyone (both sides). Works for text, voice notes, images, videos.</small></div></div><div class="footer"><div class="pow">⚡ POWERED BY SALVATION TECH-GHANA 🇬🇭</div></div></div></div>
 
-<div id="lang" class="overlay"><div class="head"><button onclick="closeLang()" style="background:none;border:none;color:#fff;font-size:20px">←</button><b>App language</b></div><div class="content"><div style="padding:12px"><input id="langSearch" placeholder="Search language" style="width:100%;padding:12px;background:#202c33;border:none;border-radius:8px;color:#fff;outline:none" oninput="renderLangs(this.value)"></div><div id="langList"></div><div class="footer"><div class="pow">⚡ POWERED BY SALVATION TECH-GHANA 🇬🇭</div></div></div></div>
+<div id="lang" class="overlay"><div class="head"><button onclick="closeLang()" style="background:none;border:none;color:#fff;font-size:20px">←</button><b>App language</b></div><div class="content"><div style="padding:12px"><input id="langSearch" placeholder="Search" style="width:100%;padding:12px;background:#202c33;border:none;border-radius:8px;color:#fff;outline:none" oninput="renderLangs(this.value)"></div><div id="langList"></div></div></div>
 
 <div id="add" class="modal"><div class="sheet"><div style="padding:20px"><b>New chat</b><br><small style="color:#8696a0">Pick from phone</small></div><div style="padding:0 20px"><button onclick="pickPhone()" style="width:100%;padding:12px;background:#00a884;border:none;border-radius:8px;font-weight:600">📱 Pick from phone</button><div style="margin-top:12px"><small style="color:#00a884">Name *</small><input id="newName" style="width:100%;padding:12px;background:#111b21;border:1px solid #2a3942;border-radius:8px;color:#fff;margin-top:4px"></div><div style="margin-top:12px"><small style="color:#00a884">Phone *</small><input id="newPhone" style="width:100%;padding:12px;background:#111b21;border:1px solid #2a3942;border-radius:8px;color:#fff;margin-top:4px"></div></div><div style="padding:16px 20px;display:flex;gap:12px"><button onclick="closeAdd()" style="flex:1;padding:12px;background:#2a3942;border:none;border-radius:8px;color:#fff">Cancel</button><button onclick="saveContact()" style="flex:1;padding:12px;background:#00a884;border:none;border-radius:8px;font-weight:600">Add</button></div></div></div>
 
@@ -122,112 +175,148 @@ body{background:#111b21;color:#e9edef;height:100vh;overflow:hidden}
 <div class="toast" id="toast"></div>
 
 <script>
-const langs={
-tw:{name:"Twi (Akan)",flag:"🇬🇭",api:"ak",my:"tw"},ga:{name:"Ga",flag:"🇬🇭",api:"ga",my:"ga"},
-ewe:{name:"Ewe",flag:"🇬🇭",api:"ee",my:"ee"},dagbani:{name:"Dagbani",flag:"🇬🇭",api:"dag",my:"dag"},
-hausa:{name:"Hausa",flag:"🇬🇭",api:"ha",my:"ha"},fante:{name:"Fante",flag:"🇬🇭",api:"fat",my:"fat"},
-pidgin:{name:"Pidgin",flag:"🇬🇭",api:"pcm",my:"en"},
-fr:{name:"Français",flag:"🇫🇷",api:"fr",my:"fr"},en:{name:"English",flag:"🇬🇧",api:"en",my:"en"},
-es:{name:"Español",flag:"🇪🇸",api:"es",my:"es"},pt:{name:"Português",flag:"🇵🇹",api:"pt",my:"pt"},
-ar:{name:"Arabic",flag:"🇸🇦",api:"ar",my:"ar"},zh:{name:"Chinese",flag:"🇨🇳",api:"zh",my:"zh"},
-yo:{name:"Yoruba",flag:"🇳🇬",api:"yo",my:"yo"},ig:{name:"Igbo",flag:"🇳🇬",api:"ig",my:"ig"},
-zu:{name:"Zulu",flag:"🇿🇦",api:"zu",my:"zu"},sw:{name:"Swahili",flag:"🇹🇿",api:"sw",my:"sw"},am:{name:"Amharic",flag:"🇪🇹",api:"am",my:"am"}
-};
-const pidginMap={"hey wat dey happened":"what happened","hey wat dey happen":"what is happening","wat dey happened":"what happened","wat dey happen":"what is happening","wetin dey happen":"what is happening","wetin happen":"what happened","how far":"how are you","an we have it done":"and we have it done","we have it done":"we have done it","u dey":"you are","i dey":"i am","make we":"let us","how for do":"how to do"};
+const langs={tw:{name:"Twi",flag:"🇬🇭"},ga:{name:"Ga",flag:"🇬🇭"},ewe:{name:"Ewe",flag:"🇬🇭"},dagbani:{name:"Dagbani",flag:"🇬🇭"},hausa:{name:"Hausa",flag:"🇬🇭"},fante:{name:"Fante",flag:"🇬🇭"},pidgin:{name:"Pidgin",flag:"🇬🇭"},fr:{name:"Français",flag:"🇫🇷"},en:{name:"English",flag:"🇬🇧"},es:{name:"Español",flag:"🇪🇸"},pt:{name:"Português",flag:"🇵🇹"}};
+const pidginMap={"hey wat dey happened":"what happened","hey wat dey happen":"what is happening","wat dey happened":"what happened","wetin dey happen":"what is happening","wetin happen":"what happened","an we have it done":"and we have it done","we have it done":"we have done it"};
 const offlineDict={
-"what happened":{fr:"Que s'est-il passé ?",tw:"Dɛn na asi ?",ga:"Atɛŋ ni ba ?",ewe:"Nukae dzɔ ?",hausa:"Me ya faru ?",fante:"Dɛn na asi ?",dagbani:"Bɔ n-kani labisi ?",pidgin:"Wetin happen ?",en:"What happened ?",es:"¿Qué pasó ?",pt:"O que aconteceu ?",ar:"ماذا حدث؟"},
-"of course we want to get our name top there":{fr:"Bien sûr, on veut que notre nom soit tout en haut",tw:"Ampa ara, yɛpɛ sɛ yɛn din kɔ soro paa",ga:"Lɛ mli akɛ wɔsumɔ ni wɔgbɛi atswa yiteŋ",ewe:"Vavã la, míedi be míaƒe ŋkɔ nadze dzi gã aɖe",hausa:"Tabbas muna son sunanmu ya kasance a sama",fante:"Ampa ara, yɛpɛ dɛ yɛn dzin kɔ sor paa",pidgin:"Of course we wan make our name dey top",en:"Of course we want to get our name top there"},
+"what happened":{fr:"Que s'est-il passé ?",tw:"Dɛn na asi ?",ga:"Atɛŋ ni ba ?",ewe:"Nukae dzɔ ?",hausa:"Me ya faru ?",fante:"Dɛn na asi ?",pidgin:"Wetin happen ?",en:"What happened ?"},
+"of course we want to get our name top there":{fr:"Bien sûr, on veut que notre nom soit tout en haut",tw:"Ampa ara, yɛpɛ sɛ yɛn din kɔ soro paa",ga:"Lɛ mli akɛ wɔsumɔ ni wɔgbɛi atswa yiteŋ",ewe:"Vavã la, míedi be míaƒe ŋkɔ nadze dzi gã aɖe",hausa:"Tabbas muna son sunanmu ya kasance a sama",pidgin:"Of course we wan make our name dey top",en:"Of course we want to get our name top there"},
 "and we have it done":{fr:"Et nous l'avons fait",tw:"Na yɛawie",ga:"Ni wɔgbe naagbɛ",ewe:"Eye míewɔe vɔ",hausa:"Kuma mun gama",pidgin:"And we don do am",en:"And we have it done"},
-"we have done it":{fr:"Nous l'avons fait",tw:"Yɛawie",ga:"Wɔgbe naagbɛ",en:"We have done it"},
-"how are you":{fr:"Comment ça va ?",tw:"Wo ho te sɛn ?",ga:"Te ofee ?",ewe:"Nenɔ ha ?",hausa:"Yaya kake ?",pidgin:"How you dey ?",en:"How are you ?",es:"¿Cómo estás ?"},
-"where":{fr:"Où ?",tw:"Ɛhe ?",ga:"Nɛgbɛ ?",en:"Where ?"},
-"hey":{fr:"Salut",tw:"Maakye",ga:"Atuu",en:"Hey",pidgin:"How far"},
-"good morning":{fr:"Bonjour",tw:"Maakye",ga:"Atuu",pidgin:"Good morning",en:"Good morning"},
-"thank you":{fr:"Merci",tw:"Medaase",ga:"Oyiwala dɔŋŋ",ewe:"Akpe",pidgin:"Thank you",en:"Thank you"}
+"how are you":{fr:"Comment ça va ?",tw:"Wo ho te sɛn ?",ga:"Te ofee ?",ewe:"Nenɔ ha ?",pidgin:"How you dey ?",en:"How are you ?"}
 };
-let curLang=localStorage.getItem('lang')||'fr';
+let curLang=localStorage.getItem('lang')||'ewe';
 let autoTrans=localStorage.getItem('auto')!=='false';
-let liveApi=localStorage.getItem('liveApi')!=='false';
 let defaultChats={Ama:[{text:"Hey wat dey happened",time:"10:06 PM",me:true},{text:"Of course we want to get our name top there",time:"9:15 PM",me:false},{text:"An we have it done",time:"9:55 PM",me:true}],Kwame:[{text:"How are you",time:"6:46 PM",me:false}]};
-let chats=JSON.parse(localStorage.getItem('chats_v136')||JSON.stringify(defaultChats));
+let chats=JSON.parse(localStorage.getItem('chats_v137')||JSON.stringify(defaultChats));
 let curChat='Ama';
 let rec=null,chunks=[],recStart=0,timer=null,stream=null,callInt=null,callSec=0;
 let myDP=localStorage.getItem('myDP')||'';
-let cache=JSON.parse(localStorage.getItem('transCache')||'{}');
+let selectedMsgIndex=null;
+let replyTo=null;
 
 function toast(m){let t=document.getElementById('toast');t.textContent=m;t.className='toast show';setTimeout(()=>t.className='toast',3000);}
 function switchTab(name){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab'+name).classList.add('active');document.querySelectorAll('.navItem').forEach(n=>n.classList.remove('active'));document.getElementById('nav'+(name==='Chats'?'C':'Ca')).classList.add('active');if(name==='Chats')renderChats();if(name==='Calls')renderCalls();}
 function filter(q){document.querySelectorAll('#list .item').forEach(it=>{it.style.display=it.dataset.name.toLowerCase().includes(q.toLowerCase())?'flex':'none';});}
-function renderChats(){let l=document.getElementById('list');l.innerHTML='';Object.keys(chats).forEach(n=>{let last=chats[n][chats[n].length-1]||{text:''};let txt=last.type==='voice'?`🎤 Voice • ${last.dur||'0:12'}`:last.text.substring(0,32);let div=document.createElement('div');div.className='item';div.dataset.name=n;div.onclick=()=>openChat(n);div.innerHTML=`<div class="avatar"><b>${n[0]}</b></div><div style="flex:1"><b style="font-weight:400">${n}</b><br><small style="color:#8696a0">${txt}</small></div><small style="color:#8696a0">${last.time||''}</small>`;l.appendChild(div);});updateDP();}
+function renderChats(){let l=document.getElementById('list');l.innerHTML='';Object.keys(chats).forEach(n=>{let last=chats[n][chats[n].length-1]||{text:''};let txt=last.type==='voice'?`🎤 Voice • ${last.dur||'0:12'}`:last.reply?`↩️ Reply: ${last.text.substring(0,20)}`:last.text.substring(0,32);let div=document.createElement('div');div.className='item';div.dataset.name=n;div.onclick=()=>openChat(n);div.innerHTML=`<div class="avatar"><b>${n[0]}</b></div><div style="flex:1"><b style="font-weight:400">${n}</b><br><small style="color:#8696a0">${txt}</small></div><small style="color:#8696a0">${last.time||''}</small>`;l.appendChild(div);});updateDP();}
 function renderCalls(){let c=JSON.parse(localStorage.getItem('calls')||'[]');let l=document.getElementById('callList');if(c.length===0){l.innerHTML='<div style="padding:40px;color:#8696a0;text-align:center">No recent calls</div>';return;}l.innerHTML='';c.slice().reverse().forEach(x=>{let d=document.createElement('div');d.className='item';d.innerHTML=`<div class="avatar"><b>${x.name[0]}</b></div><div style="flex:1"><b style="font-weight:400">${x.name}</b><br><small style="color:#8696a0">${x.type} • ${x.callType}</small></div><span>${x.callType==='video'?'📹':'📞'}</span>`;d.onclick=()=>{x.callType==='video'?videoCall(x.name):voiceCall(x.name);};l.appendChild(d);});}
 function updateDP(){if(!myDP) return;document.getElementById('setAv').innerHTML=`<img src="${myDP}">`;document.getElementById('profAv').innerHTML=`<img src="${myDP}">`;}
 function changeDP(){document.getElementById('dpInput').click();}
 function takeDP(){document.getElementById('camInput').click();}
 function removeDP(){localStorage.removeItem('myDP');myDP='';document.getElementById('setAv').innerHTML='<b>S</b>';document.getElementById('profAv').innerHTML='<b style="font-size:56px">S</b>';toast('DP removed');}
 function handleDP(e){let f=e.target.files[0];if(!f) return;let r=new FileReader();r.onload=ev=>{myDP=ev.target.result;localStorage.setItem('myDP',myDP);updateDP();toast('✅ DP changed!');};r.readAsDataURL(f);}
-function openChat(n){curChat=n;document.getElementById('chatWin').classList.add('show');document.getElementById('chatWin').style.display='flex';document.getElementById('chatName').innerText=n;document.getElementById('chatAv').innerHTML=`<b>${n[0]}</b>`;document.getElementById('chatStat').innerText=`${langs[curLang].flag} ${langs[curLang].name} • Tap 🌍 ON/OFF • Translation ${autoTrans?'ON':'OFF'}`;renderMsgs();}
-function closeChat(){document.getElementById('chatWin').classList.remove('show');document.getElementById('chatWin').style.display='none';}
+function openChat(n){curChat=n;document.getElementById('chatWin').classList.add('show');document.getElementById('chatWin').style.display='flex';document.getElementById('chatName').innerText=n;document.getElementById('chatAv').innerHTML=`<b>${n[0]}</b>`;document.getElementById('chatStat').innerText=`${langs[curLang].flag} ${langs[curLang].name} • Translation ${autoTrans?'ON':'OFF'}`;renderMsgs();}
+function closeChat(){document.getElementById('chatWin').classList.remove('show');document.getElementById('chatWin').style.display='none';cancelReply();}
 function normalize(text){let low=text.toLowerCase().trim();if(pidginMap[low]) return pidginMap[low];for(let k in pidginMap){if(low.includes(k)) return low.replace(k,pidginMap[k]);}return text;}
 function getOffline(text,target){let low=text.toLowerCase().trim();let norm=normalize(text).toLowerCase().trim();if(offlineDict[low]&&offlineDict[low][target]) return {t:offlineDict[low][target],type:'offline'};if(norm!==low&&offlineDict[norm]&&offlineDict[norm][target]) return {t:offlineDict[norm][target],type:'pidgin'};for(let k in offlineDict){if((norm.includes(k)||low.includes(k))&&offlineDict[k][target]) return {t:offlineDict[k][target],type:'offline'};}return null;}
-
-async function getLive(text,target){
- if(!liveApi) return null;
- let key=text.toLowerCase()+'|'+target;
- if(cache[key]) return {t:cache[key],type:'live-cached'};
- let apiLang=langs[target]?.my||target;
- if(apiLang==='ak'||apiLang==='ga'||apiLang==='ee'||apiLang==='dag'||apiLang==='fat'||apiLang==='pcm') return null;
- try{
-  let url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${apiLang}`;
-  let res=await fetch(url);
-  let data=await res.json();
-  if(data&&data.responseData&&data.responseData.translatedText){
-   let t=data.responseData.translatedText;
-   if(t&&t.toLowerCase()!==text.toLowerCase()){
-    cache[key]=t;localStorage.setItem('transCache',JSON.stringify(cache));
-    return {t:t,type:'live'};
-   }
-  }
- }catch(e){ console.log('live api fail',e); }
- return null;
-}
-
-async function renderMsgs(){
+function renderMsgs(){
  let b=document.getElementById('msgList');b.innerHTML='';
  let msgs=chats[curChat]||[];
- for(let i=0;i<msgs.length;i++){
-  let m=msgs[i];
+ msgs.forEach((m,idx)=>{
   let row=document.createElement('div');row.className=m.me?'msg me':'msg other';
-  if(m.type==='voice'){
-   row.innerHTML=`<div class="voice"><div class="play" onclick="playV(this,'${m.audio}')">▶️</div><div class="wave">${Array(20).fill(0).map(()=>`<span style="height:${8+Math.random()*20}px"></span>`).join('')}</div><div style="font-size:11px;color:#8696a0">${m.dur||'0:12'}</div></div><small style="font-size:11px;color:#8696a0">${m.time} ✓✓</small>`;
-  }else{
-   row.innerHTML=`<div>${m.text}</div><small style="font-size:11px;color:#8696a0">${m.time} ${m.me?'✓✓':''}</small>`;
+  row.dataset.index=idx;
+  row.onclick=()=>openMsgOptions(idx);
+  row.oncontextmenu=(e)=>{e.preventDefault();openMsgOptions(idx);};
+  let touchTimer=null;
+  row.addEventListener('touchstart',()=>{touchTimer=setTimeout(()=>openMsgOptions(idx),600);});
+  row.addEventListener('touchend',()=>{if(touchTimer)clearTimeout(touchTimer);});
+  let html='';
+  if(m.reply){
+   html+=`<div class="replyBox"><b>${m.reply.name}</b><small>${m.reply.text.substring(0,40)}</small></div>`;
   }
+  if(m.type==='voice'){
+   html+=`<div class="voice"><div class="play" onclick="event.stopPropagation();playV(this,'${m.audio}')">▶️</div><div class="wave">${Array(20).fill(0).map(()=>`<span style="height:${8+Math.random()*20}px"></span>`).join('')}</div><div style="font-size:11px;color:#8696a0">${m.dur||'0:12'}</div></div><small style="font-size:11px;color:#8696a0">${m.time} ✓✓</small>`;
+  }else if(m.type==='image'){
+   html+=`<img src="${m.src}" style="max-width:100%;border-radius:8px;max-height:200px"><br><small style="color:#8696a0">${m.time} ✓✓</small>`;
+  }else if(m.deleted){
+   html+=`<div style="font-style:italic;color:#8696a0">🗑️ This message was deleted</div><small style="color:#8696a0">${m.time}</small>`;
+  }else{
+   html+=`<div>${m.text}</div><small style="font-size:11px;color:#8696a0">${m.time} ${m.me?'✓✓':''}</small>`;
+  }
+  row.innerHTML=html;
   b.appendChild(row);
-  if(autoTrans && m.text && m.text.length>1 && m.type!=='voice'){
-   let transDiv=document.createElement('div');transDiv.className='trans';
-   transDiv.innerHTML=`<div class="transHead"><span>🌍 Translating to ${langs[curLang].flag} ${langs[curLang].name}...</span><span class="transLang offline">...</span></div>`;
-   row.appendChild(transDiv);
+  if(autoTrans && m.text && !m.deleted && m.type!=='voice'){
    let off=getOffline(m.text,curLang);
    if(off){
+    let transDiv=document.createElement('div');transDiv.className='trans';
     let badge=off.type==='pidgin'?'pidgin':'offline';
-    let label=badge==='pidgin'?'PIDGIN FIX':badge==='offline'?'OFFLINE':'LIVE';
+    let label=badge==='pidgin'?'PIDGIN FIX':'OFFLINE';
     transDiv.innerHTML=`<div class="transHead"><span>🌍 ${langs[curLang].flag} ➡️ ${off.t}</span><span class="transLang ${badge}">${label}</span></div><small>Original: "${m.text}" → Normalized: "${normalize(m.text)}" • ${off.type} • Never stops</small>`;
-   }else{
-    let live=await getLive(m.text,curLang);
-    if(live){
-     transDiv.innerHTML=`<div class="transHead"><span>🌍 ${langs[curLang].flag} ➡️ ${live.t}</span><span class="transLang live">LIVE API</span></div><small>Live MyMemory API • ${m.text} → ${curLang} • Foreign + Local</small>`;
-    }else{
-     let targetName=langs[curLang].name;
-     transDiv.innerHTML=`<div class="transHead"><span>🌍 ${langs[curLang].flag} ➡️ [No offline dict, API offline]</span><span class="transLang offline">OFFLINE</span></div><small>Original: "${m.text}" — Add to offlineDict or enable internet for LIVE • Current: ${targetName}</small>`;
-    }
+    row.appendChild(transDiv);
    }
   }
- }
+ });
  b.scrollTop=b.scrollHeight;
 }
+function openMsgOptions(idx){
+ selectedMsgIndex=idx;
+ let msg=chats[curChat][idx];
+ if(msg.deleted){toast('Message already deleted');return;}
+ document.getElementById('optTitle').innerText=msg.me?'Your message':'Message from '+curChat;
+ document.getElementById('optSub').innerText=msg.text?msg.text.substring(0,40):msg.type+' message';
+ document.getElementById('msgOptions').classList.add('show');document.getElementById('msgOptions').style.display='flex';
+}
+function closeMsgOpt(){document.getElementById('msgOptions').classList.remove('show');document.getElementById('msgOptions').style.display='none';}
+function doReply(){
+ let msg=chats[curChat][selectedMsgIndex];
+ replyTo={name:msg.me?'You':curChat,text:msg.text|| (msg.type==='voice'?'🎤 Voice note':msg.type),index:selectedMsgIndex};
+ document.getElementById('replyName').innerText=replyTo.name;
+ document.getElementById('replyText').innerText=replyTo.text;
+ document.getElementById('replyPreview').classList.add('show');
+ closeMsgOpt();
+ document.getElementById('msgInput').focus();
+}
+function cancelReply(){replyTo=null;document.getElementById('replyPreview').classList.remove('show');}
+function doCopy(){
+ let msg=chats[curChat][selectedMsgIndex];
+ if(msg.text){navigator.clipboard.writeText(msg.text);toast('📋 Copied: '+msg.text.substring(0,20));}
+ closeMsgOpt();
+}
+function doForward(){
+ let msg=chats[curChat][selectedMsgIndex];
+ let target=prompt('Forward to chat name (e.g. Kwame):');
+ if(target && chats[target]){
+  chats[target].push({...msg,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true});
+  localStorage.setItem('chats_v137',JSON.stringify(chats));
+  toast(`➡️ Forwarded to ${target}`);
+ }else if(target){toast('Chat not found: '+target);}
+ closeMsgOpt();
+}
+function doInfo(){
+ let msg=chats[curChat][selectedMsgIndex];
+ alert(`Message info:\n\nFrom: ${msg.me?'You':curChat}\nText: ${msg.text||msg.type}\nTime: ${msg.time}\nReply: ${msg.reply?msg.reply.text:'No'}\nRead: ✓✓\n\nPowered by SALVATION TECH-GHANA`);
+ closeMsgOpt();
+}
+function doDelete(){
+ closeMsgOpt();
+ document.getElementById('delConfirm').classList.add('show');document.getElementById('delConfirm').style.display='flex';
+}
+function closeDelConfirm(){document.getElementById('delConfirm').classList.remove('show');document.getElementById('delConfirm').style.display='none';}
+function confirmDelete(mode){
+ let idx=selectedMsgIndex;
+ if(idx===null) return;
+ if(mode==='me'){
+  chats[curChat][idx].deleted=true;
+  chats[curChat][idx].text='This message was deleted';
+  chats[curChat][idx].originalText=chats[curChat][idx].text;
+ }else{
+  chats[curChat][idx].deleted=true;
+  chats[curChat][idx].text='This message was deleted';
+ }
+ localStorage.setItem('chats_v137',JSON.stringify(chats));
+ renderMsgs();renderChats();
+ toast(mode==='me'?'🗑️ Deleted for me':'🗑️ Deleted for everyone');
+ closeDelConfirm();
+}
 function autoR(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';let has=el.value.trim();document.getElementById('sendBtn').style.display=has?'flex':'none';document.getElementById('micBtn').style.display=has?'none':'flex';}
-function send(){let i=document.getElementById('msgInput');let t=i.value.trim();if(!t) return;if(!chats[curChat]) chats[curChat]=[];chats[curChat].push({text:t,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true});localStorage.setItem('chats_v136',JSON.stringify(chats));i.value='';autoR(i);renderMsgs();renderChats();}
-function startRec(e){e.preventDefault();let btn=document.getElementById('micBtn');btn.classList.add('rec');btn.innerText='🔴';document.getElementById('msgInput').placeholder='Recording... 0:00';recStart=Date.now();chunks=[];navigator.mediaDevices.getUserMedia({audio:true}).then(s=>{stream=s;rec=new MediaRecorder(s);rec.ondataavailable=ev=>chunks.push(ev.data);rec.onstop=()=>{let blob=new Blob(chunks,{type:'audio/webm'});let r=new FileReader();r.onload=()=>{let dur=Math.floor((Date.now()-recStart)/1000);let durStr=`0:${dur.toString().padStart(2,'0')}`;if(!chats[curChat]) chats[curChat]=[];chats[curChat].push({type:'voice',audio:r.result,dur:durStr,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true});localStorage.setItem('chats_v136',JSON.stringify(chats));renderMsgs();renderChats();};r.readAsDataURL(blob);s.getTracks().forEach(t=>t.stop());};rec.start();timer=setInterval(()=>{let sec=Math.floor((Date.now()-recStart)/1000);document.getElementById('msgInput').placeholder=`Recording... 0:${sec.toString().padStart(2,'0')} — Release to send`;},1000);}).catch(()=>{toast('Allow mic');btn.classList.remove('rec');btn.innerText='🎤';});}
+function send(){
+ let i=document.getElementById('msgInput');let t=i.value.trim();if(!t) return;
+ if(!chats[curChat]) chats[curChat]=[];
+ let newMsg={text:t,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true};
+ if(replyTo){newMsg.reply={name:replyTo.name,text:replyTo.text};}
+ chats[curChat].push(newMsg);
+ localStorage.setItem('chats_v137',JSON.stringify(chats));
+ i.value='';autoR(i);cancelReply();renderMsgs();renderChats();
+}
+function startRec(e){e.preventDefault();let btn=document.getElementById('micBtn');btn.classList.add('rec');btn.innerText='🔴';document.getElementById('msgInput').placeholder='Recording... 0:00';recStart=Date.now();chunks=[];navigator.mediaDevices.getUserMedia({audio:true}).then(s=>{stream=s;rec=new MediaRecorder(s);rec.ondataavailable=ev=>chunks.push(ev.data);rec.onstop=()=>{let blob=new Blob(chunks,{type:'audio/webm'});let r=new FileReader();r.onload=()=>{let dur=Math.floor((Date.now()-recStart)/1000);let durStr=`0:${dur.toString().padStart(2,'0')}`;if(!chats[curChat]) chats[curChat]=[];let vm={type:'voice',audio:r.result,dur:durStr,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true};if(replyTo)vm.reply={name:replyTo.name,text:replyTo.text};chats[curChat].push(vm);localStorage.setItem('chats_v137',JSON.stringify(chats));cancelReply();renderMsgs();renderChats();};r.readAsDataURL(blob);s.getTracks().forEach(t=>t.stop());};rec.start();timer=setInterval(()=>{let sec=Math.floor((Date.now()-recStart)/1000);document.getElementById('msgInput').placeholder=`Recording... 0:${sec.toString().padStart(2,'0')} — Release to send`;},1000);}).catch(()=>{toast('Allow mic');btn.classList.remove('rec');btn.innerText='🎤';});}
 function stopRec(e){e.preventDefault();let btn=document.getElementById('micBtn');btn.classList.remove('rec');btn.innerText='🎤';document.getElementById('msgInput').placeholder='Message';clearInterval(timer);if(rec&&rec.state==='recording')rec.stop();}
 function playV(btn,audio){let a=new Audio(audio);if(btn.innerText==='▶️'){a.play();btn.innerText='⏸️';a.onended=()=>btn.innerText='▶️';}else{btn.innerText='▶️';}}
 function openAttach(){document.getElementById('attach').classList.add('show');document.getElementById('attach').style.display='flex';}
@@ -236,22 +325,22 @@ function pickCam(){closeAttach();document.getElementById('camInput').click();}
 function pickGal(){closeAttach();document.getElementById('galInput').click();}
 function pickDoc(){closeAttach();document.getElementById('docInput').click();}
 function pickAud(){closeAttach();document.getElementById('audInput').click();}
-function pickLoc(){closeAttach();navigator.geolocation.getCurrentPosition(p=>{if(!chats[curChat]) chats[curChat]=[];chats[curChat].push({text:`📍 ${p.coords.latitude.toFixed(5)}, ${p.coords.longitude.toFixed(5)} https://maps.google.com/?q=${p.coords.latitude},${p.coords.longitude}`,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true});localStorage.setItem('chats_v136',JSON.stringify(chats));renderMsgs();renderChats();toast('📍 Location sent');},()=>toast('Allow location'));}
-function pickCon(){closeAttach();toast('Pick contact — Real API');}
+function pickLoc(){closeAttach();navigator.geolocation.getCurrentPosition(p=>{if(!chats[curChat]) chats[curChat]=[];let msg={text:`📍 ${p.coords.latitude.toFixed(5)}, ${p.coords.longitude.toFixed(5)} https://maps.google.com/?q=${p.coords.latitude},${p.coords.longitude}`,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true};if(replyTo)msg.reply={name:replyTo.name,text:replyTo.text};chats[curChat].push(msg);localStorage.setItem('chats_v137',JSON.stringify(chats));cancelReply();renderMsgs();renderChats();toast('📍 Location sent');},()=>toast('Allow location'));}
+function pickCon(){closeAttach();toast('Pick contact');}
 function pickVNote(){closeAttach();startVNote();}
-function pickPoll(){closeAttach();let q=prompt('Poll:');if(!q) return;if(!chats[curChat]) chats[curChat]=[];chats[curChat].push({text:`📊 Poll: ${q}`,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true});localStorage.setItem('chats_v136',JSON.stringify(chats));renderMsgs();renderChats();}
-function handleGal(e){let f=e.target.files[0];if(!f) return;let r=new FileReader();r.onload=ev=>{let type=f.type.startsWith('video')?'video':'image';if(!chats[curChat]) chats[curChat]=[];chats[curChat].push({type:type,src:ev.target.result,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true});localStorage.setItem('chats_v136',JSON.stringify(chats));renderMsgs();renderChats();toast(type==='video'?'🎥 Video sent':'🖼️ Photo sent');};r.readAsDataURL(f);}
-function handleDoc(e){let f=e.target.files[0];if(!f) return;if(!chats[curChat]) chats[curChat]=[];chats[curChat].push({type:'file',name:f.name,size:(f.size/1024/1024).toFixed(1)+' MB',time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true});localStorage.setItem('chats_v136',JSON.stringify(chats));renderMsgs();renderChats();toast(`📄 ${f.name}`);}
-function handleAud(e){let f=e.target.files[0];if(!f) return;let r=new FileReader();r.onload=ev=>{if(!chats[curChat]) chats[curChat]=[];chats[curChat].push({type:'voice',audio:ev.target.result,dur:'0:24',time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true});localStorage.setItem('chats_v136',JSON.stringify(chats));renderMsgs();renderChats();toast('🎵 Audio sent');};r.readAsDataURL(f);}
-function startVNote(){navigator.mediaDevices.getUserMedia({video:true,audio:true}).then(s=>{let c=document.getElementById('call');c.classList.add('show');c.style.display='flex';document.getElementById('callName').innerText='Video Note — Recording';let v=document.getElementById('localV');v.style.display='block';v.srcObject=s;stream=s;document.getElementById('callAvWrap').style.display='none';let mr=new MediaRecorder(s);let ch=[];mr.ondataavailable=e=>ch.push(e.data);mr.onstop=()=>{let blob=new Blob(ch,{type:'video/webm'});let r=new FileReader();r.onload=()=>{if(!chats[curChat]) chats[curChat]=[];chats[curChat].push({type:'video',src:r.result,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true});localStorage.setItem('chats_v136',JSON.stringify(chats));renderMsgs();renderChats();endCall();toast('🎥 Video note sent');};r.readAsDataURL(blob);};mr.start();setTimeout(()=>{if(mr.state==='recording')mr.stop();},10000);}).catch(()=>toast('Allow camera'));}
+function pickPoll(){closeAttach();let q=prompt('Poll:');if(!q) return;if(!chats[curChat]) chats[curChat]=[];let msg={text:`📊 Poll: ${q}`,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true};if(replyTo)msg.reply={name:replyTo.name,text:replyTo.text};chats[curChat].push(msg);localStorage.setItem('chats_v137',JSON.stringify(chats));cancelReply();renderMsgs();renderChats();}
+function handleGal(e){let f=e.target.files[0];if(!f) return;let r=new FileReader();r.onload=ev=>{let type=f.type.startsWith('video')?'video':'image';if(!chats[curChat]) chats[curChat]=[];let msg={type:type,src:ev.target.result,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true};if(replyTo)msg.reply={name:replyTo.name,text:replyTo.text};chats[curChat].push(msg);localStorage.setItem('chats_v137',JSON.stringify(chats));cancelReply();renderMsgs();renderChats();toast(type==='video'?'🎥 Video sent':'🖼️ Photo sent');};r.readAsDataURL(f);}
+function handleDoc(e){let f=e.target.files[0];if(!f) return;if(!chats[curChat]) chats[curChat]=[];let msg={type:'file',name:f.name,size:(f.size/1024/1024).toFixed(1)+' MB',time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true};if(replyTo)msg.reply={name:replyTo.name,text:replyTo.text};chats[curChat].push(msg);localStorage.setItem('chats_v137',JSON.stringify(chats));cancelReply();renderMsgs();renderChats();toast(`📄 ${f.name}`);}
+function handleAud(e){let f=e.target.files[0];if(!f) return;let r=new FileReader();r.onload=ev=>{if(!chats[curChat]) chats[curChat]=[];let msg={type:'voice',audio:ev.target.result,dur:'0:24',time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true};if(replyTo)msg.reply={name:replyTo.name,text:replyTo.text};chats[curChat].push(msg);localStorage.setItem('chats_v137',JSON.stringify(chats));cancelReply();renderMsgs();renderChats();toast('🎵 Audio sent');};r.readAsDataURL(f);}
+function startVNote(){navigator.mediaDevices.getUserMedia({video:true,audio:true}).then(s=>{let c=document.getElementById('call');c.classList.add('show');c.style.display='flex';document.getElementById('callName').innerText='Video Note — Recording';let v=document.getElementById('localV');v.style.display='block';v.srcObject=s;stream=s;document.getElementById('callAvWrap').style.display='none';let mr=new MediaRecorder(s);let ch=[];mr.ondataavailable=e=>ch.push(e.data);mr.onstop=()=>{let blob=new Blob(ch,{type:'video/webm'});let r=new FileReader();r.onload=()=>{if(!chats[curChat]) chats[curChat]=[];let msg={type:'video',src:r.result,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true};if(replyTo)msg.reply={name:replyTo.name,text:replyTo.text};chats[curChat].push(msg);localStorage.setItem('chats_v137',JSON.stringify(chats));cancelReply();renderMsgs();renderChats();endCall();toast('🎥 Video note sent');};r.readAsDataURL(blob);};mr.start();setTimeout(()=>{if(mr.state==='recording')mr.stop();},10000);}).catch(()=>toast('Allow camera'));}
 function voiceCall(name){let t=name||curChat||'Ama';document.getElementById('call').classList.add('show');document.getElementById('call').style.display='flex';document.getElementById('callName').innerText=t;document.getElementById('callAv').innerHTML=`<b style="font-size:48px">${t[0]}</b>`;document.getElementById('localV').style.display='none';document.getElementById('callAvWrap').style.display='flex';navigator.mediaDevices.getUserMedia({audio:true}).then(s=>{stream=s;}).catch(()=>{});startTimer(t,'voice');}
 function videoCall(name){let t=name||curChat||'Ama';document.getElementById('call').classList.add('show');document.getElementById('call').style.display='flex';document.getElementById('callName').innerText=t;document.getElementById('callAv').innerHTML=`<b style="font-size:48px">${t[0]}</b>`;navigator.mediaDevices.getUserMedia({video:true,audio:true}).then(s=>{stream=s;let v=document.getElementById('localV');v.style.display='block';v.srcObject=s;document.getElementById('callAvWrap').style.display='none';}).catch(()=>{});startTimer(t,'video');}
 function startTimer(name,type){callSec=0;document.getElementById('callTimer').innerText='Calling...';callInt=setInterval(()=>{callSec++;let m=Math.floor(callSec/60);let s=callSec%60;document.getElementById('callTimer').innerText=`${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')} • Encrypted`;},1000);let calls=JSON.parse(localStorage.getItem('calls')||'[]');calls.push({name:name,callType:type,type:'Outgoing',time:new Date().toLocaleTimeString()});localStorage.setItem('calls',JSON.stringify(calls));}
 function endCall(){clearInterval(callInt);document.getElementById('call').classList.remove('show');document.getElementById('call').style.display='none';if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}document.getElementById('localV').srcObject=null;document.getElementById('localV').style.display='none';document.getElementById('callAvWrap').style.display='flex';renderCalls();}
-function togMute(){let m=!muted;muted=m;if(stream)stream.getAudioTracks().forEach(t=>t.enabled=!muted);document.getElementById('muteBtn').innerText=muted?'🔇':'🎤';}
-function togVid(){let v=!vidOff;vidOff=v;if(stream)stream.getVideoTracks().forEach(t=>t.enabled=!vidOff);document.getElementById('localV').style.display=vidOff?'none':'block';if(vidOff)document.getElementById('callAvWrap').style.display='flex';}
+function togMute(){let btn=document.getElementById('muteBtn');let muted=btn.innerText==='🔇';btn.innerText=muted?'🎤':'🔇';if(stream)stream.getAudioTracks().forEach(t=>t.enabled=muted);}
+function togVid(){let btn=document.getElementById('vidBtn');let off=btn.innerText==='📹';btn.innerText=off?'📹':'📹';document.getElementById('localV').style.display=off?'none':'block';if(off)document.getElementById('callAvWrap').style.display='flex';}
 function togSpk(){toast('🔊 Speaker');}
-function createLink(){let link='https://41-lgtm.github.io/call/'+Math.random().toString(36).substring(7);prompt('Copy link:',link);navigator.clipboard.writeText(link);toast('🔗 Link copied');}
+function createLink(){let link='https://41-lgtm.github.io/call/'+Math.random().toString(36).substring(7);prompt('Copy link:',link);toast('🔗 Link copied');}
 function openSet(){document.getElementById('settings').classList.add('show');document.getElementById('settings').style.display='flex';}
 function closeSet(){document.getElementById('settings').classList.remove('show');document.getElementById('settings').style.display='none';}
 function openProfile(){document.getElementById('profile').classList.add('show');document.getElementById('profile').style.display='flex';}
@@ -264,27 +353,27 @@ function openLang(){document.getElementById('settings').style.display='none';doc
 function closeLang(){document.getElementById('lang').classList.remove('show');document.getElementById('lang').style.display='none';document.getElementById('settings').style.display='flex';}
 function openAdd(){document.getElementById('add').classList.add('show');document.getElementById('add').style.display='flex';}
 function closeAdd(){document.getElementById('add').classList.remove('show');document.getElementById('add').style.display='none';}
-function saveContact(){let n=document.getElementById('newName').value.trim();let p=document.getElementById('newPhone').value.trim();if(!n||!p){toast('Enter name and phone');return;}chats[n]=[{text:`Hi! I am ${n} — Ghana 🇬🇭`,time:new Date().toLocaleTimeString(),me:false}];localStorage.setItem('chats_v136',JSON.stringify(chats));renderChats();closeAdd();toast(`${n} added`);openChat(n);}
+function saveContact(){let n=document.getElementById('newName').value.trim();let p=document.getElementById('newPhone').value.trim();if(!n||!p){toast('Enter name and phone');return;}chats[n]=[{text:`Hi! I am ${n} — Ghana 🇬🇭`,time:new Date().toLocaleTimeString(),me:false}];localStorage.setItem('chats_v137',JSON.stringify(chats));renderChats();closeAdd();toast(`${n} added`);openChat(n);}
 function pickPhone(){if('contacts' in navigator){navigator.contacts.select(['name','tel'],{multiple:false}).then(c=>{if(c.length>0){document.getElementById('newName').value=c[0].name[0];document.getElementById('newPhone').value=c[0].tel[0];}}).catch(()=>{});}else{toast('Pick from phone — Real API');}}
-function toggleTrans(){autoTrans=!autoTrans;localStorage.setItem('auto',autoTrans);document.getElementById('swTrans').classList.toggle('on',autoTrans);document.getElementById('transBtn').innerText=autoTrans?'🌍 ON':'🌍 OFF';document.getElementById('transBtn').style.background=autoTrans?'#00a884':'#2a3942';document.getElementById('transStat').innerText=autoTrans?`${langs[curLang].name} • Offline + Live API • Never stops`:`Translation OFF`;document.getElementById('chatStat').innerText=`${langs[curLang].flag} ${langs[curLang].name} • Translation ${autoTrans?'ON':'OFF'}`;toast(autoTrans?'🌍 Translation ON — '+langs[curLang].name:'Translation OFF');if(curChat)renderMsgs();}
-function togApi(){liveApi=!liveApi;localStorage.setItem('liveApi',liveApi);document.getElementById('swApi').classList.toggle('on',liveApi);document.getElementById('apiStat').innerText=liveApi?'ON • Local + Foreign • MyMemory Live':'OFF • Offline only';toast(liveApi?'Live API ON — Foreign + Local':'Live API OFF — Offline only');if(curChat)renderMsgs();}
-function renderLangs(f){let l=document.getElementById('langList');l.innerHTML='';Object.keys(langs).forEach(k=>{if(f&&!langs[k].name.toLowerCase().includes(f.toLowerCase())) return;let active=curLang===k;let div=document.createElement('div');div.className='row';div.style.background=active?'#2a3942':'';div.onclick=()=>{curLang=k;localStorage.setItem('lang',k);document.getElementById('curLang').innerText=langs[k].flag+' '+langs[k].name;renderLangs(f);if(curChat)renderMsgs();toast(langs[k].flag+' '+langs[k].name+' • '+(liveApi?'LIVE':'OFFLINE'));};div.innerHTML=`<div><b>${langs[k].flag} ${langs[k].name}</b><br><small style="color:#8696a0">${k} • ${langs[k].my} • ${k==='tw'||k==='ga'||k==='ewe'||k==='pidgin'?'Ghana • Offline':'Global • Live API'}</small></div><span style="color:${active?'#00a884':'transparent'}">✓</span>`;l.appendChild(div);});}
+function toggleTrans(){autoTrans=!autoTrans;localStorage.setItem('auto',autoTrans);document.getElementById('swTrans').classList.toggle('on',autoTrans);document.getElementById('transBtn').innerText=autoTrans?'🌍 ON':'🌍 OFF';document.getElementById('transBtn').style.background=autoTrans?'#00a884':'#2a3942';document.getElementById('transStat').innerText=autoTrans?`${langs[curLang].name} • Offline + Live`:`OFF`;document.getElementById('chatStat').innerText=`${langs[curLang].flag} ${langs[curLang].name} • Translation ${autoTrans?'ON':'OFF'}`;toast(autoTrans?'🌍 Translation ON':'Translation OFF');if(curChat)renderMsgs();}
+function renderLangs(f){let l=document.getElementById('langList');l.innerHTML='';Object.keys(langs).forEach(k=>{if(f&&!langs[k].name.toLowerCase().includes(f.toLowerCase())) return;let active=curLang===k;let div=document.createElement('div');div.className='row';div.style.background=active?'#2a3942':'';div.onclick=()=>{curLang=k;localStorage.setItem('lang',k);document.getElementById('curLang').innerText=langs[k].flag+' '+langs[k].name;renderLangs(f);if(curChat)renderMsgs();toast(langs[k].flag+' '+langs[k].name);};div.innerHTML=`<div><b>${langs[k].flag} ${langs[k].name}</b></div><span style="color:${active?'#00a884':'transparent'}">✓</span>`;l.appendChild(div);});}
 function toggleFaq(id){let el=document.getElementById(id);el.style.display=el.style.display==='none'?'block':'none';}
 function contactEmail(){window.location.href='mailto:salvationtechghana@gmail.com';}
 function contactPhone(){window.location.href='tel:+233540042669';}
 function editName(){let cur=localStorage.getItem('name')||document.getElementById('profName').innerText;let v=prompt('Name:',cur);if(v){localStorage.setItem('name',v);document.getElementById('setName').innerText=v;document.getElementById('profName').innerText=v;}}
 function editAbout(){let cur=localStorage.getItem('about')||document.getElementById('profAbout').innerText;let v=prompt('About:',cur);if(v){localStorage.setItem('about',v);document.getElementById('setAbout').innerText=v;document.getElementById('profAbout').innerText=v;}}
-function openInfo(){toast('Contact '+curChat+' • '+langs[curLang].flag+' '+langs[curLang].name+' • Translation '+(autoTrans?'ON':'OFF')+' • Live API '+(liveApi?'ON':'OFF'));}
+function openInfo(){toast('Contact '+curChat+' • '+langs[curLang].flag+' '+langs[curLang].name);}
 
 window.onload=()=>{
  renderChats();renderCalls();
  if(myDP)updateDP();
- curLang=localStorage.getItem('lang')||'fr';
  document.getElementById('curLang').innerText=langs[curLang].flag+' '+langs[curLang].name;
- document.getElementById('transStat').innerText=`${langs[curLang].name} • Offline + Live API • Never stops`;
  openChat('Ama');
- toast('V136 Translation LIVE — Hey wat dey happened → OFFLINE + LIVE API — Fix! 🇬🇭🌍');
+ toast('V137 Reply + Delete — Long press message → Reply / Delete — Try am! 🇬🇭');
 };
+document.getElementById('msgOptions').onclick=e=>{if(e.target.id==='msgOptions')closeMsgOpt();};
+document.getElementById('delConfirm').onclick=e=>{if(e.target.id==='delConfirm')closeDelConfirm();};
+document.getElementById('attach').onclick=e=>{if(e.target.id==='attach')closeAttach();};
 </script>
 </body>
-  </html>
+                                                                                                                                                                                                                         </html>
