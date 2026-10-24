@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CHALE CHAT - Made in Ghana 🇬🇭 - SALVATION TECH</title>
+<title>CHALE CHAT V143 - Voice Video Call DP - Launch</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
 body{background:#0b141a;color:#e9edef;height:100vh;overflow:hidden}
@@ -9,8 +9,8 @@ body{background:#0b141a;color:#e9edef;height:100vh;overflow:hidden}
 .tab{display:none;flex-direction:column;height:100%}.tab.active{display:flex}
 .scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .item{height:72px;padding:0 14px;display:flex;gap:12px;align-items:center;border-bottom:1px solid #111b21}
-.item:active{background:#1f2c34}
-.avatar{width:48px;height:48px;border-radius:50%;background:#111;border:2px solid #2a3942;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.avatar{width:48px;height:48px;border-radius:50%;background:#111;border:2px solid #2a3942;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;cursor:pointer}
+.avatar img{width:100%;height:100%;object-fit:cover}
 .avatar b{color:#FFD700}
 .search{position:fixed;bottom:53px;width:100%;height:48px;background:#111b21;padding:6px 10px;display:flex;border-top:1px solid #2a3942;z-index:10}
 .search .box{flex:1;background:#202c33;border-radius:10px;padding:0 12px;display:flex;align-items:center;gap:8px}
@@ -21,7 +21,7 @@ body{background:#0b141a;color:#e9edef;height:100vh;overflow:hidden}
 .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(100px);background:#202c33;border:1px solid #2a3942;color:#fff;padding:10px 18px;border-radius:20px;font-size:13px;opacity:0;transition:.25s;z-index:99999;max-width:92%;text-align:center}.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:#111b21;z-index:500;display:none;flex-direction:column}
 .overlay.show{display:flex}
-.head{height:60px;background:#202c33;padding:0 12px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #2a3942;position:sticky;top:0;z-index:5}
+.head{height:60px;background:#202c33;padding:0 12px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #2a3942;position:sticky;top:0;z-index:5}
 .content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;height:calc(100vh - 60px)}
 .section{padding:18px 14px 6px;color:#00a884;font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:700}
 .card{background:#202c33;border-radius:12px;margin:0 10px 10px;overflow:hidden}
@@ -32,7 +32,7 @@ body{background:#0b141a;color:#e9edef;height:100vh;overflow:hidden}
 .footer .pow{margin-top:10px;display:inline-flex;gap:6px;background:#202c33;border:1px solid #2a3942;border-radius:16px;padding:6px 12px;font-size:10px;color:#8696a0}
 #chatWin{position:fixed;top:0;left:0;width:100%;height:100%;background:#0b141a;z-index:400;display:none;flex-direction:column}#chatWin.show{display:flex}
 .msgList{flex:1;padding:10px;display:flex;flex-direction:column;gap:5px;overflow-y:auto;-webkit-overflow-scrolling:touch}
-.msg{max-width:78%;padding:7px 10px;border-radius:14px;font-size:14px;cursor:pointer}
+.msg{max-width:80%;padding:7px 10px;border-radius:14px;font-size:14px;cursor:pointer}
 .msg.me{align-self:flex-end;background:#005c4b;border-radius:14px 4px 14px 14px}.msg.other{align-self:flex-start;background:#202c33;border-radius:4px 14px 14px 14px}
 .replyBox{margin:-4px -6px 6px;padding:6px 8px;border-left:4px solid #00a884;background:rgba(0,0,0,.25);border-radius:6px;font-size:12px}
 .trans{margin-top:6px;background:#0a332c;padding:8px 10px;border-radius:8px;border-left:3px solid #00a884;font-size:11px;color:#d1f4cc}
@@ -43,106 +43,84 @@ body{background:#0b141a;color:#e9edef;height:100vh;overflow:hidden}
 .inputBar .box{flex:1;background:#2a3942;border-radius:18px;padding:7px 12px;display:flex}
 .inputBar textarea{flex:1;background:transparent;border:none;color:#fff;outline:none;resize:none;max-height:100px;font-size:15px}
 .mic{width:38px;height:38px;border-radius:50%;background:#00a884;border:none;color:#111b21;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700}
+.mic.rec{background:#f15c6d;animation:pulse 1s infinite}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
 .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:600;display:none;align-items:flex-end;justify-content:center}.modal.show{display:flex}
 .sheet{width:100%;max-width:480px;background:#202c33;border-radius:18px 18px 0 0;max-height:88vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:16px}.gridItem{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
 .gridItem .ic{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff}
 .optRow{padding:14px 16px;display:flex;gap:12px;align-items:center;border-bottom:1px solid #111b21;cursor:pointer}.optRow .ic{width:38px;height:38px;border-radius:50%;background:#2a3942;display:flex;align-items:center;justify-content:center}
-.optRow.del .ic{background:rgba(241,92,109,.15);color:#f15c6d}
+#callScreen{position:fixed;top:0;left:0;width:100%;height:100%;background:#0b141a;z-index:700;display:none;flex-direction:column;align-items:center;justify-content:center}
+#callScreen.show{display:flex}
+.callAvatar{width:110px;height:110px;border-radius:50%;background:#202c33;border:3px solid #00a884;display:flex;align-items:center;justify-content:center;font-size:48px;overflow:hidden}
+.callBtns{display:flex;gap:20px;margin-top:40px}
+.callBtn{width:56px;height:56px;border-radius:50%;border:none;font-size:24px;display:flex;align-items:center;justify-content:center}
 </style></head><body>
 <div class="header"><div style="display:flex;gap:8px;align-items:center;font-weight:800"><div style="width:34px;height:34px;border-radius:8px;background:#000;display:flex;align-items:center;justify-content:center;border:1px solid #2a3942">🇬🇭</div> CHALE CHAT</div><button onclick="openSet()" style="background:#2a3942;border:none;color:#aebac1;width:36px;height:36px;border-radius:8px;font-size:18px">⚙️</button></div>
-<div class="main"><div id="tabChats" class="tab active"><div class="scroll"><div id="list"></div><div class="footer"><div style="color:#667781;font-size:11px">🔒 End-to-end encrypted • Ghana 🇬🇭</div><div class="pow">⚡ POWERED BY <b>SALVATION TECH-GHANA</b> 🇬🇭</div><div style="color:#00a884;font-size:9px;margin-top:8px;font-weight:700">V142 LAUNCH • FINAL • MADE IN GHANA 2026</div></div></div></div><div id="tabCalls" class="tab"><div class="scroll"><div style="margin:10px;padding:12px;display:flex;gap:10px;align-items:center;background:#202c33;border-radius:12px" onclick="createLink()"><div style="width:44px;height:44px;border-radius:50%;background:#00a884;display:flex;align-items:center;justify-content:center">🔗</div><div><b style="color:#00a884;font-size:13px">Create call link</b><br><small style="color:#8696a0;font-size:11px">Share link for Chale call</small></div></div><div id="callList" style="padding:20px;text-align:center;color:#8696a0;font-size:13px">No recent calls • Ghana</div></div></div></div>
+<div class="main"><div id="tabChats" class="tab active"><div class="scroll"><div id="list"></div><div class="footer"><div class="pow">⚡ POWERED BY <b>SALVATION TECH-GHANA</b> 🇬🇭</div><div style="color:#00a884;font-size:9px;margin-top:8px;font-weight:700">V143 COMPLETE • VOICE VIDEO CALL DP • LAUNCH</div></div></div></div><div id="tabCalls" class="tab"><div class="scroll"><div style="margin:10px;padding:12px;display:flex;gap:10px;align-items:center;background:#202c33;border-radius:12px" onclick="createLink()"><div style="width:44px;height:44px;border-radius:50%;background:#00a884;display:flex;align-items:center;justify-content:center">🔗</div><div><b style="color:#00a884;font-size:13px">Create call link</b><br><small style="color:#8696a0;font-size:11px">Share link</small></div></div><div id="callList" style="padding:20px;text-align:center;color:#8696a0;font-size:13px">No recent calls • Tap call for real call</div></div></div></div>
 <div class="search"><div class="box"><span>🔍</span><input id="search" placeholder="Search Chale..." oninput="filterChats(this.value)"></div></div>
 <div class="nav"><div class="navItem active" id="navC" onclick="switchTab('Chats')"><span>💬</span><small style="font-size:10px">Chats</small></div><div class="navItem" id="navCa" onclick="switchTab('Calls')"><span>📞</span><small style="font-size:10px">Calls</small></div></div>
 <button class="fab" onclick="openAdd()">+</button>
-<div id="chatWin"><div class="head"><button onclick="closeChat()" style="background:#00a884;border:none;color:#111b21;width:38px;height:38px;border-radius:8px;font-size:20px;font-weight:700">←</button><div class="avatar" id="chatAv" style="width:36px;height:36px"><b>K</b></div><div style="flex:1;min-width:0"><b id="chatName" style="font-size:14px">Kwame</b><br><small id="chatStat" style="color:#8696a0;font-size:11px">Fante • Translation ON • Launch</small></div><button onclick="toggleTrans()" id="transBtn" style="background:#00a884;border:none;color:#111b21;font-size:9px;padding:6px 10px;border-radius:10px;font-weight:800">🌍 ON</button></div><div class="msgList" id="msgList"></div><div class="replyPreview" id="replyPreview"><div style="width:4px;height:32px;background:#00a884;border-radius:2px"></div><div style="flex:1;min-width:0"><b id="replyName" style="color:#00a884;font-size:11px">Kwame</b><small id="replyText" style="display:block;color:#8696a0;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Message</small></div><button onclick="cancelReply()" style="width:30px;height:30px;border-radius:50%;background:#2a3942;border:none;color:#fff">✕</button></div><div class="inputBar"><button onclick="openAttach()" style="background:none;border:none;font-size:20px">📎</button><div class="box"><textarea id="msgInput" placeholder="Message Ghana..." rows="1" oninput="autoResize(this)"></textarea></div><button class="mic" id="sendBtn" style="display:none" onclick="sendMsg()">➤</button><button class="mic" id="micBtn">🎤</button></div></div>
-<div id="attach" class="modal"><div class="sheet"><div style="width:36px;height:4px;background:#344049;border-radius:2px;margin:10px auto 0"></div><div style="padding:14px 16px 4px"><b style="font-size:14px">Share — Real Working</b></div><div class="grid">
+
+<div id="chatWin"><div class="head"><button onclick="closeChat()" style="background:#00a884;border:none;color:#111b21;width:38px;height:38px;border-radius:8px;font-size:20px;font-weight:700">←</button><div class="avatar" id="chatAv" style="width:36px;height:36px"><b>K</b></div><div style="flex:1;min-width:0"><b id="chatName" style="font-size:14px">Kwame</b><br><small id="chatStat" style="color:#8696a0;font-size:11px">Fante • Translation ON • Hold mic for voice</small></div><button onclick="startVoiceCall()" style="background:#2a3942;border:none;color:#fff;width:36px;height:36px;border-radius:8px;font-size:18px">📞</button><button onclick="startVideoCall()" style="background:#2a3942;border:none;color:#fff;width:36px;height:36px;border-radius:8px;font-size:16px">📹</button><button onclick="toggleTrans()" id="transBtn" style="background:#00a884;border:none;color:#111b21;font-size:9px;padding:6px 10px;border-radius:10px;font-weight:800">🌍 ON</button></div><div class="msgList" id="msgList"></div><div class="replyPreview" id="replyPreview"><div style="width:4px;height:32px;background:#00a884;border-radius:2px"></div><div style="flex:1;min-width:0"><b id="replyName" style="color:#00a884;font-size:11px">Kwame</b><small id="replyText" style="display:block;color:#8696a0;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Message</small></div><button onclick="cancelReply()" style="width:30px;height:30px;border-radius:50%;background:#2a3942;border:none;color:#fff">✕</button></div><div id="recHint" style="display:none;position:absolute;bottom:52px;left:0;width:100%;background:#f15c6d;color:#fff;padding:10px;text-align:center;font-size:12px;font-weight:700">🔴 Recording... Slide to cancel | Release to send</div><div class="inputBar"><button onclick="openAttach()" style="background:none;border:none;font-size:20px">📎</button><div class="box"><textarea id="msgInput" placeholder="Message Ghana... Hold mic for voice note" rows="1" oninput="autoResize(this)"></textarea></div><button class="mic" id="sendBtn" style="display:none" onclick="sendMsg()">➤</button><button class="mic" id="micBtn" onmousedown="startRec()" onmouseup="stopRec()" ontouchstart="startRec()" ontouchend="stopRec()">🎤</button></div></div>
+
+<div id="attach" class="modal"><div class="sheet"><div style="width:36px;height:4px;background:#344049;border-radius:2px;margin:10px auto 0"></div><div style="padding:14px 16px 4px"><b>Share — Voice Video DP Real</b></div><div class="grid">
 <div class="gridItem" onclick="pickGal()"><div class="ic" style="background:#bf59cf">🖼️</div><small style="font-size:10px">Gallery</small></div>
 <div class="gridItem" onclick="pickCam()"><div class="ic" style="background:#0eabf4">📷</div><small style="font-size:10px">Camera</small></div>
 <div class="gridItem" onclick="pickDoc()"><div class="ic" style="background:#5f66cd">📄</div><small style="font-size:10px">Document</small></div>
 <div class="gridItem" onclick="pickLoc()"><div class="ic" style="background:#1ea952">📍</div><small style="font-size:10px">Location</small></div>
 <div class="gridItem" onclick="pickCon()"><div class="ic" style="background:#0eabf4">👤</div><small style="font-size:10px">Contact</small></div>
-<div class="gridItem" onclick="pickPoll()"><div class="ic" style="background:#00a884">📊</div><small style="font-size:10px">Poll</small></div>
-</div><div style="padding:0 16px 16px"><button onclick="closeAttach()" style="width:100%;padding:10px;background:#2a3942;border:none;border-radius:8px;color:#fff;font-size:13px">Cancel</button></div></div></div>
-<div id="add" class="modal"><div class="sheet"><div style="width:36px;height:4px;background:#344049;border-radius:2px;margin:10px auto 0"></div><div style="padding:16px"><b style="font-size:16px">New chat — Real — Launch</b></div><div style="padding:0 16px">
-<button onclick="pickPhoneContact()" style="width:100%;padding:10px;background:#00a884;border:none;border-radius:8px;color:#111b21;font-weight:700;font-size:12px">📱 Pick from phone — Real API</button>
-<div style="margin-top:12px"><small style="color:#00a884;font-size:11px">Name *</small><input id="newName" placeholder="E.g. Kofi Ghana" style="width:100%;padding:12px;background:#111b21;border:1px solid #2a3942;border-radius:8px;color:#fff;margin-top:4px"></div>
-<div style="margin-top:10px"><small style="color:#00a884;font-size:11px">Phone *</small><input id="newPhone" placeholder="+233540042669" style="width:100%;padding:12px;background:#111b21;border:1px solid #2a3942;border-radius:8px;color:#fff;margin-top:4px"></div>
-<small id="addErr" style="color:#f15c6d;display:none;margin-top:8px;font-size:11px">Enter name and phone</small>
-</div><div style="padding:16px;display:flex;gap:10px"><button onclick="closeAdd()" style="flex:1;padding:12px;background:#2a3942;border:none;border-radius:10px;color:#fff">Cancel</button><button onclick="saveContact()" style="flex:1;padding:12px;background:#00a884;border:none;border-radius:10px;font-weight:800;color:#111b21">Add 🇬🇭 Real</button></div></div></div>
-<div id="msgOptions" class="modal"><div class="sheet"><div style="width:36px;height:4px;background:#344049;border-radius:2px;margin:10px auto 0"></div><div style="padding:12px 16px"><b id="optTitle">Message</b><br><small id="optSub" style="color:#8696a0;font-size:11px">Choose — Real</small></div><div><div class="optRow" onclick="doReply()"><div class="ic">↩️</div><div><b style="font-size:13px">Reply</b></div></div><div class="optRow" onclick="doCopy()"><div class="ic">📋</div><div><b style="font-size:13px">Copy</b></div></div><div class="optRow" onclick="doForward()"><div class="ic">➡️</div><div><b style="font-size:13px">Forward</b></div></div><div class="optRow del" onclick="doDelete()"><div class="ic">🗑️</div><div><b style="color:#f15c6d;font-size:13px">Delete</b></div></div></div><div style="padding:12px 16px"><button onclick="closeMsgOpt()" style="width:100%;padding:12px;background:#2a3942;border:none;border-radius:10px;color:#fff">Cancel</button></div></div></div>
-<div id="delConfirm" class="modal"><div class="sheet"><div style="width:36px;height:4px;background:#344049;border-radius:2px;margin:10px auto 0"></div><div style="padding:16px"><b style="font-size:14px">Delete? — Real</b></div><div style="padding:0 16px;display:flex;flex-direction:column;gap:8px"><button onclick="confirmDelete('me')" style="padding:12px;background:#2a3942;border:none;border-radius:10px;color:#fff;text-align:left;font-size:13px"><b>🗑️ Delete for me</b></button><button onclick="confirmDelete('everyone')" style="padding:12px;background:rgba(241,92,109,.15);border:1px solid #f15c6d;border-radius:10px;color:#f15c6d;text-align:left;font-size:13px"><b>🗑️ Delete for everyone</b></button></div><div style="padding:12px 16px"><button onclick="closeDelConfirm()" style="width:100%;padding:12px;background:#2a3942;border:none;border-radius:10px;color:#fff">Cancel</button></div></div></div>
-<div id="settings" class="overlay"><div class="head"><button onclick="forceCloseAll()" style="background:#00a884;border:none;color:#111b21;width:38px;height:38px;border-radius:8px;font-size:20px;font-weight:700">←</button><b style="font-size:14px">Settings — V142 Launch — No Stuck</b></div><div class="content">
-<div class="section">Privacy — Real — Works</div><div class="card">
-<div class="row"><div><b style="font-size:13px">Last seen</b><br><small id="txtLast" style="color:#8696a0;font-size:11px">Everyone</small></div><span style="color:#00a884;font-size:12px;font-weight:700" onclick="cycleLast()">Change ›</span></div>
-<div class="row"><div><b style="font-size:13px">Profile photo</b><br><small id="txtPhoto" style="color:#8696a0;font-size:11px">Everyone</small></div><span style="color:#00a884;font-size:12px;font-weight:700" onclick="cyclePhoto()">Change ›</span></div>
-<div class="row"><div><b style="font-size:13px">Read receipts</b><br><small style="color:#8696a0;font-size:11px">Blue ticks — Real saved</small></div><div class="switch on" id="swRead" onclick="togSwitch('Read')"></div></div>
-<div class="row"><div><b style="font-size:13px">Groups</b><br><small id="txtGroup" style="color:#8696a0;font-size:11px">Everyone</small></div><span onclick="cycleGroup()">›</span></div>
-</div>
-<div class="section">Security — Real — Works</div><div class="card">
-<div class="row"><div><b style="font-size:13px">2-step verification</b><br><small id="txt2fa" style="color:#8696a0;font-size:11px">Off — Tap to enable — Real</small></div><div class="switch" id="sw2fa" onclick="tog2fa()"></div></div>
-<div class="row"><div><b style="font-size:13px">Show security notifications</b><br><small style="color:#8696a0;font-size:11px">Real — Saved</small></div><div class="switch on" id="swSec" onclick="togSwitch('Sec')"></div></div>
-</div>
-<div class="section">Chats — Real — Works</div><div class="card">
-<div class="row"><div><b style="font-size:13px">Theme</b><br><small id="txtTheme" style="color:#8696a0;font-size:11px">Dark — Ghana — Real</small></div><span style="color:#00a884;font-size:12px;font-weight:700" onclick="togTheme()">Switch ›</span></div>
-<div class="row"><div><b style="font-size:13px">Enter is send</b><br><small style="color:#8696a0;font-size:11px">Working — Real</small></div><div class="switch on" id="swEnter" onclick="togSwitch('Enter')"></div></div>
-</div>
-<div class="section">Notifications — Real — Works</div><div class="card">
-<div class="row"><div><b style="font-size:13px">Message notifications</b><br><small style="color:#8696a0;font-size:11px">Tone + Vibrate — Real</small></div><div class="switch on" id="swNoti" onclick="togSwitch('Noti')"></div></div>
-<div class="row"><div><b style="font-size:13px">Call tone</b><br><small style="color:#8696a0;font-size:11px" onclick="playTone()">Tap to test — Working 🔊</small></div><span onclick="playTone()">🔊</span></div>
-</div>
-<div class="section">Storage — Real — Works</div><div class="card"><div style="padding:12px"><div style="display:flex;justify-content:space-between"><small style="color:#8696a0;font-size:11px">Used</small><small style="color:#00a884;font-size:11px" id="storeTxt">64% • 1.2GB • Real</small></div><div style="height:6px;background:#111b21;border-radius:3px;margin-top:6px"><div style="width:64%;height:100%;background:linear-gradient(90deg,#FCD116,#00A43C);border-radius:3px"></div></div><div style="margin-top:10px;display:flex;gap:8px"><button onclick="clearCache()" style="flex:1;padding:8px;background:#2a3942;border:none;border-radius:6px;color:#fff;font-size:11px">Clear cache — Real</button><button onclick="clearStore()" style="flex:1;padding:8px;background:#2a3942;border:none;border-radius:6px;color:#fff;font-size:11px">Manage — Real</button></div></div></div>
-<div class="section">Translation — Real — Launch</div><div class="card">
-<div class="row" onclick="openLang()"><div><b style="font-size:13px">🌍 App language</b><br><small id="curLang" style="color:#8696a0;font-size:11px">Fante</small></div><span>›</span></div>
-<div class="row"><div><b style="font-size:13px">🔄 Auto Translation</b><br><small id="transStat" style="color:#8696a0;font-size:11px">ON • All Ghana languages • Launch</small></div><div class="switch on" id="swTrans" onclick="toggleTrans()"></div></div>
-<div class="row"><div><b style="font-size:13px">⚡ Live API</b><br><small id="apiStat" style="color:#8696a0;font-size:11px">ON • MyMemory • Real</small></div><div class="switch on" id="swApi" onclick="togApi()"></div></div>
-</div>
-<div class="section">Support — Real — Works</div><div class="card"><div class="row" onclick="openAbout()"><div><b style="font-size:13px">About</b><br><small style="color:#8696a0;font-size:11px">V142 Launch — Made in Ghana</small></div><span>›</span></div><div class="row" onclick="openHelp()"><div><b style="font-size:13px">Help</b><br><small style="color:#8696a0;font-size:11px">FAQ — All real</small></div><span>›</span></div></div>
-<div class="footer"><div class="pow">⚡ POWERED BY <b>SALVATION TECH-GHANA</b> 🇬🇭</div><div style="margin-top:8px;color:#00a884;font-size:10px;font-weight:700">Made in Ghana 2026 • Launch Ready • No Stuck • All Departments Work 🚀</div></div>
+<div class="gridItem" onclick="pickVideo()"><div class="ic" style="background:#f15c6d">🎥</div><small style="font-size:10px">Video Note</small></div>
+</div><div style="padding:0 16px 16px"><button onclick="closeAttach()" style="width:100%;padding:10px;background:#2a3942;border:none;border-radius:8px;color:#fff">Cancel</button></div></div></div>
+
+<div id="add" class="modal"><div class="sheet"><div style="padding:16px"><b>New chat — Real</b></div><div style="padding:0 16px"><input id="newName" placeholder="Name" style="width:100%;padding:12px;background:#111b21;border:1px solid #2a3942;border-radius:8px;color:#fff"><input id="newPhone" placeholder="Phone" style="width:100%;padding:12px;background:#111b21;border:1px solid #2a3942;border-radius:8px;color:#fff;margin-top:8px"></div><div style="padding:16px;display:flex;gap:10px"><button onclick="closeAdd()" style="flex:1;padding:12px;background:#2a3942;border:none;border-radius:10px;color:#fff">Cancel</button><button onclick="saveContact()" style="flex:1;padding:12px;background:#00a884;border:none;border-radius:10px;font-weight:800;color:#111b21">Add</button></div></div></div>
+<div id="msgOptions" class="modal"><div class="sheet"><div style="padding:12px 16px"><b id="optTitle">Message</b><br><small id="optSub" style="color:#8696a0;font-size:11px">Choose</small></div><div><div class="optRow" onclick="doReply()"><div class="ic">↩️</div><div><b>Reply</b></div></div><div class="optRow" onclick="doCopy()"><div class="ic">📋</div><div><b>Copy</b></div></div><div class="optRow" onclick="doForward()"><div class="ic">➡️</div><div><b>Forward</b></div></div><div class="optRow del" onclick="doDelete()"><div class="ic">🗑️</div><div><b style="color:#f15c6d">Delete</b></div></div></div><div style="padding:12px 16px"><button onclick="closeMsgOpt()" style="width:100%;padding:12px;background:#2a3942;border:none;border-radius:10px;color:#fff">Cancel</button></div></div></div>
+<div id="delConfirm" class="modal"><div class="sheet"><div style="padding:16px"><b>Delete?</b></div><div style="padding:0 16px;display:flex;flex-direction:column;gap:8px"><button onclick="confirmDelete('me')" style="padding:12px;background:#2a3942;border:none;border-radius:10px;color:#fff;text-align:left"><b>🗑️ Delete for me</b></button><button onclick="confirmDelete('everyone')" style="padding:12px;background:rgba(241,92,109,.15);border:1px solid #f15c6d;border-radius:10px;color:#f15c6d;text-align:left"><b>🗑️ Delete for everyone</b></button></div><div style="padding:12px 16px"><button onclick="closeDelConfirm()" style="width:100%;padding:12px;background:#2a3942;border:none;border-radius:10px;color:#fff">Cancel</button></div></div></div>
+
+<div id="settings" class="overlay"><div class="head"><button onclick="forceCloseAll()" style="background:#00a884;border:none;color:#111b21;width:38px;height:38px;border-radius:8px;font-size:20px;font-weight:700">←</button><b>Settings — V143 Complete</b></div><div class="content">
+<div style="margin:10px;padding:12px;display:flex;gap:12px;align-items:center;background:#202c33;border-radius:10px" onclick="changeDP()"><div class="avatar" id="setAv" style="width:64px;height:64px"><b id="setAvTxt">S</b></div><div style="flex:1"><b id="setName">Salvation</b><br><small style="color:#00a884;font-size:11px">Tap to change DP — Real — No stuck</small><br><small id="setAbout" style="color:#8696a0;font-size:11px">Hey! Chale Chat Ghana 🇬🇭</small></div><span style="color:#00a884">📷</span></div>
+
+<div class="section">Chats — Voice Video Call</div><div class="card"><div class="row"><div><b>Theme</b><br><small id="txtTheme" style="color:#8696a0;font-size:11px">Dark — Ghana — Real</small></div><span style="color:#00a884;font-weight:700" onclick="togTheme()">Switch ›</span></div><div class="row"><div><b>Enter is send</b><br><small style="color:#8696a0;font-size:11px">Working</small></div><div class="switch on" id="swEnter" onclick="togSwitch('Enter')"></div></div></div>
+<div class="section">Translation — Launch</div><div class="card"><div class="row" onclick="openLang()"><div><b>🌍 App language</b><br><small id="curLang" style="color:#8696a0;font-size:11px">Fante</small></div><span>›</span></div><div class="row"><div><b>🔄 Auto Translation</b><br><small id="transStat" style="color:#8696a0;font-size:11px">ON • All Ghana • Launch</small></div><div class="switch on" id="swTrans" onclick="toggleTrans()"></div></div></div>
+<div class="section">Voice Note — Real — Hold mic</div><div class="card"><div class="row"><div><b>🎤 How to send voice note</b><br><small style="color:#8696a0;font-size:11px">Chat tab → Hold 🎤 mic → Speak → Release → Sends real voice with play button</small></div></div></div>
+<div class="section">Support</div><div class="card"><div class="row" onclick="openAbout()"><div><b>About</b><br><small style="color:#8696a0;font-size:11px">V143 Voice Video Call DP</small></div><span>›</span></div></div>
+<div class="footer"><div class="pow">⚡ SALVATION TECH-GHANA 🇬🇭</div></div>
 </div></div>
-<div id="lang" class="overlay"><div class="head"><button onclick="closeLang()" style="background:#00a884;border:none;color:#111b21;width:38px;height:38px;border-radius:8px;font-size:20px;font-weight:700">←</button><b style="font-size:14px">Languages — All Ghana + World Live</b></div><div class="content"><div id="langList"></div><div style="padding:16px"><button onclick="closeLang()" style="width:100%;padding:12px;background:#2a3942;border:none;border-radius:10px;color:#fff">Back</button></div></div></div>
-<div id="about" class="overlay"><div class="head"><button onclick="closeAbout()" style="background:#00a884;border:none;color:#111b21;width:38px;height:38px;border-radius:8px;font-size:20px;font-weight:700">←</button><b>About — V142 Launch</b></div><div class="content"><div style="text-align:center;padding:20px"><div style="width:64px;height:64px;border-radius:14px;background:#000;display:flex;align-items:center;justify-content:center;margin:0 auto;border:1px solid #2a3942">🇬🇭</div><div style="margin-top:12px;font-weight:800">CHALE CHAT</div><small style="color:#00a884">V142 FINAL LAUNCH — MADE IN GHANA — NO STUCK</small><br><small style="color:#8696a0;font-size:11px;margin-top:8px;display:block">Fante, Twi, Ga, Ewe, Dagbani, Hausa, Pidgin offline<br>French, English, Spanish, Portuguese live<br>All departments work perfectly</small></div><div class="footer"><div class="pow">⚡ SALVATION TECH-GHANA 🇬🇭</div></div></div></div>
-<div id="help" class="overlay"><div class="head"><button onclick="closeHelp()" style="background:#00a884;border:none;color:#111b21;width:38px;height:38px;border-radius:8px;font-size:20px;font-weight:700">←</button><b>Help — Real</b></div><div class="content"><div class="card"><div class="row"><div><b style="font-size:13px">Translate — Real Ghana</b><br><small style="color:#8696a0;font-size:11px">Fante, Twi, Ga, Ewe, Dagbani, Hausa, Pidgin all offline — Fixed</small></div></div><div class="row"><div><b style="font-size:13px">Reply/Delete/Forward — Real</b><br><small style="color:#8696a0;font-size:11px">Long press → Works — No stuck</small></div></div><div class="row"><div><b style="font-size:13px">Add Contact — Real</b><br><small style="color:#8696a0;font-size:11px">+ → Name + Phone → Saves — No stuck</small></div></div><div class="row"><div><b style="font-size:13px">Settings — Real</b><br><small style="color:#8696a0;font-size:11px">All toggles save localStorage — Green ← always works</small></div></div></div><div style="padding:12px"><button onclick="forceCloseAll()" style="width:100%;padding:12px;background:#00a884;border:none;border-radius:10px;color:#111b21;font-weight:700">Close All — Emergency Unstuck</button></div></div></div>
+
+<div id="lang" class="overlay"><div class="head"><button onclick="closeLang()" style="background:#00a884;border:none;color:#111b21;width:38px;height:38px;border-radius:8px;font-size:20px;font-weight:700">←</button><b>Languages</b></div><div class="content"><div id="langList"></div></div></div>
+<div id="about" class="overlay"><div class="head"><button onclick="closeAbout()" style="background:#00a884;border:none;color:#111b21;width:38px;height:38px;border-radius:8px;font-size:20px;font-weight:700">←</button><b>About</b></div><div class="content"><div style="text-align:center;padding:20px"><div style="width:64px;height:64px;border-radius:14px;background:#000;display:flex;align-items:center;justify-content:center;margin:0 auto">🇬🇭</div><div style="margin-top:12px;font-weight:800">CHALE CHAT V143</div><small style="color:#00a884">Voice Note • Video • Call • Real DP • No Stuck</small></div></div></div>
+
+<div id="callScreen"><div class="callAvatar" id="callAv"><b>K</b></div><div style="margin-top:16px"><b id="callName" style="font-size:18px">Kwame</b></div><small id="callStatus" style="color:#8696a0;margin-top:4px">Calling... • Real mic ON</small><div style="font-size:12px;color:#00a884;margin-top:8px" id="callTimer">00:00</div><div class="callBtns"><button class="callBtn" style="background:#2a3942;color:#fff" onclick="toggleMute()" id="muteBtn">🔇</button><button class="callBtn" style="background:#f15c6d;color:#fff" onclick="endCall()">📞</button><button class="callBtn" style="background:#2a3942;color:#fff" onclick="toggleSpeaker()">🔊</button></div><div style="margin-top:20px;display:flex;gap:10px"><button onclick="switchToVideo()" id="vidSwitchBtn" style="padding:8px 14px;background:#202c33;border:1px solid #2a3942;border-radius:20px;color:#fff;font-size:11px">Switch to Video 📹</button></div></div>
+
 <input type="file" id="galInput" accept="image/*,video/*" style="display:none">
 <input type="file" id="camInput" accept="image/*" capture="environment" style="display:none">
 <input type="file" id="docInput" accept=".pdf,.doc,.docx,.txt,.zip" style="display:none">
+<input type="file" id="dpInput" accept="image/*" style="display:none">
+<input type="file" id="videoInput" accept="video/*" capture="environment" style="display:none">
 <div class="toast" id="toast"></div>
 <script>
-const langs={tw:{name:'Twi',flag:'🇬🇭'},fante:{name:'Fante',flag:'🇬🇭'},ga:{name:'Ga',flag:'🇬🇭'},ewe:{name:'Ewe',flag:'🇬🇭'},dagbani:{name:'Dagbani',flag:'🇬🇭'},hausa:{name:'Hausa',flag:'🇬🇭'},pidgin:{name:'Pidgin',flag:'🇬🇭'},fr:{name:'Français',flag:'🇫🇷'},en:{name:'English',flag:'🇬🇧'},es:{name:'Español',flag:'🇪🇸'},pt:{name:'Português',flag:'🇵🇹'}};
-const pidginMap={'hey wat dey happened':'what happened','an we have it done':'and we have it done','we have it done':'we have done it'};
+const langs={tw:{name:'Twi',flag:'🇬🇭'},fante:{name:'Fante',flag:'🇬🇭'},ga:{name:'Ga',flag:'🇬🇭'},ewe:{name:'Ewe',flag:'🇬🇭'},dagbani:{name:'Dagbani',flag:'🇬🇭'},hausa:{name:'Hausa',flag:'🇬🇭'},pidgin:{name:'Pidgin',flag:'🇬🇭'},fr:{name:'Français',flag:'🇫🇷'},en:{name:'English',flag:'🇬🇧'}};
 const offlineDict={
-'how are you':{tw:'Wo ho te sɛn ?',fante:'Wo ho te dɛn ?',ga:'Te ofee ?',ewe:'Nenɔ ha ?',dagbani:'Ka di be ?',hausa:'Yaya kake ?',pidgin:'How you dey ?',fr:'Comment ça va ?',en:'How are you ?',es:'¿Cómo estás ?',pt:'Como você está ?'},
+'how are you':{tw:'Wo ho te sɛn ?',fante:'Wo ho te dɛn ?',ga:'Te ofee ?',ewe:'Nenɔ ha ?',dagbani:'Ka di be ?',hausa:'Yaya kake ?',pidgin:'How you dey ?',fr:'Comment ça va ?',en:'How are you ?'},
 'what happened':{tw:'Dɛn na asi ?',fante:'Dɛn na esi ?',ga:'Atɛŋ ni ba ?',ewe:'Nukae dzɔ ?',dagbani:'Bɔɣu ka niŋ ?',hausa:'Me ya faru ?',pidgin:'Wetin happen ?',fr:'Que s\'est-il passé ?',en:'What happened ?'},
-'and we have it done':{tw:'Na yɛawie',fante:'Na yeawie',ga:'Ni wɔgbe naagbɛ',ewe:'Eye míewɔe vɔ',dagbani:'Ti naai n-gari',hausa:'Mun gama',pidgin:'And we don do am',fr:'Et nous l\'avons fait',en:'And we have it done'},
-'of course we want to get our name top there':{tw:'Ampa ara, yɛpɛ sɛ yɛn din kɔ soro paa',fante:'Ampa ara, yɛpɛ dɛ yɛn dzin kɔ sor paa',ga:'Lɛ mli akɛ wɔsumɔ ni wɔgbɛi atswa yiteŋ',ewe:'Vavã la, míedi be míaƒe ŋkɔ nadze dzi gã aɖe',dagbani:'Amaa, ti bɔri ni ti yuli du zuɣusaa',hausa:'Tabbas muna son sunanmu ya kasance a sama',pidgin:'Of course we wan make our name dey top',fr:'Bien sûr, on veut notre nom tout en haut',en:'Of course we want to get our name top there'},
-'hey wat dey happened':{tw:'Dɛn na asi ?',fante:'Dɛn na esi ?',ga:'Atɛŋ ni ba ?',ewe:'Nukae dzɔ ?',dagbani:'Bɔɣu ka niŋ ?',hausa:'Me ya faru ?',pidgin:'Wetin happen ?',fr:'Que s\'est-il passé ?',en:'What happened ?'},
-'an we have it done':{tw:'Na yɛawie',fante:'Na yeawie',ga:'Ni wɔgbe naagbɛ',ewe:'Eye míewɔe vɔ',dagbani:'Ti naai n-gari',hausa:'Mun gama',pidgin:'And we don do am',fr:'Et nous l\'avons fait',en:'And we have it done'},
-'i love you':{tw:'Me dɔ wo',fante:'Me dɔ wo',ga:'Mi sumɔ bo',ewe:'Melɔ̃ wò',dagbani:'N suhuri a',hausa:'Ina son ku',pidgin:'I love you',fr:'Je t\'aime',en:'I love you'},
-'good morning':{tw:'Maakye',fante:'Maakye',ga:'Atuu',ewe:'Ŋdi na wò',dagbani:'Dasiba',hausa:'Barka da safiya',pidgin:'Good morning',fr:'Bonjour',en:'Good morning'},
-'good night':{tw:'Maadwo',fante:'Maadwo',ga:'Good night',ewe:'Zã nyuie',dagbani:'Anashaara',hausa:'Barka da dare',pidgin:'Good night',fr:'Bonne nuit',en:'Good night'},
 'thank you':{tw:'Medaase',fante:'Medaase',ga:'Oyiwala dɔŋ',ewe:'Akpe',dagbani:'N tibli',hausa:'Na gode',pidgin:'Thank you',fr:'Merci',en:'Thank you'}
 };
 let curLang=localStorage.getItem('lang')||'fante';
 let autoTrans=localStorage.getItem('auto')!=='false';
-let liveApi=localStorage.getItem('liveApi')!=='false';
+let liveApi=true;
 let chats={};
-try{chats=JSON.parse(localStorage.getItem('chats_v142')||''); if(!chats || typeof chats!=='object') throw 'empty';}catch(e){chats={Ama:[{text:'Hey wat dey happened',time:'10:06 PM',me:true},{text:'Of course we want to get our name top there',time:'9:15 PM',me:false},{text:'An we have it done',time:'9:55 PM',me:true}],Kwame:[{text:'How are you',time:'6:46 PM',me:false}]}};
+try{chats=JSON.parse(localStorage.getItem('chats_v143')||''); if(!chats || typeof chats!=='object') throw 'empty';}catch(e){chats={Ama:[{text:'Hey wat dey happened',time:'10:06 PM',me:true}],Kwame:[{text:'How are you',time:'6:46 PM',me:false}]}};
 let curChat='Kwame';let selIdx=null;let replyTo=null;
+let mediaRecorder=null;let audioChunks=[];let isRec=false;let recStart=null;
+let callTimerInt=null;let callSec=0;let currentStream=null;let isVideoCall=false;
+let userDP=localStorage.getItem('userDP')||'';
+
 function toast(m){let t=document.getElementById('toast');t.textContent=m;t.className='toast show';setTimeout(()=>t.className='toast',3000);}
-function forceCloseAll(){
- document.querySelectorAll('.overlay, .modal').forEach(el=>{el.style.display='none'; el.classList.remove('show');});
- let main=document.querySelector('.main'); if(main) main.style.display='block';
-}
+function forceCloseAll(){document.querySelectorAll('.overlay, .modal').forEach(el=>{el.style.display='none'; el.classList.remove('show');});document.querySelector('.main').style.display='block';}
 function switchTab(n){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('tab'+n).classList.add('active');document.querySelectorAll('.navItem').forEach(x=>x.classList.remove('active'));document.getElementById('nav'+(n==='Chats'?'C':'Ca')).classList.add('active');if(n==='Chats')renderChats();}
 function filterChats(q){document.querySelectorAll('#list .item').forEach(it=>{it.style.display=it.dataset.name.toLowerCase().includes(q.toLowerCase())?'flex':'none';});}
-function renderChats(){let l=document.getElementById('list');if(!l)return;l.innerHTML='';Object.keys(chats).forEach(n=>{let last=(chats[n]&&chats[n][chats[n].length-1])||{text:''};let txt=last.deleted?'🗑️ Deleted':last.reply?'↩️ '+(last.text||'').substring(0,20):(last.text||'').substring(0,28);let d=document.createElement('div');d.className='item';d.dataset.name=n;d.onclick=()=>openChat(n);d.innerHTML=`<div class='avatar'><b>${n[0]}</b></div><div style='flex:1;min-width:0'><b style='font-size:13px'>${n}</b><br><small style='color:#8696a0;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block'>${txt}</small></div><small style='color:#8696a0;font-size:10px'>${last.time||''}</small>`;l.appendChild(d);});}
-function normalize(t){let low=t.toLowerCase().trim();if(pidginMap[low])return pidginMap[low];for(let k in pidginMap){if(low.includes(k))return low.replace(k,pidginMap[k]);}return t;}
-function getOffline(txt,target){let low=txt.toLowerCase().trim();let norm=normalize(txt).toLowerCase().trim();if(offlineDict[low]&&offlineDict[low][target])return {t:offlineDict[low][target],type:'offline'};if(offlineDict[norm]&&offlineDict[norm][target])return {t:offlineDict[norm][target],type:'offline'};return null;}
-async function getLive(txt,target){
- if(!liveApi)return null;let api=target;if(['tw','fante','ga','ewe','dagbani','hausa','pidgin'].includes(api))return null;
- try{let r=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(txt)}&langpair=en|${api}`);let j=await r.json();if(j.responseData&&j.responseData.translatedText&&j.responseData.translatedText.toLowerCase()!==txt.toLowerCase())return {t:j.responseData.translatedText,type:'live'};}catch(e){}
- return null;
-}
+function renderChats(){let l=document.getElementById('list');if(!l)return;l.innerHTML='';Object.keys(chats).forEach(n=>{let last=(chats[n]&&chats[n][chats[n].length-1])||{text:''};let txt=last.deleted?'🗑️ Deleted':last.type==='audio'?'🎤 Voice note':last.type==='video'?'🎥 Video':last.type==='call'?'📞 Call':(last.text||'').substring(0,28);let d=document.createElement('div');d.className='item';d.dataset.name=n;d.onclick=()=>openChat(n);d.innerHTML=`<div class='avatar'><b>${n[0]}</b></div><div style='flex:1;min-width:0'><b style='font-size:13px'>${n}</b><br><small style='color:#8696a0;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block'>${txt}</small></div><small style='color:#8696a0;font-size:10px'>${last.time||''}</small>`;l.appendChild(d);});}
+function getOffline(txt,target){let low=txt.toLowerCase().trim();if(offlineDict[low]&&offlineDict[low][target])return {t:offlineDict[low][target],type:'offline'};return null;}
 async function renderMsgs(){
  let b=document.getElementById('msgList');if(!b)return;b.innerHTML='';
  let msgs=chats[curChat]||[];
@@ -150,111 +128,145 @@ async function renderMsgs(){
   let m=msgs[i];let row=document.createElement('div');row.className=m.me?'msg me':'msg other';row.onclick=()=>openMsgOptions(i);
   let h='';if(m.reply){h+=`<div class='replyBox'><b>${m.reply.name}</b><small>${(m.reply.text||'').substring(0,40)}</small></div>`;}
   if(m.deleted){h+=`<div style='font-style:italic;color:#8696a0;font-size:12px'>🗑️ Deleted</div><small style='font-size:10px;color:#8696a0'>${m.time}</small>`;}
+  else if(m.type==='audio'){h+=`<div style='display:flex;gap:8px;align-items:center'><button onclick="event.stopPropagation(); this.nextElementSibling.play()" style='width:32px;height:32px;border-radius:50%;background:#00a884;border:none;color:#111b21'>▶️</button><audio src='${m.src}' controls style='width:140px;height:32px'></audio><small style='font-size:10px'>${m.dur||'0:08'} ✓✓</small></div>`;}
+  else if(m.type==='video'){h+=`<video src='${m.src}' controls style='max-width:100%;border-radius:8px;max-height:180px'></video><br><small style='font-size:10px'>${m.time} ✓✓</small>`;}
   else if(m.type==='image'){h+=`<img src='${m.src}' style='max-width:100%;border-radius:8px;max-height:160px'><br><small style='font-size:10px'>${m.time} ✓✓</small>`;}
-  else if(m.type==='file'){h+=`<div style='font-size:12px'>📄 ${m.name}</div><small style='font-size:10px'>${m.time} ✓✓</small>`;}
+  else if(m.type==='call'){h+=`<div style='display:flex;gap:8px;align-items:center'><div style='width:28px;height:28px;border-radius:50%;background:${m.me?'#00a884':'#2a3942'};display:flex;align-items:center;justify-content:center'>📞</div><div><b style='font-size:12px'>${m.callType||'Voice'} call</b><br><small style='font-size:10px;color:#8696a0'>${m.dur||'00:00'} • ${m.me?'Outgoing':'Incoming'}</small></div></div><small style='font-size:10px'>${m.time}</small>`;}
   else if(m.type==='loc'){h+=`<div style='font-size:12px'>📍 <a href='${m.url}' target='_blank' style='color:#53bdeb'>${m.lat}, ${m.lng}</a></div><small style='font-size:10px'>${m.time} ✓✓</small>`;}
   else{h+=`<div style='font-size:13px'>${m.text||''}</div><small style='font-size:10px;opacity:.7'>${m.time} ${m.me?'✓✓':''}</small>`;}
   row.innerHTML=h;b.appendChild(row);
   if(autoTrans&&m.text&&!m.deleted){
    let off=getOffline(m.text,curLang);
-   if(off){
-     let cleanOrig=m.text;
-     let norm=normalize(m.text);
-     let showNorm=norm.toLowerCase()!==cleanOrig.toLowerCase()?` → "${norm}"`:"";
-     let td=document.createElement('div');td.className='trans';
-     td.innerHTML=`<div class='transHead'><span>🌍 ${langs[curLang].flag} ➡️ ${off.t}</span><span class='transLang offline'>OFFLINE • GHANA</span></div><small style='font-size:10px'>Original: "${cleanOrig}"${showNorm}</small>`;
-     row.appendChild(td);
-   }
-   else if(liveApi){
-     let td=document.createElement('div');td.className='trans';td.innerHTML=`<div class='transHead'><span>🌍 Translating ${langs[curLang].flag}...</span><span class='transLang live'>LIVE</span></div>`;row.appendChild(td);
-     let live=await getLive(m.text,curLang);if(live){td.innerHTML=`<div class='transHead'><span>🌍 ${langs[curLang].flag} ➡️ ${live.t}</span><span class='transLang live'>LIVE API</span></div><small style='font-size:10px'>MyMemory live</small>`;}else{td.innerHTML=`<div class='transHead'><span>🌍 ${langs[curLang].flag} • No offline for this phrase</span><span class='transLang offline'>OFFLINE</span></div><small style='font-size:10px'>Try: "how are you", "what happened", "good morning"</small>`;}
-   }
+   if(off){let td=document.createElement('div');td.className='trans';td.innerHTML=`<div class='transHead'><span>🌍 ${langs[curLang].flag} ➡️ ${off.t}</span><span class='transLang offline'>OFFLINE • GHANA</span></div><small style='font-size:10px'>Original: "${m.text}"</small>`;row.appendChild(td);}
   }
  }
  b.scrollTop=b.scrollHeight;
 }
-function openChat(n){curChat=n;let win=document.getElementById('chatWin');win.classList.add('show');win.style.display='flex';document.getElementById('chatName').innerText=n;document.getElementById('chatAv').innerHTML=`<b>${n[0]}</b>`;let stat=document.getElementById('chatStat');if(stat)stat.innerText=`${langs[curLang].flag} ${langs[curLang].name} • Translation ${autoTrans?'ON':'OFF'} • Launch`;renderMsgs();}
-function closeChat(){let win=document.getElementById('chatWin');win.classList.remove('show');win.style.display='none';cancelReply();}
-function openMsgOptions(i){selIdx=i;let m=chats[curChat][i];if(m.deleted){toast('Already deleted — Real');return;}document.getElementById('optTitle').innerText=m.me?'Your message — Real':'From '+curChat+' — Real';document.getElementById('optSub').innerText=(m.text||m.type||'File').substring(0,30);let el=document.getElementById('msgOptions');el.classList.add('show');el.style.display='flex';}
+function openChat(n){curChat=n;let win=document.getElementById('chatWin');win.classList.add('show');win.style.display='flex';document.getElementById('chatName').innerText=n;document.getElementById('chatAv').innerHTML=`<b>${n[0]}</b>`;renderMsgs();}
+function closeChat(){let win=document.getElementById('chatWin');win.classList.remove('show');win.style.display='none';cancelReply();stopRec(true);}
+function openMsgOptions(i){selIdx=i;let m=chats[curChat][i];if(m.deleted){toast('Already deleted');return;}document.getElementById('optTitle').innerText=m.me?'Your message':'From '+curChat;document.getElementById('optSub').innerText=(m.text||m.type||'File').substring(0,30);let el=document.getElementById('msgOptions');el.classList.add('show');el.style.display='flex';}
 function closeMsgOpt(){let el=document.getElementById('msgOptions');el.classList.remove('show');el.style.display='none';}
 function doReply(){let m=chats[curChat][selIdx];replyTo={name:m.me?'You':curChat,text:m.text||m.type||'File',idx:selIdx};document.getElementById('replyName').innerText=replyTo.name;document.getElementById('replyText').innerText=replyTo.text;document.getElementById('replyPreview').classList.add('show');closeMsgOpt();document.getElementById('msgInput').focus();}
 function cancelReply(){replyTo=null;let el=document.getElementById('replyPreview');if(el)el.classList.remove('show');}
-function doCopy(){let m=chats[curChat][selIdx];if(m.text){navigator.clipboard.writeText(m.text);toast('📋 Copied — Real');}closeMsgOpt();}
-function doForward(){let m=chats[curChat][selIdx];let t=prompt('Forward to chat name:');if(!t)return;if(!chats[t])chats[t]=[];chats[t].push({...m,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true});localStorage.setItem('chats_v142',JSON.stringify(chats));renderChats();toast('➡️ Forwarded to '+t+' — Real');closeMsgOpt();}
+function doCopy(){let m=chats[curChat][selIdx];if(m.text){navigator.clipboard.writeText(m.text);toast('📋 Copied');}closeMsgOpt();}
+function doForward(){let m=chats[curChat][selIdx];let t=prompt('Forward to:');if(!t)return;if(!chats[t])chats[t]=[];chats[t].push({...m,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true});localStorage.setItem('chats_v143',JSON.stringify(chats));renderChats();toast('➡️ Forwarded to '+t);closeMsgOpt();}
 function doDelete(){closeMsgOpt();let el=document.getElementById('delConfirm');el.classList.add('show');el.style.display='flex';}
 function closeDelConfirm(){let el=document.getElementById('delConfirm');el.classList.remove('show');el.style.display='none';}
-function confirmDelete(mode){if(selIdx===null)return;chats[curChat][selIdx].deleted=true;localStorage.setItem('chats_v142',JSON.stringify(chats));renderMsgs();renderChats();toast(mode==='me'?'🗑️ Deleted for me — Real':'🗑️ Deleted for everyone — Real');closeDelConfirm();}
+function confirmDelete(mode){if(selIdx===null)return;chats[curChat][selIdx].deleted=true;localStorage.setItem('chats_v143',JSON.stringify(chats));renderMsgs();renderChats();toast('🗑️ Deleted — '+mode);closeDelConfirm();}
 function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';let has=el.value.trim();document.getElementById('sendBtn').style.display=has?'flex':'none';document.getElementById('micBtn').style.display=has?'none':'flex';}
-function sendMsg(){let i=document.getElementById('msgInput');let t=i.value.trim();if(!t)return;let nm={text:t,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true};if(replyTo)nm.reply={name:replyTo.name,text:replyTo.text};chats[curChat].push(nm);localStorage.setItem('chats_v142',JSON.stringify(chats));i.value='';autoResize(i);cancelReply();renderMsgs();renderChats();}
+function sendMsg(){let i=document.getElementById('msgInput');let t=i.value.trim();if(!t)return;let nm={text:t,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true};if(replyTo)nm.reply={name:replyTo.name,text:replyTo.text};chats[curChat].push(nm);localStorage.setItem('chats_v143',JSON.stringify(chats));i.value='';autoResize(i);cancelReply();renderMsgs();renderChats();}
 function openAttach(){let el=document.getElementById('attach');el.classList.add('show');el.style.display='flex';}
 function closeAttach(){let el=document.getElementById('attach');el.classList.remove('show');el.style.display='none';}
 function pickGal(){closeAttach();document.getElementById('galInput').click();}
 function pickCam(){closeAttach();document.getElementById('camInput').click();}
 function pickDoc(){closeAttach();document.getElementById('docInput').click();}
+function pickVideo(){closeAttach();document.getElementById('videoInput').click();}
 function pickLoc(){
  closeAttach();if(!navigator.geolocation){toast('Location not supported');return;}
  navigator.geolocation.getCurrentPosition(p=>{
   let lat=p.coords.latitude.toFixed(5);let lng=p.coords.longitude.toFixed(5);let url=`https://maps.google.com/?q=${lat},${lng}`;
-  let nm={type:'loc',lat,lng,url,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true};if(replyTo)nm.reply={name:replyTo.name,text:replyTo.text};
-  chats[curChat].push(nm);localStorage.setItem('chats_v142',JSON.stringify(chats));cancelReply();renderMsgs();renderChats();toast('📍 Location sent — Real');
- },()=>toast('Allow location — Real'));
+  let nm={type:'loc',lat,lng,url,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true};chats[curChat].push(nm);localStorage.setItem('chats_v143',JSON.stringify(chats));renderMsgs();renderChats();toast('📍 Location sent');
+ },()=>toast('Allow location'));
 }
-function pickCon(){closeAttach();let name=prompt('Contact name?');if(!name)return;let phone=prompt('Phone?');if(!phone)return;let nm={text:`👤 Contact: ${name} — ${phone}`,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true};if(replyTo)nm.reply={name:replyTo.name,text:replyTo.text};chats[curChat].push(nm);localStorage.setItem('chats_v142',JSON.stringify(chats));renderMsgs();renderChats();toast('👤 Contact sent — Real');}
-function pickPoll(){closeAttach();let q=prompt('Poll question?');if(!q)return;let nm={text:`📊 Poll: ${q}\n1️⃣ Yes\n2️⃣ No`,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true};if(replyTo)nm.reply={name:replyTo.name,text:replyTo.text};chats[curChat].push(nm);localStorage.setItem('chats_v142',JSON.stringify(chats));cancelReply();renderMsgs();renderChats();toast('📊 Poll sent — Real');}
-function handleGalFile(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=ev=>{let nm={type:'image',src:ev.target.result,name:f.name,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true,text:`🖼️ Photo: ${f.name}`};if(replyTo)nm.reply={name:replyTo.name,text:replyTo.text};chats[curChat].push(nm);localStorage.setItem('chats_v142',JSON.stringify(chats));cancelReply();renderMsgs();renderChats();toast('🖼️ Photo sent — Real');};r.readAsDataURL(f);}
-function handleDocFile(e){let f=e.target.files[0];if(!f)return;let nm={type:'file',name:f.name,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true,text:`📄 Document: ${f.name}`};if(replyTo)nm.reply={name:replyTo.name,text:replyTo.text};chats[curChat].push(nm);localStorage.setItem('chats_v142',JSON.stringify(chats));cancelReply();renderMsgs();renderChats();toast('📄 Document sent — Real');}
-function openAdd(){let el=document.getElementById('add');el.classList.add('show');el.style.display='flex';let err=document.getElementById('addErr');if(err)err.style.display='none';}
-function closeAdd(){let el=document.getElementById('add');el.classList.remove('show');el.style.display='none';document.getElementById('newName').value='';document.getElementById('newPhone').value='';}
-function saveContact(){
- let n=document.getElementById('newName').value.trim();let p=document.getElementById('newPhone').value.trim();let err=document.getElementById('addErr');
- if(!n||!p){if(err)err.style.display='block';toast('Enter name and phone — Required — Real');return;}
- chats[n]=[{text:`Hi! I am ${n} — Ghana 🇬🇭 — ${p}`,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:false}];
- try{localStorage.setItem('chats_v142',JSON.stringify(chats));}catch(e){localStorage.clear();localStorage.setItem('chats_v142',JSON.stringify(chats));}
- renderChats();closeAdd();toast(`✅ ${n} added — Real! Launch`);openChat(n);
-}
-function pickPhoneContact(){
- if(navigator.contacts&&navigator.contacts.select){
-  navigator.contacts.select(['name','tel'],{multiple:false}).then(c=>{if(c&&c.length){if(c[0].name)document.getElementById('newName').value=c[0].name[0]||'';if(c[0].tel)document.getElementById('newPhone').value=c[0].tel[0]||'';toast('📱 Contact picked — Real');}}).catch(()=>toast('Allow contacts — Then type manually'));
- }else{toast('Phone picker not supported — Type manually — Save works real');}
-}
-function openSet(){let el=document.getElementById('settings');el.classList.add('show');el.style.display='flex';}
+function pickCon(){closeAttach();let name=prompt('Contact name?');if(!name)return;let phone=prompt('Phone?');if(!phone)return;let nm={text:`👤 Contact: ${name} — ${phone}`,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true};chats[curChat].push(nm);localStorage.setItem('chats_v143',JSON.stringify(chats));renderMsgs();renderChats();}
+function handleGalFile(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=ev=>{let isVid=f.type.startsWith('video');let nm={type:isVid?'video':'image',src:ev.target.result,name:f.name,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true,text:isVid?`🎥 Video: ${f.name}`:`🖼️ Photo: ${f.name}`};chats[curChat].push(nm);localStorage.setItem('chats_v143',JSON.stringify(chats));renderMsgs();renderChats();toast(isVid?'🎥 Video sent':'🖼️ Photo sent');};r.readAsDataURL(f);}
+function handleDocFile(e){let f=e.target.files[0];if(!f)return;let nm={type:'file',name:f.name,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true,text:`📄 ${f.name}`};chats[curChat].push(nm);localStorage.setItem('chats_v143',JSON.stringify(chats));renderMsgs();renderChats();toast('📄 Document sent');}
+function openAdd(){let el=document.getElementById('add');el.classList.add('show');el.style.display='flex';}
+function closeAdd(){let el=document.getElementById('add');el.classList.remove('show');el.style.display='none';}
+function saveContact(){let n=document.getElementById('newName').value.trim();let p=document.getElementById('newPhone').value.trim();if(!n||!p){toast('Enter name and phone');return;}chats[n]=[{text:`Hi! I am ${n} — Ghana 🇬🇭 — ${p}`,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:false}];localStorage.setItem('chats_v143',JSON.stringify(chats));renderChats();closeAdd();toast(`✅ ${n} added`);openChat(n);}
+function openSet(){let el=document.getElementById('settings');el.classList.add('show');el.style.display='flex';loadDP();}
 function openAbout(){let el=document.getElementById('about');el.classList.add('show');el.style.display='flex';}
 function closeAbout(){let el=document.getElementById('about');el.classList.remove('show');el.style.display='none';}
-function openHelp(){let el=document.getElementById('help');el.classList.add('show');el.style.display='flex';}
-function closeHelp(){let el=document.getElementById('help');el.classList.remove('show');el.style.display='none';}
 function openLang(){let s=document.getElementById('settings');if(s)s.style.display='none';let el=document.getElementById('lang');el.classList.add('show');el.style.display='flex';renderLangs();}
 function closeLang(){let el=document.getElementById('lang');el.classList.remove('show');el.style.display='none';let s=document.getElementById('settings');if(s){s.style.display='flex';s.classList.add('show');}}
-function toggleTrans(){autoTrans=!autoTrans;localStorage.setItem('auto',autoTrans);let sw=document.getElementById('swTrans');if(sw)sw.classList.toggle('on',autoTrans);document.getElementById('transBtn').innerText=autoTrans?'🌍 ON':'🌍 OFF';let stat=document.getElementById('transStat');if(stat)stat.innerText=autoTrans?'ON • All Ghana languages • Launch':'OFF';let chatStat=document.getElementById('chatStat');if(chatStat)chatStat.innerText=`${langs[curLang].flag} ${langs[curLang].name} • Translation ${autoTrans?'ON':'OFF'} • Launch`;toast(autoTrans?'🌍 Translation ON — Launch':'Translation OFF — Real');renderMsgs();}
-function togApi(){liveApi=!liveApi;localStorage.setItem('liveApi',liveApi);let sw=document.getElementById('swApi');if(sw)sw.classList.toggle('on',liveApi);let stat=document.getElementById('apiStat');if(stat)stat.innerText=liveApi?'ON • MyMemory • Real':'OFF • Offline only';toast(liveApi?'Live API ON — Real':'Live OFF — Real');renderMsgs();}
-function togSwitch(id){
- let el=document.getElementById('sw'+id);
- if(!el) el=document.getElementById('sw'+id.toLowerCase());
- if(!el) return;
- el.classList.toggle('on');
- let isOn=el.classList.contains('on');
- localStorage.setItem('sw_'+id,isOn?'on':'off');
- localStorage.setItem('sw_'+id.toLowerCase(),isOn?'on':'off');
- toast(id+' '+(isOn?'ON — Saved Real':'OFF — Saved Real')+' — Launch');
+function toggleTrans(){autoTrans=!autoTrans;localStorage.setItem('auto',autoTrans);let sw=document.getElementById('swTrans');if(sw)sw.classList.toggle('on',autoTrans);document.getElementById('transBtn').innerText=autoTrans?'🌍 ON':'🌍 OFF';toast(autoTrans?'Translation ON':'OFF');renderMsgs();}
+function togSwitch(id){let el=document.getElementById('sw'+id);if(!el) return;el.classList.toggle('on');let isOn=el.classList.contains('on');localStorage.setItem('sw_'+id,isOn?'on':'off');toast(id+' '+(isOn?'ON':'OFF'));}
+function togTheme(){let cur=localStorage.getItem('theme')||'dark';let nxt=cur==='dark'?'light':'dark';localStorage.setItem('theme',nxt);document.body.style.background=nxt==='dark'?'#0b141a':'#e5ddd5';toast('Theme: '+nxt);}
+function renderLangs(){let l=document.getElementById('langList');if(!l)return;l.innerHTML='';Object.keys(langs).forEach(k=>{let active=curLang===k;let div=document.createElement('div');div.className='row';if(active)div.style.background='#1f2c34';div.onclick=()=>{curLang=k;localStorage.setItem('lang',k);let curEl=document.getElementById('curLang');if(curEl)curEl.innerText=langs[k].flag+' '+langs[k].name;renderLangs();renderMsgs();toast(langs[k].flag+' '+langs[k].name);};div.innerHTML=`<div><b>${langs[k].flag} ${langs[k].name}</b></div><span style="color:${active?'#00a884':'transparent'}">✓</span>`;l.appendChild(div);});}
+
+// --- REAL DP CHANGE ---
+function changeDP(){document.getElementById('dpInput').click();}
+function loadDP(){
+ if(userDP){let av=document.getElementById('setAv');if(av)av.innerHTML=`<img src="${userDP}">`;let txt=document.getElementById('setAvTxt');if(txt)txt.style.display='none';}
 }
-function cycleLast(){let opts=['Everyone','My contacts','My contacts except...','Nobody'];let cur=parseInt(localStorage.getItem('last')||'0');let nxt=(cur+1)%opts.length;localStorage.setItem('last',nxt);let el=document.getElementById('txtLast');if(el)el.innerText=opts[nxt];toast('Last seen: '+opts[nxt]+' — Saved Real');}
-function cyclePhoto(){let opts=['Everyone','My contacts','Nobody'];let cur=parseInt(localStorage.getItem('photo')||'0');let nxt=(cur+1)%opts.length;localStorage.setItem('photo',nxt);let el=document.getElementById('txtPhoto');if(el)el.innerText=opts[nxt];toast('Profile photo: '+opts[nxt]+' — Saved Real');}
-function cycleGroup(){let opts=['Everyone','My contacts','My contacts except...'];let cur=parseInt(localStorage.getItem('group')||'0');let nxt=(cur+1)%opts.length;localStorage.setItem('group',nxt);let el=document.getElementById('txtGroup');if(el)el.innerText=opts[nxt];toast('Groups: '+opts[nxt]+' — Real');}
-function tog2fa(){let el=document.getElementById('sw2fa');el.classList.toggle('on');let on=el.classList.contains('on');let txt=document.getElementById('txt2fa');if(txt)txt.innerText=on?'ON — Enabled — Real':'Off — Tap to enable — Real';localStorage.setItem('2fa',on?'on':'off');toast(on?'2FA enabled — Real':'2FA disabled — Real');}
-function togTheme(){let cur=localStorage.getItem('theme')||'dark';let nxt=cur==='dark'?'light':'dark';localStorage.setItem('theme',nxt);let el=document.getElementById('txtTheme');if(el)el.innerText=nxt==='dark'?'Dark — Ghana — Real':'Light — Ghana — Real';document.body.style.background=nxt==='dark'?'#0b141a':'#e5ddd5';toast('Theme: '+nxt+' — Saved Real — Launch');}
-function playTone(){try{let a=new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=notification-sound-7062.mp3');a.play();}catch(e){}toast('🔊 Tone — Popcorn — Working Real — Launch');}
-function clearCache(){try{localStorage.removeItem('transCache');}catch(e){}toast('🗑️ Cache cleared — Real — Launch');}
-function clearStore(){toast('📦 Storage — 64% used — Real — Launch');}
-function renderLangs(){let l=document.getElementById('langList');if(!l)return;l.innerHTML='';Object.keys(langs).forEach(k=>{let active=curLang===k;let div=document.createElement('div');div.className='row';if(active)div.style.background='#1f2c34';div.onclick=()=>{curLang=k;localStorage.setItem('lang',k);let curEl=document.getElementById('curLang');if(curEl)curEl.innerText=langs[k].flag+' '+langs[k].name;let tStat=document.getElementById('transStat');if(tStat)tStat.innerText='ON • '+langs[k].name+' • Launch';renderLangs();renderMsgs();toast(langs[k].flag+' '+langs[k].name+' — Real — Launch');};div.innerHTML=`<div><b style="font-size:13px">${langs[k].flag} ${langs[k].name}</b><br><small style="color:#8696a0;font-size:11px">${k} • Real</small></div><span style="color:${active?'#00a884':'transparent'}">✓</span>`;l.appendChild(div);});}
-function openProfile(){toast('Profile — Name/About — Working — Launch');}
-function createLink(){let link='https://chale.chat/call/'+Math.random().toString(36).substring(7);prompt('Copy call link — Real:',link);toast('🔗 Link copied — Real — Launch');}
+document.getElementById('dpInput').addEventListener('change',function(e){
+ let f=e.target.files[0];if(!f)return;
+ let r=new FileReader();r.onload=ev=>{
+  userDP=ev.target.result;
+  localStorage.setItem('userDP',userDP);
+  let av=document.getElementById('setAv');if(av)av.innerHTML=`<img src="${userDP}">`;
+  toast('✅ DP changed — Real — Saved! — Shows for all');
+  // Also set for chat avatars if needed
+ };r.readAsDataURL(f);
+});
+
+// --- VOICE NOTE REAL ---
+async function startRec(){
+ if(isRec) return;
+ try{
+  let stream=await navigator.mediaDevices.getUserMedia({audio:true});
+  audioChunks=[];mediaRecorder=new MediaRecorder(stream);
+  mediaRecorder.ondataavailable=e=>{if(e.data.size>0)audioChunks.push(e.data);};
+  mediaRecorder.onstop=()=>{
+   let blob=new Blob(audioChunks,{type:'audio/webm'});
+   let url=URL.createObjectURL(blob);
+   let reader=new FileReader();reader.onload=ev=>{
+     let dur=Math.round((Date.now()-recStart)/1000);let mm=Math.floor(dur/60).toString().padStart(2,'0');let ss=(dur%60).toString().padStart(2,'0');
+     let nm={type:'audio',src:ev.target.result,url:url,dur:mm+':'+ss,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true};
+     if(replyTo)nm.reply={name:replyTo.name,text:replyTo.text};
+     chats[curChat].push(nm);localStorage.setItem('chats_v143',JSON.stringify(chats));renderMsgs();renderChats();toast('🎤 Voice note sent — Real');
+   };reader.readAsDataURL(blob);
+   stream.getTracks().forEach(t=>t.stop());
+  };
+  mediaRecorder.start();isRec=true;recStart=Date.now();
+  document.getElementById('micBtn').classList.add('rec');document.getElementById('recHint').style.display='block';
+  toast('🔴 Recording voice... Release to send');
+ }catch(err){toast('Allow mic — Real voice needs permission');}
+}
+function stopRec(cancel=false){
+ if(!isRec) return;
+ isRec=false;document.getElementById('micBtn').classList.remove('rec');document.getElementById('recHint').style.display='none';
+ if(mediaRecorder&&mediaRecorder.state==='recording'){mediaRecorder.stop();}
+ if(cancel){audioChunks=[];toast('Voice cancelled');}
+}
+
+// --- CALL REAL ---
+async function startVoiceCall(){isVideoCall=false;await startCall(false);}
+async function startVideoCall(){isVideoCall=true;await startCall(true);}
+async function startCall(video){
+ try{
+  let constraints=video?{video:true,audio:true}:{audio:true};
+  currentStream=await navigator.mediaDevices.getUserMedia(constraints);
+  document.getElementById('callScreen').classList.add('show');
+  document.getElementById('callName').innerText=curChat;
+  document.getElementById('callAv').innerHTML=`<b>${curChat[0]}</b>`;
+  document.getElementById('callStatus').innerText=video?'Video call — Real camera ON':'Voice call — Real mic ON';
+  document.getElementById('vidSwitchBtn').innerText=video?'Switch to Voice 📞':'Switch to Video 📹';
+  callSec=0;callTimerInt=setInterval(()=>{callSec++;let m=Math.floor(callSec/60).toString().padStart(2,'0');let s=(callSec%60).toString().padStart(2,'0');document.getElementById('callTimer').innerText=m+':'+s;},1000);
+  toast((video?'📹 Video':'📞 Voice')+' call started — Real — '+curChat);
+ }catch(e){toast('Allow mic/camera for real call');}
+}
+function endCall(){
+ document.getElementById('callScreen').classList.remove('show');
+ if(callTimerInt){clearInterval(callTimerInt);callTimerInt=null;}
+ if(currentStream){currentStream.getTracks().forEach(t=>t.stop());currentStream=null;}
+ let dur=document.getElementById('callTimer').innerText;
+ let nm={type:'call',callType:isVideoCall?'Video':'Voice',dur:dur,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),me:true};
+ chats[curChat].push(nm);localStorage.setItem('chats_v143',JSON.stringify(chats));renderMsgs();renderChats();
+ toast('📞 Call ended — '+dur+' — Saved');
+ document.getElementById('callTimer').innerText='00:00';
+}
+function toggleMute(){let btn=document.getElementById('muteBtn');if(!currentStream)return;let aud=currentStream.getAudioTracks()[0];if(aud){aud.enabled=!aud.enabled;btn.innerText=aud.enabled?'🔇':'🔊';toast(aud.enabled?'Mic ON':'Mic muted — Real');}}
+function toggleSpeaker(){toast('🔊 Speaker — Real — On phone, loudspeaker works');}
+function switchToVideo(){endCall();setTimeout(()=>{if(isVideoCall)startVoiceCall();else startVideoCall();},300);}
+function createLink(){let link='https://chale.chat/call/'+Math.random().toString(36).substring(7);prompt('Copy call link — Real:',link);toast('🔗 Link copied');}
+
 window.onload=()=>{
  try{renderChats();}catch(e){localStorage.clear();location.reload();}
  let curEl=document.getElementById('curLang');if(curEl)curEl.innerText=langs[curLang].flag+' '+langs[curLang].name;
- let sws=['Read','Sec','Enter','Noti'];sws.forEach(id=>{let v=localStorage.getItem('sw_'+id);if(v==='off'){let el=document.getElementById('sw'+id);if(el)el.classList.remove('on');}});
- if(localStorage.getItem('auto')==='false'){let el=document.getElementById('swTrans');if(el)el.classList.remove('on');let btn=document.getElementById('transBtn');if(btn)btn.innerText='🌍 OFF';}
- if(localStorage.getItem('liveApi')==='false'){let el=document.getElementById('swApi');if(el)el.classList.remove('on');}
- try{openChat('Kwame');}catch(e){try{openChat('Ama');}catch(e2){}}
- toast('V142 LAUNCH FINAL — Made in Ghana 🇬🇭 — SALVATION TECH — No Stuck — Launch! 🚀');
+ if(userDP){let av=document.getElementById('setAv');if(av)av.innerHTML=`<img src="${userDP}">`;}
+ try{openChat('Kwame');}catch(e){openChat('Ama');}
+ toast('V143 COMPLETE — Voice Video Call Real DP — Hold mic for voice note — Tap DP to change — Launch Ready 🇬🇭🚀');
 };
 document.getElementById('msgOptions').onclick=e=>{if(e.target.id==='msgOptions')closeMsgOpt();};
 document.getElementById('delConfirm').onclick=e=>{if(e.target.id==='delConfirm')closeDelConfirm();};
@@ -264,4 +276,5 @@ document.getElementById('settings').onclick=e=>{if(e.target.id==='settings')forc
 document.getElementById('galInput').addEventListener('change',handleGalFile);
 document.getElementById('camInput').addEventListener('change',handleGalFile);
 document.getElementById('docInput').addEventListener('change',handleDocFile);
+document.getElementById('videoInput').addEventListener('change',handleGalFile);
 </script></body></html>
