@@ -1,11 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>ChaleChat V150 - DEV - Ghana First Translator</title>
-<meta name="viewport" content="width=device-width">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChaleChat V150 - Ghana's First Translating Messenger</title>
+<style>
+body{margin:0;font-family:system-ui;background:#0a0a0a;color:#fff}
+.topbar{background:#111;color:#FFD700;padding:8px;text-align:center;font-size:13px;position:sticky;top:0;z-index:99;border-bottom:1px solid #333}
+.header{padding:20px;text-align:center;background:linear-gradient(135deg,#000,#222)}
+.header h1{margin:0;font-size:28px} .header span{color:#FFD700}
+.chatbox{max-width:600px;margin:0 auto;padding:15px;height:60vh;overflow-y:auto;background:#0f0f0f}
+.msg{padding:10px 14px;border-radius:18px;margin:8px 0;max-width:80%;font-size:14px}
+.me{background:#FFD700;color:#000;margin-left:auto;border-bottom-right-radius:4px}
+.them{background:#222;color:#fff;border-bottom-left-radius:4px}
+.controls{max-width:600px;margin:0 auto;padding:10px;display:flex;gap:8px;align-items:center;background:#111;position:sticky;bottom:0}
+.controls input{flex:1;padding:12px;border-radius:24px;border:none;background:#222;color:#fff;outline:none}
+.controls button{padding:12px 18px;border-radius:24px;border:none;background:#FFD700;color:#000;font-weight:bold}
+select{padding:8px 12px;border-radius:20px;background:#222;color:#fff;border:1px solid #333}
+.small{font-size:11px;opacity:.6;text-align:center;padding:10px}
+</style>
 </head>
 <body>
-<h1>ChaleChat V150 DEV loading...</h1>
-<p>Offline Mode Active - Twi | Pidgin | Fante</p>
+<div class="topbar">🇬🇭 V150 DEV • Offline Mode Active • Built in Accra on Phone • Hackathon Ready</div>
+<div class="header">
+<h1>Chale<span>Chat</span></h1>
+<p style="opacity:.7;font-size:13px;margin:5px 0">Ghana's First Translating Messenger<br>Twi • Pidgin • Fante • Ewe • Ga • Yoruba • English • French • Swahili</p>
+<select id="fromLang"><option value="en">English</option><option value="twi">Twi</option><option value="pidgin">Pidgin</option><option value="fante">Fante</option><option value="ewe">Ewe</option><option value="ga">Ga</option></select>
+<span>→</span>
+<select id="toLang"><option value="twi">Twi</option><option value="pidgin">Pidgin</option><option value="fante">Fante</option><option value="ewe">Ewe</option><option value="ga">Ga</option><option value="en">English</option></select>
+</div>
+
+<div class="chatbox" id="chat">
+<div class="msg them">Maakye! 🇬🇭 ChaleChat V150 dey here. Type something — I go translate am offline. No data needed.</div>
+</div>
+
+<div class="controls">
+<input id="input" placeholder="Type in English or Pidgin..." />
+<button onclick="send()">Send</button>
+</div>
+<div class="small">V150 • Offline Dictionary • Ready for Muse Spark API tomorrow • salvation441-lgtm/chalechat</div>
+
+<script>
+const dict={
+en_twi:{"how are you":"wo ho te sen","good morning":"maakye","good afternoon":"maaha","good evening":"maadwo","i love you":"me do wo","thank you":"medaase","come":"bra","go":"ko","money":"sika","friend":"adamfo","brother":"nua","water":"nsuo","food":"aduane","yes":"aane","no":"daabi","my friend":"me adamfo","what's up":"ɛte sɛn","i'm fine":"me ho ye"},
+en_pidgin:{"how are you":"how you dey","good morning":"how morning","thank you":"thank you","come":"come","money":"money","friend":"chale","brother":"bro","water":"water","food":"chop","yes":"yes","no":"no","my friend":"my chale","what's up":"how far","i'm fine":"i dey"},
+en_fante:{"how are you":"wo ho te sen","good morning":"maakye","thank you":"medaase","come":"bra","money":"sika","friend":"adamfo","yes":"aane","no":"daabi","food":"eduan","water":"nsu"},
+pidgin_twi:{"how you dey":"wo ho te sen","my chale":"me adamfo"}
+};
+function translate(text,from,to){
+let t=text.toLowerCase().trim();
+let key=from+"_"+to;
+let d=dict[key] || dict["en_"+to] || {};
+return d[t] || "[V150 Offline]: "+text+" → ("+to+" translation go be live with API tomorrow, but offline demo dey work! Medaase!)";
+}
+function send(){
+let input=document.getElementById("input");
+let text=input.value.trim(); if(!text) return;
+let from=document.getElementById("fromLang").value;
+let to=document.getElementById("toLang").value;
+let chat=document.getElementById("chat");
+chat.innerHTML+=`<div class="msg me">${text}<br><small style="opacity:.6">${from} → ${to}</small></div>`;
+let translated=translate(text,from,to);
+setTimeout(()=>{chat.innerHTML+=`<div class="msg them">${translated}</div>`; chat.scrollTop=chat.scrollHeight;},400);
+input.value=""; chat.scrollTop=chat.scrollHeight;
+}
+document.getElementById("input").addEventListener("keypress",e=>{if(e.key==="Enter") send()});
+</script>
 </body>
 </html>
