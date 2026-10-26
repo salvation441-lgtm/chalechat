@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>ChaleChat V147 — Auto Contact</title>
+<title>ChaleChat V148 — Auto Translate Both Ways</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,sans-serif;-webkit-tap-highlight-color:transparent}
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:#0b141a;color:#e9edef;height:100dvh;display:flex;flex-direction:column}
 .header{background:#202c33;padding:10px 12px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:50}
 .avatar{width:40px;height:40px;border-radius:50%;overflow:hidden;background:#111;border:2px solid #00a88433}
@@ -19,18 +19,16 @@ body{background:#0b141a;color:#e9edef;height:100dvh;display:flex;flex-direction:
 .screen{flex:1;overflow-y:auto;position:relative}
 .settings{padding:10px 10px 100px 10px}
 .card{background:#202c33;margin-bottom:10px;padding:16px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;min-height:80px;cursor:pointer}
-.card:active{background:#2a3942}
-.card b{font-size:15px}
-.card p{font-size:12.5px;color:#8696a0;margin-top:4px}
-.card img{width:52px;height:52px;border-radius:50%;object-fit:cover;margin-top:8px}
-.change{color:#00a884;font-weight:800;padding:16px;margin:-16px;min-width:90px;text-align:right}
 .fab{position:fixed;right:16px;bottom:20px;width:58px;height:58px;border-radius:18px;background:#00a884;color:white;border:none;font-size:30px;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,168,132,0.4);z-index:30}
 .chat-area{padding:12px;display:flex;flex-direction:column;gap:8px}
-.bubble{max-width:82%;padding:10px 12px;border-radius:16px;font-size:14.5px}
-.bubble.me{align-self:flex-end;background:#005c4b}
-.bubble.them{align-self:flex-start;background:#202c33}
-.meta{font-size:10px;color:#ffffff99;margin-top:6px;text-align:right}
-.translation{margin-top:8px;background:#0a332c;border-left:3px solid #00a884;padding:8px 10px;border-radius:10px;font-size:13px}
+.bubble{max-width:82%;padding:10px 12px;border-radius:16px;font-size:14.5px;position:relative}
+.bubble.me{align-self:flex-end;background:#005c4b;border-bottom-right-radius:4px}
+.bubble.them{align-self:flex-start;background:#202c33;border-bottom-left-radius:4px}
+.meta{font-size:10px;color:#ffffff99;margin-top:6px;text-align:right;display:flex;gap:4px;justify-content:flex-end}
+.reply-preview{border-left:3px solid #00a884;background:#00000030;padding:6px 8px;border-radius:6px;margin-bottom:6px;font-size:12.5px;color:#e9edefcc}
+.translation{margin-top:8px;background:linear-gradient(90deg,#0a332c,#0e2a1e);border-left:3px solid #00a884;padding:8px 10px;border-radius:10px;font-size:13px;animation:fadeIn 0.3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.reply-bar{background:#182026;padding:8px 12px;display:flex;align-items:center;gap:10px;border-left:3px solid #00a884;display:none}
 .input-bar{background:#202c33;padding:6px 8px;display:flex;align-items:flex-end;gap:6px;position:sticky;bottom:0}
 .input-wrap{flex:1;background:#2a3942;border-radius:24px;display:flex;align-items:flex-end;padding:5px 6px 5px 14px}
 .input-wrap textarea{flex:1;background:transparent;border:none;color:white;outline:none;resize:none;max-height:100px;min-height:22px;padding:8px 0;font-size:15px}
@@ -38,22 +36,23 @@ body{background:#0b141a;color:#e9edef;height:100dvh;display:flex;flex-direction:
 .mic{background:#00a884;color:white}
 .mic.recording{background:#f15c6d}
 .send{background:#00a884;color:white;display:none}
-.bottom-sheet{position:fixed;bottom:0;left:0;right:0;background:#111b21;border:1px solid #2a3942;border-bottom:none;border-radius:24px 24px 0 0;padding:18px 16px 32px 16px;z-index:100;display:none;max-height:90vh;overflow-y:auto;box-shadow:0 -12px 40px rgba(0,0,0,0.8)}
+.bottom-sheet{position:fixed;bottom:0;left:0;right:0;background:#111b21;border:1px solid #2a3942;border-bottom:none;border-radius:24px 24px 0 0;padding:18px 16px 32px 16px;z-index:100;display:none;max-height:90vh;overflow-y:auto}
 .sheet-handle{height:4px;width:40px;background:#2a3942;border-radius:10px;margin:0 auto 14px}
 .sheet-opt{padding:18px 10px;border-bottom:1px solid #202c33;font-size:15px;display:flex;justify-content:space-between;align-items:center}
-.input-field{width:100%;background:#202c33;border:1px solid #2a3942;border-radius:12px;padding:14px;color:white;font-size:15px;outline:none;margin-top:10px}
-.input-field:focus{border-color:#00a884}
-.btn-primary{width:100%;background:#00a884;color:white;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:800;margin-top:14px}
+.input-field{width:100%;background:#202c33;border:1px solid #2a3942;border-radius:12px;padding:14px;color:white;font-size:15px;margin-top:10px;outline:none}
+.btn-primary{width:100%;background:#00a884;color:white;border:none;border-radius:12px;padding:14px;font-weight:800;margin-top:14px}
 .btn-dash{width:100%;background:#1f2c34;border:1px dashed #00a884;color:#00a884;border-radius:12px;padding:14px;font-weight:800;margin-top:14px}
 .btn-ghost{width:100%;background:transparent;color:#8696a0;border:none;padding:12px;margin-top:8px}
-.video-preview{width:100%;border-radius:12px;max-height:260px;margin-top:6px}
+.context-menu{position:fixed;background:#233138;border-radius:14px;overflow:hidden;z-index:200;box-shadow:0 12px 30px rgba(0,0,0,0.6);min-width:240px;display:none}
+.context-menu div{padding:16px 18px;font-size:14.5px}
+.context-menu div:active{background:#2a3942}
 </style>
 </head>
 <body>
 <div class="header">
-<button class="back" style="width:40px;height:40px;background:#00a884;border-radius:12px;border:none;color:white" onclick="showScreen('chats')">←</button>
+<button style="width:40px;height:40px;background:#00a884;border-radius:12px;border:none;color:white" onclick="showScreen('chats')">←</button>
 <div class="avatar"><img id="hImg" src="https://i.pravatar.cc/100?img=12"></div>
-<div style="flex:1"><div class="name" id="hName">Kwame</div><div class="sub" id="hSub">🇬🇭 Twi • Translation ON</div></div>
+<div style="flex:1"><div class="name" id="hName">? 1l1p</div><div class="sub" id="hSub">🇪🇸 Spanish • Translation ON</div></div>
 <button class="badge" id="transBtn" onclick="toggleTrans()">🌍 ON</button>
 </div>
 <div class="tabs"><button id="tChats" class="active" onclick="showScreen('chats')">Chats</button><button id="tChat" onclick="showScreen('chat')">Chat</button><button id="tSet" onclick="showScreen('settings')">Settings</button></div>
@@ -61,12 +60,12 @@ body{background:#0b141a;color:#e9edef;height:100dvh;display:flex;flex-direction:
 <div id="sChats" class="screen" style="display:block;padding:12px"><div id="contactList"></div><button class="fab" onclick="openContactModal()">+</button></div>
 <div id="sChat" class="screen chat-area" style="display:none"><div id="msgs" style="display:flex;flex-direction:column;gap:8px;width:100%"></div></div>
 <div id="sSettings" class="screen settings" style="display:none">
-<div style="color:#00a884;font-size:11px;font-weight:900;margin:8px 4px;letter-spacing:1px">PRIVACY • V147 AUTO</div>
-<div class="card" onclick="openSheet('lastseen')"><div><b>Last seen</b><p id="vLast">Everyone</p></div><span class="change">Change ›</span></div>
-<div class="card" onclick="pickDP()"><div><b>Profile photo</b><p>Everyone — Tap to change</p><img id="dpImg" src="https://i.pravatar.cc/100?img=12"></div><span class="change">Change ›</span></div>
-<div class="card" onclick="openSheet('theme')"><div><b>Theme</b><p id="vTheme">Dark • Standard</p></div><span class="change">Change ›</span></div>
-<div class="card" onclick="openSheet('language')"><div><b>Language Dictionary 📖</b><p id="vLang">Twi • 10 languages</p></div><span class="change">Change ›</span></div>
+<div style="color:#00a884;font-size:11px;font-weight:900;margin:8px 4px">V148 — AUTO TRANSLATE BOTH WAYS</div>
+<div class="card" onclick="openSheet('language')"><div><b>Language Dictionary 📖</b><p id="vLang">Spanish • Auto-translate both ways</p></div><span style="color:#00a884;font-weight:800">Change ›</span></div>
+<div class="card" onclick="openSheet('theme')"><div><b>Theme</b><p id="vTheme">Dark • Standard</p></div><span style="color:#00a884;font-weight:800">Change ›</span></div>
 </div>
+
+<div id="replyBar" class="reply-bar"><div style="flex:1"><b id="replyName" style="font-size:13px;color:#00a884">Replying</b><div id="replyText" style="font-size:12px;color:#8696a0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div></div><button onclick="cancelReply()" style="background:none;border:none;color:#8696a0;font-size:20px">✕</button></div>
 
 <div class="input-bar" id="inputBar" style="display:none">
 <button class="icon-btn" style="background:#2a3942" onclick="openSheet('attach')">📎</button>
@@ -76,86 +75,124 @@ body{background:#0b141a;color:#e9edef;height:100dvh;display:flex;flex-direction:
 </div>
 
 <div class="bottom-sheet" id="sheet"><div class="sheet-handle"></div><h4 id="sheetTitle"></h4><div id="sheetOptions" style="margin-top:12px"></div><button class="btn-ghost" onclick="closeSheet()">Cancel</button></div>
+<div class="bottom-sheet" id="contactModal"><div class="sheet-handle"></div><h4 style="font-weight:900">New Contact 🇬🇭</h4><button class="btn-dash" onclick="autoPickContact()">📱 Pick from Phone — AUTO</button><input id="cName" class="input-field" placeholder="Name"><input id="cNumber" class="input-field" placeholder="Phone"><input id="cLang" class="input-field" value="Spanish"><button class="btn-primary" onclick="saveContact()">Save ✓</button><button class="btn-ghost" onclick="closeContactModal()">Cancel</button><div id="autoStatus" style="font-size:12px;color:#8696a0;margin-top:10px;text-align:center"></div></div>
 
-<!-- CONTACT AUTO MODAL -->
-<div class="bottom-sheet" id="contactModal"><div class="sheet-handle"></div>
-<h4 style="font-size:18px;font-weight:900">New Contact 🇬🇭</h4>
-<p style="color:#8696a0;font-size:13px;margin-top:6px">Auto-fill from phone contacts</p>
-<button class="btn-dash" onclick="autoPickContact()">📱 Pick from Phone — AUTO FILL</button>
-<input id="cName" class="input-field" placeholder="Full name — auto-filled" autocomplete="name">
-<input id="cNumber" class="input-field" placeholder="Phone — auto-filled" type="tel" autocomplete="tel">
-<input id="cLang" class="input-field" placeholder="Language" value="Twi">
-<button class="btn-primary" onclick="saveContact()">Save Contact ✓</button>
-<button class="btn-ghost" onclick="closeContactModal()">Cancel</button>
-<div id="autoStatus" style="font-size:12px;color:#8696a0;margin-top:10px;text-align:center">Tap Pick to auto-fill</div>
+<div class="context-menu" id="msgMenu">
+<div onclick="replyMsg()">↩️ Reply</div>
+<div onclick="deleteMsg()">🗑️ Delete for me</div>
+<div style="color:#f15c6d" onclick="deleteMsg(true)">🗑️ Delete for everyone</div>
+<div onclick="closeMsgMenu()" style="text-align:center;color:#8696a0;border-top:1px solid #2a3942">Cancel</div>
 </div>
 
 <input type="file" id="dpInput" accept="image/*" hidden><input type="file" id="genInput" hidden><input type="file" id="camInput" accept="image/*,video/*" capture="environment" hidden>
 
 <script>
 let transON=localStorage.getItem('cc_trans')!=='OFF';
-let msgs=JSON.parse(localStorage.getItem('cc_msgs_v147')||'[{"id":1,"text":"How are you","time":"6:46 PM","from":"them"}]');
-let contacts=JSON.parse(localStorage.getItem('cc_contacts')||'[{"name":"Kwame","number":"0550000000","lang":"Twi","flag":"🇬🇭","avatar":"https://i.pravatar.cc/100?img=12"}]');
-let dp=localStorage.getItem('chale_dp')||'https://i.pravatar.cc/100?img=12';
-document.getElementById('dpImg').src=dp; document.getElementById('hImg').src=dp;
-const DICT={"How are you":{"twi":"Wo ho te sɛn?","fante":"Wo ho te dɛn?","ga":"Atuu?","ewe":"Nee foa?","pidgin":"How for do?","french":"Comment ça va?","spanish":"¿Cómo estás?","portuguese":"Como você está?","arabic":"كيف حالك؟","english":"How are you?"}};
-const THEMES=[{id:'dark',name:'Dark • Standard',desc:'Default'},{id:'light',name:'Light',desc:'Day'},{id:'ghana',name:'Ghana Gold 🇬🇭',desc:'Black & Gold'},{id:'system',name:'System',desc:'Follow phone'}];
-const LANGS=[{id:'twi',name:'Twi',flag:'🇬🇭',sample:'Wo ho te sɛn?'},{id:'fante',name:'Fante',flag:'🇬🇭',sample:'Wo ho te dɛn?'},{id:'ga',name:'Ga',flag:'🇬🇭',sample:'Atuu?'},{id:'ewe',name:'Ewe',flag:'🇬🇭',sample:'Nee foa?'},{id:'pidgin',name:'Pidgin',flag:'🇬🇭',sample:'How for do?'},{id:'english',name:'English',flag:'🇬🇧',sample:'How are you?'},{id:'french',name:'French',flag:'🇫🇷',sample:'Comment ça va?'},{id:'spanish',name:'Spanish',flag:'🇪🇸',sample:'¿Cómo estás?'},{id:'portuguese',name:'Portuguese',flag:'🇵🇹',sample:'Como você está?'},{id:'arabic',name:'Arabic',flag:'🇸🇦',sample:'كيف حالك؟'}];
-const PRIV=['Everyone','My contacts','My contacts except...','Nobody'];
-function getLang(){return localStorage.getItem('cc_lang')||'twi';}
-function renderContacts(){const c=document.getElementById('contactList');c.innerHTML='';contacts.forEach(con=>{const div=document.createElement('div');div.className='card';div.innerHTML=`<div style="display:flex;gap:12px;align-items:center"><div class="avatar"><img src="${con.avatar}"></div><div><b>${con.name}</b><p>${con.number} • ${con.lang}</p></div></div><span class="change">›</span>`;div.onclick=()=>{document.getElementById('hName').textContent=con.name;document.getElementById('hSub').textContent=`${con.flag} ${con.lang} • Translation ON`;showScreen('chat');};c.appendChild(div);});}
-function renderMsgs(){const c=document.getElementById('msgs');c.innerHTML='';const lang=getLang();msgs.forEach(m=>{const d=document.createElement('div');d.className='bubble '+(m.from==='me'?'me':'them');if(m.type==='voice'){d.innerHTML=`<audio src="${m.url}" controls style="width:180px;height:32px"></audio><div class="meta">${m.dur||0}s • ${m.time}</div>`;}else if(m.type==='image'){d.innerHTML=`<img src="${m.url}" class="video-preview"><div class="meta">${m.time}</div>`;}else if(m.type==='video'){d.innerHTML=`<video src="${m.url}" controls class="video-preview"></video><div class="meta">${m.time}</div>`;}else{const tr=DICT[m.text]?DICT[m.text][lang]||m.text:m.text;d.innerHTML=`${m.text}<div class="meta">${m.time}</div>${m.from==='them'&&transON?`<div class="translation">🌍 ${tr} <span style="background:#00a88422;border:1px solid #00a88455;color:#00a884;padding:2px 8px;border-radius:12px;font-size:10px">${lang.toUpperCase()}</span></div>`:''}`;}c.appendChild(d);});}
+let msgs=JSON.parse(localStorage.getItem('cc_msgs_v148')||'[{"id":1,"text":"How are you","time":"6:46 PM","from":"them"},{"id":2,"text":"Yes am good","time":"08:43 AM","from":"me"}]');
+let contacts=JSON.parse(localStorage.getItem('cc_contacts')||'[{"name":"? 1l1p","number":"055","lang":"Spanish","flag":"🇪🇸","avatar":"https://i.pravatar.cc/100?img=3"}]');
+let replyTo=null, currentType=null, longPressId=null;
+const DICT={
+ "How are you":{twi:"Wo ho te sɛn?",fante:"Wo ho te dɛn?",ga:"Atuu?",ewe:"Nee foa?",pidgin:"How for do?",english:"How are you?",french:"Comment ça va?",spanish:"¿Cómo estás?",portuguese:"Como você está?",arabic:"كيف حالك؟"},
+ "Yes am good":{twi:"Yɛ, me ho yɛ",fante:"Nyew, me ho yɛ papa",ga:"Hɛ, mi he yɛ jogbanŋ",ewe:"Ɛɛ, me le nyuie",pidgin:"Yes, I dey fine",english:"Yes am good",french:"Oui, je vais bien",spanish:"Sí, estoy bien",portuguese:"Sim, estou bem",arabic:"نعم، أنا بخير"},
+ "Thank you":{twi:"Medaase",fante:"Me da wo ase",spanish:"Gracias",english:"Thank you",french:"Merci"}
+};
+const LANGS=[{id:'twi',name:'Twi',flag:'🇬🇭'},{id:'fante',name:'Fante',flag:'🇬🇭'},{id:'ga',name:'Ga',flag:'🇬🇭'},{id:'ewe',name:'Ewe',flag:'🇬🇭'},{id:'pidgin',name:'Pidgin',flag:'🇬🇭'},{id:'english',name:'English',flag:'🇬🇧'},{id:'french',name:'French',flag:'🇫🇷'},{id:'spanish',name:'Spanish',flag:'🇪🇸'},{id:'portuguese',name:'Portuguese',flag:'🇵🇹'},{id:'arabic',name:'Arabic',flag:'🇸🇦'}];
+
+function getLang(){return localStorage.getItem('cc_lang')||'spanish';}
+function t(text, lang){ const k=text.trim(); if(DICT[k]&&DICT[k][lang]) return DICT[k][lang]; return text; }
+
+function renderContacts(){const c=document.getElementById('contactList');c.innerHTML='';contacts.forEach(con=>{const div=document.createElement('div');div.className='card';div.innerHTML=`<div style="display:flex;gap:12px;align-items:center"><div class="avatar"><img src="${con.avatar}"></div><div><b>${con.name}</b><p>${con.number} • ${con.lang}</p></div></div><span style="color:#00a884;font-weight:800">›</span>`;div.onclick=()=>{document.getElementById('hName').textContent=con.name;document.getElementById('hSub').textContent=`${con.flag} ${con.lang} • Translation ON`;localStorage.setItem('cc_lang',con.lang.toLowerCase());document.getElementById('vLang').textContent=con.lang;showScreen('chat');renderMsgs();};c.appendChild(div);});}
+
+function renderMsgs(){
+ const c=document.getElementById('msgs');c.innerHTML='';const myLang=getLang();
+ msgs.forEach(m=>{
+  const d=document.createElement('div');d.className='bubble '+(m.from==='me'?'me':'them');d.dataset.id=m.id;
+  let html='';
+  if(m.reply){html+=`<div class="reply-preview"><b>${m.reply.name}</b><br>${m.reply.text}</div>`;}
+  if(m.type==='voice'){html+=`<audio src="${m.url}" controls style="width:180px;height:32px"></audio><div class="meta">${m.dur||0}s • ${m.time} ✓✓</div>`;}
+  else{ 
+   // AUTO TRANSLATE BOTH WAYS — FIX
+   const otherLang = myLang;
+   const translated = t(m.text, otherLang);
+   const isDifferent = translated.toLowerCase() !== m.text.toLowerCase();
+   html+=`${m.text}<div class="meta">${m.time} ${m.from==='me'?'✓✓':''}</div>`;
+   if(transON && isDifferent){
+     // Show translation for BOTH me and them
+     if(m.from==='them'){
+       html+=`<div class="translation">🌍 ${translated} <span style="background:#00a88433;border:1px solid #00a88466;color:#00a884;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:800">${otherLang.toUpperCase()} • AUTO</span><br><small style="color:#8696a0">Original: ${m.text}</small></div>`;
+     } else {
+       // For my messages, show how other person will see it
+       html+=`<div class="translation" style="background:#1a2e1a;border-left-color:#00a884">🌐 Translated for ${otherLang.toUpperCase()}: <b>${translated}</b><br><small style="color:#8696a0">You sent: ${m.text}</small></div>`;
+     }
+   }
+  }
+  d.innerHTML=html;
+  let timer; d.addEventListener('touchstart',()=>{timer=setTimeout(()=>openMsgMenu(m.id),550);}); d.addEventListener('touchend',()=>clearTimeout(timer)); d.addEventListener('contextmenu',e=>{e.preventDefault();openMsgMenu(m.id);});
+  c.appendChild(d);
+ });
+ c.scrollTop=c.scrollHeight;
+}
 renderContacts();renderMsgs();
+
 function onTyping(){const has=document.getElementById('msgInput').value.trim().length>0;document.getElementById('micBtn').style.display=has?'none':'grid';document.getElementById('sendBtn').style.display=has?'grid':'none';}
-function sendText(){const inp=document.getElementById('msgInput');if(!inp.value.trim())return;msgs.push({id:Date.now(),text:inp.value.trim(),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'});localStorage.setItem('cc_msgs_v147',JSON.stringify(msgs));inp.value='';onTyping();renderMsgs();}
+function sendText(){
+ const inp=document.getElementById('msgInput');if(!inp.value.trim())return;
+ const newMsg={id:Date.now(),text:inp.value.trim(),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'};
+ if(replyTo){newMsg.reply={name:replyTo.from==='me'?'You':document.getElementById('hName').textContent,text:replyTo.text}; cancelReply();}
+ msgs.push(newMsg); localStorage.setItem('cc_msgs_v148',JSON.stringify(msgs)); inp.value=''; onTyping(); renderMsgs();
+ // AUTO CHANGE — simulate reply translation update instantly
+ setTimeout(()=>{ renderMsgs(); },100);
+}
 function toggleTrans(){transON=!transON;localStorage.setItem('cc_trans',transON?'ON':'OFF');document.getElementById('transBtn').textContent=transON?'🌍 ON':'🌍 OFF';renderMsgs();}
-function pickDP(){document.getElementById('dpInput').click();}
-document.getElementById('dpInput').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{dp=ev.target.result;localStorage.setItem('chale_dp',dp);document.getElementById('dpImg').src=dp;document.getElementById('hImg').src=dp;};r.readAsDataURL(f);});
+
+// CONTACT AUTO
 function openContactModal(){document.getElementById('contactModal').style.display='block';}
 function closeContactModal(){document.getElementById('contactModal').style.display='none';}
 async function autoPickContact(){
- const status=document.getElementById('autoStatus'); status.textContent='Opening phone contacts...'; status.style.color='#8696a0';
+ const status=document.getElementById('autoStatus'); status.textContent='Opening...';
  try{
   if('contacts' in navigator && 'ContactsManager' in window){
-   const contactsPicked=await navigator.contacts.select(['name','tel'],{multiple:false});
-   if(contactsPicked.length>0){
-    const c=contactsPicked[0]; const name=c.name[0]||''; const tel=(c.tel[0]||'').replace(/\s/g,'');
-    document.getElementById('cName').value=name; document.getElementById('cNumber').value=tel;
-    document.getElementById('cLang').value='Twi'; status.textContent='✓ Auto-filled: '+name; if(navigator.vibrate) navigator.vibrate(30); return;
-   }
+   const picked=await navigator.contacts.select(['name','tel'],{multiple:false});
+   if(picked.length>0){document.getElementById('cName').value=picked[0].name[0]||'';document.getElementById('cNumber').value=(picked[0].tel[0]||'').replace(/\s/g,'');status.textContent='✓ Auto-filled';return;}
   }
-  status.textContent='Phone picker not supported — Chrome Android 80+ needed. Type manual or enable in Chrome Settings → Site settings → Contacts';
-  status.style.color='#ffcc00';
- }catch(err){
-  if(err.name==='NotAllowedError'){status.textContent='❌ Permission denied — Allow contacts in Chrome settings';}
-  else{status.textContent='Cancelled or error: '+err.message;}
-  status.style.color='#f15c6d';
- }
+  status.textContent='Not supported on this browser — use manual';
+ }catch(e){status.textContent='Cancelled';}
 }
 function saveContact(){
- const name=document.getElementById('cName').value.trim(); const num=document.getElementById('cNumber').value.trim(); const lang=document.getElementById('cLang').value.trim()||'Twi';
- if(!name||!num){document.getElementById('autoStatus').textContent='⚠️ Fill name and number';document.getElementById('autoStatus').style.color='#f15c6d';return;}
- const flag=LANGS.find(l=>l.name.toLowerCase()===lang.toLowerCase())?.flag||'🇬🇭';
+ const name=document.getElementById('cName').value.trim(); const num=document.getElementById('cNumber').value.trim(); const lang=document.getElementById('cLang').value.trim()||'Spanish';
+ if(!name||!num)return;
+ const flag=LANGS.find(l=>l.name.toLowerCase()===lang.toLowerCase())?.flag||'🇪🇸';
  contacts.push({name,number:num,lang,flag,avatar:`https://i.pravatar.cc/100?u=${Date.now()}`}); localStorage.setItem('cc_contacts',JSON.stringify(contacts)); renderContacts(); closeContactModal(); document.getElementById('cName').value=''; document.getElementById('cNumber').value='';
- const t=document.createElement('div');t.textContent=`✓ ${name} saved`;t.style.cssText='position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#00a884;color:white;padding:12px 20px;border-radius:24px;z-index:999;font-weight:800';document.body.appendChild(t);setTimeout(()=>t.remove(),2500);
 }
+
+// REPLY + DELETE — FINAL
+function openMsgMenu(id){longPressId=id;document.getElementById('msgMenu').style.display='block';document.getElementById('msgMenu').style.left='50%';document.getElementById('msgMenu').style.top='45%';document.getElementById('msgMenu').style.transform='translateX(-50%)';if(navigator.vibrate) navigator.vibrate(20);}
+function closeMsgMenu(){document.getElementById('msgMenu').style.display='none';}
+function replyMsg(){
+ const m=msgs.find(x=>x.id===longPressId); if(!m)return;
+ replyTo=m;
+ document.getElementById('replyBar').style.display='flex';
+ document.getElementById('replyName').textContent=m.from==='me'?'You':document.getElementById('hName').textContent;
+ document.getElementById('replyText').textContent=m.text;
+ closeMsgMenu(); document.getElementById('msgInput').focus();
+}
+function cancelReply(){replyTo=null;document.getElementById('replyBar').style.display='none';}
+function deleteMsg(all){
+ msgs=msgs.filter(x=>x.id!==longPressId); localStorage.setItem('cc_msgs_v148',JSON.stringify(msgs)); renderMsgs(); closeMsgMenu();
+ const toast=document.createElement('div'); toast.textContent=all?'🗑️ Deleted for everyone':'🗑️ Deleted'; toast.style.cssText='position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#202c33;color:white;padding:10px 18px;border-radius:20px;z-index:999'; document.body.appendChild(toast); setTimeout(()=>toast.remove(),2000);
+}
+
 function openSheet(type){
- const opt=document.getElementById('sheetOptions'); const title=document.getElementById('sheetTitle'); opt.innerHTML='';
- if(type==='theme'){title.textContent='Choose theme'; THEMES.forEach(t=>{const d=document.createElement('div');d.className='sheet-opt';d.innerHTML=`<div><b>${t.name}</b><br><small style="color:#8696a0">${t.desc}</small></div><span style="color:#00a884">›</span>`;d.onclick=()=>{localStorage.setItem('themeName',t.name);document.getElementById('vTheme').textContent=t.name;closeSheet();};opt.appendChild(d);});}
- else if(type==='language'){title.textContent='Language Dictionary • 10 Languages'; LANGS.forEach(l=>{const d=document.createElement('div');d.className='sheet-opt';d.innerHTML=`<div><b>${l.flag} ${l.name}</b><br><small style="color:#8696a0">${l.sample}</small></div><span style="color:#00a884">›</span>`;d.onclick=()=>{localStorage.setItem('cc_lang',l.id);document.getElementById('vLang').textContent=l.name;document.getElementById('hSub').textContent=`${l.flag} ${l.name} • Translation ON`;renderMsgs();closeSheet();};opt.appendChild(d);});}
- else if(type==='attach'){title.textContent='Attach';opt.innerHTML=`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px"><div style="text-align:center" onclick="pickMedia('image/*')"><div style="width:54px;height:54px;border-radius:50%;background:#007bfc;display:grid;place-items:center;margin:auto">🖼️</div><small>Gallery</small></div><div style="text-align:center" onclick="pickMedia('video/*')"><div style="width:54px;height:54px;border-radius:50%;background:#a884ff;display:grid;place-items:center;margin:auto">🎥</div><small>Video</small></div><div style="text-align:center" onclick="document.getElementById('camInput').click();closeSheet()"><div style="width:54px;height:54px;border-radius:50%;background:#00a884;display:grid;place-items:center;margin:auto">📷</div><small>Camera</small></div></div>`;}
- else{title.textContent='Choose '+type; PRIV.forEach(v=>{const d=document.createElement('div');d.className='sheet-opt';d.textContent=v;d.onclick=()=>{document.getElementById('vLast').textContent=v;localStorage.setItem(type,v);closeSheet();};opt.appendChild(d);});}
+ const opt=document.getElementById('sheetOptions');const title=document.getElementById('sheetTitle');opt.innerHTML='';
+ if(type==='language'){title.textContent='Choose Language • Auto Both Ways'; LANGS.forEach(l=>{const d=document.createElement('div');d.className='sheet-opt';d.innerHTML=`<div><b>${l.flag} ${l.name}</b><br><small style="color:#8696a0">How are you = ${DICT["How are you"][l.id]||l.name}</small></div><span style="color:#00a884">›</span>`;d.onclick=()=>{localStorage.setItem('cc_lang',l.id);document.getElementById('vLang').textContent=l.name;document.getElementById('hSub').textContent=`${l.flag} ${l.name} • Translation ON`;renderMsgs();closeSheet();};opt.appendChild(d);});}
+ else if(type==='theme'){title.textContent='Theme';[{id:'dark',name:'Dark'},{id:'light',name:'Light'},{id:'ghana',name:'Ghana Gold'}].forEach(t=>{const d=document.createElement('div');d.className='sheet-opt';d.textContent=t.name;d.onclick=()=>closeSheet();opt.appendChild(d);});}
+ else{title.textContent='Choose';['Everyone','My contacts','Nobody'].forEach(v=>{const d=document.createElement('div');d.className='sheet-opt';d.textContent=v;d.onclick=()=>closeSheet();opt.appendChild(d);});}
  document.getElementById('sheet').style.display='block';
 }
 function closeSheet(){document.getElementById('sheet').style.display='none';}
-function pickMedia(a){document.getElementById('genInput').accept=a;document.getElementById('genInput').click();closeSheet();}
-document.getElementById('genInput').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const url=URL.createObjectURL(f);const isVid=f.type.startsWith('video');msgs.push({id:Date.now(),type:isVid?'video':'image',url,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'});localStorage.setItem('cc_msgs_v147',JSON.stringify(msgs));renderMsgs();});
-document.getElementById('camInput').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const url=URL.createObjectURL(f);const isVid=f.type.startsWith('video');msgs.push({id:Date.now(),type:isVid?'video':'image',url,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'});localStorage.setItem('cc_msgs_v147',JSON.stringify(msgs));renderMsgs();});
-let rec=null,chunks=[],tmr=null,st=0;const mic=document.getElementById('micBtn');
-async function rStart(){try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});rec=new MediaRecorder(stream);chunks=[];st=Date.now();rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};rec.onstop=()=>{const blob=new Blob(chunks,{type:'audio/webm'});const url=URL.createObjectURL(blob);msgs.push({id:Date.now(),type:'voice',url,dur:Math.round((Date.now()-st)/1000),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'});localStorage.setItem('cc_msgs_v147',JSON.stringify(msgs));renderMsgs();stream.getTracks().forEach(t=>t.stop());mic.classList.remove('recording');clearInterval(tmr);};rec.start();mic.classList.add('recording');tmr=setInterval(()=>{document.getElementById('msgInput').placeholder=`🎙️ ${Math.round((Date.now()-st)/1000)}s`},400);}catch{alert('Allow mic');}}
-function rStop(){if(rec&&rec.state==='recording')rec.stop();}
-mic.addEventListener('touchstart',e=>{e.preventDefault();rStart();});mic.addEventListener('touchend',e=>{e.preventDefault();rStop();});mic.addEventListener('mousedown',rStart);mic.addEventListener('mouseup',rStop);
-function showScreen(s){document.getElementById('sChats').style.display=s==='chats'?'block':'none';document.getElementById('sChat').style.display=s==='chat'?'flex':'none';document.getElementById('sSettings').style.display=s==='settings'?'block':'none';document.getElementById('inputBar').style.display=s==='chat'?'flex':'none';document.getElementById('tChats').classList.toggle('active',s==='chats');document.getElementById('tChat').classList.toggle('active',s==='chat');document.getElementById('tSet').classList.toggle('active',s==='settings');}
+document.addEventListener('click',e=>{if(!e.target.closest('.bubble')&&!e.target.closest('#msgMenu')) closeMsgMenu(); if(!e.target.closest('#sheet')&&!e.target.closest('.input-bar')&&!e.target.closest('.fab')) closeSheet();});
+
+function showScreen(s){document.getElementById('sChats').style.display=s==='chats'?'block':'none';document.getElementById('sChat').style.display=s==='chat'?'flex':'none';document.getElementById('sSettings').style.display=s==='settings'?'block':'none';document.getElementById('inputBar').style.display=s==='chat'?'flex':'none';document.getElementById('replyBar').style.display=s==='chat'&&(replyTo?'flex':'none');document.getElementById('tChats').classList.toggle('active',s==='chats');document.getElementById('tChat').classList.toggle('active',s==='chat');document.getElementById('tSet').classList.toggle('active',s==='settings');}
 </script>
 </body>
 </html>
