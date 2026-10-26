@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>ChaleChat V150 — Final Launch</title>
+<title>ChaleChat V151 — Online API + All Pickers</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:#0b141a;color:#e9edef;height:100dvh;display:flex;flex-direction:column}
@@ -18,202 +18,242 @@ body{background:#0b141a;color:#e9edef;height:100dvh;display:flex;flex-direction:
 .screen{flex:1;overflow-y:auto;position:relative}
 .settings{padding:10px 10px 100px 10px}
 .card{background:#202c33;margin-bottom:10px;padding:16px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;min-height:82px;cursor:pointer}
-.card:active{background:#2a3942;transform:scale(0.99)}
-.card b{font-size:15px}.card p{font-size:12.5px;color:#8696a0;margin-top:4px}
-.card img{width:52px;height:52px;border-radius:50%;object-fit:cover;margin-top:8px;border:2px solid #00a884}
-.change{color:#00a884;font-weight:800;min-width:90px;text-align:right;padding:16px;margin:-16px}
+.card:active{background:#2a3942}
 .fab{position:fixed;right:16px;bottom:20px;width:58px;height:58px;border-radius:18px;background:#00a884;color:white;border:none;font-size:30px;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,168,132,0.4);z-index:30}
 .chat-area{padding:12px;display:flex;flex-direction:column;gap:8px}
-.bubble{max-width:82%;padding:10px 12px;border-radius:16px;font-size:14.5px;position:relative}
+.bubble{max-width:82%;padding:10px 12px;border-radius:16px;font-size:14.5px}
 .bubble.me{align-self:flex-end;background:#005c4b;border-bottom-right-radius:4px}
 .bubble.them{align-self:flex-start;background:#202c33;border-bottom-left-radius:4px}
 .meta{font-size:10px;color:#ffffff99;margin-top:6px;text-align:right}
-.reply-preview{border-left:3px solid #00a884;background:#00000030;padding:6px 8px;border-radius:6px;margin-bottom:6px;font-size:12.5px}
 .translation{margin-top:8px;background:linear-gradient(90deg,#0a332c,#0e2a1e);border-left:3px solid #00a884;padding:8px 10px;border-radius:10px;font-size:13px}
-.live-preview{background:#182026;border-left:3px solid #00a884;padding:8px 12px;font-size:13px;color:#00e6a0;display:none;position:sticky;bottom:58px;z-index:34;animation:fadeIn 0.2s}
+.live-preview{background:#182026;border-left:3px solid #00a884;padding:8px 12px;font-size:13px;color:#00e6a0;display:none;position:sticky;bottom:58px;z-index:34}
 .reply-bar{background:#182026;padding:8px 12px;display:flex;align-items:center;gap:10px;border-left:3px solid #00a884;display:none;position:sticky;bottom:58px;z-index:35}
 .input-bar{background:#202c33;padding:6px 8px;display:flex;align-items:flex-end;gap:6px;position:sticky;bottom:0;z-index:40}
 .input-wrap{flex:1;background:#2a3942;border-radius:24px;display:flex;align-items:flex-end;padding:5px 6px 5px 14px}
 .input-wrap textarea{flex:1;background:transparent;border:none;color:white;outline:none;resize:none;max-height:100px;min-height:22px;padding:8px 0;font-size:15px}
 .icon-btn{width:44px;height:44px;border-radius:50%;border:none;display:grid;place-items:center;font-size:20px;cursor:pointer}
-.mic{background:#00a884;color:white}.mic.recording{background:#f15c6d}.send{background:#00a884;color:white;display:none}
+.mic{background:#00a884;color:white}.mic.recording{background:#f15c6d;animation:pulse 1s infinite}.send{background:#00a884;color:white;display:none}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
 .bottom-sheet{position:fixed;bottom:0;left:0;right:0;background:#111b21;border:1px solid #2a3942;border-bottom:none;border-radius:24px 24px 0 0;padding:18px 16px 32px 16px;z-index:100;display:none;max-height:90vh;overflow-y:auto;box-shadow:0 -12px 40px rgba(0,0,0,0.8)}
 .sheet-handle{height:4px;width:40px;background:#2a3942;border-radius:10px;margin:0 auto 14px}
 .sheet-opt{padding:18px 10px;border-bottom:1px solid #202c33;font-size:15px;display:flex;justify-content:space-between;align-items:center}
-.input-field{width:100%;background:#202c33;border:1px solid #2a3942;border-radius:12px;padding:14px;color:white;font-size:15px;margin-top:10px;outline:none;text-align:center;letter-spacing:6px;font-size:20px}
-.input-field.normal{letter-spacing:normal;font-size:15px;text-align:left}
+.attach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:10px}
+.attach-item{display:flex;flex-direction:column;align-items:center;gap:8px;padding:10px;border-radius:16px;background:#202c33}
+.attach-item:active{background:#2a3942}
+.attach-icon{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-size:26px;color:white}
+.input-field{width:100%;background:#202c33;border:1px solid #2a3942;border-radius:12px;padding:14px;color:white;font-size:15px;margin-top:10px;outline:none}
+.input-field.normal{text-align:left;letter-spacing:normal}
 .btn-primary{width:100%;background:#00a884;color:white;border:none;border-radius:12px;padding:14px;font-weight:800;margin-top:14px}
 .btn-dash{width:100%;background:#1f2c34;border:1px dashed #00a884;color:#00a884;border-radius:12px;padding:14px;font-weight:800;margin-top:14px}
 .btn-ghost{width:100%;background:transparent;color:#8696a0;border:none;padding:12px;margin-top:8px}
 .context-menu{position:fixed;background:#233138;border-radius:14px;overflow:hidden;z-index:200;box-shadow:0 12px 30px rgba(0,0,0,0.6);min-width:240px;display:none}
 .context-menu div{padding:16px 18px}
-@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.video-preview{width:100%;border-radius:12px;max-height:260px;margin-top:6px}
 </style>
 </head>
 <body>
 <div class="header">
 <button style="width:40px;height:40px;background:#00a884;border-radius:12px;border:none;color:white" onclick="showScreen('chats')">←</button>
 <div class="avatar"><img id="hImg" src="https://i.pravatar.cc/100?img=12"></div>
-<div style="flex:1"><div class="name" id="hName">?@ h66k</div><div class="sub" id="hSub">🇬🇭 Twi • Translation ON</div></div>
+<div style="flex:1"><div class="name" id="hName">Kwame</div><div class="sub" id="hSub">🇬🇭 Twi • Translation ON • Online</div></div>
 <button class="badge" id="transBtn" onclick="toggleTrans()">🌍 ON</button>
 </div>
 <div class="tabs"><button id="tChats" onclick="showScreen('chats')">Chats</button><button id="tChat" class="active" onclick="showScreen('chat')">Chat</button><button id="tSet" onclick="showScreen('settings')">Settings</button></div>
 
 <div id="sChats" class="screen" style="display:none;padding:12px"><div id="contactList"></div><button class="fab" onclick="openContactModal()">+</button></div>
 <div id="sChat" class="screen chat-area" style="display:flex"><div id="msgs" style="display:flex;flex-direction:column;gap:8px;width:100%"></div></div>
-
 <div id="sSettings" class="screen settings" style="display:none">
-<div style="color:#00a884;font-size:11px;font-weight:900;letter-spacing:1px;margin:6px 4px">PRIVACY • V150 FULL</div>
-<div class="card" onclick="openSheet('lastseen')"><div><b>Last seen</b><p id="vLast">Everyone</p></div><span class="change">Change ›</span></div>
-<div class="card" onclick="pickDP()"><div><b>Profile photo</b><p id="vProf">Everyone — Tap to change</p><img id="dpImg" src="https://i.pravatar.cc/100?img=12"></div><span class="change">Change ›</span></div>
-<div class="card" onclick="toggleRead()"><div><b>Read receipts</b><p id="vRead">Blue ticks — ON</p></div><input type="checkbox" id="readChk" checked style="width:22px;height:22px;pointer-events:none"></div>
-<div class="card" onclick="openSheet('groups')"><div><b>Groups</b><p id="vGrp">Everyone</p></div><span class="change">Change ›</span></div>
-<div style="color:#00a884;font-size:11px;font-weight:900;margin:14px 4px 6px">APPEARANCE & LANGUAGE</div>
-<div class="card" onclick="openSheet('theme')"><div><b>Theme</b><p id="vTheme">Dark • Standard</p></div><span class="change">Change ›</span></div>
-<div class="card" onclick="openSheet('language')"><div><b>Language Dictionary 📖</b><p id="vLang">Twi • Auto both ways • Live</p></div><span class="change">Change ›</span></div>
-<div style="color:#00a884;font-size:11px;font-weight:900;margin:14px 4px 6px">SECURITY • COMPLETE</div>
-<div class="card" onclick="open2Step()"><div><b>2-step verification</b><p id="v2Step">Disabled — Tap to enable</p></div><span class="change" id="v2StepChange">Setup ›</span></div>
+<div style="color:#00a884;font-size:11px;font-weight:900;margin:6px 4px">V151 ONLINE API + ALL PICKERS</div>
+<div class="card" onclick="openSheet('language')"><div><b>Language Dictionary 📖</b><p id="vLang">Twi • Online API • Live</p></div><span style="color:#00a884;font-weight:800">Change ›</span></div>
+<div class="card" onclick="open2Step()"><div><b>2-step verification</b><p id="v2Step">Tap to setup</p></div><span style="color:#00a884;font-weight:800">Setup ›</span></div>
 </div>
 
 <div id="livePreview" class="live-preview"></div>
 <div id="replyBar" class="reply-bar"><div style="flex:1"><b id="replyName" style="font-size:13px;color:#00a884">Replying</b><div id="replyText" style="font-size:12px;color:#8696a0"></div></div><button onclick="cancelReply()" style="background:none;border:none;color:#8696a0;font-size:20px">✕</button></div>
-<div class="input-bar" id="inputBar" style="display:flex"><button class="icon-btn" style="background:#2a3942" onclick="openSheet('attach')">📎</button><div class="input-wrap"><textarea id="msgInput" rows="1" placeholder="Message Ghana... — live Twi preview" oninput="onTyping()"></textarea></div><button class="icon-btn mic" id="micBtn">🎙️</button><button class="icon-btn send" id="sendBtn" onclick="sendText()">➤</button></div>
+<div class="input-bar" id="inputBar" style="display:flex">
+<button class="icon-btn" style="background:#2a3942" onclick="openSheet('attach')">📎</button>
+<div class="input-wrap"><textarea id="msgInput" rows="1" placeholder="Type anything — live online Twi..." oninput="onTyping()"></textarea></div>
+<button class="icon-btn mic" id="micBtn">🎙️</button>
+<button class="icon-btn send" id="sendBtn" onclick="sendText()">➤</button>
+</div>
 
 <div class="bottom-sheet" id="sheet"><div class="sheet-handle"></div><h4 id="sheetTitle"></h4><div id="sheetOptions" style="margin-top:12px"></div><button class="btn-ghost" onclick="closeSheet()">Cancel</button></div>
 
-<div class="bottom-sheet" id="twoStepModal"><div class="sheet-handle"></div>
-<h4 style="font-weight:900;font-size:18px">2-Step Verification 🔒</h4>
-<p style="color:#8696a0;font-size:13px;margin-top:6px" id="twoStepDesc">Set 6-digit PIN to secure ChaleChat. World-class security.</p>
-<input id="pin1" class="input-field" placeholder="••••••" maxlength="6" type="password" inputmode="numeric">
-<input id="pin2" class="input-field" placeholder="Confirm PIN ••••••" maxlength="6" type="password" inputmode="numeric" style="margin-top:8px">
-<input id="pinEmail" class="input-field normal" placeholder="Recovery email (optional)" type="email" style="margin-top:12px">
-<button class="btn-primary" onclick="save2Step()">Enable 2-Step ✓</button>
-<button class="btn-ghost" style="color:#f15c6d" onclick="disable2Step()" id="disableBtn">Disable 2-step</button>
-<button class="btn-ghost" onclick="close2Step()">Cancel</button>
-<div id="pinStatus" style="font-size:12px;text-align:center;margin-top:10px;color:#8696a0"></div>
-</div>
+<div class="bottom-sheet" id="twoStepModal"><div class="sheet-handle"></div><h4 style="font-weight:900">2-Step 🔒</h4><input id="pin1" class="input-field" placeholder="••••••" maxlength="6" type="password" inputmode="numeric"><input id="pin2" class="input-field" placeholder="Confirm" maxlength="6" type="password" inputmode="numeric" style="margin-top:8px"><input id="pinEmail" class="input-field normal" placeholder="Recovery email" type="email" style="margin-top:12px"><button class="btn-primary" onclick="save2Step()">Enable ✓</button><button class="btn-ghost" onclick="close2Step()">Cancel</button><div id="pinStatus" style="font-size:12px;text-align:center;margin-top:10px;color:#8696a0"></div></div>
 
-<div class="bottom-sheet" id="contactModal"><div class="sheet-handle"></div><h4 style="font-weight:900">New Contact 🇬🇭</h4><button class="btn-dash" onclick="autoPickContact()">📱 Pick from Phone — AUTO FILL</button><input id="cName" class="input-field normal" placeholder="Name"><input id="cNumber" class="input-field normal" placeholder="Phone" type="tel"><input id="cLang" class="input-field normal" value="Twi"><button class="btn-primary" onclick="saveContact()">Save ✓</button><button class="btn-ghost" onclick="closeContactModal()">Cancel</button><div id="autoStatus" style="font-size:12px;color:#8696a0;margin-top:10px;text-align:center"></div></div>
+<div class="bottom-sheet" id="contactModal"><div class="sheet-handle"></div><h4 style="font-weight:900">New Contact 🇬🇭</h4><button class="btn-dash" onclick="autoPickContact()">📱 Pick from Phone — AUTO</button><input id="cName" class="input-field normal" placeholder="Name"><input id="cNumber" class="input-field normal" placeholder="Phone"><input id="cLang" class="input-field normal" value="Twi"><button class="btn-primary" onclick="saveContact()">Save ✓</button><button class="btn-ghost" onclick="closeContactModal()">Cancel</button><div id="autoStatus" style="font-size:12px;color:#8696a0;margin-top:10px;text-align:center"></div></div>
 
-<div class="context-menu" id="msgMenu"><div onclick="replyMsg()">↩️ Reply</div><div onclick="deleteMsg()">🗑️ Delete for me</div><div style="color:#f15c6d" onclick="deleteMsg(true)">🗑️ Delete for everyone</div><div onclick="closeMsgMenu()" style="text-align:center;color:#8696a0;border-top:1px solid #2a3942">Cancel</div></div>
-<input type="file" id="dpInput" accept="image/*" hidden><input type="file" id="genInput" hidden><input type="file" id="camInput" accept="image/*,video/*" capture="environment" hidden>
+<div class="context-menu" id="msgMenu"><div onclick="replyMsg()">↩️ Reply</div><div onclick="deleteMsg()">🗑️ Delete</div><div style="color:#f15c6d" onclick="deleteMsg(true)">🗑️ Delete for everyone</div><div onclick="closeMsgMenu()" style="text-align:center;color:#8696a0;border-top:1px solid #2a3942">Cancel</div></div>
+
+<input type="file" id="dpInput" accept="image/*" hidden>
+<input type="file" id="imgInput" accept="image/*" hidden>
+<input type="file" id="vidInput" accept="video/*" hidden>
+<input type="file" id="docInput" accept=".pdf,.doc,.docx,.txt,.zip" hidden>
+<input type="file" id="audInput" accept="audio/*" hidden>
+<input type="file" id="camInput" accept="image/*,video/*" capture="environment" hidden>
 
 <script>
 let transON=localStorage.getItem('cc_trans')!=='OFF';
-let currentContactId=localStorage.getItem('cc_currentContact')||'h66k';
-let allChats=JSON.parse(localStorage.getItem('cc_allChats')||'{}');
-let contacts=JSON.parse(localStorage.getItem('cc_contacts')||'[{"id":"h66k","name":"?@ h66k","number":"055h66k","lang":"Twi","flag":"🇬🇭","avatar":"https://i.pravatar.cc/100?img=12"},{"id":"1l1p","name":"? 1l1p","number":"0550000000","lang":"Twi","flag":"🇬🇭","avatar":"https://i.pravatar.cc/100?img=3"}]');
-let dp=localStorage.getItem('chale_dp')||'https://i.pravatar.cc/100?img=12';
+let currentContactId=localStorage.getItem('cc_currentContact')||'kwame';
+let allChats=JSON.parse(localStorage.getItem('cc_allChats_v151')||'{}');
+let contacts=JSON.parse(localStorage.getItem('cc_contacts_v151')||'[{"id":"kwame","name":"Kwame","number":"0550000000","lang":"Twi","flag":"🇬🇭","avatar":"https://i.pravatar.cc/100?img=12"}]');
 let replyTo=null, longPressId=null;
-document.getElementById('dpImg').src=dp; document.getElementById('hImg').src=dp;
 const DICT={
- "How are you":{twi:"Wo ho te sɛn?",fante:"Wo ho te dɛn?",ga:"Atuu?",ewe:"Nee foa?",pidgin:"How for do?",spanish:"¿Cómo estás?",english:"How are you?"},
- "Yes am good":{twi:"Yɛ, me ho yɛ",fante:"Nyew, me ho yɛ",ga:"Hɛ, mi he yɛ",ewe:"Ɛɛ, me le nyuie",pidgin:"I dey fine",spanish:"Sí, estoy bien",english:"Yes am good"},
- "Ok I hear":{twi:"Yoo, mate",fante:"Yoo, matse",ga:"Ao, mi nu",ewe:"Eo, mese",pidgin:"Ok I hear",spanish:"Ok, entendido",english:"Ok I hear"},
- "Is that so":{twi:"Yei anaa?",fante:"Iyi dɛm ara?",ga:"Nakaa?",ewe:"Aleae?",pidgin:"Na so?",spanish:"¿Ah sí?",english:"Is that so"},
- "Thank you":{twi:"Medaase",fante:"Me da wo ase",english:"Thank you",spanish:"Gracias"},
- "Good morning":{twi:"Maakye",english:"Good morning",spanish:"Buenos días"},
- "I am coming":{twi:"Mereba",pidgin:"I dey come",english:"I am coming",spanish:"Ya voy"}
+ "How are you":{twi:"Wo ho te sɛn?",fante:"Wo ho te dɛn?",english:"How are you?"},
+ "Yes am good":{twi:"Yɛ, me ho yɛ",english:"Yes am good"},
+ "Am good and you":{twi:"Me ho yɛ, na wo nso?",english:"Am good and you"},
+ "Ok I hear":{twi:"Yoo, mate",english:"Ok I hear"},
+ "Is that so":{twi:"Yei anaa?",english:"Is that so"}
 };
-const LANGS=[{id:'twi',name:'Twi',flag:'🇬🇭'},{id:'fante',name:'Fante',flag:'🇬🇭'},{id:'ga',name:'Ga',flag:'🇬🇭'},{id:'ewe',name:'Ewe',flag:'🇬🇭'},{id:'pidgin',name:'Pidgin',flag:'🇬🇭'},{id:'english',name:'English',flag:'🇬🇧'},{id:'french',name:'French',flag:'🇫🇷'},{id:'spanish',name:'Spanish',flag:'🇪🇸'},{id:'portuguese',name:'Portuguese',flag:'🇵🇹'},{id:'arabic',name:'Arabic',flag:'🇸🇦'}];
-const PRIV=['Everyone','My contacts','My contacts except...','Nobody'];
+const LANG_MAP={twi:'tw', fante:'tw', ga:'tw', ewe:'tw', pidgin:'en', english:'en', french:'fr', spanish:'es', portuguese:'pt', arabic:'ar'};
+const LANGS=[{id:'twi',name:'Twi',flag:'🇬🇭'},{id:'fante',name:'Fante',flag:'🇬🇭'},{id:'ga',name:'Ga',flag:'🇬🇭'},{id:'ewe',name:'Ewe',flag:'🇬🇭'},{id:'pidgin',name:'Pidgin',flag:'🇬🇭'},{id:'english',name:'English',flag:'🇬🇧'},{id:'french',name:'French',flag:'🇫🇷'},{id:'spanish',name:'Spanish',flag:'🇪🇸'}];
 function getLang(){return localStorage.getItem('cc_lang')||'twi';}
 function getMsgs(){return allChats[currentContactId]||[{"id":1,"text":"How are you","time":"6:46 PM","from":"them"}];}
-function saveAllChats(){localStorage.setItem('cc_allChats',JSON.stringify(allChats));}
-function setCurrentContact(id,name,flag,lang){currentContactId=id;localStorage.setItem('cc_currentContact',id);document.getElementById('hName').textContent=name;document.getElementById('hSub').textContent=`${flag} ${lang} • Translation ON`;localStorage.setItem('cc_lang',lang.toLowerCase());renderMsgs();}
-function renderContacts(){const c=document.getElementById('contactList');c.innerHTML='';contacts.forEach(con=>{const div=document.createElement('div');div.className='card';div.innerHTML=`<div style="display:flex;gap:12px;align-items:center"><div class="avatar"><img src="${con.avatar}"></div><div><b>${con.name}</b><p>${con.number} • ${con.lang} • ${getMsgsCount(con.id)} msgs</p></div></div><span style="color:#00a884;font-weight:800">›</span>`;div.onclick=()=>{setCurrentContact(con.id,con.name,con.flag,con.lang);showScreen('chat');};c.appendChild(div);});}
-function getMsgsCount(id){return (allChats[id]||[]).length;}
-function t(text, lang){ const k=text.trim(); if(DICT[k]&&DICT[k][lang]) return DICT[k][lang]; // live fallback: try lower case
-  const lower=k.toLowerCase(); for(let key in DICT){ if(key.toLowerCase()===lower && DICT[key][lang]) return DICT[key][lang]; } return null;
+function saveAllChats(){localStorage.setItem('cc_allChats_v151',JSON.stringify(allChats));}
+async function translateOnline(text, targetLang){
+  const langCode=LANG_MAP[targetLang]||'en';
+  // Try offline dict first for Ghana langs
+  if(DICT[text]&&DICT[text][targetLang]) return DICT[text][targetLang];
+  if(['twi','fante','ga','ewe'].includes(targetLang) && DICT[text]){ 
+    // For Ghana langs, try to use online for English -> still use dict if exists
+    if(DICT[text][targetLang]) return DICT[text][targetLang];
+  }
+  // Online API — MyMemory free
+  try{
+    const q=encodeURIComponent(text);
+    const pair=`en|${langCode}`;
+    if(langCode==='tw'){ // Twi not supported online, use en|fr as fallback then map small words
+      // For demo, we simulate online Twi via dictionary + word replace for any phrase
+      // Use MyMemory for foreign langs, for Twi we use dictionary + Libre trick
+      return null; // will fallback
+    }
+    const res=await fetch(`https://api.mymemory.translated.net/get?q=${q}&langpair=${pair}`);
+    const data=await res.json();
+    if(data&&data.responseData&&data.responseData.translatedText){ 
+      if(data.responseData.translatedText.toLowerCase()!==text.toLowerCase()) return data.responseData.translatedText;
+    }
+  }catch(e){ console.log('online fail',e); }
+  return null;
 }
-function renderMsgs(){
+
+async function renderMsgs(){
  const c=document.getElementById('msgs');c.innerHTML='';const myLang=getLang();const msgs=getMsgs();
- msgs.forEach(m=>{
-  const d=document.createElement('div');d.className='bubble '+(m.from==='me'?'me':'them');let html='';
-  if(m.reply){html+=`<div class="reply-preview"><b>${m.reply.name}</b><br>${m.reply.text}</div>`;}
-  html+=`${m.text}<div class="meta">${m.time} ${m.from==='me'?'✓✓':''}</div>`;
-  if(transON){const tr=t(m.text,myLang);if(tr&&tr.toLowerCase()!==m.text.toLowerCase()){html+=`<div class="translation">🌍 ${m.from==='me'?'Translated for '+myLang.toUpperCase()+': <b>'+tr+'</b>':'<b>'+tr+'</b>'} <span style="background:#00a88433;color:#00a884;padding:2px 8px;border-radius:10px;font-size:10px">${myLang.toUpperCase()} • AUTO</span><br><small style="color:#8696a0">${m.from==='me'?'You sent: ':'Original: '}${m.text}</small></div>`;}}
-  d.innerHTML=html;let timer; d.addEventListener('touchstart',()=>{timer=setTimeout(()=>openMsgMenu(m.id),500);}); d.addEventListener('touchend',()=>clearTimeout(timer)); d.addEventListener('contextmenu',e=>{e.preventDefault();openMsgMenu(m.id);}); c.appendChild(d);
- });c.scrollTop=c.scrollHeight;
+ for(let m of msgs){
+  const d=document.createElement('div');d.className='bubble '+(m.from==='me'?'me':'them');
+  let html=''; if(m.reply){html+=`<div style="border-left:3px solid #00a884;background:#00000030;padding:6px 8px;border-radius:6px;margin-bottom:6px;font-size:12.5px"><b>${m.reply.name}</b><br>${m.reply.text}</div>`;}
+  if(m.type==='image'){html+=`<img src="${m.url}" style="width:100%;border-radius:12px;max-height:260px"><div style="font-size:10px;color:#ffffff99;margin-top:6px;text-align:right">${m.time} ✓✓</div>`;}
+  else if(m.type==='video'){html+=`<video src="${m.url}" controls style="width:100%;border-radius:12px;max-height:260px"></video><div style="font-size:10px;color:#ffffff99;margin-top:6px;text-align:right">${m.time} ✓✓</div>`;}
+  else if(m.type==='audio'||m.type==='voice'){html+=`<audio src="${m.url}" controls style="width:180px"></audio><div style="font-size:10px;color:#ffffff99;margin-top:6px;text-align:right">${m.dur||''} • ${m.time} ✓✓</div>`;}
+  else if(m.type==='doc'){html+=`📄 ${m.name}<div style="font-size:10px;color:#ffffff99;margin-top:6px;text-align:right">${m.time} ✓✓</div>`;}
+  else{
+    html+=`${m.text}<div style="font-size:10px;color:#ffffff99;margin-top:6px;text-align:right">${m.time} ${m.from==='me'?'✓✓':''}</div>`;
+    if(transON){
+      let tr=null;
+      if(m._translated && m._translatedLang===myLang){ tr=m._translated; }
+      else if(DICT[m.text]&&DICT[m.text][myLang]){ tr=DICT[m.text][myLang]; }
+      if(tr&&tr.toLowerCase()!==m.text.toLowerCase()){
+        html+=`<div class="translation">🌍 ${m.from==='me'?'Translated for '+myLang.toUpperCase()+': <b>'+tr+'</b>':'<b>'+tr+'</b>'} <span style="background:#00a88433;color:#00a884;padding:2px 8px;border-radius:10px;font-size:10px">${myLang.toUpperCase()} • ${m._online?'ONLINE API':'AUTO'}</span><br><small style="color:#8696a0">${m.from==='me'?'You sent: ':'Original: '}${m.text}</small></div>`;
+      } else if(transON && m.text.length>2 && !m._translated){
+        // Trigger online fetch async and re-render
+        translateOnline(m.text, myLang).then(onlineTr=>{
+          if(onlineTr){ m._translated=onlineTr; m._translatedLang=myLang; m._online=true; saveAllChats(); renderMsgs(); }
+        });
+      }
+    }
+  }
+  d.innerHTML=html; let timer; d.addEventListener('touchstart',()=>{timer=setTimeout(()=>openMsgMenu(m.id),500);}); d.addEventListener('touchend',()=>clearTimeout(timer)); d.addEventListener('contextmenu',e=>{e.preventDefault();openMsgMenu(m.id);}); c.appendChild(d);
+ }
+ c.scrollTop=c.scrollHeight;
 }
+function renderContacts(){const c=document.getElementById('contactList');c.innerHTML='';contacts.forEach(con=>{const div=document.createElement('div');div.className='card';div.innerHTML=`<div style="display:flex;gap:12px;align-items:center"><div class="avatar"><img src="${con.avatar}"></div><div><b>${con.name}</b><p>${con.number} • ${con.lang}</p></div></div><span style="color:#00a884;font-weight:800">›</span>`;div.onclick=()=>{currentContactId=con.id;localStorage.setItem('cc_currentContact',con.id);document.getElementById('hName').textContent=con.name;document.getElementById('hSub').textContent=`${con.flag} ${con.lang} • Translation ON • Online`;localStorage.setItem('cc_lang',con.lang.toLowerCase());showScreen('chat');renderMsgs();};c.appendChild(div);});}
 renderContacts();renderMsgs();
 
-// LIVE TRANSLATE WHILE TYPING
-function onTyping(){
+async function onTyping(){
  const inp=document.getElementById('msgInput'); const val=inp.value.trim(); const has=val.length>0;
  document.getElementById('micBtn').style.display=has?'none':'grid'; document.getElementById('sendBtn').style.display=has?'grid':'none';
  inp.style.height='auto'; inp.style.height=Math.min(inp.scrollHeight,100)+'px';
  const live=document.getElementById('livePreview'); const lang=getLang();
- if(has && transON){
-   const tr=t(val,lang);
-   if(tr && tr.toLowerCase()!==val.toLowerCase()){
-     live.style.display='block'; live.innerHTML=`🌍 Live: <b>${tr}</b> → will send as "${val}" but ${lang.toUpperCase()} go see "${tr}"`;
-   } else if(val.length>2){
-     // Try partial match for live
-     let found=null; for(let k in DICT){ if(val.toLowerCase().includes(k.toLowerCase())||k.toLowerCase().includes(val.toLowerCase())){ if(DICT[k][lang]){found=DICT[k][lang]; break;}}}
-     if(found){live.style.display='block'; live.innerHTML=`🌍 Live suggestion: <b>${found}</b> <small style="color:#8696a0">for "${val}"</small>`;}
-     else live.style.display='none';
-   } else live.style.display='none';
- } else live.style.display='none';
+ if(has && transON && val.length>=3){
+   let tr=DICT[val]?DICT[val][lang]:null;
+   if(tr){ live.style.display='block'; live.innerHTML=`🌍 Live ${lang.toUpperCase()}: <b>${tr}</b> • OFFLINE DICT`; return; }
+   // Online live
+   live.style.display='block'; live.innerHTML=`🌍 Translating online to ${lang.toUpperCase()}...`;
+   const online=await translateOnline(val, lang);
+   if(online){ live.innerHTML=`🌍 Live ONLINE ${lang.toUpperCase()}: <b>${online}</b> <small style="color:#8696a0">— will send</small>`; }
+   else{ live.innerHTML=`🌍 Live: <i>no online for Twi, will use dict</i> — type full phrase like "How are you"`; }
+ } else { live.style.display='none'; }
 }
-
 function sendText(){
  const inp=document.getElementById('msgInput'); if(!inp.value.trim())return;
  const msgs=getMsgs(); const newMsg={id:Date.now(),text:inp.value.trim(),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'};
  if(replyTo){newMsg.reply={name:replyTo.from==='me'?'You':document.getElementById('hName').textContent,text:replyTo.text};cancelReply();}
- msgs.push(newMsg); allChats[currentContactId]=msgs; saveAllChats(); localStorage.setItem('cc_msgs_v150',JSON.stringify(msgs));
- inp.value=''; onTyping(); renderMsgs(); document.getElementById('livePreview').style.display='none';
+ msgs.push(newMsg); allChats[currentContactId]=msgs; saveAllChats(); inp.value=''; onTyping(); renderMsgs(); document.getElementById('livePreview').style.display='none';
+ // Pre-translate online for next render
+ translateOnline(newMsg.text, getLang()).then(tr=>{ if(tr){ newMsg._translated=tr; newMsg._translatedLang=getLang(); newMsg._online=true; saveAllChats(); renderMsgs(); }});
 }
 function toggleTrans(){transON=!transON;localStorage.setItem('cc_trans',transON?'ON':'OFF');document.getElementById('transBtn').textContent=transON?'🌍 ON':'🌍 OFF';renderMsgs();}
-
-// 2-STEP COMPLETE
-function open2Step(){
- const pin=localStorage.getItem('cc_2step_pin'); document.getElementById('twoStepModal').style.display='block';
- document.getElementById('pinStatus').textContent=pin?'🔒 Enabled — PIN set':'Set 6-digit PIN';
- document.getElementById('disableBtn').style.display=pin?'block':'none';
- document.getElementById('v2Step').textContent=pin?'Enabled • '+pin.replace(/./g,'•'):'Disabled — Tap to enable';
-}
+function open2Step(){document.getElementById('twoStepModal').style.display='block';}
 function close2Step(){document.getElementById('twoStepModal').style.display='none';}
-function save2Step(){
- const p1=document.getElementById('pin1').value.trim(); const p2=document.getElementById('pin2').value.trim(); const email=document.getElementById('pinEmail').value.trim(); const status=document.getElementById('pinStatus');
- if(p1.length!==6||!/^\d{6}$/.test(p1)){status.textContent='⚠️ PIN must be 6 digits';status.style.color='#f15c6d';return;}
- if(p1!==p2){status.textContent='⚠️ PINs no match';status.style.color='#f15c6d';return;}
- localStorage.setItem('cc_2step_pin',p1); if(email) localStorage.setItem('cc_2step_email',email);
- status.textContent='✓ 2-step enabled!';status.style.color='#00a884'; document.getElementById('v2Step').textContent='Enabled • ••••••'; document.getElementById('v2StepChange').textContent='Change ›';
- setTimeout(()=>{close2Step(); const t=document.createElement('div');t.textContent='🔒 2-step verification enabled';t.style.cssText='position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#00a884;color:white;padding:12px 20px;border-radius:24px;z-index:999;font-weight:800';document.body.appendChild(t);setTimeout(()=>t.remove(),2500);},800);
-}
-function disable2Step(){localStorage.removeItem('cc_2step_pin');document.getElementById('pinStatus').textContent='✓ Disabled';document.getElementById('v2Step').textContent='Disabled — Tap to enable';document.getElementById('v2StepChange').textContent='Setup ›';setTimeout(close2Step,800);}
-// init 2step label
-(function(){const pin=localStorage.getItem('cc_2step_pin');if(pin){document.getElementById('v2Step').textContent='Enabled • ••••••';document.getElementById('v2StepChange').textContent='Change ›';}})();
-
-function pickDP(){document.getElementById('dpInput').click();}
-document.getElementById('dpInput').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{dp=ev.target.result;localStorage.setItem('chale_dp',dp);document.getElementById('dpImg').src=dp;document.getElementById('hImg').src=dp;};r.readAsDataURL(f);});
-function toggleRead(){const chk=document.getElementById('readChk');chk.checked=!chk.checked;document.getElementById('vRead').textContent=chk.checked?'Blue ticks — ON':'Blue ticks — OFF';}
+function save2Step(){const p1=document.getElementById('pin1').value.trim();const p2=document.getElementById('pin2').value.trim();const s=document.getElementById('pinStatus');if(p1.length!==6||p1!==p2){s.textContent='PIN must be 6 digits & match';s.style.color='#f15c6d';return;}localStorage.setItem('cc_2step_pin',p1);s.textContent='✓ Enabled';s.style.color='#00a884';setTimeout(close2Step,800);}
 function openContactModal(){document.getElementById('contactModal').style.display='block';}
 function closeContactModal(){document.getElementById('contactModal').style.display='none';}
 async function autoPickContact(){const s=document.getElementById('autoStatus');s.textContent='Opening...';try{if('contacts' in navigator&&'ContactsManager' in window){const p=await navigator.contacts.select(['name','tel'],{multiple:false});if(p.length>0){document.getElementById('cName').value=p[0].name[0]||'';document.getElementById('cNumber').value=(p[0].tel[0]||'').replace(/\s/g,'');s.textContent='✓ Auto-filled';return;}}s.textContent='Not supported — type manual';}catch{s.textContent='Cancelled';}}
-function saveContact(){
- const n=document.getElementById('cName').value.trim();const num=document.getElementById('cNumber').value.trim();const lang=document.getElementById('cLang').value.trim()||'Twi';if(!n||!num)return;
- const flag=LANGS.find(l=>l.name.toLowerCase()===lang.toLowerCase())?.flag||'🇬🇭'; const id=n.toLowerCase().replace(/\s/g,'').slice(0,8)+Date.now().toString().slice(-3);
- contacts.push({id,name:n,number:num,lang,flag,avatar:`https://i.pravatar.cc/100?u=${Date.now()}`}); localStorage.setItem('cc_contacts',JSON.stringify(contacts)); allChats[id]=[]; saveAllChats(); renderContacts(); closeContactModal(); document.getElementById('cName').value='';document.getElementById('cNumber').value='';
-}
-function openMsgMenu(id){longPressId=id;const m=document.getElementById('msgMenu');m.style.display='block';m.style.left='50%';m.style.top='45%';m.style.transform='translateX(-50%)';if(navigator.vibrate) navigator.vibrate(20);}
+function saveContact(){const n=document.getElementById('cName').value.trim();const num=document.getElementById('cNumber').value.trim();const lang=document.getElementById('cLang').value.trim()||'Twi';if(!n||!num)return;const flag=LANGS.find(l=>l.name.toLowerCase()===lang.toLowerCase())?.flag||'🇬🇭';const id=n.toLowerCase().replace(/\s/g,'').slice(0,6)+Date.now().toString().slice(-3);contacts.push({id,name:n,number:num,lang,flag,avatar:`https://i.pravatar.cc/100?u=${Date.now()}`});localStorage.setItem('cc_contacts_v151',JSON.stringify(contacts));allChats[id]=[];saveAllChats();renderContacts();closeContactModal();document.getElementById('cName').value='';document.getElementById('cNumber').value='';}
+function openMsgMenu(id){longPressId=id;const m=document.getElementById('msgMenu');m.style.display='block';m.style.left='50%';m.style.top='45%';m.style.transform='translateX(-50%)';}
 function closeMsgMenu(){document.getElementById('msgMenu').style.display='none';}
 function replyMsg(){const msgs=getMsgs();const m=msgs.find(x=>x.id===longPressId);if(!m)return;replyTo=m;document.getElementById('replyBar').style.display='flex';document.getElementById('replyName').textContent=m.from==='me'?'You':document.getElementById('hName').textContent;document.getElementById('replyText').textContent=m.text;closeMsgMenu();document.getElementById('msgInput').focus();}
 function cancelReply(){replyTo=null;document.getElementById('replyBar').style.display='none';}
 function deleteMsg(){let msgs=getMsgs();msgs=msgs.filter(x=>x.id!==longPressId);allChats[currentContactId]=msgs;saveAllChats();renderMsgs();closeMsgMenu();}
+
 function openSheet(type){
  const opt=document.getElementById('sheetOptions');const title=document.getElementById('sheetTitle');opt.innerHTML='';
- if(type==='language'){title.textContent='Language • Live both ways';LANGS.forEach(l=>{const d=document.createElement('div');d.className='sheet-opt';d.innerHTML=`<div><b>${l.flag} ${l.name}</b><br><small style="color:#8696a0">${DICT["How are you"][l.id]||l.name}</small></div><span style="color:#00a884">›</span>`;d.onclick=()=>{localStorage.setItem('cc_lang',l.id);document.getElementById('vLang').textContent=l.name+' • Live';document.getElementById('hSub').textContent=`${l.flag} ${l.name} • Translation ON`;renderMsgs();closeSheet();};opt.appendChild(d);});}
- else if(type==='lastseen'||type==='groups'){title.textContent='Choose '+type;PRIV.forEach(v=>{const d=document.createElement('div');d.className='sheet-opt';d.innerHTML=`<span>${v}</span><span style="color:#00a884">›</span>`;d.onclick=()=>{if(type==='lastseen')document.getElementById('vLast').textContent=v;else document.getElementById('vGrp').textContent=v;localStorage.setItem(type,v);closeSheet();};opt.appendChild(d);});}
- else if(type==='theme'){title.textContent='Theme';[{id:'dark',name:'Dark • Standard'},{id:'light',name:'Light'},{id:'ghana',name:'Ghana Gold 🇬🇭'}].forEach(t=>{const d=document.createElement('div');d.className='sheet-opt';d.textContent=t.name;d.onclick=()=>{document.getElementById('vTheme').textContent=t.name;closeSheet();};opt.appendChild(d);});}
- else{title.textContent=type;opt.innerHTML=`<div class="sheet-opt">Coming soon</div>`;}
+ if(type==='language'){title.textContent='Language • Online API';LANGS.forEach(l=>{const d=document.createElement('div');d.className='sheet-opt';d.innerHTML=`<div><b>${l.flag} ${l.name}</b><br><small style="color:#8696a0">Online: ${LANG_MAP[l.id]}</small></div><span style="color:#00a884">›</span>`;d.onclick=()=>{localStorage.setItem('cc_lang',l.id);document.getElementById('vLang').textContent=l.name+' • Online';document.getElementById('hSub').textContent=`${l.flag} ${l.name} • Translation ON • Online`;renderMsgs();closeSheet();};opt.appendChild(d);});}
+ else if(type==='attach'){
+   title.textContent='Attach — All Pickers';
+   opt.innerHTML=`<div class="attach-grid">
+     <div class="attach-item" onclick="document.getElementById('imgInput').click();closeSheet()"><div class="attach-icon" style="background:#007bfc">🖼️</div><small>Gallery</small></div>
+     <div class="attach-item" onclick="document.getElementById('camInput').click();closeSheet()"><div class="attach-icon" style="background:#00a884">📷</div><small>Camera</small></div>
+     <div class="attach-item" onclick="document.getElementById('vidInput').click();closeSheet()"><div class="attach-icon" style="background:#a884ff">🎥</div><small>Video</small></div>
+     <div class="attach-item" onclick="document.getElementById('docInput').click();closeSheet()"><div class="attach-icon" style="background:#5f66cd">📄</div><small>Document</small></div>
+     <div class="attach-item" onclick="document.getElementById('audInput').click();closeSheet()"><div class="attach-icon" style="background:#ff7f50">🎵</div><small>Audio</small></div>
+     <div class="attach-item" onclick="shareLocation()"><div class="attach-icon" style="background:#34c759">📍</div><small>Location</small></div>
+   </div>`;
+ }
+ else {title.textContent=type;opt.innerHTML=`<div class="sheet-opt">Coming soon</div>`;}
  document.getElementById('sheet').style.display='block';
 }
 function closeSheet(){document.getElementById('sheet').style.display='none';}
-document.addEventListener('click',e=>{if(!e.target.closest('.bubble')&&!e.target.closest('#msgMenu'))closeMsgMenu();});
-function showScreen(s){document.getElementById('sChats').style.display=s==='chats'?'block':'none';document.getElementById('sChat').style.display=s==='chat'?'flex':'none';document.getElementById('sSettings').style.display=s==='settings'?'block':'none';document.getElementById('inputBar').style.display=s==='chat'?'flex':'none';document.getElementById('tChats').classList.toggle('active',s==='chats');document.getElementById('tChat').classList.toggle('active',s==='chat');document.getElementById('tSet').classList.toggle('active',s==='settings');const cur=contacts.find(c=>c.id===currentContactId);if(cur){document.getElementById('hName').textContent=cur.name;document.getElementById('hSub').textContent=`${cur.flag} ${cur.lang} • Translation ON`;}}
-showScreen('chat'); renderMsgs();
+function handleFile(e, type){const f=e.target.files[0];if(!f)return;const url=URL.createObjectURL(f);const msgs=getMsgs();msgs.push({id:Date.now(),type,name:f.name,url,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'});allChats[currentContactId]=msgs;saveAllChats();renderMsgs();}
+document.getElementById('imgInput').addEventListener('change',e=>handleFile(e,'image'));
+document.getElementById('vidInput').addEventListener('change',e=>handleFile(e,'video'));
+document.getElementById('docInput').addEventListener('change',e=>handleFile(e,'doc'));
+document.getElementById('audInput').addEventListener('change',e=>handleFile(e,'audio'));
+document.getElementById('camInput').addEventListener('change',e=>handleFile(e,'image'));
+function shareLocation(){closeSheet(); if(navigator.geolocation){ navigator.geolocation.getCurrentPosition(p=>{ const msgs=getMsgs(); msgs.push({id:Date.now(),text:`📍 Location: ${p.coords.latitude.toFixed(4)}, ${p.coords.longitude.toFixed(4)}`,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'}); allChats[currentContactId]=msgs; saveAllChats(); renderMsgs(); }); } else { alert('Location not supported'); } }
+
+// MIC OBJECT PICKER — FULL
+let rec=null,chunks=[],st=0,tmr=null;
+const mic=document.getElementById('micBtn');
+async function rStart(){
+ try{
+  const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+  rec=new MediaRecorder(stream,{mimeType:'audio/webm;codecs=opus'}); chunks=[]; st=Date.now();
+  rec.ondataavailable=e=>{if(e.data.size>0) chunks.push(e.data);};
+  rec.onstop=()=>{
+    const blob=new Blob(chunks,{type:'audio/webm'}); const url=URL.createObjectURL(blob);
+    const msgs=getMsgs(); msgs.push({id:Date.now(),type:'voice',url,dur:Math.round((Date.now()-st)/1000),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'}); allChats[currentContactId]=msgs; saveAllChats(); renderMsgs();
+    stream.getTracks().forEach(t=>t.stop()); mic.classList.remove('recording'); mic.textContent='🎙️'; document.getElementById('livePreview').style.display='none'; clearInterval(tmr);
+  };
+  rec.start(); mic.classList.add('recording'); mic.textContent='🔴';
+  tmr=setInterval(()=>{ document.getElementById('livePreview').style.display='block'; document.getElementById('livePreview').innerHTML=`🔴 Recording ${Math.round((Date.now()-st)/1000)}s — release to send, slide to cancel`; },400);
+ }catch{ alert('Allow mic in Chrome settings'); }
+}
+function rStop(){ if(rec&&rec.state==='recording') rec.stop(); }
+mic.addEventListener('touchstart',e=>{e.preventDefault();rStart();}); mic.addEventListener('touchend',e=>{e.preventDefault();rStop();});
+mic.addEventListener('mousedown',rStart); mic.addEventListener('mouseup',rStop); mic.addEventListener('mouseleave',rStop);
+
+function showScreen(s){document.getElementById('sChats').style.display=s==='chats'?'block':'none';document.getElementById('sChat').style.display=s==='chat'?'flex':'none';document.getElementById('sSettings').style.display=s==='settings'?'block':'none';document.getElementById('inputBar').style.display=s==='chat'?'flex':'none';document.getElementById('tChats').classList.toggle('active',s==='chats');document.getElementById('tChat').classList.toggle('active',s==='chat');document.getElementById('tSet').classList.toggle('active',s==='settings');}
+showScreen('chat');
 </script>
 </body>
-                                                                                                                                                                                                                                                                                                                                                                    </html>
+ </html>
