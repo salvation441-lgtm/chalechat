@@ -2,218 +2,227 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>ChaleChat V142 - Standard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>ChaleChat V143 Standard</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
-body{background:#0b141a;color:#e9edef;height:100vh;display:flex;flex-direction:column}
-.header{background:#202c33;padding:10px 12px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
-.back{width:38px;height:38px;background:#00a884;border-radius:8px;display:grid;place-items:center;border:none;font-size:18px;color:white}
-.avatar{width:38px;height:38px;background:#111;border-radius:50%;display:grid;place-items:center;color:#ffd700;font-weight:bold;border:2px solid #333}
-.name{font-weight:600}
+*{margin:0;padding:0;box-sizing:border-box;font-family: -apple-system, system-ui, sans-serif; -webkit-tap-highlight-color: transparent}
+body{background:#0b141a;color:#e9edef;height:100dvh;display:flex;flex-direction:column;overscroll-behavior:none}
+.header{background:#202c33;padding:10px 12px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:20}
+.back{width:40px;height:40px;background:#00a884;border-radius:10px;display:grid;place-items:center;border:none;color:white;font-size:18px}
+.avatar{width:40px;height:40px;border-radius:50%;overflow:hidden;background:#111;border:2px solid #00a8843a;display:grid;place-items:center;font-weight:bold}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.name{font-weight:700;font-size:15px}
 .sub{font-size:12px;color:#8696a0}
-.badge{margin-left:auto;background:#1a4d4d;border:1px solid #00a884;color:#00a884;padding:5px 10px;border-radius:20px;font-size:12px}
-.chat-area{flex:1;overflow-y:auto;padding:12px;background:#0b141a;display:flex;flex-direction:column;gap:10px}
-.bubble{max-width:80%;padding:8px 10px;border-radius:10px;font-size:14px;line-height:1.3}
-.bubble.me{align-self:flex-end;background:#005c4b}
-.bubble.them{align-self:flex-start;background:#202c33}
-.meta{font-size:10px;color:#8696a0;margin-top:4px}
-.translation{margin-top:6px;background:#1a2a1a;border-left:3px solid #00a884;padding:6px 8px;border-radius:6px;font-size:13px}
-.offline{background:#ffcc00;color:#111;padding:2px 6px;border-radius:10px;font-size:10px;font-weight:bold;margin-left:6px}
-.input-bar{background:#202c33;padding:8px 10px;display:flex;align-items:center;gap:8px;position:sticky;bottom:0}
-.input-bar input{flex:1;background:#2a3942;border:none;padding:12px 14px;border-radius:22px;color:white;outline:none}
-.icon-btn{width:44px;height:44px;border-radius:50%;border:none;display:grid;place-items:center;font-size:20px;cursor:pointer}
-.mic{background:#00a884;color:white;transition:0.2s}
-.mic.recording{background:red;animation:pulse 1s infinite}
-@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
-.settings{padding:12px}
-.card{background:#202c33;margin-bottom:10px;padding:14px;border-radius:10px;display:flex;justify-content:space-between;align-items:center}
-.card b{font-size:14px}
-.card p{font-size:12px;color:#8696a0;margin-top:2px}
-.card img{width:48px;height:48px;border-radius:50%;object-fit:cover;margin-top:6px;border:2px solid #00a884}
-.change{color:#00a884;font-size:14px}
-.tabs{display:flex;background:#202c33}
-.tabs button{flex:1;padding:12px;background:none;border:none;color:#8696a0;font-weight:600;border-bottom:3px solid transparent}
+.badge{margin-left:auto;background:#0a332c;border:1px solid #00a884;color:#00a884;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700}
+.tabs{display:flex;background:#202c33;border-bottom:1px solid #2a3942}
+.tabs button{flex:1;padding:13px;background:none;border:none;color:#8696a0;font-weight:700;border-bottom:3px solid transparent;font-size:14px}
 .tabs button.active{color:#00a884;border-color:#00a884}
-.voice{ display:flex;align-items:center;gap:8px;background:#2a3942;padding:8px 10px;border-radius:20px;margin-top:4px}
+.screen{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.chat-area{padding:12px;display:flex;flex-direction:column;gap:8px;background:#0b141a url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');background-blend-mode:overlay}
+.bubble{max-width:82%;padding:8px 10px;border-radius:10px;font-size:14.5px;line-height:1.35;position:relative;word-break:break-word;box-shadow:0 1px 0.5px rgba(0,0,0,0.3)}
+.bubble.me{align-self:flex-end;background:#005c4b;border-top-right-radius:2px}
+.bubble.them{align-self:flex-start;background:#202c33;border-top-left-radius:2px}
+.meta{font-size:10px;color:#ffffff99;margin-top:5px;text-align:right;display:flex;justify-content:flex-end;gap:4px}
+.translation{margin-top:6px;background:#0a332c;border-left:3px solid #00a884;padding:6px 8px;border-radius:6px;font-size:13px}
+.settings{padding:10px}
+.card{background:#202c33;margin-bottom:8px;padding:14px 14px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;min-height:72px;cursor:pointer;user-select:none}
+.card:active{background:#2a3942}
+.card b{font-size:14.5px;display:block}
+.card p{font-size:12.5px;color:#8696a0;margin-top:3px}
+.card img{width:48px;height:48px;border-radius:50%;object-fit:cover;margin-top:8px;border:2px solid #00a884}
+.change{color:#00a884;font-size:14px;font-weight:600;padding:10px;margin:-10px;min-width:80px;text-align:right}
+.input-bar{background:#202c33;padding:6px 8px;display:flex;align-items:flex-end;gap:6px;position:sticky;bottom:0;z-index:20}
+.input-wrap{flex:1;background:#2a3942;border-radius:24px;display:flex;align-items:flex-end;padding:5px 6px 5px 12px;gap:6px}
+.input-wrap textarea{flex:1;background:transparent;border:none;color:white;outline:none;resize:none;max-height:100px;min-height:24px;padding:8px 0;font-size:15px;line-height:20px}
+.icon-btn{width:44px;height:44px;border-radius:50%;border:none;display:grid;place-items:center;font-size:20px;cursor:pointer;flex-shrink:0}
+.mic{background:#00a884;color:white}
+.mic.recording{background:#f15c6d;animation:pulse 1s infinite}
+.send{background:#00a884;color:white;display:none}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+.attach-sheet{position:fixed;bottom:0;left:0;right:0;background:#202c33;border-radius:18px 18px 0 0;padding:18px;z-index:100;display:none;box-shadow:0 -10px 30px rgba(0,0,0,0.5)}
+.attach-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:12px}
+.attach-item{display:flex;flex-direction:column;align-items:center;gap:6px}
+.attach-icon{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-size:24px;color:white}
+.bottom-sheet{position:fixed;bottom:0;left:0;right:0;background:#202c33;border-radius:18px 18px 0 0;padding:16px;z-index:101;display:none}
+.sheet-opt{padding:16px 8px;border-bottom:1px solid #2a3942;font-size:15px}
+.sheet-opt:active{background:#2a3942}
+.context-menu{position:fixed;background:#233138;border-radius:10px;overflow:hidden;z-index:200;box-shadow:0 8px 20px rgba(0,0,0,0.5);min-width:180px;display:none}
+.context-menu div{padding:14px 16px;font-size:14.5px}
+.context-menu div:active{background:#2a3942}
+.context-menu .danger{color:#f15c6d}
+.video-preview{width:100%;border-radius:10px;margin-top:6px;max-height:220px}
 </style>
 </head>
 <body>
 
 <div class="header">
   <button class="back" onclick="showScreen('chats')">←</button>
-  <div class="avatar" id="headerAvatar">K</div>
-  <div style="flex:1">
-    <div class="name">Kwame</div>
-    <div class="sub" id="headerSub">🇬🇭 Fante • Translation ON • Last testing</div>
-  </div>
-  <button class="badge" id="transToggle" onclick="toggleTrans()">🌍 ON</button>
+  <div class="avatar" id="hAvatar"><img id="hImg" src=""></div>
+  <div style="flex:1"><div class="name">Kwame</div><div class="sub" id="hSub">🇬🇭 Fante • Translation ON</div></div>
+  <button class="badge" id="transBtn" onclick="toggleTrans()">🌍 ON</button>
 </div>
+<div class="tabs"><button id="tChat" class="active" onclick="showScreen('chat')">Chat</button><button id="tSet" onclick="showScreen('settings')">Settings</button></div>
 
-<div class="tabs">
-  <button id="tabChat" class="active" onclick="showScreen('chat')">Chat</button>
-  <button id="tabSettings" onclick="showScreen('settings')">Settings</button>
-</div>
+<div id="sChat" class="screen chat-area"><div id="msgs" style="display:flex;flex-direction:column;gap:8px;width:100%"></div></div>
 
-<!-- CHAT SCREEN - YOUR SCREENSHOT -->
-<div id="screen-chat" class="chat-area">
-  <div id="messages"></div>
-</div>
-
-<!-- SETTINGS SCREEN - YOUR SCREENSHOT BUT STANDARD -->
-<div id="screen-settings" class="settings" style="display:none;overflow-y:auto;flex:1">
-  <h4 style="color:#00a884;margin:10px 0 10px 4px;letter-spacing:1px;font-size:12px">PRIVACY — REAL — WORKS • V142</h4>
-  
-  <div class="card" onclick="openPrivacyOptions('lastseen')">
-    <div><b>Last seen</b><p id="lsVal">Everyone</p></div><span class="change">Change ›</span>
-  </div>
-  <div class="card" onclick="document.getElementById('dpInput').click()">
-    <div>
-      <b>Profile photo</b><p id="ppVal">Everyone — Tap to change</p>
-      <img id="dpPreview" src="https://i.pravatar.cc/100?img=12">
-    </div><span class="change">Change ›</span>
-  </div>
-  <div class="card">
-    <div><b>Read receipts</b><p>Blue ticks — Real saved</p></div>
-    <label><input type="checkbox" id="readChk" checked onchange="saveSettings()"> </label>
-  </div>
-  <div class="card" onclick="openPrivacyOptions('groups')">
-    <div><b>Groups</b><p id="grpVal">Everyone</p></div><span class="change">Change ›</span>
-  </div>
-  <div class="card"><div><b>2-step verification</b><p>Disabled</p></div><span class="change">Change ›</span></div>
-  <div class="card"><div><b>Show security notifications</b><p>Show security code</p></div><div><input type="checkbox" checked></div></div>
-  <div class="card"><div><b>Theme</b><p>Dark • Standard</p></div><span class="change">Change ›</span></div>
-  <input type="file" id="dpInput" accept="image/*" hidden>
+<div id="sSettings" class="screen settings" style="display:none">
+  <div style="color:#00a884;font-size:11px;letter-spacing:1px;font-weight:700;margin:8px 4px">PRIVACY • V143 STANDARD — ALL TAPPABLE</div>
+  <div class="card" onclick="openSheet('lastseen')"><div><b>Last seen</b><p id="vLast">Everyone</p></div><span class="change">Change ›</span></div>
+  <div class="card" onclick="pickDP()"><div><b>Profile photo</b><p>Everyone — Tap to change</p><img id="dpImg" src=""></div><span class="change">Change ›</span></div>
+  <div class="card" onclick="document.getElementById('readChk').click()"><div><b>Read receipts</b><p>Blue ticks — Real saved</p></div><input type="checkbox" id="readChk" checked style="width:20px;height:20px"></div>
+  <div class="card" onclick="openSheet('groups')"><div><b>Groups</b><p id="vGrp">Everyone</p></div><span class="change">Change ›</span></div>
+  <div class="card" onclick="openSheet('2step')"><div><b>2-step verification</b><p>Disabled</p></div><span class="change">Change ›</span></div>
+  <div class="card" onclick="document.getElementById('secChk').click()"><div><b>Show security notifications</b><p>Show security code</p></div><input type="checkbox" id="secChk" checked style="width:20px;height:20px"></div>
+  <div class="card" onclick="openSheet('theme')"><div><b>Theme</b><p>Dark • Standard</p></div><span class="change">Change ›</span></div>
 </div>
 
 <div class="input-bar" id="inputBar">
-  <button class="icon-btn" style="background:#2a3942" onclick="document.getElementById('fileInput').click()">📎</button>
-  <input id="msgInput" placeholder="Message Ghana..." onkeydown="if(event.key==='Enter')sendText()">
+  <button class="icon-btn" style="background:#2a3942" onclick="openAttach()">📎</button>
+  <div class="input-wrap"><textarea id="msgInput" rows="1" placeholder="Message Ghana..." oninput="onTyping()"></textarea></div>
   <button class="icon-btn mic" id="micBtn">🎙️</button>
-  <input type="file" id="fileInput" hidden>
+  <button class="icon-btn send" id="sendBtn" onclick="sendText()">➤</button>
 </div>
 
-<script>
-// STORAGE
-let transON = localStorage.getItem('cc_trans') !== 'OFF';
-let messages = JSON.parse(localStorage.getItem('cc_msgs') || '[{"text":"How are you","time":"6:46 PM","from":"them"}]');
-let dp = localStorage.getItem('chale_dp') || 'https://i.pravatar.cc/100?img=12';
-document.getElementById('dpPreview').src = dp;
-document.getElementById('headerAvatar').innerHTML = `<img src="${dp}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">`;
+<!-- Attach Sheet -->
+<div class="attach-sheet" id="attachSheet">
+  <div style="display:flex;justify-content:space-between;align-items:center"><b>Attach</b><button onclick="closeAttach()" style="background:none;border:none;color:#8696a0;font-size:20px">✕</button></div>
+  <div class="attach-grid">
+    <div class="attach-item" onclick="pickFile('image/*')"><div class="attach-icon" style="background:#007bfc">🖼️</div><small>Gallery</small></div>
+    <div class="attach-item" onclick="pickFile('video/*')"><div class="attach-icon" style="background:#a884ff">🎥</div><small>Video</small></div>
+    <div class="attach-item" onclick="openCamera()"><div class="attach-icon" style="background:#00a884">📷</div><small>Camera</small></div>
+    <div class="attach-item" onclick="pickFile('*/*')"><div class="attach-icon" style="background:#5f66cd">📄</div><small>Document</small></div>
+  </div>
+</div>
 
-// RENDER MESSAGES
+<!-- Privacy Sheet -->
+<div class="bottom-sheet" id="privSheet">
+  <div style="height:4px;width:40px;background:#2a3942;border-radius:10px;margin:0 auto 12px"></div>
+  <h4 id="sheetTitle" style="margin-bottom:8px">Choose</h4>
+  <div class="sheet-opt" onclick="setPriv('Everyone')">Everyone</div>
+  <div class="sheet-opt" onclick="setPriv('My contacts')">My contacts</div>
+  <div class="sheet-opt" onclick="setPriv('My contacts except...')">My contacts except...</div>
+  <div class="sheet-opt" onclick="setPriv('Nobody')">Nobody</div>
+  <div class="sheet-opt" style="color:#8696a0;text-align:center;margin-top:8px" onclick="closeSheet()">Cancel</div>
+</div>
+
+<!-- Message Context -->
+<div class="context-menu" id="msgMenu">
+  <div onclick="deleteMsg()">🗑️ Delete for me</div>
+  <div class="danger" onclick="deleteMsg(true)">🗑️ Delete for everyone</div>
+  <div onclick="closeMsgMenu()" style="text-align:center;color:#8696a0">Cancel</div>
+</div>
+
+<input type="file" id="dpInput" accept="image/*" hidden>
+<input type="file" id="genInput" hidden>
+<input type="file" id="camInput" accept="image/*,video/*" capture="environment" hidden>
+
+<script>
+let transON = localStorage.getItem('cc_trans')!=='OFF';
+let msgs = JSON.parse(localStorage.getItem('cc_msgs_v143')||'[{"id":1,"text":"How are you","time":"6:46 PM","from":"them"}]');
+let currentPrivType=null, longPressMsgId=null;
+let dp = localStorage.getItem('chale_dp')||'https://i.pravatar.cc/100?img=12';
+document.getElementById('dpImg').src=dp; document.getElementById('hImg').src=dp;
+document.getElementById('transBtn').textContent=transON?'🌍 ON':'🌍 OFF';
+
 function render(){
-  const cont = document.getElementById('messages');
-  cont.innerHTML = '';
-  messages.forEach(m=>{
-    const div = document.createElement('div');
-    div.className = 'bubble ' + (m.from==='me'?'me':'them');
-    if(m.type==='voice'){
-      div.innerHTML = `<div class="voice">▶️ <audio src="${m.url}" controls style="width:160px;height:30px"></audio> <small>${m.dur}s</small></div><div class="meta">${m.time}</div>`;
-    } else {
-      div.innerHTML = `${m.text}<div class="meta">${m.time}</div>
-      ${m.from==='them' && transON ? `<div class="translation">🌍🇬🇭→ Wo ho te dɛn? <span class="offline">OFFLINE</span><br><small>Original: "${m.text}" → "${m.text}"</small></div>` : ''}`;
-    }
-    cont.appendChild(div);
+  const c=document.getElementById('msgs'); c.innerHTML='';
+  msgs.forEach(m=>{
+    const d=document.createElement('div'); d.className='bubble '+(m.from==='me'?'me':'them');
+    d.dataset.id=m.id;
+    if(m.type==='voice'){ d.innerHTML=`<audio src="${m.url}" controls style="width:180px;height:32px"></audio><div class="meta">${m.dur||0}s • ${m.time} ✓✓</div>`; }
+    else if(m.type==='image'){ d.innerHTML=`<img src="${m.url}" class="video-preview"><div class="meta">${m.time} ✓✓</div>`; }
+    else if(m.type==='video'){ d.innerHTML=`<video src="${m.url}" controls class="video-preview"></video><div class="meta">${m.time} ✓✓</div>`; }
+    else { d.innerHTML=`${escapeHtml(m.text)}<div class="meta">${m.time} ${m.from==='me'?'✓✓':''}</div>${m.from==='them'&&transON?`<div class="translation">🌍 Wo ho te dɛn? <span style="background:#ffcc00;color:#111;padding:2px 6px;border-radius:10px;font-size:10px">OFFLINE</span><br><small>Original: "${escapeHtml(m.text)}"</small></div>`:''}`; }
+    // long press
+    let timer; d.addEventListener('touchstart',()=>{ timer=setTimeout(()=>openMsgMenu(m.id),600); });
+    d.addEventListener('touchend',()=>clearTimeout(timer));
+    d.addEventListener('contextmenu',e=>{ e.preventDefault(); openMsgMenu(m.id); });
+    c.appendChild(d);
   });
-  cont.scrollTop = cont.scrollHeight;
+  c.scrollTop=c.scrollHeight;
 }
+function escapeHtml(t){ return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 render();
 
-function toggleTrans(){
-  transON = !transON;
-  localStorage.setItem('cc_trans', transON?'ON':'OFF');
-  document.getElementById('transToggle').textContent = transON?'🌍 ON':'🌍 OFF';
-  document.getElementById('headerSub').textContent = `🇬🇭 Fante • Translation ${transON?'ON':'OFF'} • Last testing`;
-  render();
+function onTyping(){
+  const hasText=document.getElementById('msgInput').value.trim().length>0;
+  document.getElementById('micBtn').style.display=hasText?'none':'grid';
+  document.getElementById('sendBtn').style.display=hasText?'grid':'none';
+  const ta=document.getElementById('msgInput'); ta.style.height='auto'; ta.style.height=Math.min(ta.scrollHeight,100)+'px';
 }
-
 function sendText(){
-  const inp = document.getElementById('msgInput');
-  if(!inp.value.trim()) return;
-  messages.push({text:inp.value, time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}), from:'me'});
-  localStorage.setItem('cc_msgs', JSON.stringify(messages));
-  inp.value=''; render();
+  const inp=document.getElementById('msgInput'); if(!inp.value.trim()) return;
+  msgs.push({id:Date.now(),text:inp.value.trim(),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'});
+  localStorage.setItem('cc_msgs_v143',JSON.stringify(msgs)); inp.value=''; onTyping(); render();
 }
+function toggleTrans(){ transON=!transON; localStorage.setItem('cc_trans',transON?'ON':'OFF'); document.getElementById('transBtn').textContent=transON?'🌍 ON':'🌍 OFF'; render(); }
 
-// === DP PICKER STANDARD - FIXES YOUR BUG ===
-document.getElementById('dpInput').addEventListener('change', e=>{
-  const file = e.target.files[0]; if(!file) return;
-  if(file.size > 5*1024*1024){ alert('File too big, pick <5MB'); return; }
-  const reader = new FileReader();
-  reader.onload = ev=>{
-    dp = ev.target.result;
-    localStorage.setItem('chale_dp', dp);
-    document.getElementById('dpPreview').src = dp;
-    document.getElementById('headerAvatar').innerHTML = `<img src="${dp}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">`;
-    alert('Profile photo changed ✅');
-  };
-  reader.readAsDataURL(file);
+// DP PICKER
+function pickDP(){ document.getElementById('dpInput').click(); }
+document.getElementById('dpInput').addEventListener('change',e=>{
+  const f=e.target.files[0]; if(!f) return; if(f.size>8*1024*1024){ alert('Image too big'); return; }
+  const r=new FileReader(); r.onload=ev=>{ dp=ev.target.result; localStorage.setItem('chale_dp',dp); document.getElementById('dpImg').src=dp; document.getElementById('hImg').src=dp; }; r.readAsDataURL(f);
 });
 
-// === MIC P2P - FIXES YOUR BUG - HOLD TO RECORD ===
-let mediaRecorder=null, chunks=[], recStart=0, recTimer=null;
-const micBtn = document.getElementById('micBtn');
-
-async function startRec(){
-  try{
-    const stream = await navigator.mediaDevices.getUserMedia({audio:true});
-    mediaRecorder = new MediaRecorder(stream, {mimeType:'audio/webm;codecs=opus'});
-    chunks=[]; recStart=Date.now();
-    mediaRecorder.ondataavailable = e=>{ if(e.data.size>0) chunks.push(e.data); };
-    mediaRecorder.onstop = ()=>{
-      const dur = Math.round((Date.now()-recStart)/1000);
-      const blob = new Blob(chunks,{type:'audio/webm'});
-      const url = URL.createObjectURL(blob);
-      messages.push({type:'voice', url, dur, time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}), from:'me'});
-      localStorage.setItem('cc_msgs', JSON.stringify(messages));
-      render();
-      stream.getTracks().forEach(t=>t.stop());
-      micBtn.classList.remove('recording'); micBtn.textContent='🎙️';
-      document.getElementById('msgInput').placeholder='Message Ghana...';
-      clearInterval(recTimer);
-    };
-    mediaRecorder.start();
-    micBtn.classList.add('recording'); micBtn.textContent='🔴';
-    recTimer = setInterval(()=>{
-      const s = Math.round((Date.now()-recStart)/1000);
-      document.getElementById('msgInput').placeholder=`🎙️ Recording ${s}s — release to send`;
-    },500);
-    if(navigator.vibrate) navigator.vibrate(50);
-  }catch(err){
-    alert('Mic permission needed: Allow microphone for 41-lgtm.github.io in Chrome > Settings > Site Settings');
-    console.error(err);
-  }
+// ATTACH + VIDEO
+function openAttach(){ document.getElementById('attachSheet').style.display='block'; }
+function closeAttach(){ document.getElementById('attachSheet').style.display='none'; }
+function pickFile(accept){ document.getElementById('genInput').accept=accept; document.getElementById('genInput').click(); closeAttach(); }
+function openCamera(){ document.getElementById('camInput').click(); closeAttach(); }
+document.getElementById('genInput').addEventListener('change',handleMedia);
+document.getElementById('camInput').addEventListener('change',handleMedia);
+function handleMedia(e){
+  const f=e.target.files[0]; if(!f) return;
+  const url=URL.createObjectURL(f); const isVid=f.type.startsWith('video');
+  msgs.push({id:Date.now(),type:isVid?'video':'image',url,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'});
+  localStorage.setItem('cc_msgs_v143',JSON.stringify(msgs)); render();
 }
-function stopRec(){ if(mediaRecorder && mediaRecorder.state==='recording'){ mediaRecorder.stop(); } }
 
-// Touch + Mouse
-micBtn.addEventListener('touchstart', e=>{ e.preventDefault(); startRec(); });
-micBtn.addEventListener('touchend', e=>{ e.preventDefault(); stopRec(); });
-micBtn.addEventListener('mousedown', startRec);
-micBtn.addEventListener('mouseup', stopRec);
-micBtn.addEventListener('mouseleave', stopRec);
+// PRIVACY SHEET - FIXES TAPPABLE
+function openSheet(type){ currentPrivType=type; document.getElementById('sheetTitle').textContent='Choose '+type; document.getElementById('privSheet').style.display='block'; }
+function closeSheet(){ document.getElementById('privSheet').style.display='none'; }
+function setPriv(val){
+  if(currentPrivType==='lastseen') document.getElementById('vLast').textContent=val;
+  if(currentPrivType==='groups') document.getElementById('vGrp').textContent=val;
+  localStorage.setItem(currentPrivType,val); closeSheet();
+}
+
+// DELETE
+function openMsgMenu(id){ longPressMsgId=id; const menu=document.getElementById('msgMenu'); menu.style.display='block'; menu.style.left='20%'; menu.style.top='40%'; if(navigator.vibrate) navigator.vibrate(30); }
+function closeMsgMenu(){ document.getElementById('msgMenu').style.display='none'; }
+function deleteMsg(all){ msgs=msgs.filter(m=>m.id!==longPressMsgId); localStorage.setItem('cc_msgs_v143',JSON.stringify(msgs)); render(); closeMsgMenu(); }
+document.addEventListener('click',e=>{ if(!e.target.closest('.bubble')&&!e.target.closest('.context-menu')) closeMsgMenu(); if(!e.target.closest('#attachSheet')&&!e.target.closest('.input-bar')) closeAttach(); });
+
+// MIC - HOLD TO RECORD - FIXED
+let rec=null, chunks=[], tmr=null, start=0;
+const micBtn=document.getElementById('micBtn');
+async function recStart(){
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    rec=new MediaRecorder(stream,{mimeType:'audio/webm;codecs=opus'}); chunks=[]; start=Date.now();
+    rec.ondataavailable=e=>{ if(e.data.size>0) chunks.push(e.data); };
+    rec.onstop=()=>{
+      const blob=new Blob(chunks,{type:'audio/webm'}); const url=URL.createObjectURL(blob);
+      msgs.push({id:Date.now(),type:'voice',url,dur:Math.round((Date.now()-start)/1000),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'});
+      localStorage.setItem('cc_msgs_v143',JSON.stringify(msgs)); render();
+      stream.getTracks().forEach(t=>t.stop()); micBtn.classList.remove('recording'); micBtn.textContent='🎙️';
+      document.getElementById('msgInput').placeholder='Message Ghana...'; clearInterval(tmr);
+    };
+    rec.start(); micBtn.classList.add('recording'); micBtn.textContent='🔴';
+    tmr=setInterval(()=>{ document.getElementById('msgInput').placeholder=`🎙️ ${Math.round((Date.now()-start)/1000)}s — release to send`; },400);
+  }catch(err){ alert('Allow microphone for 41-lgtm.github.io: Chrome → ⋮ → Settings → Site settings → Microphone → Allow'); }
+}
+function recStop(){ if(rec&&rec.state==='recording') rec.stop(); }
+micBtn.addEventListener('touchstart',e=>{ e.preventDefault(); recStart(); }); micBtn.addEventListener('touchend',e=>{ e.preventDefault(); recStop(); });
+micBtn.addEventListener('mousedown',recStart); micBtn.addEventListener('mouseup',recStop); micBtn.addEventListener('mouseleave',recStop);
 
 function showScreen(s){
-  document.getElementById('screen-chat').style.display = s==='chat'?'flex':'none';
-  document.getElementById('screen-settings').style.display = s==='settings'?'block':'none';
-  document.getElementById('inputBar').style.display = s==='chat'?'flex':'none';
-  document.getElementById('tabChat').classList.toggle('active', s==='chat');
-  document.getElementById('tabSettings').classList.toggle('active', s==='settings');
+  document.getElementById('sChat').style.display=s==='chat'?'flex':'none';
+  document.getElementById('sSettings').style.display=s==='settings'?'block':'none';
+  document.getElementById('inputBar').style.display=s==='chat'?'flex':'none';
+  document.getElementById('tChat').classList.toggle('active',s==='chat');
+  document.getElementById('tSet').classList.toggle('active',s==='settings');
 }
-function openPrivacyOptions(type){
-  const choice = prompt(`Choose for ${type}:\n1. Everyone\n2. My contacts\n3. My contacts except...\n4. Nobody\nType number:`);
-  const map = {'1':'Everyone','2':'My contacts','3':'My contacts except...','4':'Nobody'};
-  if(map[choice]){
-    if(type==='lastseen') document.getElementById('lsVal').textContent=map[choice];
-    if(type==='groups') document.getElementById('grpVal').textContent=map[choice];
-    localStorage.setItem(type, map[choice]);
-  }
-}
-function saveSettings(){ localStorage.setItem('readReceipts', document.getElementById('readChk').checked); }
-
-// Register Service Worker for PWA
-if('serviceWorker' in navigator){ navigator.serviceWorker.register('./sw.js').catch(()=>{}); }
 </script>
 </body>
 </html>
