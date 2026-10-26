@@ -3,140 +3,213 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>ChaleChat V145 — All Tappable + FAB</title>
+<title>ChaleChat V146 — World Class Launch</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,system-ui;-webkit-tap-highlight-color:transparent}
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:#0b141a;color:#e9edef;height:100dvh;display:flex;flex-direction:column}
 .header{background:#202c33;padding:10px 12px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:50}
-.back{width:40px;height:40px;background:#00a884;border-radius:10px;display:grid;place-items:center;border:none;color:white;font-size:18px}
-.avatar{width:40px;height:40px;border-radius:50%;overflow:hidden;background:#111;border:2px solid #00a8843a;display:grid;place-items:center}
+.back{width:40px;height:40px;background:#00a884;border-radius:12px;display:grid;place-items:center;border:none;color:white}
+.avatar{width:40px;height:40px;border-radius:50%;overflow:hidden;background:#111;border:2px solid #00a88433}
 .avatar img{width:100%;height:100%;object-fit:cover}
-.name{font-weight:700}
-.sub{font-size:12px;color:#8696a0}
-.badge{margin-left:auto;background:#0a332c;border:1px solid #00a884;color:#00a884;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700}
-.tabs{display:flex;background:#202c33;border-bottom:1px solid #2a3942;position:sticky;top:56px;z-index:40}
-.tabs button{flex:1;padding:13px;background:none;border:none;color:#8696a0;font-weight:700;border-bottom:3px solid transparent}
+.name{font-weight:800;font-size:15px}
+.sub{font-size:11px;color:#8696a0}
+.badge{margin-left:auto;background:#0a332c;border:1px solid #00a884;color:#00a884;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:800}
+.tabs{display:flex;background:#202c33;border-bottom:1px solid #2a3942}
+.tabs button{flex:1;padding:14px;background:none;border:none;color:#8696a0;font-weight:800;font-size:13px;letter-spacing:0.3px;border-bottom:3px solid transparent}
 .tabs button.active{color:#00a884;border-color:#00a884}
 .screen{flex:1;overflow-y:auto;position:relative}
 .chat-area{padding:12px;display:flex;flex-direction:column;gap:8px}
-.bubble{max-width:82%;padding:8px 10px;border-radius:12px;font-size:14.5px;word-break:break-word}
-.bubble.me{align-self:flex-end;background:#005c4b}
-.bubble.them{align-self:flex-start;background:#202c33}
-.meta{font-size:10px;color:#ffffff99;margin-top:5px;text-align:right}
-.settings{padding:10px 10px 90px 10px}
-.card{background:#202c33;margin-bottom:10px;padding:16px;border-radius:14px;display:flex;justify-content:space-between;align-items:center;min-height:80px;cursor:pointer;position:relative;z-index:1}
-.card:active{transform:scale(0.99);background:#2a3942}
-.card b{font-size:15px;pointer-events:none}
-.card p{font-size:12.5px;color:#8696a0;margin-top:3px;pointer-events:none}
-.card img{width:52px;height:52px;border-radius:50%;object-fit:cover;margin-top:8px;border:2px solid #00a884;pointer-events:none}
-.change{color:#00a884;font-size:14px;font-weight:700;padding:16px;margin:-16px;min-width:90px;text-align:right;display:grid;place-items:center;z-index:2}
-.fab{position:fixed;right:16px;bottom:80px;width:56px;height:56px;border-radius:16px;background:#00a884;color:white;border:none;font-size:28px;display:grid;place-items:center;box-shadow:0 6px 20px rgba(0,0,0,0.5);z-index:30}
+.bubble{max-width:82%;padding:10px 12px;border-radius:16px;font-size:14.5px;line-height:1.4;position:relative;box-shadow:0 1px 1px rgba(0,0,0,0.2)}
+.bubble.me{align-self:flex-end;background:#005c4b;border-bottom-right-radius:4px}
+.bubble.them{align-self:flex-start;background:#202c33;border-bottom-left-radius:4px}
+.meta{font-size:10px;color:#ffffff99;margin-top:6px;text-align:right}
+.translation{margin-top:8px;background:linear-gradient(90deg,#0a332c,#0e2a1e);border-left:3px solid #00a884;padding:8px 10px;border-radius:10px;font-size:13px}
+.settings{padding:10px 10px 100px 10px}
+.card{background:#202c33;margin-bottom:10px;padding:16px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;min-height:80px;cursor:pointer;transition:0.15s}
+.card:active{transform:scale(0.98);background:#2a3942}
+.card b{font-size:15px}
+.card p{font-size:12.5px;color:#8696a0;margin-top:4px}
+.card img{width:52px;height:52px;border-radius:50%;object-fit:cover;margin-top:8px;border:2px solid #00a884}
+.change{color:#00a884;font-size:14px;font-weight:800;padding:16px;margin:-16px;min-width:90px;text-align:right}
+.fab{position:fixed;right:16px;bottom:20px;width:58px;height:58px;border-radius:18px;background:#00a884;color:white;border:none;font-size:30px;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,168,132,0.4);z-index:30;transition:0.2s}
+.fab:active{transform:scale(0.92)}
 .input-bar{background:#202c33;padding:6px 8px;display:flex;align-items:flex-end;gap:6px;position:sticky;bottom:0;z-index:40}
-.input-wrap{flex:1;background:#2a3942;border-radius:24px;display:flex;align-items:flex-end;padding:5px 6px 5px 12px}
-.input-wrap textarea{flex:1;background:transparent;border:none;color:white;outline:none;resize:none;max-height:100px;min-height:24px;padding:8px 0;font-size:15px}
+.input-wrap{flex:1;background:#2a3942;border-radius:24px;display:flex;align-items:flex-end;padding:5px 6px 5px 14px}
+.input-wrap textarea{flex:1;background:transparent;border:none;color:white;outline:none;resize:none;max-height:100px;min-height:22px;padding:8px 0;font-size:15px}
 .icon-btn{width:44px;height:44px;border-radius:50%;border:none;display:grid;place-items:center;font-size:20px;cursor:pointer;flex-shrink:0}
 .mic{background:#00a884;color:white}
-.mic.recording{background:#f15c6d}
+.mic.recording{background:#f15c6d;animation:pulse 1s infinite}
 .send{background:#00a884;color:white;display:none}
-.bottom-sheet{position:fixed;bottom:0;left:0;right:0;background:#202c33;border-radius:20px 20px 0 0;padding:16px 16px 30px 16px;z-index:100;display:none;max-height:85vh;overflow-y:auto;box-shadow:0 -10px 40px rgba(0,0,0,0.7)}
-.sheet-opt{padding:18px 8px;border-bottom:1px solid #2a3942;font-size:15px}
-.sheet-opt:active{background:#2a3942}
-.video-preview{width:100%;border-radius:10px;margin-top:6px;max-height:240px}
-.context-menu{position:fixed;background:#233138;border-radius:12px;overflow:hidden;z-index:200;box-shadow:0 8px 20px rgba(0,0,0,0.5);min-width:200px;display:none}
-.context-menu div{padding:14px 16px}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+.bottom-sheet{position:fixed;bottom:0;left:0;right:0;background:#111b21;border:1px solid #2a3942;border-bottom:none;border-radius:24px 24px 0 0;padding:18px 16px 32px 16px;z-index:100;display:none;max-height:90vh;overflow-y:auto;box-shadow:0 -12px 40px rgba(0,0,0,0.8)}
+.sheet-handle{height:4px;width:40px;background:#2a3942;border-radius:10px;margin:0 auto 14px}
+.sheet-opt{padding:18px 10px;border-bottom:1px solid #202c33;font-size:15px;display:flex;justify-content:space-between;align-items:center}
+.sheet-opt:active{background:#202c33;border-radius:10px}
+.input-field{width:100%;background:#202c33;border:1px solid #2a3942;border-radius:12px;padding:14px 14px;color:white;font-size:15px;outline:none;margin-top:8px}
+.input-field:focus{border-color:#00a884}
+.btn-primary{width:100%;background:#00a884;color:white;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:800;margin-top:14px}
+.btn-ghost{width:100%;background:transparent;color:#8696a0;border:none;padding:12px;margin-top:8px}
+.video-preview{width:100%;border-radius:12px;margin-top:6px;max-height:260px}
+.context-menu{position:fixed;background:#233138;border-radius:14px;overflow:hidden;z-index:200;box-shadow:0 12px 30px rgba(0,0,0,0.6);min-width:220px;display:none}
+.context-menu div{padding:16px;font-size:14.5px}
 </style>
 </head>
 <body>
 <div class="header">
-<button class="back" onclick="showChats()">←</button>
+<button class="back" onclick="showScreen('chats')">←</button>
 <div class="avatar"><img id="hImg" src="https://i.pravatar.cc/100?img=12"></div>
-<div style="flex:1"><div class="name" id="hName">Kwame</div><div class="sub" id="hSub">🇬🇭 Fante • Translation ON</div></div>
+<div style="flex:1"><div class="name" id="hName">Kwame</div><div class="sub" id="hSub">🇬🇭 Twi • Translation ON</div></div>
 <button class="badge" id="transBtn" onclick="toggleTrans()">🌍 ON</button>
 </div>
-<div class="tabs"><button id="tChats" onclick="showChats()">Chats</button><button id="tChat" class="active" onclick="showScreen('chat')">Chat</button><button id="tSet" onclick="showScreen('settings')">Settings</button></div>
+<div class="tabs"><button id="tChats" class="active" onclick="showScreen('chats')">Chats</button><button id="tChat" onclick="showScreen('chat')">Chat</button><button id="tSet" onclick="showScreen('settings')">Settings</button></div>
 
-<!-- CHATS LIST WITH FAB -->
-<div id="sChats" class="screen" style="display:none;padding:10px">
-<div class="card" onclick="showScreen('chat')"><div style="display:flex;gap:12px;align-items:center"><div class="avatar"><img src="https://i.pravatar.cc/100?img=12"></div><div><b>Kwame</b><p>How are you • 6:46 PM</p></div></div><span class="change">›</span></div>
-<div class="card" onclick="newContact()"><div><b>+ New Contact</b><p>Add Ghana number</p></div><span class="change">Add ›</span></div>
-<button class="fab" onclick="newContact()">+</button>
+<div id="sChats" class="screen" style="display:block;padding:12px">
+<div id="contactList"></div>
+<button class="fab" onclick="openContactModal()">+</button>
 </div>
 
-<div id="sChat" class="screen chat-area"><div id="msgs" style="display:flex;flex-direction:column;gap:8px;width:100%"></div><button class="fab" onclick="openSheet('attach')" style="bottom:70px">📎</button></div>
+<div id="sChat" class="screen chat-area" style="display:none"><div id="msgs" style="display:flex;flex-direction:column;gap:8px;width:100%"></div></div>
 
 <div id="sSettings" class="screen settings" style="display:none">
-<div style="color:#00a884;font-size:11px;font-weight:800;margin:8px 4px;letter-spacing:1px">PRIVACY • V145 — ALL TAPPABLE NOW</div>
-<div class="card" onclick="openSheet('lastseen')"><div><b>Last seen</b><p id="vLast">Everyone</p></div><span class="change" onclick="openSheet('lastseen'); event.stopPropagation()">Change ›</span></div>
-<div class="card" onclick="pickDP()"><div><b>Profile photo</b><p>Everyone — Tap to change</p><img id="dpImg" src="https://i.pravatar.cc/100?img=12"></div><span class="change" onclick="pickDP(); event.stopPropagation()">Change ›</span></div>
-<div class="card" onclick="toggleRead()"><div><b>Read receipts</b><p id="vRead">Blue ticks — Real saved</p></div><input type="checkbox" id="readChk" checked style="width:22px;height:22px;pointer-events:none"></div>
-<div class="card" onclick="openSheet('groups')"><div><b>Groups</b><p id="vGrp">Everyone</p></div><span class="change" onclick="openSheet('groups'); event.stopPropagation()">Change ›</span></div>
-<div class="card" onclick="openSheet('theme')"><div><b>Theme</b><p id="vTheme">Dark • Standard</p></div><span class="change" onclick="openSheet('theme'); event.stopPropagation()">Change ›</span></div>
-<div class="card" onclick="openSheet('language')"><div><b>Language Dictionary 📖</b><p id="vLang">Fante • Tap to view</p></div><span class="change" onclick="openSheet('language'); event.stopPropagation()">Change ›</span></div>
+<div style="color:#00a884;font-size:11px;font-weight:900;letter-spacing:1px;margin:8px 4px">PRIVACY • V146 WORLD CLASS</div>
+<div class="card" onclick="openSheet('lastseen')"><div><b>Last seen</b><p id="vLast">Everyone</p></div><span class="change">Change ›</span></div>
+<div class="card" onclick="pickDP()"><div><b>Profile photo</b><p>Everyone — Tap to change</p><img id="dpImg" src="https://i.pravatar.cc/100?img=12"></div><span class="change">Change ›</span></div>
+<div class="card" onclick="toggleRead()"><div><b>Read receipts</b><p id="vRead">Blue ticks — Real</p></div><input type="checkbox" id="readChk" checked style="width:22px;height:22px;pointer-events:none"></div>
+<div class="card" onclick="openSheet('groups')"><div><b>Groups</b><p id="vGrp">Everyone</p></div><span class="change">Change ›</span></div>
+<div class="card" onclick="openSheet('theme')"><div><b>Theme</b><p id="vTheme">Dark • Standard</p></div><span class="change">Change ›</span></div>
+<div class="card" onclick="openSheet('language')"><div><b>Language Dictionary 📖</b><p id="vLang">Twi • 10 languages</p></div><span class="change">Change ›</span></div>
 </div>
 
-<div class="input-bar" id="inputBar">
+<div class="input-bar" id="inputBar" style="display:none">
 <button class="icon-btn" style="background:#2a3942" onclick="openSheet('attach')">📎</button>
 <div class="input-wrap"><textarea id="msgInput" rows="1" placeholder="Message Ghana..." oninput="onTyping()"></textarea></div>
 <button class="icon-btn mic" id="micBtn">🎙️</button>
 <button class="icon-btn send" id="sendBtn" onclick="sendText()">➤</button>
 </div>
 
-<div class="bottom-sheet" id="sheet"><div style="height:4px;width:40px;background:#2a3942;border-radius:10px;margin:0 auto 12px"></div><h4 id="sheetTitle">Choose</h4><div id="sheetOptions" style="margin-top:10px"></div><div class="sheet-opt" style="color:#8696a0;text-align:center" onclick="closeSheet()">Cancel</div></div>
+<!-- UNIVERSAL SHEET -->
+<div class="bottom-sheet" id="sheet"><div class="sheet-handle"></div><h4 id="sheetTitle" style="font-size:16px;font-weight:800"></h4><div id="sheetOptions" style="margin-top:12px"></div><button class="btn-ghost" onclick="closeSheet()">Cancel</button></div>
+
+<!-- CONTACT MODAL — WORLD CLASS, NO PROMPT() -->
+<div class="bottom-sheet" id="contactModal"><div class="sheet-handle"></div><h4 style="font-size:18px;font-weight:800">New Contact 🇬🇭</h4><p style="color:#8696a0;font-size:13px;margin-top:6px">Add friend to ChaleChat</p>
+<input id="cName" class="input-field" placeholder="Full name (e.g. Kwame Mensah)">
+<input id="cNumber" class="input-field" placeholder="Phone (e.g. 055 123 4567)" type="tel">
+<input id="cLang" class="input-field" placeholder="Language (e.g. Twi, Fante, English)" value="Twi">
+<button class="btn-primary" onclick="saveContact()">Save Contact ✓</button>
+<button class="btn-ghost" onclick="closeContactModal()">Cancel</button>
+</div>
+
 <div class="context-menu" id="msgMenu"><div onclick="deleteMsg()">🗑️ Delete for me</div><div style="color:#f15c6d" onclick="deleteMsg(true)">🗑️ Delete for everyone</div><div onclick="closeMsgMenu()" style="text-align:center;color:#8696a0;border-top:1px solid #2a3942">Cancel</div></div>
 <input type="file" id="dpInput" accept="image/*" hidden><input type="file" id="genInput" hidden><input type="file" id="camInput" accept="image/*,video/*" capture="environment" hidden>
 
 <script>
 let transON = localStorage.getItem('cc_trans')!=='OFF';
-let msgs = JSON.parse(localStorage.getItem('cc_msgs_v145')||'[{"id":1,"text":"How are you","time":"6:46 PM","from":"them"}]');
+let msgs = JSON.parse(localStorage.getItem('cc_msgs_v146')||'[{"id":1,"text":"How are you","time":"6:46 PM","from":"them"}]');
+let contacts = JSON.parse(localStorage.getItem('cc_contacts')||'[{"name":"Kwame","number":"0550000000","lang":"Twi","avatar":"https://i.pravatar.cc/100?img=12"}]');
 let currentType=null, longPressId=null;
 let dp = localStorage.getItem('chale_dp')||'https://i.pravatar.cc/100?img=12';
 document.getElementById('dpImg').src=dp; document.getElementById('hImg').src=dp;
-document.getElementById('vLast').textContent=localStorage.getItem('lastseen')||'Everyone';
-document.getElementById('vGrp').textContent=localStorage.getItem('groups')||'Everyone';
-document.getElementById('vTheme').textContent=localStorage.getItem('themeName')||'Dark • Standard';
-document.getElementById('transBtn').textContent=transON?'🌍 ON':'🌍 OFF';
 
-const THEMES=[{id:'dark',name:'Dark • Standard',desc:'Default dark'},{id:'light',name:'Light',desc:'Day mode'},{id:'ghana',name:'Ghana Gold 🇬🇭',desc:'Black & Gold'},{id:'system',name:'System',desc:'Follow phone'}];
-const LANGS=[{id:'fante',name:'Fante',dict:'Agoo=Hello • Me da wo ase=Thank you • Wo ho te den=How are you'},{id:'twi',name:'Twi',dict:'Akwaaba=Welcome • Medaase=Thank you'},{id:'ga',name:'Ga',dict:'Atuu?=How are you? • Ojekoo=Welcome'},{id:'ewe',name:'Ewe',dict:'Woezor=Welcome • Akpe=Thank you'},{id:'pidgin',name:'Pidgin',dict:'Chale=Friend • How for do?=How are you'}];
+const DICT={
+  "How are you":{"twi":"Wo ho te sɛn?","fante":"Wo ho te dɛn?","ga":"Atuu?","ewe":"Nee foa?","pidgin":"How for do?","french":"Comment ça va?","spanish":"¿Cómo estás?","portuguese":"Como você está?","arabic":"كيف حالك؟","english":"How are you?"},
+  "Thank you":{"twi":"Medaase","fante":"Me da wo ase","ga":"Oyiwala don?","ewe":"Akpe","pidgin":"Chale thank you","french":"Merci","spanish":"Gracias","portuguese":"Obrigado","arabic":"شكرا","english":"Thank you"},
+  "Welcome":{"twi":"Akwaaba","fante":"Akwaaba","ga":"Ojekoo","ewe":"Woezor","pidgin":"You welcome","french":"Bienvenue","spanish":"Bienvenido","portuguese":"Bem-vindo","arabic":"أهلا وسهلا","english":"Welcome"}
+};
+
+const THEMES=[{id:'dark',name:'Dark • Standard',desc:'WhatsApp dark'},{id:'light',name:'Light',desc:'Day mode'},{id:'ghana',name:'Ghana Gold 🇬🇭',desc:'Black & Gold premium'},{id:'system',name:'System',desc:'Follow phone'}];
+const LANGS=[
+  {id:'twi',name:'Twi',flag:'🇬🇭',sample:DICT["How are you"].twi},
+  {id:'fante',name:'Fante',flag:'🇬🇭',sample:DICT["How are you"].fante},
+  {id:'ga',name:'Ga',flag:'🇬🇭',sample:DICT["How are you"].ga},
+  {id:'ewe',name:'Ewe',flag:'🇬🇭',sample:DICT["How are you"].ewe},
+  {id:'pidgin',name:'Ghana Pidgin',flag:'🇬🇭',sample:DICT["How are you"].pidgin},
+  {id:'english',name:'English',flag:'🇬🇧',sample:DICT["How are you"].english},
+  {id:'french',name:'French',flag:'🇫🇷',sample:DICT["How are you"].french},
+  {id:'spanish',name:'Spanish',flag:'🇪🇸',sample:DICT["How are you"].spanish},
+  {id:'portuguese',name:'Portuguese',flag:'🇵🇹',sample:DICT["How are you"].portuguese},
+  {id:'arabic',name:'Arabic',flag:'🇸🇦',sample:DICT["How are you"].arabic}
+];
 const PRIV=['Everyone','My contacts','My contacts except...','Nobody'];
 
-function render(){ const c=document.getElementById('msgs'); c.innerHTML=''; msgs.forEach(m=>{ const d=document.createElement('div'); d.className='bubble '+(m.from==='me'?'me':'them'); d.dataset.id=m.id; if(m.type==='voice'){ d.innerHTML=`<audio src="${m.url}" controls style="width:180px;height:32px"></audio><div class="meta">${m.dur||0}s • ${m.time} ✓✓</div>`; } else if(m.type==='image'){ d.innerHTML=`<img src="${m.url}" class="video-preview"><div class="meta">${m.time} ✓✓</div>`; } else if(m.type==='video'){ d.innerHTML=`<video src="${m.url}" controls class="video-preview"></video><div class="meta">${m.time} ✓✓</div>`; } else { d.innerHTML=`${esc(m.text)}<div class="meta">${m.time} ${m.from==='me'?'✓✓':''}</div>`; } let timer; d.addEventListener('touchstart',()=>{ timer=setTimeout(()=>openMsgMenu(m.id),550); }); d.addEventListener('touchend',()=>clearTimeout(timer)); d.addEventListener('contextmenu',e=>{ e.preventDefault(); openMsgMenu(m.id); }); c.appendChild(d); }); c.scrollTop=c.scrollHeight; }
+function getLang(){ return localStorage.getItem('cc_lang')||'twi'; }
+function translate(text){
+  const lang=getLang(); const key=text.trim(); if(DICT[key]&&DICT[key][lang]) return DICT[key][lang];
+  // fallback: return original with hint
+  return text;
+}
+
+function renderContacts(){
+  const c=document.getElementById('contactList'); c.innerHTML='';
+  contacts.forEach(con=>{
+    const div=document.createElement('div'); div.className='card';
+    div.innerHTML=`<div style="display:flex;gap:12px;align-items:center"><div class="avatar"><img src="${con.avatar}"></div><div><b>${con.name}</b><p>${con.number} • ${con.lang}</p></div></div><span class="change">›</span>`;
+    div.onclick=()=>{ document.getElementById('hName').textContent=con.name; document.getElementById('hSub').textContent=`${con.flag||'🇬🇭'} ${con.lang} • Translation ${transON?'ON':'OFF'}`; showScreen('chat'); };
+    c.appendChild(div);
+  });
+}
+renderContacts();
+
+function renderMsgs(){
+  const c=document.getElementById('msgs'); c.innerHTML=''; const lang=getLang();
+  msgs.forEach(m=>{
+    const d=document.createElement('div'); d.className='bubble '+(m.from==='me'?'me':'them'); d.dataset.id=m.id;
+    if(m.type==='voice'){ d.innerHTML=`<audio src="${m.url}" controls style="width:180px;height:32px"></audio><div class="meta">${m.dur||0}s • ${m.time} ✓✓</div>`; }
+    else if(m.type==='image'){ d.innerHTML=`<img src="${m.url}" class="video-preview"><div class="meta">${m.time} ✓✓</div>`; }
+    else if(m.type==='video'){ d.innerHTML=`<video src="${m.url}" controls class="video-preview"></video><div class="meta">${m.time} ✓✓</div>`; }
+    else {
+      const transText=DICT[m.text]?DICT[m.text][lang]||m.text:m.text;
+      d.innerHTML=`${esc(m.text)}<div class="meta">${m.time} ${m.from==='me'?'✓✓':''}</div>${m.from==='them'&&transON?`<div class="translation">🌍 ${transText} <span style="background:#00a88422;border:1px solid #00a88455;color:#00a884;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700">${lang.toUpperCase()} • REAL</span><br><small style="color:#8696a0">Original: "${esc(m.text)}" → ${LANGS.find(l=>l.id===lang)?.name||lang}</small></div>`:''}`;
+    }
+    let timer; d.addEventListener('touchstart',()=>{ timer=setTimeout(()=>openMsgMenu(m.id),550); }); d.addEventListener('touchend',()=>clearTimeout(timer)); d.addEventListener('contextmenu',e=>{ e.preventDefault(); openMsgMenu(m.id); }); c.appendChild(d);
+  });
+  c.scrollTop=c.scrollHeight;
+}
 function esc(t){ return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-render();
+renderMsgs();
+
 function onTyping(){ const has=document.getElementById('msgInput').value.trim().length>0; document.getElementById('micBtn').style.display=has?'none':'grid'; document.getElementById('sendBtn').style.display=has?'grid':'none'; const ta=document.getElementById('msgInput'); ta.style.height='auto'; ta.style.height=Math.min(ta.scrollHeight,100)+'px'; }
-function sendText(){ const inp=document.getElementById('msgInput'); if(!inp.value.trim()) return; msgs.push({id:Date.now(),text:inp.value.trim(),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'}); localStorage.setItem('cc_msgs_v145',JSON.stringify(msgs)); inp.value=''; onTyping(); render(); }
-function toggleTrans(){ transON=!transON; localStorage.setItem('cc_trans',transON?'ON':'OFF'); document.getElementById('transBtn').textContent=transON?'🌍 ON':'🌍 OFF'; render(); }
+function sendText(){ const inp=document.getElementById('msgInput'); if(!inp.value.trim()) return; msgs.push({id:Date.now(),text:inp.value.trim(),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'}); localStorage.setItem('cc_msgs_v146',JSON.stringify(msgs)); inp.value=''; onTyping(); renderMsgs(); }
+function toggleTrans(){ transON=!transON; localStorage.setItem('cc_trans',transON?'ON':'OFF'); document.getElementById('transBtn').textContent=transON?'🌍 ON':'🌍 OFF'; renderMsgs(); }
 function pickDP(){ document.getElementById('dpInput').click(); }
 document.getElementById('dpInput').addEventListener('change',e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{ dp=ev.target.result; localStorage.setItem('chale_dp',dp); document.getElementById('dpImg').src=dp; document.getElementById('hImg').src=dp; }; r.readAsDataURL(f); });
-function toggleRead(){ const chk=document.getElementById('readChk'); chk.checked=!chk.checked; localStorage.setItem('readReceipts',chk.checked); document.getElementById('vRead').textContent=chk.checked?'Blue ticks — ON':'Blue ticks — OFF'; }
-function newContact(){ const name=prompt('Enter contact name:'); if(!name) return; const num=prompt('Enter Ghana number (e.g. 055...):'); if(num) alert('Contact '+name+' ('+num+') added! — Check Chats'); }
+function toggleRead(){ const chk=document.getElementById('readChk'); chk.checked=!chk.checked; localStorage.setItem('readReceipts',chk.checked); }
 
-// ALL SHEETS — NOW SEPARATED AND TAPPABLE
+function openContactModal(){ document.getElementById('contactModal').style.display='block'; }
+function closeContactModal(){ document.getElementById('contactModal').style.display='none'; }
+function saveContact(){
+  const name=document.getElementById('cName').value.trim(); const num=document.getElementById('cNumber').value.trim(); const lang=document.getElementById('cLang').value.trim()||'Twi';
+  if(!name||!num){ alert('Please fill name and number'); return; }
+  const flag=LANGS.find(l=>l.name.toLowerCase()===lang.toLowerCase())?.flag||'🇬🇭';
+  contacts.push({name,number:num,lang,flag,avatar:`https://i.pravatar.cc/100?u=${Date.now()}`});
+  localStorage.setItem('cc_contacts',JSON.stringify(contacts)); renderContacts(); closeContactModal();
+  document.getElementById('cName').value=''; document.getElementById('cNumber').value='';
+  // world class toast
+  const t=document.createElement('div'); t.textContent=`✓ ${name} saved`; t.style.cssText='position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#202c33;color:white;padding:10px 18px;border-radius:20px;z-index:999;font-size:14px;box-shadow:0 6px 20px rgba(0,0,0,0.5)'; document.body.appendChild(t); setTimeout(()=>t.remove(),2500);
+}
+
 function openSheet(type){
- currentType=type; const opt=document.getElementById('sheetOptions'); const title=document.getElementById('sheetTitle'); opt.innerHTML='';
- if(type==='theme'){ title.textContent='Choose theme'; THEMES.forEach(t=>{ const d=document.createElement('div'); d.className='sheet-opt'; d.innerHTML=`<b>${t.name}</b><br><small>${t.desc}</small>`; d.onclick=()=>{ setTheme(t); closeSheet(); }; opt.appendChild(d); }); }
- else if(type==='language'){ title.textContent='Language Dictionary 📖'; LANGS.forEach(l=>{ const d=document.createElement('div'); d.className='sheet-opt'; d.innerHTML=`<b>${l.name}</b><br><small>${l.dict}</small>`; d.onclick=()=>{ localStorage.setItem('cc_lang',l.id); localStorage.setItem('cc_langName',l.name); document.getElementById('vLang').textContent=l.name; document.getElementById('hSub').textContent=`🇬🇭 ${l.name} • Translation ON`; document.getElementById('hName').textContent='Kwame'; closeSheet(); }; opt.appendChild(d); }); }
- else if(type==='attach'){ title.textContent='Attach'; opt.innerHTML=`<div class="attach-grid"><div class="attach-item" onclick="pickMedia('image/*')"><div class="attach-icon" style="background:#007bfc">🖼️</div><small>Gallery</small></div><div class="attach-item" onclick="pickMedia('video/*')"><div class="attach-icon" style="background:#a884ff">🎥</div><small>Video</small></div><div class="attach-item" onclick="document.getElementById('camInput').click(); closeSheet();"><div class="attach-icon" style="background:#00a884">📷</div><small>Camera</small></div><div class="attach-item" onclick="pickMedia('*/*')"><div class="attach-icon" style="background:#5f66cd">📄</div><small>Document</small></div></div>`; }
- else { title.textContent='Choose '+type; PRIV.forEach(v=>{ const d=document.createElement('div'); d.className='sheet-opt'; d.textContent=v; d.onclick=()=>{ setPriv(v); closeSheet(); }; opt.appendChild(d); }); }
- document.getElementById('sheet').style.display='block';
+  currentType=type; const opt=document.getElementById('sheetOptions'); const title=document.getElementById('sheetTitle'); opt.innerHTML='';
+  if(type==='theme'){ title.textContent='Choose theme'; THEMES.forEach(t=>{ const d=document.createElement('div'); d.className='sheet-opt'; d.innerHTML=`<div><b>${t.name}</b><br><small style="color:#8696a0">${t.desc}</small></div><span style="color:#00a884">›</span>`; d.onclick=()=>{ setTheme(t); closeSheet(); }; opt.appendChild(d); }); }
+  else if(type==='language'){ title.textContent='Language Dictionary • 10 Languages 🌍'; LANGS.forEach(l=>{ const d=document.createElement('div'); d.className='sheet-opt'; d.innerHTML=`<div><b>${l.flag} ${l.name}</b><br><small style="color:#8696a0">How are you = ${l.sample}</small></div><span style="color:#00a884">›</span>`; d.onclick=()=>{ localStorage.setItem('cc_lang',l.id); localStorage.setItem('cc_langName',l.name); document.getElementById('vLang').textContent=`${l.name} • ${LANGS.length} languages`; document.getElementById('hSub').textContent=`${l.flag} ${l.name} • Translation ON`; renderMsgs(); closeSheet(); }; opt.appendChild(d); }); }
+  else if(type==='attach'){ title.textContent='Attach'; opt.innerHTML=`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:6px"><div style="text-align:center" onclick="pickMedia('image/*')"><div style="width:54px;height:54px;border-radius:50%;background:#007bfc;display:grid;place-items:center;margin:0 auto">🖼️</div><small>Gallery</small></div><div style="text-align:center" onclick="pickMedia('video/*')"><div style="width:54px;height:54px;border-radius:50%;background:#a884ff;display:grid;place-items:center;margin:0 auto">🎥</div><small>Video</small></div><div style="text-align:center" onclick="document.getElementById('camInput').click(); closeSheet();"><div style="width:54px;height:54px;border-radius:50%;background:#00a884;display:grid;place-items:center;margin:0 auto">📷</div><small>Camera</small></div><div style="text-align:center" onclick="pickMedia('*/*')"><div style="width:54px;height:54px;border-radius:50%;background:#5f66cd;display:grid;place-items:center;margin:0 auto">📄</div><small>Document</small></div></div>`; }
+  else { title.textContent='Choose '+type; PRIV.forEach(v=>{ const d=document.createElement('div'); d.className='sheet-opt'; d.innerHTML=`<span>${v}</span><span style="color:#00a884">›</span>`; d.onclick=()=>{ setPriv(v); closeSheet(); }; opt.appendChild(d); }); }
+  document.getElementById('sheet').style.display='block';
 }
 function closeSheet(){ document.getElementById('sheet').style.display='none'; }
 function setPriv(v){ if(currentType==='lastseen') document.getElementById('vLast').textContent=v; if(currentType==='groups') document.getElementById('vGrp').textContent=v; localStorage.setItem(currentType,v); }
 function setTheme(t){ localStorage.setItem('cc_theme',t.id); localStorage.setItem('themeName',t.name); document.getElementById('vTheme').textContent=t.name; if(t.id==='light'){ document.body.style.background='#efe7dd'; document.body.style.color='#111'; document.querySelectorAll('.card').forEach(c=>c.style.background='#fff'); } else if(t.id==='ghana'){ document.body.style.background='#0a0a0a'; document.body.style.color='#ffd700'; document.querySelectorAll('.card').forEach(c=>{ c.style.background='#1a1a1a'; c.style.border='1px solid #d4af3733'; }); } else { document.body.style.background='#0b141a'; document.body.style.color='#e9edef'; document.querySelectorAll('.card').forEach(c=>{ c.style.background='#202c33'; c.style.border='none'; }); } }
 function pickMedia(a){ document.getElementById('genInput').accept=a; document.getElementById('genInput').click(); closeSheet(); }
 document.getElementById('genInput').addEventListener('change',handleMedia); document.getElementById('camInput').addEventListener('change',handleMedia);
-function handleMedia(e){ const f=e.target.files[0]; if(!f) return; const url=URL.createObjectURL(f); const isVid=f.type.startsWith('video'); msgs.push({id:Date.now(),type:isVid?'video':'image',url,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'}); localStorage.setItem('cc_msgs_v145',JSON.stringify(msgs)); render(); }
-function openMsgMenu(id){ longPressId=id; const m=document.getElementById('msgMenu'); m.style.display='block'; m.style.left='20%'; m.style.top='40%'; if(navigator.vibrate) navigator.vibrate(30); }
+function handleMedia(e){ const f=e.target.files[0]; if(!f) return; const url=URL.createObjectURL(f); const isVid=f.type.startsWith('video'); msgs.push({id:Date.now(),type:isVid?'video':'image',url,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'}); localStorage.setItem('cc_msgs_v146',JSON.stringify(msgs)); renderMsgs(); }
+function openMsgMenu(id){ longPressId=id; const m=document.getElementById('msgMenu'); m.style.display='block'; m.style.left='20%'; m.style.top='40%'; if(navigator.vibrate) navigator.vibrate(20); }
 function closeMsgMenu(){ document.getElementById('msgMenu').style.display='none'; }
-function deleteMsg(){ msgs=msgs.filter(x=>x.id!==longPressId); localStorage.setItem('cc_msgs_v145',JSON.stringify(msgs)); render(); closeMsgMenu(); }
+function deleteMsg(){ msgs=msgs.filter(x=>x.id!==longPressId); localStorage.setItem('cc_msgs_v146',JSON.stringify(msgs)); renderMsgs(); closeMsgMenu(); }
 document.addEventListener('click',e=>{ if(!e.target.closest('.bubble')&&!e.target.closest('#msgMenu')) closeMsgMenu(); if(!e.target.closest('#sheet')&&!e.target.closest('.input-bar')&&!e.target.closest('.fab')) closeSheet(); });
 let rec=null,chunks=[],tmr=null,st=0; const mic=document.getElementById('micBtn');
-async function rStart(){ try{ const stream=await navigator.mediaDevices.getUserMedia({audio:true}); rec=new MediaRecorder(stream,{mimeType:'audio/webm;codecs=opus'}); chunks=[]; st=Date.now(); rec.ondataavailable=e=>{ if(e.data.size>0) chunks.push(e.data); }; rec.onstop=()=>{ const blob=new Blob(chunks,{type:'audio/webm'}); const url=URL.createObjectURL(blob); msgs.push({id:Date.now(),type:'voice',url,dur:Math.round((Date.now()-st)/1000),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'}); localStorage.setItem('cc_msgs_v145',JSON.stringify(msgs)); render(); stream.getTracks().forEach(t=>t.stop()); mic.classList.remove('recording'); mic.textContent='🎙️'; document.getElementById('msgInput').placeholder='Message Ghana...'; clearInterval(tmr); }; rec.start(); mic.classList.add('recording'); mic.textContent='🔴'; tmr=setInterval(()=>{ document.getElementById('msgInput').placeholder=`🎙️ ${Math.round((Date.now()-st)/1000)}s — release`; },400); }catch{ alert('Allow mic for 41-lgtm.github.io'); } }
+async function rStart(){ try{ const stream=await navigator.mediaDevices.getUserMedia({audio:true}); rec=new MediaRecorder(stream,{mimeType:'audio/webm;codecs=opus'}); chunks=[]; st=Date.now(); rec.ondataavailable=e=>{ if(e.data.size>0) chunks.push(e.data); }; rec.onstop=()=>{ const blob=new Blob(chunks,{type:'audio/webm'}); const url=URL.createObjectURL(blob); msgs.push({id:Date.now(),type:'voice',url,dur:Math.round((Date.now()-st)/1000),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'}); localStorage.setItem('cc_msgs_v146',JSON.stringify(msgs)); renderMsgs(); stream.getTracks().forEach(t=>t.stop()); mic.classList.remove('recording'); mic.textContent='🎙️'; document.getElementById('msgInput').placeholder='Message Ghana...'; clearInterval(tmr); }; rec.start(); mic.classList.add('recording'); mic.textContent='🔴'; tmr=setInterval(()=>{ document.getElementById('msgInput').placeholder=`🎙️ ${Math.round((Date.now()-st)/1000)}s — release`; },400); }catch{ alert('Please allow microphone in Chrome settings for 41-lgtm.github.io'); } }
 function rStop(){ if(rec&&rec.state==='recording') rec.stop(); }
 mic.addEventListener('touchstart',e=>{ e.preventDefault(); rStart(); }); mic.addEventListener('touchend',e=>{ e.preventDefault(); rStop(); }); mic.addEventListener('mousedown',rStart); mic.addEventListener('mouseup',rStop); mic.addEventListener('mouseleave',rStop);
 function showScreen(s){ document.getElementById('sChats').style.display=s==='chats'?'block':'none'; document.getElementById('sChat').style.display=s==='chat'?'flex':'none'; document.getElementById('sSettings').style.display=s==='settings'?'block':'none'; document.getElementById('inputBar').style.display=s==='chat'?'flex':'none'; document.getElementById('tChats').classList.toggle('active',s==='chats'); document.getElementById('tChat').classList.toggle('active',s==='chat'); document.getElementById('tSet').classList.toggle('active',s==='settings'); }
-function showChats(){ showScreen('chats'); }
-window.onload=()=>{ render(); }
 </script>
 </body>
 </html>
