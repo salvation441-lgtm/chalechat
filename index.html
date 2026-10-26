@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>ChaleChat V156 — Pic Picks To Person</title>
+<title>ChaleChat V158 — No Stretch + Pick Fixed</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:#0b141a;color:#e9edef;height:100dvh;display:flex;flex-direction:column}
@@ -22,6 +22,7 @@ body{background:#0b141a;color:#e9edef;height:100dvh;display:flex;flex-direction:
 .bubble{max-width:85%;padding:10px 12px;border-radius:16px;font-size:15px;word-break:break-word}
 .bubble.me{align-self:flex-end;background:#005c4b;border-bottom-right-radius:4px}
 .bubble.them{align-self:flex-start;background:#202c33;border-bottom-left-radius:4px}
+.bubble img, .bubble video{width:100%;height:auto;max-height:380px;border-radius:12px;object-fit:contain;background:#000;display:block}
 .meta{font-size:10px;color:#ffffff99;margin-top:6px;text-align:right}
 .orig{margin-top:6px;padding-top:6px;border-top:1px dashed #ffffff20;font-size:11px;color:#8696a0}
 .live-preview{background:#182026;border-left:3px solid #00a884;padding:10px 12px;font-size:13px;color:#00e6a0;display:none;position:sticky;bottom:58px;z-index:34}
@@ -30,9 +31,11 @@ body{background:#0b141a;color:#e9edef;height:100dvh;display:flex;flex-direction:
 .input-wrap{flex:1;background:#2a3942;border-radius:24px;display:flex;align-items:flex-end;padding:5px 6px 5px 14px}
 .input-wrap textarea{flex:1;background:transparent;border:none;color:white;outline:none;resize:none;max-height:100px;min-height:22px;padding:8px 0;font-size:15px}
 .icon-btn{width:44px;height:44px;border-radius:50%;border:none;display:grid;place-items:center;font-size:20px;cursor:pointer;touch-action:none}
-.mic{background:#00a884;color:white}.mic.recording{background:#f15c6d}.send{background:#00a884;color:white;display:none}
+.mic{background:#00a884;color:white}.mic.recording{background:#f15c6d;animation:pulse 1s infinite}.send{background:#00a884;color:white;display:none}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
 .bottom-sheet{position:fixed;bottom:0;left:0;right:0;background:#111b21;border:1px solid #2a3942;border-bottom:none;border-radius:24px 24px 0 0;padding:18px 16px 32px 16px;z-index:100;display:none;max-height:90vh;overflow-y:auto}
 .sheet-handle{height:4px;width:40px;background:#2a3942;border-radius:10px;margin:0 auto 14px}
+.sheet-opt{padding:18px 10px;border-bottom:1px solid #202c33;font-size:15px;display:flex;justify-content:space-between;align-items:center}
 .attach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:10px}
 .attach-item{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px;border-radius:16px;background:#202c33}
 .attach-icon{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-size:26px;color:white}
@@ -49,20 +52,20 @@ body{background:#0b141a;color:#e9edef;height:100dvh;display:flex;flex-direction:
 <div class="header">
 <button style="width:40px;height:40px;background:#00a884;border-radius:12px;border:none;color:white" onclick="showScreen('chats')">←</button>
 <div class="avatar"><img id="hImg" src="https://i.pravatar.cc/100?img=12"></div>
-<div style="flex:1"><div class="name" id="hName">@ku4 96nk6r</div><div class="sub" id="hSub">🇬🇭 Twi • Pick To Chat • Pic Fixed</div></div>
+<div style="flex:1"><div class="name" id="hName">@ku4 96nk6r</div><div class="sub" id="hSub">🇬🇭 Twi • Pick To Chat • No Stretch</div></div>
 <button class="badge" id="transBtn" onclick="toggleTrans()">🌍 ON</button>
 </div>
 <div class="tabs"><button id="tChats" onclick="showScreen('chats')">Chats</button><button id="tChat" class="active" onclick="showScreen('chat')">Chat</button><button id="tSet" onclick="showScreen('settings')">Settings</button></div>
 
 <div id="sChats" class="screen" style="display:none;padding:12px"><div id="contactList"></div><button class="fab" onclick="openContactModal()">+</button></div>
 <div id="sChat" class="screen chat-area" style="display:flex"><div id="msgs" style="display:flex;flex-direction:column;gap:8px;width:100%"></div></div>
-<div id="sSettings" class="screen settings" style="display:none"><div style="color:#00a884;font-size:11px;font-weight:900;margin:6px 4px">V156 PIC PICKS TO PERSON</div><div class="card" onclick="openSheet('language')"><div><b>Language 📖</b><p id="vLang">Twi • Pic fixed • No undefined</p></div><span style="color:#00a884;font-weight:800">Change ›</span></div></div>
+<div id="sSettings" class="screen settings" style="display:none"><div style="color:#00a884;font-size:11px;font-weight:900;margin:6px 4px">V158 NO STRETCH + RECORDING FIXED</div><div class="card" onclick="openSheet('language')"><div><b>Language 📖</b><p id="vLang">Twi • No Stretch • Pick Fixed</p></div><span style="color:#00a884;font-weight:800">Change ›</span></div></div>
 
 <div id="livePreview" class="live-preview"></div>
 <div id="replyBar" class="reply-bar"><div style="flex:1"><b id="replyName" style="font-size:13px;color:#00a884">Replying</b><div id="replyText" style="font-size:12px;color:#8696a0"></div></div><button onclick="cancelReply()" style="background:none;border:none;color:#8696a0;font-size:20px">✕</button></div>
 <div class="input-bar" id="inputBar" style="display:flex">
 <button class="icon-btn" style="background:#2a3942" onclick="openSheet('attach')">📎</button>
-<div class="input-wrap"><textarea id="msgInput" rows="1" placeholder="Type or attach pic — will pick" oninput="onTyping()"></textarea></div>
+<div class="input-wrap"><textarea id="msgInput" rows="1" placeholder="Type or attach pic/video — will pick" oninput="onTyping()"></textarea></div>
 <button class="icon-btn mic" id="micBtn">🎙️</button>
 <button class="icon-btn send" id="sendBtn" onclick="sendText()">➤</button>
 </div>
@@ -74,35 +77,35 @@ body{background:#0b141a;color:#e9edef;height:100dvh;display:flex;flex-direction:
 <input type="file" id="imgInput" accept="image/*" hidden>
 <input type="file" id="camInput" accept="image/*,video/*" capture="environment" hidden>
 <input type="file" id="vidInput" accept="video/*" hidden>
-<input type="file" id="docInput" accept=".pdf,.doc,.docx,.txt,.png,.jpg" hidden>
+<input type="file" id="docInput" accept=".pdf,.doc,.docx,.txt" hidden>
 <input type="file" id="audInput" accept="audio/*" hidden>
 
 <script>
 let transON=true;
-let currentContactId=localStorage.getItem('cc_current_v156')||'ku4';
-let allChats=JSON.parse(localStorage.getItem('cc_allChats_v156')||'{}');
-let contacts=JSON.parse(localStorage.getItem('cc_contacts_v156')||'[{"id":"ku4","name":"@ku4 96nk6r","number":"0550000000","lang":"Twi","flag":"🇬🇭","avatar":"https://i.pravatar.cc/100?img=12"}]');
+let currentContactId=localStorage.getItem('cc_current_v158')||'ku4';
+let allChats=JSON.parse(localStorage.getItem('cc_allChats_v158')||'{}');
+let contacts=JSON.parse(localStorage.getItem('cc_contacts_v158')||'[{"id":"ku4","name":"@ku4 96nk6r","number":"0550000000","lang":"Twi","flag":"🇬🇭","avatar":"https://i.pravatar.cc/100?img=12"}]');
 let replyTo=null, longPressId=null;
 const LANGS=[{id:'twi',name:'Twi',flag:'🇬🇭',code:'tw'},{id:'fante',name:'Fante',flag:'🇬🇭',code:'ak'},{id:'english',name:'English',flag:'🇬🇧',code:'en'}];
 function getLang(){return localStorage.getItem('cc_lang')||'twi';}
 function getLangCode(){const l=LANGS.find(x=>x.id===getLang()); return l?l.code:'tw';}
-function getMsgs(id){id=id||currentContactId; if(!allChats[id]) allChats[id]=[]; allChats[id]=allChats[id].filter(m=>m&&m.text!==undefined&&m.text!=="undefined"&& (m.type||m.text)); if(allChats[id].length===0){ allChats[id]=[{id:1,text:"How are you",displayText:"Wo ho te sɛn?",original:"How are you",time:"6:46 PM",from:"them"}]; saveAll(); } return allChats[id];}
-function saveAll(){localStorage.setItem('cc_allChats_v156',JSON.stringify(allChats)); localStorage.setItem('cc_contacts_v156',JSON.stringify(contacts)); localStorage.setItem('cc_current_v156',currentContactId);}
+function getMsgs(id){id=id||currentContactId; if(!allChats[id]) allChats[id]=[]; allChats[id]=allChats[id].filter(m=>m&&(m.type||m.text)); if(allChats[id].length===0){ allChats[id]=[{id:1,text:"How are you",displayText:"Wo ho te sɛn?",original:"How are you",time:"6:46 PM",from:"them"}]; saveAll(); } return allChats[id];}
+function saveAll(){localStorage.setItem('cc_allChats_v158',JSON.stringify(allChats)); localStorage.setItem('cc_contacts_v158',JSON.stringify(contacts)); localStorage.setItem('cc_current_v158',currentContactId);}
 
 async function googleTranslate(text, targetCode){
   try{ const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetCode}&dt=t&q=${encodeURIComponent(text)}`; const res=await fetch(url); const data=await res.json(); let out=''; if(data&&data[0]){ data[0].forEach(s=>{ if(s[0]) out+=s[0]; }); } if(out&&out.toLowerCase()!==text.toLowerCase()) return out; }catch(e){}
   return null;
 }
-const OFFLINE={"Adey good":{twi:"Me ho yɛ",fante:"Me ho yɛ papa"},"How are you":{twi:"Wo ho te sɛn?",fante:"Wo ho te dɛn?"}};
-function offlineTranslate(text, langId){ const k=text.trim(); if(OFFLINE[k]&&OFFLINE[k][langId]) return OFFLINE[k][langId]; const low=k.toLowerCase(); if(low.includes('adey good')||low.includes('am good')){ if(langId==='twi') return 'Me ho yɛ'; } let m=low.match(/^how is (.+)$/); if(m){ const N=m[1].charAt(0).toUpperCase()+m[1].slice(1); if(langId==='twi') return `${N} ho te sɛn?`; } return null; }
+const OFFLINE={"Adey good":{twi:"Me ho yɛ",fante:"Me ho yɛ papa"},"How are you":{twi:"Wo ho te sɛn?",fante:"Wo ho te dɛn?"},"Ebi so":{twi:"Ebi te saa",fante:"Ebi te saa"}};
+function offlineTranslate(text, langId){ const k=text.trim(); if(OFFLINE[k]&&OFFLINE[k][langId]) return OFFLINE[k][langId]; const low=k.toLowerCase(); if(low.includes('adey good')||low.includes('ebi so')){ if(langId==='twi') return low.includes('ebi')?'Ebi te saa':'Me ho yɛ'; } let m=low.match(/^how is (.+)$/); if(m){ const N=m[1].charAt(0).toUpperCase()+m[1].slice(1); if(langId==='twi') return `${N} ho te sɛn?`; } return null; }
 
 function renderMsgs(){
  const c=document.getElementById('msgs');c.innerHTML='';const langId=getLang();const msgs=getMsgs();
  msgs.forEach(m=>{
   const d=document.createElement('div');d.className='bubble '+(m.from==='me'?'me':'them');
   let html=''; if(m.reply){html+=`<div style="border-left:3px solid #00a884;background:#00000030;padding:6px 8px;border-radius:6px;margin-bottom:6px;font-size:12.5px"><b>${m.reply.name}</b><br>${m.reply.text}</div>`;}
-  if(m.type==='image'){ html+=`<img src="${m.url}" style="width:100%;border-radius:12px;max-height:300px;object-fit:contain;background:#000"><div class="meta">${m.time} ✓✓ • Pic picked to chat</div>`; if(m.text) html+=`<div style="margin-top:6px">${m.text}</div>`; }
-  else if(m.type==='video'){ html+=`<video src="${m.url}" controls style="width:100%;border-radius:12px;max-height:300px"></video><div class="meta">${m.time} ✓✓</div>`; }
+  if(m.type==='image'){ html+=`<img src="${m.url}" alt="pic"><div class="meta">${m.time} ✓✓</div>`; }
+  else if(m.type==='video'){ html+=`<video src="${m.url}" controls playsinline></video><div class="meta">${m.time} ✓✓ • Video picked</div>`; }
   else if(m.type==='audio'||m.type==='voice'){ html+=`<audio src="${m.url}" controls style="width:200px"></audio><div class="meta">${m.dur||''} • ${m.time} ✓✓</div>`; }
   else if(m.type==='doc'){ html+=`📄 ${m.name}<div class="meta">${m.time} ✓✓</div>`; }
   else{
@@ -119,7 +122,7 @@ function renderContacts(){
  contacts.forEach(con=>{
   const div=document.createElement('div');div.className='card';
   div.innerHTML=`<div style="display:flex;gap:12px;align-items:center"><div class="avatar"><img src="${con.avatar}"></div><div><b>${con.name}</b><p>${con.number} • ${con.lang} • ${getMsgs(con.id).length} msgs</p></div></div><span style="color:#00a884;font-weight:800">›</span>`;
-  div.onclick=()=>{ currentContactId=con.id; localStorage.setItem('cc_current_v156',con.id); document.getElementById('hName').textContent=con.name; document.getElementById('hSub').textContent=`${con.flag} ${con.lang} • Pick To Chat`; localStorage.setItem('cc_lang',con.lang.toLowerCase()); showScreen('chat'); renderMsgs(); };
+  div.onclick=()=>{ currentContactId=con.id; localStorage.setItem('cc_current_v158',con.id); document.getElementById('hName').textContent=con.name; document.getElementById('hSub').textContent=`${con.flag} ${con.lang} • Pick To Chat`; localStorage.setItem('cc_lang',con.lang.toLowerCase()); showScreen('chat'); renderMsgs(); };
   c.appendChild(div);
  });
 }
@@ -132,14 +135,14 @@ function onTyping(){
  inp.style.height='auto'; inp.style.height=Math.min(inp.scrollHeight,100)+'px';
  const live=document.getElementById('livePreview'); if(!has||!transON){ live.style.display='none'; return; }
  if(typingTimer) clearTimeout(typingTimer);
- live.style.display='block'; live.innerHTML=`🌍 Translating "${val}"... will pick to chat`;
+ live.style.display='block'; live.innerHTML=`🌍 Translating "${val}"...`;
  typingTimer=setTimeout(async()=>{
    let tr=offlineTranslate(val, getLang()); if(tr){ live.innerHTML=`🌍 Live ${getLang().toUpperCase()}: <b>${tr}</b> • will pick`; return; }
    const online=await googleTranslate(val, getLangCode()); if(online) live.innerHTML=`🌍 Live GOOGLE: <b>${online}</b> — will pick`;
  },400);
 }
 async function sendText(){
- const inp=document.getElementById('msgInput'); const raw=inp.value.trim(); if(!raw||raw==="undefined")return;
+ const inp=document.getElementById('msgInput'); const raw=inp.value.trim(); if(!raw)return;
  let tr=offlineTranslate(raw, getLang()); if(!tr) tr=await googleTranslate(raw, getLangCode());
  const msgs=getMsgs();
  const newMsg={id:Date.now(),text:raw,displayText:tr||raw,original:raw,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me',translated:tr,lang:getLang()};
@@ -148,18 +151,70 @@ async function sendText(){
 }
 function toggleTrans(){transON=!transON;localStorage.setItem('cc_trans',transON?'ON':'OFF');document.getElementById('transBtn').textContent=transON?'🌍 ON':'🌍 OFF';renderMsgs();}
 
-// MIC
-let rec=null,chunks=[],st=0,tmr=null;
+// === FIXED RECORDING — NO BLOCK AFTER PIC/VIDEO ===
+let rec=null,chunks=[],st=0,tmr=null,isCancelled=false,startX=0;
 const mic=document.getElementById('micBtn');
-async function rStart(){ if(rec&&rec.state==='recording') return; try{ const stream=await navigator.mediaDevices.getUserMedia({audio:true}); rec=new MediaRecorder(stream); chunks=[]; st=Date.now(); rec.ondataavailable=ev=>{if(ev.data.size>0) chunks.push(ev.data);}; rec.onstop=()=>{ const blob=new Blob(chunks,{type:'audio/webm'}); const reader=new FileReader(); reader.onload=()=>{ const url=reader.result; const msgs=getMsgs(); msgs.push({id:Date.now(),type:'voice',url,dur:Math.round((Date.now()-st)/1000),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'}); allChats[currentContactId]=msgs; saveAll(); renderMsgs(); }; reader.readAsDataURL(blob); stream.getTracks().forEach(t=>t.stop()); mic.classList.remove('recording'); mic.textContent='🎙️'; document.getElementById('livePreview').style.display='none'; clearInterval(tmr); rec=null; }; rec.start(); mic.classList.add('recording'); mic.textContent='🔴'; tmr=setInterval(()=>{ const sec=Math.round((Date.now()-st)/1000); document.getElementById('livePreview').style.display='block'; document.getElementById('livePreview').innerHTML=`🔴 Recording ${sec}s — release to send`; },400); }catch{ alert('Allow mic'); } }
-function rStop(){ if(!rec||rec.state!=='recording'){ mic.classList.remove('recording'); mic.textContent='🎙️'; document.getElementById('livePreview').style.display='none'; clearInterval(tmr); return; } rec.stop(); }
-mic.addEventListener('pointerdown', rStart); window.addEventListener('pointerup', rStop);
+async function rStart(e){
+  if(rec && rec.state==='recording') return;
+  isCancelled=false; startX=e.touches?e.touches[0].clientX:e.clientX||0;
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    rec=new MediaRecorder(stream); chunks=[]; st=Date.now();
+    rec.ondataavailable=ev=>{ if(ev.data.size>0) chunks.push(ev.data); };
+    rec.onstop=()=>{
+      if(!isCancelled){
+        const blob=new Blob(chunks,{type:'audio/webm'});
+        const reader=new FileReader();
+        reader.onload=()=>{
+          const url=reader.result;
+          const msgs=getMsgs();
+          msgs.push({id:Date.now(),type:'voice',url,dur:Math.round((Date.now()-st)/1000),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'});
+          allChats[currentContactId]=msgs; saveAll(); renderMsgs();
+        };
+        reader.readAsDataURL(blob);
+      }
+      stream.getTracks().forEach(t=>t.stop());
+      mic.classList.remove('recording'); mic.textContent='🎙️';
+      document.getElementById('livePreview').style.display='none';
+      clearInterval(tmr); rec=null; isCancelled=false;
+    };
+    rec.start(); mic.classList.add('recording'); mic.textContent='🔴';
+    tmr=setInterval(()=>{
+      const sec=Math.round((Date.now()-st)/1000);
+      const lp=document.getElementById('livePreview');
+      lp.style.display='block'; lp.innerHTML=`🔴 Recording ${sec}s — release to send | slide left to cancel`;
+      if(sec>90) rStop();
+    },400);
+  }catch(err){
+    alert('Allow mic in Chrome settings');
+    mic.classList.remove('recording'); mic.textContent='🎙️';
+  }
+}
+function rStop(){
+  if(!rec || rec.state!=='recording'){
+    mic.classList.remove('recording'); mic.textContent='🎙️';
+    document.getElementById('livePreview').style.display='none';
+    clearInterval(tmr); rec=null; return;
+  }
+  rec.stop();
+}
+mic.addEventListener('touchstart',e=>{ startX=e.touches[0].clientX; });
+mic.addEventListener('touchmove',e=>{
+  if(!rec) return;
+  const curX=e.touches[0].clientX;
+  const lp=document.getElementById('livePreview');
+  if(startX-curX>80){ lp.innerHTML='❌ Cancel — slide more to cancel'; isCancelled=true; }
+  else{ lp.innerHTML=`🔴 Recording ${Math.round((Date.now()-st)/1000)}s — release to send`; isCancelled=false; }
+});
+mic.addEventListener('pointerdown', rStart);
+window.addEventListener('pointerup', rStop);
+window.addEventListener('pointercancel',()=>{ isCancelled=true; if(rec) rec.stop(); });
 
-// === PIC PICK TO PERSON — BASE64 FIX ===
+// === PIC/VIDEO PICK — COMPRESS + NO STRETCH + NO BLOCK ===
 function openSheet(type){
  const opt=document.getElementById('sheetOptions');const title=document.getElementById('sheetTitle');opt.innerHTML='';
  if(type==='language'){title.textContent='Language';LANGS.forEach(l=>{const d=document.createElement('div');d.className='sheet-opt';d.innerHTML=`<div><b>${l.flag} ${l.name}</b></div><span style="color:#00a884">›</span>`;d.onclick=()=>{localStorage.setItem('cc_lang',l.id);document.getElementById('vLang').textContent=l.name;document.getElementById('hSub').textContent=`${l.flag} ${l.name} • Pick To Chat`;renderMsgs();closeSheet();};opt.appendChild(d);});}
- else if(type==='attach'){title.textContent='Attach — Pic Picks To Person';opt.innerHTML=`<div class="attach-grid">
+ else if(type==='attach'){title.textContent='Attach — Pic/Video Picks To Person';opt.innerHTML=`<div class="attach-grid">
    <div class="attach-item" onclick="pick('img')"><div class="attach-icon" style="background:#007bfc">🖼️</div><small>Gallery</small></div>
    <div class="attach-item" onclick="pick('cam')"><div class="attach-icon" style="background:#00a884">📷</div><small>Camera</small></div>
    <div class="attach-item" onclick="pick('vid')"><div class="attach-icon" style="background:#a884ff">🎥</div><small>Video</small></div>
@@ -172,23 +227,36 @@ function closeSheet(){document.getElementById('sheet').style.display='none';}
 function pick(k){closeSheet(); setTimeout(()=>{ if(k==='img') document.getElementById('imgInput').click(); if(k==='cam') document.getElementById('camInput').click(); if(k==='vid') document.getElementById('vidInput').click(); if(k==='doc') document.getElementById('docInput').click(); if(k==='aud') document.getElementById('audInput').click(); },120);}
 
 function handleFile(e,type){
-  const f=e.target.files[0]; if(!f) return;
-  // Use FileReader base64 — picks to person and persists!
+  const f=e.target.files[0]; if(!f){ e.target.value=''; return; }
   const reader=new FileReader();
   reader.onload=function(ev){
-    const dataUrl=ev.target.result; // base64
-    const msgs=getMsgs();
-    let obj={id:Date.now(),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me',url:dataUrl,name:f.name,text:f.name};
-    if(type==='img'||type==='cam') obj.type='image';
-    else if(type==='vid') obj.type='video';
-    else if(type==='doc') obj.type='doc';
-    else obj.type='audio';
-    msgs.push(obj); allChats[currentContactId]=msgs; saveAll(); renderMsgs();
+    const dataUrl=ev.target.result;
+    if(type==='img'||type==='cam'){
+      const img=new Image();
+      img.onload=function(){
+        const canvas=document.createElement('canvas');
+        const max=720; let w=img.width,h=img.height;
+        // keep aspect ratio — no stretch
+        if(w>h){ if(w>max){ h=h*max/w; w=max; } }
+        else{ if(h>max){ w=w*max/h; h=max; } }
+        canvas.width=w; canvas.height=h;
+        canvas.getContext('2d').drawImage(img,0,0,w,h);
+        const compressed=canvas.toDataURL('image/jpeg',0.65);
+        const msgs=getMsgs();
+        msgs.push({id:Date.now(),type:'image',url:compressed,name:f.name,text:f.name,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'});
+        allChats[currentContactId]=msgs; saveAll(); renderMsgs();
+        e.target.value=''; // clear so you can pick again
+      };
+      img.src=dataUrl;
+    } else {
+      const msgs=getMsgs();
+      let obj={id:Date.now(),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me',url:dataUrl,name:f.name,text:f.name};
+      if(type==='vid') obj.type='video'; else if(type==='doc') obj.type='doc'; else obj.type='audio';
+      msgs.push(obj); allChats[currentContactId]=msgs; saveAll(); renderMsgs();
+      e.target.value='';
+    }
   };
-  if(type==='img'||type==='cam'||type==='vid'||type==='doc'||type==='aud'){
-    reader.readAsDataURL(f); // BASE64 — key fix!
-  }
-  e.target.value='';
+  reader.readAsDataURL(f);
 }
 document.getElementById('imgInput').addEventListener('change',e=>handleFile(e,'img'));
 document.getElementById('camInput').addEventListener('change',e=>handleFile(e,'cam'));
