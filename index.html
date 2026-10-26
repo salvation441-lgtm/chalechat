@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>ChaleChat V152 — Mic Fixed + Contact Translate</title>
+<title>ChaleChat V156 — Pic Picks To Person</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:#0b141a;color:#e9edef;height:100dvh;display:flex;flex-direction:column}
@@ -16,35 +16,32 @@ body{background:#0b141a;color:#e9edef;height:100dvh;display:flex;flex-direction:
 .tabs button{flex:1;padding:14px;background:none;border:none;color:#8696a0;font-weight:800;border-bottom:3px solid transparent}
 .tabs button.active{color:#00a884;border-color:#00a884}
 .screen{flex:1;overflow-y:auto;position:relative}
-.settings{padding:10px 10px 100px 10px}
 .card{background:#202c33;margin-bottom:10px;padding:16px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;min-height:82px;cursor:pointer}
-.fab{position:fixed;right:16px;bottom:20px;width:58px;height:58px;border-radius:18px;background:#00a884;color:white;border:none;font-size:30px;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,168,132,0.4);z-index:30}
+.fab{position:fixed;right:16px;bottom:20px;width:58px;height:58px;border-radius:18px;background:#00a884;color:white;border:none;font-size:30px;display:grid;place-items:center;z-index:30}
 .chat-area{padding:12px;display:flex;flex-direction:column;gap:8px}
-.bubble{max-width:82%;padding:10px 12px;border-radius:16px;font-size:14.5px}
+.bubble{max-width:85%;padding:10px 12px;border-radius:16px;font-size:15px;word-break:break-word}
 .bubble.me{align-self:flex-end;background:#005c4b;border-bottom-right-radius:4px}
 .bubble.them{align-self:flex-start;background:#202c33;border-bottom-left-radius:4px}
 .meta{font-size:10px;color:#ffffff99;margin-top:6px;text-align:right}
-.translation{margin-top:8px;background:linear-gradient(90deg,#0a332c,#0e2a1e);border-left:3px solid #00a884;padding:8px 10px;border-radius:10px;font-size:13px}
-.live-preview{background:#182026;border-left:3px solid #f15c6d;padding:10px 12px;font-size:13px;color:#00e6a0;display:none;position:sticky;bottom:58px;z-index:34}
+.orig{margin-top:6px;padding-top:6px;border-top:1px dashed #ffffff20;font-size:11px;color:#8696a0}
+.live-preview{background:#182026;border-left:3px solid #00a884;padding:10px 12px;font-size:13px;color:#00e6a0;display:none;position:sticky;bottom:58px;z-index:34}
 .reply-bar{background:#182026;padding:8px 12px;display:flex;align-items:center;gap:10px;border-left:3px solid #00a884;display:none;position:sticky;bottom:58px;z-index:35}
 .input-bar{background:#202c33;padding:6px 8px;display:flex;align-items:flex-end;gap:6px;position:sticky;bottom:0;z-index:40}
 .input-wrap{flex:1;background:#2a3942;border-radius:24px;display:flex;align-items:flex-end;padding:5px 6px 5px 14px}
 .input-wrap textarea{flex:1;background:transparent;border:none;color:white;outline:none;resize:none;max-height:100px;min-height:22px;padding:8px 0;font-size:15px}
 .icon-btn{width:44px;height:44px;border-radius:50%;border:none;display:grid;place-items:center;font-size:20px;cursor:pointer;touch-action:none}
-.mic{background:#00a884;color:white}.mic.recording{background:#f15c6d;animation:pulse 1s infinite}.send{background:#00a884;color:white;display:none}
-@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
+.mic{background:#00a884;color:white}.mic.recording{background:#f15c6d}.send{background:#00a884;color:white;display:none}
 .bottom-sheet{position:fixed;bottom:0;left:0;right:0;background:#111b21;border:1px solid #2a3942;border-bottom:none;border-radius:24px 24px 0 0;padding:18px 16px 32px 16px;z-index:100;display:none;max-height:90vh;overflow-y:auto}
 .sheet-handle{height:4px;width:40px;background:#2a3942;border-radius:10px;margin:0 auto 14px}
-.sheet-opt{padding:18px 10px;border-bottom:1px solid #202c33;font-size:15px;display:flex;justify-content:space-between;align-items:center}
 .attach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:10px}
-.attach-item{display:flex;flex-direction:column;align-items:center;gap:8px;padding:10px;border-radius:16px;background:#202c33}
+.attach-item{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px;border-radius:16px;background:#202c33}
 .attach-icon{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-size:26px;color:white}
 .input-field{width:100%;background:#202c33;border:1px solid #2a3942;border-radius:12px;padding:14px;color:white;font-size:15px;margin-top:10px;outline:none}
-.input-field.normal{text-align:left;letter-spacing:normal}
+.input-field.normal{text-align:left}
 .btn-primary{width:100%;background:#00a884;color:white;border:none;border-radius:12px;padding:14px;font-weight:800;margin-top:14px}
 .btn-dash{width:100%;background:#1f2c34;border:1px dashed #00a884;color:#00a884;border-radius:12px;padding:14px;font-weight:800;margin-top:14px}
 .btn-ghost{width:100%;background:transparent;color:#8696a0;border:none;padding:12px;margin-top:8px}
-.context-menu{position:fixed;background:#233138;border-radius:14px;overflow:hidden;z-index:200;box-shadow:0 12px 30px rgba(0,0,0,0.6);min-width:240px;display:none}
+.context-menu{position:fixed;background:#233138;border-radius:14px;overflow:hidden;z-index:200;min-width:240px;display:none}
 .context-menu div{padding:16px 18px}
 </style>
 </head>
@@ -52,181 +49,164 @@ body{background:#0b141a;color:#e9edef;height:100dvh;display:flex;flex-direction:
 <div class="header">
 <button style="width:40px;height:40px;background:#00a884;border-radius:12px;border:none;color:white" onclick="showScreen('chats')">←</button>
 <div class="avatar"><img id="hImg" src="https://i.pravatar.cc/100?img=12"></div>
-<div style="flex:1"><div class="name" id="hName">Kwame</div><div class="sub" id="hSub">🇬🇭 Twi • Translation ON • Online</div></div>
+<div style="flex:1"><div class="name" id="hName">@ku4 96nk6r</div><div class="sub" id="hSub">🇬🇭 Twi • Pick To Chat • Pic Fixed</div></div>
 <button class="badge" id="transBtn" onclick="toggleTrans()">🌍 ON</button>
 </div>
-<div class="tabs"><button id="tChats" class="active" onclick="showScreen('chats')">Chats</button><button id="tChat" onclick="showScreen('chat')">Chat</button><button id="tSet" onclick="showScreen('settings')">Settings</button></div>
+<div class="tabs"><button id="tChats" onclick="showScreen('chats')">Chats</button><button id="tChat" class="active" onclick="showScreen('chat')">Chat</button><button id="tSet" onclick="showScreen('settings')">Settings</button></div>
 
-<div id="sChats" class="screen" style="display:block;padding:12px"><div id="contactList"></div><button class="fab" onclick="openContactModal()">+</button></div>
-<div id="sChat" class="screen chat-area" style="display:none"><div id="msgs" style="display:flex;flex-direction:column;gap:8px;width:100%"></div></div>
-<div id="sSettings" class="screen settings" style="display:none">
-<div style="color:#00a884;font-size:11px;font-weight:900;margin:6px 4px">V152 MIC FIXED + CONTACT TRANSLATE</div>
-<div class="card" onclick="openSheet('language')"><div><b>Language Dictionary 📖</b><p id="vLang">Twi • Online • Live</p></div><span style="color:#00a884;font-weight:800">Change ›</span></div>
-</div>
+<div id="sChats" class="screen" style="display:none;padding:12px"><div id="contactList"></div><button class="fab" onclick="openContactModal()">+</button></div>
+<div id="sChat" class="screen chat-area" style="display:flex"><div id="msgs" style="display:flex;flex-direction:column;gap:8px;width:100%"></div></div>
+<div id="sSettings" class="screen settings" style="display:none"><div style="color:#00a884;font-size:11px;font-weight:900;margin:6px 4px">V156 PIC PICKS TO PERSON</div><div class="card" onclick="openSheet('language')"><div><b>Language 📖</b><p id="vLang">Twi • Pic fixed • No undefined</p></div><span style="color:#00a884;font-weight:800">Change ›</span></div></div>
 
 <div id="livePreview" class="live-preview"></div>
 <div id="replyBar" class="reply-bar"><div style="flex:1"><b id="replyName" style="font-size:13px;color:#00a884">Replying</b><div id="replyText" style="font-size:12px;color:#8696a0"></div></div><button onclick="cancelReply()" style="background:none;border:none;color:#8696a0;font-size:20px">✕</button></div>
-<div class="input-bar" id="inputBar" style="display:none">
+<div class="input-bar" id="inputBar" style="display:flex">
 <button class="icon-btn" style="background:#2a3942" onclick="openSheet('attach')">📎</button>
-<div class="input-wrap"><textarea id="msgInput" rows="1" placeholder="Type anything — live Twi..." oninput="onTyping()"></textarea></div>
+<div class="input-wrap"><textarea id="msgInput" rows="1" placeholder="Type or attach pic — will pick" oninput="onTyping()"></textarea></div>
 <button class="icon-btn mic" id="micBtn">🎙️</button>
 <button class="icon-btn send" id="sendBtn" onclick="sendText()">➤</button>
 </div>
 
 <div class="bottom-sheet" id="sheet"><div class="sheet-handle"></div><h4 id="sheetTitle"></h4><div id="sheetOptions" style="margin-top:12px"></div><button class="btn-ghost" onclick="closeSheet()">Cancel</button></div>
-<div class="bottom-sheet" id="contactModal"><div class="sheet-handle"></div><h4 style="font-weight:900">New Contact 🇬🇭</h4><button class="btn-dash" onclick="autoPickContact()">📱 Pick from Phone — AUTO</button><input id="cName" class="input-field normal" placeholder="Name"><input id="cNumber" class="input-field normal" placeholder="Phone"><input id="cLang" class="input-field normal" value="Twi"><button class="btn-primary" onclick="saveContact()">Save ✓</button><button class="btn-ghost" onclick="closeContactModal()">Cancel</button><div id="autoStatus" style="font-size:12px;color:#8696a0;margin-top:10px;text-align:center"></div></div>
+<div class="bottom-sheet" id="contactModal"><div class="sheet-handle"></div><h4 style="font-weight:900">New Contact 🇬🇭</h4><button class="btn-dash" onclick="autoPickContact()">📱 Pick from Phone</button><input id="cName" class="input-field normal" placeholder="Name"><input id="cNumber" class="input-field normal" placeholder="Phone"><input id="cLang" class="input-field normal" value="Twi"><button class="btn-primary" onclick="saveContact()">Save ✓</button><button class="btn-ghost" onclick="closeContactModal()">Cancel</button><div id="autoStatus" style="font-size:12px;color:#8696a0;margin-top:10px;text-align:center"></div></div>
 <div class="context-menu" id="msgMenu"><div onclick="replyMsg()">↩️ Reply</div><div onclick="deleteMsg()">🗑️ Delete</div><div onclick="closeMsgMenu()" style="text-align:center;color:#8696a0;border-top:1px solid #2a3942">Cancel</div></div>
 
 <input type="file" id="imgInput" accept="image/*" hidden>
-<input type="file" id="vidInput" accept="video/*" hidden>
-<input type="file" id="docInput" accept=".pdf,.doc,.docx" hidden>
-<input type="file" id="audInput" accept="audio/*" hidden>
 <input type="file" id="camInput" accept="image/*,video/*" capture="environment" hidden>
+<input type="file" id="vidInput" accept="video/*" hidden>
+<input type="file" id="docInput" accept=".pdf,.doc,.docx,.txt,.png,.jpg" hidden>
+<input type="file" id="audInput" accept="audio/*" hidden>
 
 <script>
-let transON=localStorage.getItem('cc_trans')!=='OFF';
-let currentContactId=localStorage.getItem('cc_currentContact')||'kwame';
-let allChats=JSON.parse(localStorage.getItem('cc_allChats_v152')||'{}');
-let contacts=JSON.parse(localStorage.getItem('cc_contacts_v152')||'[{"id":"kwame","name":"Kwame","number":"0550000000","lang":"Twi","flag":"🇬🇭","avatar":"https://i.pravatar.cc/100?img=12"},{"id":"abdulai","name":"Abdulai","number":"0248495093","lang":"Twi","flag":"🇬🇭","avatar":"https://i.pravatar.cc/100?img=13"}]');
+let transON=true;
+let currentContactId=localStorage.getItem('cc_current_v156')||'ku4';
+let allChats=JSON.parse(localStorage.getItem('cc_allChats_v156')||'{}');
+let contacts=JSON.parse(localStorage.getItem('cc_contacts_v156')||'[{"id":"ku4","name":"@ku4 96nk6r","number":"0550000000","lang":"Twi","flag":"🇬🇭","avatar":"https://i.pravatar.cc/100?img=12"}]');
 let replyTo=null, longPressId=null;
-const DICT={
- "How are you":{twi:"Wo ho te sɛn?",fante:"Wo ho te dɛn?",ga:"Atuu?",ewe:"Nee foa?",pidgin:"How for do?",english:"How are you?",french:"Comment ça va?",spanish:"¿Cómo estás?"},
- "Am good and you":{twi:"Me ho yɛ, na wo nso?",fante:"Me ho yɛ, na wo?",english:"Am good and you",spanish:"Estoy bien, ¿y tú?"},
- "Yes am good":{twi:"Yɛ, me ho yɛ",english:"Yes am good"},
- "Ok I hear":{twi:"Yoo, mate",english:"Ok I hear"},
- "Is that so":{twi:"Yei anaa?",english:"Is that so"}
-};
-const LANG_MAP={twi:'tw',fante:'tw',ga:'tw',ewe:'tw',pidgin:'en',english:'en',french:'fr',spanish:'es'};
-const LANGS=[{id:'twi',name:'Twi',flag:'🇬🇭'},{id:'fante',name:'Fante',flag:'🇬🇭'},{id:'ga',name:'Ga',flag:'🇬🇭'},{id:'ewe',name:'Ewe',flag:'🇬🇭'},{id:'pidgin',name:'Pidgin',flag:'🇬🇭'},{id:'english',name:'English',flag:'🇬🇧'},{id:'french',name:'French',flag:'🇫🇷'},{id:'spanish',name:'Spanish',flag:'🇪🇸'}];
+const LANGS=[{id:'twi',name:'Twi',flag:'🇬🇭',code:'tw'},{id:'fante',name:'Fante',flag:'🇬🇭',code:'ak'},{id:'english',name:'English',flag:'🇬🇧',code:'en'}];
 function getLang(){return localStorage.getItem('cc_lang')||'twi';}
-function getMsgs(id){id=id||currentContactId; if(!allChats[id]||allChats[id].length===0){ allChats[id]=[{"id":1,"text":"How are you","time":"6:46 PM","from":"them"}]; saveAll(); } return allChats[id];}
-function saveAll(){localStorage.setItem('cc_allChats_v152',JSON.stringify(allChats)); localStorage.setItem('cc_contacts_v152',JSON.stringify(contacts));}
-function t(text, lang){ const k=text.trim(); if(DICT[k]&&DICT[k][lang]) return DICT[k][lang]; const lower=k.toLowerCase(); for(let key in DICT){ if(key.toLowerCase()===lower && DICT[key][lang]) return DICT[key][lang]; } return null; }
-async function translateOnline(text, targetLang){
-  const code=LANG_MAP[targetLang]||'en'; if(['twi','fante','ga','ewe'].includes(targetLang)) return t(text,targetLang);
-  try{ const res=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${code}`); const data=await res.json(); if(data.responseData&&data.responseData.translatedText) return data.responseData.translatedText; }catch(e){}
+function getLangCode(){const l=LANGS.find(x=>x.id===getLang()); return l?l.code:'tw';}
+function getMsgs(id){id=id||currentContactId; if(!allChats[id]) allChats[id]=[]; allChats[id]=allChats[id].filter(m=>m&&m.text!==undefined&&m.text!=="undefined"&& (m.type||m.text)); if(allChats[id].length===0){ allChats[id]=[{id:1,text:"How are you",displayText:"Wo ho te sɛn?",original:"How are you",time:"6:46 PM",from:"them"}]; saveAll(); } return allChats[id];}
+function saveAll(){localStorage.setItem('cc_allChats_v156',JSON.stringify(allChats)); localStorage.setItem('cc_contacts_v156',JSON.stringify(contacts)); localStorage.setItem('cc_current_v156',currentContactId);}
+
+async function googleTranslate(text, targetCode){
+  try{ const url=`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetCode}&dt=t&q=${encodeURIComponent(text)}`; const res=await fetch(url); const data=await res.json(); let out=''; if(data&&data[0]){ data[0].forEach(s=>{ if(s[0]) out+=s[0]; }); } if(out&&out.toLowerCase()!==text.toLowerCase()) return out; }catch(e){}
   return null;
+}
+const OFFLINE={"Adey good":{twi:"Me ho yɛ",fante:"Me ho yɛ papa"},"How are you":{twi:"Wo ho te sɛn?",fante:"Wo ho te dɛn?"}};
+function offlineTranslate(text, langId){ const k=text.trim(); if(OFFLINE[k]&&OFFLINE[k][langId]) return OFFLINE[k][langId]; const low=k.toLowerCase(); if(low.includes('adey good')||low.includes('am good')){ if(langId==='twi') return 'Me ho yɛ'; } let m=low.match(/^how is (.+)$/); if(m){ const N=m[1].charAt(0).toUpperCase()+m[1].slice(1); if(langId==='twi') return `${N} ho te sɛn?`; } return null; }
+
+function renderMsgs(){
+ const c=document.getElementById('msgs');c.innerHTML='';const langId=getLang();const msgs=getMsgs();
+ msgs.forEach(m=>{
+  const d=document.createElement('div');d.className='bubble '+(m.from==='me'?'me':'them');
+  let html=''; if(m.reply){html+=`<div style="border-left:3px solid #00a884;background:#00000030;padding:6px 8px;border-radius:6px;margin-bottom:6px;font-size:12.5px"><b>${m.reply.name}</b><br>${m.reply.text}</div>`;}
+  if(m.type==='image'){ html+=`<img src="${m.url}" style="width:100%;border-radius:12px;max-height:300px;object-fit:contain;background:#000"><div class="meta">${m.time} ✓✓ • Pic picked to chat</div>`; if(m.text) html+=`<div style="margin-top:6px">${m.text}</div>`; }
+  else if(m.type==='video'){ html+=`<video src="${m.url}" controls style="width:100%;border-radius:12px;max-height:300px"></video><div class="meta">${m.time} ✓✓</div>`; }
+  else if(m.type==='audio'||m.type==='voice'){ html+=`<audio src="${m.url}" controls style="width:200px"></audio><div class="meta">${m.dur||''} • ${m.time} ✓✓</div>`; }
+  else if(m.type==='doc'){ html+=`📄 ${m.name}<div class="meta">${m.time} ✓✓</div>`; }
+  else{
+    const mainText = transON && m.displayText ? m.displayText : m.text;
+    html+=`${mainText}<div class="meta">${m.time} ${m.from==='me'?'✓✓':''}</div>`;
+    if(transON && m.original && m.original!==mainText){ html+=`<div class="orig">Original: ${m.original} • ${langId.toUpperCase()}</div>`; }
+  }
+  d.innerHTML=html; let timer; d.addEventListener('touchstart',()=>{timer=setTimeout(()=>openMsgMenu(m.id),500);}); d.addEventListener('touchend',()=>clearTimeout(timer)); d.addEventListener('contextmenu',e=>{e.preventDefault();openMsgMenu(m.id);}); c.appendChild(d);
+ });
+ c.scrollTop=c.scrollHeight;
 }
 function renderContacts(){
  const c=document.getElementById('contactList');c.innerHTML='';
  contacts.forEach(con=>{
   const div=document.createElement('div');div.className='card';
   div.innerHTML=`<div style="display:flex;gap:12px;align-items:center"><div class="avatar"><img src="${con.avatar}"></div><div><b>${con.name}</b><p>${con.number} • ${con.lang} • ${getMsgs(con.id).length} msgs</p></div></div><span style="color:#00a884;font-weight:800">›</span>`;
-  div.onclick=()=>{
-    currentContactId=con.id; localStorage.setItem('cc_currentContact',con.id);
-    document.getElementById('hName').textContent=con.name;
-    document.getElementById('hSub').textContent=`${con.flag} ${con.lang} • Translation ON • Online`;
-    localStorage.setItem('cc_lang',con.lang.toLowerCase());
-    showScreen('chat'); renderMsgs();
-  };
+  div.onclick=()=>{ currentContactId=con.id; localStorage.setItem('cc_current_v156',con.id); document.getElementById('hName').textContent=con.name; document.getElementById('hSub').textContent=`${con.flag} ${con.lang} • Pick To Chat`; localStorage.setItem('cc_lang',con.lang.toLowerCase()); showScreen('chat'); renderMsgs(); };
   c.appendChild(div);
  });
 }
-function renderMsgs(){
- const c=document.getElementById('msgs');c.innerHTML='';const myLang=getLang();const msgs=getMsgs();
- msgs.forEach(m=>{
-  const d=document.createElement('div');d.className='bubble '+(m.from==='me'?'me':'them');
-  let html=''; if(m.reply){html+=`<div style="border-left:3px solid #00a884;background:#00000030;padding:6px 8px;border-radius:6px;margin-bottom:6px;font-size:12.5px"><b>${m.reply.name}</b><br>${m.reply.text}</div>`;}
-  if(m.type==='image'){html+=`<img src="${m.url}" style="width:100%;border-radius:12px;max-height:260px"><div class="meta">${m.time} ✓✓</div>`;}
-  else if(m.type==='voice'||m.type==='audio'){html+=`<audio src="${m.url}" controls style="width:180px"></audio><div class="meta">${m.dur||''} • ${m.time} ✓✓</div>`;}
-  else{ html+=`${m.text}<div class="meta">${m.time} ${m.from==='me'?'✓✓':''}</div>`; if(transON){ const tr=m._translated&&m._translatedLang===myLang?m._translated:t(m.text,myLang); if(tr&&tr.toLowerCase()!==m.text.toLowerCase()){ html+=`<div class="translation">🌍 ${m.from==='me'?'Translated for '+myLang.toUpperCase()+': <b>'+tr+'</b>':'<b>'+tr+'</b>'} <span style="background:#00a88433;color:#00a884;padding:2px 8px;border-radius:10px;font-size:10px">${myLang.toUpperCase()} • ${m._online?'ONLINE':'AUTO'}</span><br><small style="color:#8696a0">Original: ${m.text}</small></div>`; } else if(!m._translated){ translateOnline(m.text,myLang).then(ot=>{ if(ot&&ot.toLowerCase()!==m.text.toLowerCase()){ m._translated=ot; m._translatedLang=myLang; m._online=true; saveAll(); renderMsgs(); } }); } } }
-  d.innerHTML=html; let timer; d.addEventListener('touchstart',()=>{timer=setTimeout(()=>openMsgMenu(m.id),500);}); d.addEventListener('touchend',()=>clearTimeout(timer)); d.addEventListener('contextmenu',e=>{e.preventDefault();openMsgMenu(m.id);}); c.appendChild(d);
- }); c.scrollTop=c.scrollHeight;
-}
-renderContacts();
+renderContacts(); renderMsgs();
 
+let typingTimer=null;
 function onTyping(){
  const inp=document.getElementById('msgInput'); const val=inp.value.trim(); const has=val.length>0;
  document.getElementById('micBtn').style.display=has?'none':'grid'; document.getElementById('sendBtn').style.display=has?'grid':'none';
  inp.style.height='auto'; inp.style.height=Math.min(inp.scrollHeight,100)+'px';
- const live=document.getElementById('livePreview'); const lang=getLang();
- if(has && transON && val.length>=2){ const tr=t(val,lang); if(tr){ live.style.display='block'; live.innerHTML=`🌍 Live ${lang.toUpperCase()}: <b>${tr}</b>`; } else { live.style.display='block'; live.innerHTML=`🌍 Translating online to ${lang.toUpperCase()}...`; translateOnline(val,lang).then(ot=>{ if(ot) live.innerHTML=`🌍 Live ONLINE ${lang.toUpperCase()}: <b>${ot}</b>`; }); } } else live.style.display='none';
+ const live=document.getElementById('livePreview'); if(!has||!transON){ live.style.display='none'; return; }
+ if(typingTimer) clearTimeout(typingTimer);
+ live.style.display='block'; live.innerHTML=`🌍 Translating "${val}"... will pick to chat`;
+ typingTimer=setTimeout(async()=>{
+   let tr=offlineTranslate(val, getLang()); if(tr){ live.innerHTML=`🌍 Live ${getLang().toUpperCase()}: <b>${tr}</b> • will pick`; return; }
+   const online=await googleTranslate(val, getLangCode()); if(online) live.innerHTML=`🌍 Live GOOGLE: <b>${online}</b> — will pick`;
+ },400);
 }
-function sendText(){
- const inp=document.getElementById('msgInput'); if(!inp.value.trim())return;
- const msgs=getMsgs(); const newMsg={id:Date.now(),text:inp.value.trim(),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'};
+async function sendText(){
+ const inp=document.getElementById('msgInput'); const raw=inp.value.trim(); if(!raw||raw==="undefined")return;
+ let tr=offlineTranslate(raw, getLang()); if(!tr) tr=await googleTranslate(raw, getLangCode());
+ const msgs=getMsgs();
+ const newMsg={id:Date.now(),text:raw,displayText:tr||raw,original:raw,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me',translated:tr,lang:getLang()};
  if(replyTo){newMsg.reply={name:replyTo.from==='me'?'You':document.getElementById('hName').textContent,text:replyTo.text};cancelReply();}
  msgs.push(newMsg); allChats[currentContactId]=msgs; saveAll(); inp.value=''; onTyping(); renderMsgs(); document.getElementById('livePreview').style.display='none';
- translateOnline(newMsg.text, getLang()).then(tr=>{ if(tr){ newMsg._translated=tr; newMsg._translatedLang=getLang(); newMsg._online=true; saveAll(); renderMsgs(); }});
 }
 function toggleTrans(){transON=!transON;localStorage.setItem('cc_trans',transON?'ON':'OFF');document.getElementById('transBtn').textContent=transON?'🌍 ON':'🌍 OFF';renderMsgs();}
-function openContactModal(){document.getElementById('contactModal').style.display='block';}
-function closeContactModal(){document.getElementById('contactModal').style.display='none';}
-async function autoPickContact(){const s=document.getElementById('autoStatus');s.textContent='Opening...';try{if('contacts' in navigator&&'ContactsManager' in window){const p=await navigator.contacts.select(['name','tel'],{multiple:false});if(p.length>0){document.getElementById('cName').value=p[0].name[0]||'';document.getElementById('cNumber').value=(p[0].tel[0]||'').replace(/\s/g,'');s.textContent='✓ Auto-filled';return;}}s.textContent='Not supported — type manual';}catch{s.textContent='Cancelled';}}
-function saveContact(){const n=document.getElementById('cName').value.trim();const num=document.getElementById('cNumber').value.trim();const lang=document.getElementById('cLang').value.trim()||'Twi';if(!n||!num)return;const flag=LANGS.find(l=>l.name.toLowerCase()===lang.toLowerCase())?.flag||'🇬🇭';const id=n.toLowerCase().replace(/\s/g,'').slice(0,6)+Date.now().toString().slice(-3);contacts.push({id,name:n,number:num,lang,flag,avatar:`https://i.pravatar.cc/100?u=${Date.now()}`});allChats[id]=[{"id":1,"text":"How are you","time":"6:46 PM","from":"them"}];saveAll();renderContacts();closeContactModal();document.getElementById('cName').value='';document.getElementById('cNumber').value='';}
-function openMsgMenu(id){longPressId=id;const m=document.getElementById('msgMenu');m.style.display='block';m.style.left='50%';m.style.top='45%';m.style.transform='translateX(-50%)';}
-function closeMsgMenu(){document.getElementById('msgMenu').style.display='none';}
-function replyMsg(){const msgs=getMsgs();const m=msgs.find(x=>x.id===longPressId);if(!m)return;replyTo=m;document.getElementById('replyBar').style.display='flex';document.getElementById('replyName').textContent=m.from==='me'?'You':document.getElementById('hName').textContent;document.getElementById('replyText').textContent=m.text;closeMsgMenu();document.getElementById('msgInput').focus();}
-function cancelReply(){replyTo=null;document.getElementById('replyBar').style.display='none';}
-function deleteMsg(){let msgs=getMsgs();msgs=msgs.filter(x=>x.id!==longPressId);allChats[currentContactId]=msgs;saveAll();renderMsgs();closeMsgMenu();}
 
-// MIC FIXED — CANNOT BE STOP ISSUE
-let rec=null,chunks=[],st=0,tmr=null,startX=0,isCancelled=false;
+// MIC
+let rec=null,chunks=[],st=0,tmr=null;
 const mic=document.getElementById('micBtn');
-async function rStart(e){
-  if(rec&&rec.state==='recording') return;
-  isCancelled=false; startX=e.touches?e.touches[0].clientX:e.clientX;
-  try{
-    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
-    rec=new MediaRecorder(stream); chunks=[]; st=Date.now();
-    rec.ondataavailable=ev=>{if(ev.data.size>0) chunks.push(ev.data);};
-    rec.onstop=()=>{
-      if(!isCancelled){
-        const blob=new Blob(chunks,{type:'audio/webm'}); const url=URL.createObjectURL(blob);
-        const msgs=getMsgs(); msgs.push({id:Date.now(),type:'voice',url,dur:Math.round((Date.now()-st)/1000),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'}); allChats[currentContactId]=msgs; saveAll(); renderMsgs();
-      }
-      stream.getTracks().forEach(t=>t.stop()); mic.classList.remove('recording'); mic.textContent='🎙️'; document.getElementById('livePreview').style.display='none'; clearInterval(tmr); rec=null;
-    };
-    rec.start(); mic.classList.add('recording'); mic.textContent='🔴';
-    tmr=setInterval(()=>{ const sec=Math.round((Date.now()-st)/1000); document.getElementById('livePreview').style.display='block'; document.getElementById('livePreview').innerHTML=`🔴 Recording ${sec}s — release to send | slide left to cancel`; if(sec>90) rStop(); },400);
-  }catch{ alert('Allow mic in Chrome'); }
-}
-function rStop(e){
-  if(!rec||rec.state!=='recording') { mic.classList.remove('recording'); mic.textContent='🎙️'; document.getElementById('livePreview').style.display='none'; clearInterval(tmr); return; }
-  // Check slide to cancel
-  if(e&&e.changedTouches){ const endX=e.changedTouches[0].clientX; if(startX-endX>80) isCancelled=true; }
-  rec.stop();
-}
-function rCancel(){ isCancelled=true; if(rec&&rec.state==='recording') rec.stop(); }
-// Use pointer events for reliable stop
-mic.addEventListener('pointerdown', rStart);
-window.addEventListener('pointerup', rStop);
-window.addEventListener('pointercancel', rCancel);
-mic.addEventListener('touchmove', e=>{ if(!rec) return; const curX=e.touches[0].clientX; if(startX-curX>80){ document.getElementById('livePreview').innerHTML='❌ Cancelled — slide released'; isCancelled=true; } });
+async function rStart(){ if(rec&&rec.state==='recording') return; try{ const stream=await navigator.mediaDevices.getUserMedia({audio:true}); rec=new MediaRecorder(stream); chunks=[]; st=Date.now(); rec.ondataavailable=ev=>{if(ev.data.size>0) chunks.push(ev.data);}; rec.onstop=()=>{ const blob=new Blob(chunks,{type:'audio/webm'}); const reader=new FileReader(); reader.onload=()=>{ const url=reader.result; const msgs=getMsgs(); msgs.push({id:Date.now(),type:'voice',url,dur:Math.round((Date.now()-st)/1000),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'}); allChats[currentContactId]=msgs; saveAll(); renderMsgs(); }; reader.readAsDataURL(blob); stream.getTracks().forEach(t=>t.stop()); mic.classList.remove('recording'); mic.textContent='🎙️'; document.getElementById('livePreview').style.display='none'; clearInterval(tmr); rec=null; }; rec.start(); mic.classList.add('recording'); mic.textContent='🔴'; tmr=setInterval(()=>{ const sec=Math.round((Date.now()-st)/1000); document.getElementById('livePreview').style.display='block'; document.getElementById('livePreview').innerHTML=`🔴 Recording ${sec}s — release to send`; },400); }catch{ alert('Allow mic'); } }
+function rStop(){ if(!rec||rec.state!=='recording'){ mic.classList.remove('recording'); mic.textContent='🎙️'; document.getElementById('livePreview').style.display='none'; clearInterval(tmr); return; } rec.stop(); }
+mic.addEventListener('pointerdown', rStart); window.addEventListener('pointerup', rStop);
 
+// === PIC PICK TO PERSON — BASE64 FIX ===
 function openSheet(type){
  const opt=document.getElementById('sheetOptions');const title=document.getElementById('sheetTitle');opt.innerHTML='';
- if(type==='language'){title.textContent='Language • Online';LANGS.forEach(l=>{const d=document.createElement('div');d.className='sheet-opt';d.innerHTML=`<div><b>${l.flag} ${l.name}</b></div><span style="color:#00a884">›</span>`;d.onclick=()=>{localStorage.setItem('cc_lang',l.id);document.getElementById('vLang').textContent=l.name;document.getElementById('hSub').textContent=`${l.flag} ${l.name} • Translation ON • Online`;renderMsgs();closeSheet();};opt.appendChild(d);});}
- else if(type==='attach'){
-   title.textContent='Attach — All Pickers'; 
-   opt.innerHTML=`<div class="attach-grid">
-     <div class="attach-item" onclick="document.getElementById('imgInput').click();closeSheet()"><div class="attach-icon" style="background:#007bfc">🖼️</div><small>Gallery</small></div>
-     <div class="attach-item" onclick="document.getElementById('camInput').click();closeSheet()"><div class="attach-icon" style="background:#00a884">📷</div><small>Camera</small></div>
-     <div class="attach-item" onclick="document.getElementById('vidInput').click();closeSheet()"><div class="attach-icon" style="background:#a884ff">🎥</div><small>Video</small></div>
-     <div class="attach-item" onclick="document.getElementById('docInput').click();closeSheet()"><div class="attach-icon" style="background:#5f66cd">📄</div><small>Doc</small></div>
-     <div class="attach-item" onclick="document.getElementById('audInput').click();closeSheet()"><div class="attach-icon" style="background:#ff7f50">🎵</div><small>Audio</small></div>
-   </div>`;
- }
+ if(type==='language'){title.textContent='Language';LANGS.forEach(l=>{const d=document.createElement('div');d.className='sheet-opt';d.innerHTML=`<div><b>${l.flag} ${l.name}</b></div><span style="color:#00a884">›</span>`;d.onclick=()=>{localStorage.setItem('cc_lang',l.id);document.getElementById('vLang').textContent=l.name;document.getElementById('hSub').textContent=`${l.flag} ${l.name} • Pick To Chat`;renderMsgs();closeSheet();};opt.appendChild(d);});}
+ else if(type==='attach'){title.textContent='Attach — Pic Picks To Person';opt.innerHTML=`<div class="attach-grid">
+   <div class="attach-item" onclick="pick('img')"><div class="attach-icon" style="background:#007bfc">🖼️</div><small>Gallery</small></div>
+   <div class="attach-item" onclick="pick('cam')"><div class="attach-icon" style="background:#00a884">📷</div><small>Camera</small></div>
+   <div class="attach-item" onclick="pick('vid')"><div class="attach-icon" style="background:#a884ff">🎥</div><small>Video</small></div>
+   <div class="attach-item" onclick="pick('doc')"><div class="attach-icon" style="background:#5f66cd">📄</div><small>Doc</small></div>
+   <div class="attach-item" onclick="pick('aud')"><div class="attach-icon" style="background:#ff7f50">🎵</div><small>Audio</small></div>
+ </div>`;}
  document.getElementById('sheet').style.display='block';
 }
 function closeSheet(){document.getElementById('sheet').style.display='none';}
-function handleFile(e,type){const f=e.target.files[0];if(!f)return;const url=URL.createObjectURL(f);const msgs=getMsgs();msgs.push({id:Date.now(),type,name:f.name,url,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me'});allChats[currentContactId]=msgs;saveAll();renderMsgs();}
-document.getElementById('imgInput').addEventListener('change',e=>handleFile(e,'image'));
-document.getElementById('vidInput').addEventListener('change',e=>handleFile(e,'video'));
-document.getElementById('docInput').addEventListener('change',e=>handleFile(e,'doc'));
-document.getElementById('audInput').addEventListener('change',e=>handleFile(e,'audio'));
-document.getElementById('camInput').addEventListener('change',e=>handleFile(e,'image'));
-function showScreen(s){
- document.getElementById('sChats').style.display=s==='chats'?'block':'none';
- document.getElementById('sChat').style.display=s==='chat'?'flex':'none';
- document.getElementById('sSettings').style.display=s==='settings'?'block':'none';
- document.getElementById('inputBar').style.display=s==='chat'?'flex':'none';
- document.getElementById('tChats').classList.toggle('active',s==='chats');
- document.getElementById('tChat').classList.toggle('active',s==='chat');
- document.getElementById('tSet').classList.toggle('active',s==='settings');
- if(s==='chat') renderMsgs();
+function pick(k){closeSheet(); setTimeout(()=>{ if(k==='img') document.getElementById('imgInput').click(); if(k==='cam') document.getElementById('camInput').click(); if(k==='vid') document.getElementById('vidInput').click(); if(k==='doc') document.getElementById('docInput').click(); if(k==='aud') document.getElementById('audInput').click(); },120);}
+
+function handleFile(e,type){
+  const f=e.target.files[0]; if(!f) return;
+  // Use FileReader base64 — picks to person and persists!
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    const dataUrl=ev.target.result; // base64
+    const msgs=getMsgs();
+    let obj={id:Date.now(),time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),from:'me',url:dataUrl,name:f.name,text:f.name};
+    if(type==='img'||type==='cam') obj.type='image';
+    else if(type==='vid') obj.type='video';
+    else if(type==='doc') obj.type='doc';
+    else obj.type='audio';
+    msgs.push(obj); allChats[currentContactId]=msgs; saveAll(); renderMsgs();
+  };
+  if(type==='img'||type==='cam'||type==='vid'||type==='doc'||type==='aud'){
+    reader.readAsDataURL(f); // BASE64 — key fix!
+  }
+  e.target.value='';
 }
-showScreen('chats'); renderContacts();
+document.getElementById('imgInput').addEventListener('change',e=>handleFile(e,'img'));
+document.getElementById('camInput').addEventListener('change',e=>handleFile(e,'cam'));
+document.getElementById('vidInput').addEventListener('change',e=>handleFile(e,'vid'));
+document.getElementById('docInput').addEventListener('change',e=>handleFile(e,'doc'));
+document.getElementById('audInput').addEventListener('change',e=>handleFile(e,'aud'));
+
+function openContactModal(){document.getElementById('contactModal').style.display='block';}
+function closeContactModal(){document.getElementById('contactModal').style.display='none';}
+async function autoPickContact(){const s=document.getElementById('autoStatus');s.textContent='Opening...';try{if('contacts' in navigator&&'ContactsManager' in window){const p=await navigator.contacts.select(['name','tel'],{multiple:false});if(p.length>0){document.getElementById('cName').value=p[0].name[0]||'';document.getElementById('cNumber').value=(p[0].tel[0]||'').replace(/\s/g,'');s.textContent='✓ Auto-filled';return;}}s.textContent='Not supported';}catch{s.textContent='Cancelled';}}
+function saveContact(){const n=document.getElementById('cName').value.trim();const num=document.getElementById('cNumber').value.trim();const lang=document.getElementById('cLang').value.trim()||'Twi';if(!n||!num)return;const flag=LANGS.find(l=>l.name.toLowerCase()===lang.toLowerCase())?.flag||'🇬🇭';const id=n.toLowerCase().replace(/\s/g,'').slice(0,6)+Date.now().toString().slice(-3);contacts.push({id,name:n,number:num,lang,flag,avatar:`https://i.pravatar.cc/100?u=${Date.now()}`});allChats[id]=[{id:1,text:"How are you",displayText:"Wo ho te sɛn?",original:"How are you",time:"6:46 PM",from:"them"}];saveAll();renderContacts();closeContactModal();}
+function openMsgMenu(id){longPressId=id;const m=document.getElementById('msgMenu');m.style.display='block';m.style.left='50%';m.style.top='45%';m.style.transform='translateX(-50%)';}
+function closeMsgMenu(){document.getElementById('msgMenu').style.display='none';}
+function replyMsg(){const msgs=getMsgs();const m=msgs.find(x=>x.id===longPressId);if(!m)return;replyTo=m;document.getElementById('replyBar').style.display='flex';document.getElementById('replyName').textContent=m.from==='me'?'You':document.getElementById('hName').textContent;document.getElementById('replyText').textContent=m.displayText||m.text||m.name;closeMsgMenu();document.getElementById('msgInput').focus();}
+function cancelReply(){replyTo=null;document.getElementById('replyBar').style.display='none';}
+function deleteMsg(){let msgs=getMsgs();msgs=msgs.filter(x=>x.id!==longPressId);allChats[currentContactId]=msgs;saveAll();renderMsgs();closeMsgMenu();}
+function showScreen(s){document.getElementById('sChats').style.display=s==='chats'?'block':'none';document.getElementById('sChat').style.display=s==='chat'?'flex':'none';document.getElementById('sSettings').style.display=s==='settings'?'block':'none';document.getElementById('inputBar').style.display=s==='chat'?'flex':'none';document.getElementById('tChats').classList.toggle('active',s==='chats');document.getElementById('tChat').classList.toggle('active',s==='chat');document.getElementById('tSet').classList.toggle('active',s==='settings');if(s==='chat') renderMsgs();}
+showScreen('chat'); renderContacts(); renderMsgs();
 </script>
 </body>
 </html>
