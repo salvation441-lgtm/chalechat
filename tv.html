@@ -1,0 +1,26 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Salvation TV Simple</title><style>body{background:#000;color:#fff;font-family:sans-serif;margin:0}h1{padding:12px;text-align:center;background:#111;border-bottom:2px solid #00e676;font-size:16px}iframe{width:100%;aspect-ratio:16/9;background:#000;border:none}.list{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px}button{padding:14px;border-radius:12px;border:1px solid #333;background:#1a1a1a;color:#fff;font-weight:800}button.on{background:#00e676;color:#000}p{text-align:center;color:#888;font-size:11px;padding:10px}</style></head><body>
+<h1>🇬🇭 SALVATION TECH TV - SIMPLE</h1>
+<div id="player"><div style="padding:40px;text-align:center;color:#666">Tap channel below to play 👇</div></div>
+<div class="list">
+<button onclick="play('GTV Ghana live','gtv')">🇬🇭 GTV Ghana</button>
+<button onclick="play('UTV Ghana live','utv')">📺 UTV Ghana</button>
+<button onclick="play('TV3 Ghana live','tv3')">🎬 TV3 Ghana</button>
+<button onclick="play('Adom TV live','adom')">🔥 Adom TV</button>
+<button onclick="play('GHOne TV live','ghone')">📰 GHOne</button>
+<button onclick="play('Joy Prime Ghana live','joy')">💫 Joy Prime</button>
+<button onclick="play('Metro TV Ghana live','metro')">📡 Metro TV</button>
+<button onclick="play('Angel TV Ghana live','angel')">👼 Angel TV</button>
+<button onclick="play('GTV Sports Ghana live','sports')">⚽ GTV Sports</button>
+<button onclick="play('Citi TV Ghana live','citi')">🏙️ Citi TV</button>
+<button onclick="play('TV Africa Ghana live','africa')">🌍 TV Africa</button>
+<button onclick="play('NET2 TV Ghana live','net2')">📺 NET2 TV</button>
+</div>
+<p>All channels use public YouTube live streams. Free, no login.</p>
+<script>
+function play(q,id){
+document.querySelectorAll('button').forEach(b=>b.classList.remove('on'));
+event.target.classList.add('on');
+document.getElementById('player').innerHTML=`<iframe src="https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(q)}&autoplay=1" allow="autoplay;fullscreen" allowfullscreen></iframe><div style="padding:8px 12px;background:#111;display:flex;justify-content:space-between"><b>${q}</b><span style="color:#ff4444">● LIVE</span></div>`;
+window.scrollTo({top:0,behavior:'smooth'});
+}
+</script></body></html>
