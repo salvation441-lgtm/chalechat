@@ -1,31 +1,62 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Salvation TV V10 Lite</title><style>body{margin:0;background:#070a12;color:#fff;font-family:sans-serif}header{padding:14px;background:#000;border-bottom:3px solid #00e676;text-align:center}#card{margin:12px;background:#131c37;border-radius:16px;padding:16px;text-align:center;border:1px solid #1e2f5a}h2{color:#00e676;margin:0 0 8px}.btn{display:block;background:#ff0000;color:#fff;padding:14px;border-radius:12px;text-decoration:none;font-weight:900;margin:8px 0}.btn2{background:#00e676;color:#000}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px}button{padding:14px;border-radius:12px;border:1px solid #333;background:#222;color:#fff;font-weight:800;font-size:12px}</style></head><body>
-<header><b>🇬🇭 SALVATION TV V10 LITE</b><br><small style="color:#8aa0d0">Made for slow data (3K/s)</small></header>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Salvation TV V13 FREE API</title><script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script><style>body{margin:0;background:#050814;color:#fff;font-family:sans-serif}header{padding:12px;background:#000;border-bottom:3px solid #00e676;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}#playerWrap{background:#000;position:sticky;top:49px;z-index:99}#player{width:100%;aspect-ratio:16/9;background:#000;position:relative}video{width:100%;height:100%;background:#000}#badge{position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:900;z-index:2}#info{padding:10px 14px;background:#0e152b;display:flex;justify-content:space-between;align-items:center;font-size:12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 10px 100px}button{padding:14px 6px;border-radius:14px;border:1px solid #1e2f5a;background:#131c37;color:#fff;font-weight:800;font-size:12px;text-align:center}button.on{background:#00e676;color:#000;box-shadow:0 0 15px #00e676}small{display:block;font-size:9px;opacity:.7;margin-top:3px}footer{position:fixed;bottom:0;left:0;right:0;background:#000;padding:8px;text-align:center;font-size:9px;color:#555;border-top:1px solid #222}</style></head><body>
+<header><b>🇬🇭 SALVATION TV V13</b><span style="background:#00e676;color:#000;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:900">FREE API</span></header>
 
-<div id="card">
-<h2 id="name">📺 Choose Channel</h2>
-<p style="font-size:12px;color:#aaa;margin:0 0 12px" id="desc">Tap below - direct link loads faster with slow data</p>
-<a id="mainLink" class="btn" href="https://m.youtube.com/@gtvsportsplusghana" target="_blank">▶ OPEN GTV SPORTS+ OFFICIAL</a>
-<a class="btn btn2" href="https://m.youtube.com/results?search_query=GTV+Ghana+live" target="_blank">🔍 SEARCH GTV (if first slow)</a>
-<p style="font-size:10px;color:#666;margin-top:10px">Tip: Connect to WiFi or *138*1# bundle - 3.94K/s too slow for live video</p>
+<div id="playerWrap">
+<div id="player">
+<video id="video" controls autoplay playsinline></video>
+<div id="badge">● LIVE FREE API</div>
+</div>
+<div id="info"><div><b id="chName">Al Jazeera English - Real Graphics Inside</b><br><span id="chStat" style="color:#00e676;font-size:11px">● Playing inside app - No YouTube - No white page</span></div></div>
 </div>
 
-<div class="grid">
-<button onclick="setCh('GTV Sports+','gtvsportsplusghana')">⚽ GTV Sports+</button>
-<button onclick="setCh('GTV Ghana','GTVGhanaOfficial')">🇬🇭 GTV Ghana</button>
-<button onclick="setCh('UTV Ghana','utvghanaonline')">📺 UTV Ghana</button>
-<button onclick="setCh('TV3 Ghana','TV3Ghana')">🎬 TV3 Ghana</button>
-<button onclick="setCh('Adom TV','adomtvGH')">🔥 Adom TV</button>
-<button onclick="setCh('GHOne TV','GHOneTV')">📰 GHOne</button>
-<button onclick="setCh('JoyNews','JoyNewsOnTV')">💫 JoyNews</button>
-<button onclick="setCh('Metro TV','metrotvgh')">📡 Metro TV</button>
-</div>
+<div class="grid" id="grid"></div>
+
+<footer>V13 FREE API © 2026 • Real foreign TV inside • Later we add Ghana channels • Built in Accra 📱</footer>
 
 <script>
-function setCh(name,handle){
-document.getElementById('name').innerText='📺 '+name;
-document.getElementById('desc').innerText='Direct official page - loads faster than search';
-document.getElementById('mainLink').innerText='▶ OPEN '+name.toUpperCase()+' OFFICIAL';
-document.getElementById('mainLink').href='https://m.youtube.com/@'+handle;
+const channels=[
+{name:"Al Jazeera English",emoji:"📰",url:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",desc:"News - Real graphics"},
+{name:"France 24 English",emoji:"🇫🇷",url:"https://live.france24.com/hls/live/2037218/F24_EN_LO_HLS/master.m3u8",desc:"News - Real graphics"},
+{name:"DW English",emoji:"🇩🇪",url:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",desc:"News - Real graphics"},
+{name:"NASA TV",emoji:"🚀",url:"https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",desc:"Space - Real graphics"},
+{name:"CGTN English",emoji:"🇨🇳",url:"https://news.cgtn.com/resource/live/english/cgtn-news.m3u8",desc:"News - Real graphics"},
+{name:"Al Jazeera Arabic",emoji:"🌍",url:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",desc:"Arabic News"},
+{name:"Bloomberg",emoji:"💹",url:"https://bloomberg-bloomberg-3-br.samsung.wurl.tv/playlist.m3u8",desc:"Business"},
+{name:"Red Bull TV",emoji:"🏎️",url:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",desc:"Sports - Real"},
+];
+
+const video=document.getElementById('video');
+let hls;
+
+function playChannel(c,btn){
+document.querySelectorAll('.grid button').forEach(b=>b.classList.remove('on'));
+btn.classList.add('on');
+document.getElementById('chName').innerText=c.emoji+' '+c.name+' - Real Graphics Inside';
+document.getElementById('chStat').innerText='● Playing: '+c.desc;
+if(hls){hls.destroy();}
+if(Hls.isSupported()){
+hls=new Hls();
+hls.loadSource(c.url);
+hls.attachMedia(video);
+hls.on(Hls.Events.MANIFEST_PARSED,()=>video.play().catch(()=>{}));
+}else if(video.canPlayType('application/vnd.apple.mpegurl')){
+video.src=c.url;
+video.addEventListener('loadedmetadata',()=>video.play().catch(()=>{}));
+}
 window.scrollTo({top:0,behavior:'smooth'});
 }
+
+function build(){
+let g=document.getElementById('grid');
+channels.forEach((c,i)=>{
+let b=document.createElement('button');
+if(i==0) b.classList.add('on');
+b.innerHTML=c.emoji+' '+c.name+'<small>'+c.desc+'</small>';
+b.onclick=()=>playChannel(c,b);
+g.appendChild(b);
+});
+// autoplay first
+playChannel(channels[0], g.firstChild);
+}
+build();
 </script></body></html>
