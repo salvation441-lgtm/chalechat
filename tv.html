@@ -1,62 +1,101 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Salvation TV V13 FREE API</title><script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script><style>body{margin:0;background:#050814;color:#fff;font-family:sans-serif}header{padding:12px;background:#000;border-bottom:3px solid #00e676;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}#playerWrap{background:#000;position:sticky;top:49px;z-index:99}#player{width:100%;aspect-ratio:16/9;background:#000;position:relative}video{width:100%;height:100%;background:#000}#badge{position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:900;z-index:2}#info{padding:10px 14px;background:#0e152b;display:flex;justify-content:space-between;align-items:center;font-size:12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 10px 100px}button{padding:14px 6px;border-radius:14px;border:1px solid #1e2f5a;background:#131c37;color:#fff;font-weight:800;font-size:12px;text-align:center}button.on{background:#00e676;color:#000;box-shadow:0 0 15px #00e676}small{display:block;font-size:9px;opacity:.7;margin-top:3px}footer{position:fixed;bottom:0;left:0;right:0;background:#000;padding:8px;text-align:center;font-size:9px;color:#555;border-top:1px solid #222}</style></head><body>
-<header><b>🇬🇭 SALVATION TV V13</b><span style="background:#00e676;color:#000;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:900">FREE API</span></header>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Salvation TV V15 TV+Radio</title><script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script><style>body{margin:0;background:#050814;color:#fff;font-family:sans-serif}header{padding:12px;background:#000;border-bottom:3px solid #00e676;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}#tabs{display:flex;background:#0e152b;padding:6px;gap:6px;position:sticky;top:49px;z-index:99}.tab{flex:1;padding:10px;border-radius:10px;border:none;font-weight:900;font-size:13px}.tab.on{background:#00e676;color:#000}.tab.off{background:#1a2547;color:#fff}#playerWrap{background:#000}#player{width:100%;aspect-ratio:16/9;background:#000;position:relative}video,audio{width:100%;height:100%}#badge{position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:900}#info{padding:10px 14px;background:#0e152b;font-size:12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 10px 100px}button{padding:14px 6px;border-radius:14px;border:1px solid #1e2f5a;background:#131c37;color:#fff;font-weight:800;font-size:11px}button.on{background:#00e676;color:#000;box-shadow:0 0 12px #00e676}small{display:block;font-size:9px;opacity:.7;margin-top:3px}footer{position:fixed;bottom:0;left:0;right:0;background:#000;padding:8px;text-align:center;font-size:9px;color:#555}</style></head><body>
+<header><b>🇬🇭 SALVATION TV V15</b><span style="background:#00e676;color:#000;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:900">TV + RADIO</span></header>
+
+<div id="tabs">
+<button class="tab on" id="tvTab" onclick="switchTab('tv')">📺 TV (FREE API)</button>
+<button class="tab off" id="radioTab" onclick="switchTab('radio')">📻 RADIO (Low Data)</button>
+<button class="tab off" id="ghTab" onclick="switchTab('gh')">🇬🇭 GHANA (YT)</button>
+</div>
 
 <div id="playerWrap">
 <div id="player">
 <video id="video" controls autoplay playsinline></video>
-<div id="badge">● LIVE FREE API</div>
+<div id="badge">● LIVE</div>
 </div>
-<div id="info"><div><b id="chName">Al Jazeera English - Real Graphics Inside</b><br><span id="chStat" style="color:#00e676;font-size:11px">● Playing inside app - No YouTube - No white page</span></div></div>
+<div id="info"><b id="chName">Al Jazeera Arabic - Real Graphics Inside</b><br><span id="chStat" style="color:#00e676;font-size:11px">● Playing inside</span></div>
 </div>
 
 <div class="grid" id="grid"></div>
 
-<footer>V13 FREE API © 2026 • Real foreign TV inside • Later we add Ghana channels • Built in Accra 📱</footer>
+<footer>V15 TV+Radio+GH © 2026 • TV works with 70K/s • Radio works with 11K/s • Accra 📱</footer>
 
 <script>
-const channels=[
-{name:"Al Jazeera English",emoji:"📰",url:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",desc:"News - Real graphics"},
-{name:"France 24 English",emoji:"🇫🇷",url:"https://live.france24.com/hls/live/2037218/F24_EN_LO_HLS/master.m3u8",desc:"News - Real graphics"},
-{name:"DW English",emoji:"🇩🇪",url:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",desc:"News - Real graphics"},
-{name:"NASA TV",emoji:"🚀",url:"https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",desc:"Space - Real graphics"},
-{name:"CGTN English",emoji:"🇨🇳",url:"https://news.cgtn.com/resource/live/english/cgtn-news.m3u8",desc:"News - Real graphics"},
-{name:"Al Jazeera Arabic",emoji:"🌍",url:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",desc:"Arabic News"},
+const tvChannels=[
+{name:"Al Jazeera Arabic",emoji:"🌍",url:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",desc:"Arabic News - Real"},
+{name:"Al Jazeera English",emoji:"📰",url:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",desc:"News - Real"},
+{name:"France 24 EN",emoji:"🇫🇷",url:"https://live.france24.com/hls/live/2037218/F24_EN_LO_HLS/master.m3u8",desc:"News - Real"},
+{name:"DW English",emoji:"🇩🇪",url:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",desc:"News - Real"},
+{name:"NASA TV",emoji:"🚀",url:"https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",desc:"Space - Real"},
+{name:"CGTN",emoji:"🇨🇳",url:"https://news.cgtn.com/resource/live/english/cgtn-news.m3u8",desc:"News - Real"},
 {name:"Bloomberg",emoji:"💹",url:"https://bloomberg-bloomberg-3-br.samsung.wurl.tv/playlist.m3u8",desc:"Business"},
 {name:"Red Bull TV",emoji:"🏎️",url:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",desc:"Sports - Real"},
 ];
 
-const video=document.getElementById('video');
-let hls;
+const radioChannels=[
+{name:"Joy FM 99.7",emoji:"📻",url:"https://195.154.182.222:8000/joy",desc:"Ghana #1 - Works 11K/s"},
+{name:"Citi FM 97.3",emoji:"🎙️",url:"https://citi973.radioca.st/stream",desc:"News - Works 11K/s"},
+{name:"Peace FM 104.3",emoji:"🔥",url:"https://peacefmonline.radioca.st/stream",desc:"Twi - Works 11K/s"},
+{name:"Adom FM 106.3",emoji:"💚",url:"https://adom1063fm.radioca.st/stream",desc:"Twi - Works 11K/s"},
+{name:"BBC World",emoji:"🌐",url:"https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",desc:"World - Works 11K/s"},
+];
 
-function playChannel(c,btn){
+const ghChannels=[
+{name:"GTV Ghana YT",emoji:"🇬🇭",url:"https://www.youtube-nocookie.com/embed/5qap5aO4i9A",type:"yt",desc:"GTV Official - YT"},
+{name:"UTV Ghana YT",emoji:"📺",url:"https://www.youtube-nocookie.com/embed/86YLFOog4GM",type:"yt",desc:"UTV Official - YT"},
+{name:"TV3 Ghana YT",emoji:"🎬",url:"https://www.youtube-nocookie.com/embed/21X5lGlDOfg",type:"yt",desc:"TV3 Official - YT"},
+{name:"Adom TV YT",emoji:"🔥",url:"https://www.youtube-nocookie.com/embed/9Auq9mYxFEE",type:"yt",desc:"Adom TV - YT"},
+];
+
+let currentTab='tv';
+let hls;
+const video=document.getElementById('video');
+
+function playHLS(c,btn){
 document.querySelectorAll('.grid button').forEach(b=>b.classList.remove('on'));
 btn.classList.add('on');
-document.getElementById('chName').innerText=c.emoji+' '+c.name+' - Real Graphics Inside';
+document.getElementById('chName').innerText=c.emoji+' '+c.name;
 document.getElementById('chStat').innerText='● Playing: '+c.desc;
+if(c.type=='yt'){
 if(hls){hls.destroy();}
-if(Hls.isSupported()){
-hls=new Hls();
-hls.loadSource(c.url);
-hls.attachMedia(video);
-hls.on(Hls.Events.MANIFEST_PARSED,()=>video.play().catch(()=>{}));
-}else if(video.canPlayType('application/vnd.apple.mpegurl')){
-video.src=c.url;
-video.addEventListener('loadedmetadata',()=>video.play().catch(()=>{}));
+video.style.display='none';
+let wrap=document.getElementById('player');
+let existing=wrap.querySelector('iframe');
+if(existing) existing.remove();
+let ifr=document.createElement('iframe');
+ifr.src=c.url+'?autoplay=1&mute=0';
+ifr.style.width='100%';ifr.style.height='100%';ifr.style.border='none';ifr.allow='autoplay; fullscreen';ifr.allowFullscreen=true;
+wrap.prepend(ifr);
+return;
+}else{
+video.style.display='block';
+let ifr=document.getElementById('player').querySelector('iframe');
+if(ifr) ifr.remove();
+if(hls){hls.destroy();}
+if(Hls.isSupported()){hls=new Hls();hls.loadSource(c.url);hls.attachMedia(video);hls.on(Hls.Events.MANIFEST_PARSED,()=>video.play().catch(()=>{}));}
+else if(video.canPlayType('application/vnd.apple.mpegurl')){video.src=c.url;video.play().catch(()=>{});}
 }
 window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function build(){
-let g=document.getElementById('grid');
-channels.forEach((c,i)=>{
+function build(list){
+let g=document.getElementById('grid');g.innerHTML='';
+list.forEach((c,i)=>{
 let b=document.createElement('button');
 if(i==0) b.classList.add('on');
 b.innerHTML=c.emoji+' '+c.name+'<small>'+c.desc+'</small>';
-b.onclick=()=>playChannel(c,b);
+b.onclick=()=>playHLS(c,b);
 g.appendChild(b);
 });
-// autoplay first
-playChannel(channels[0], g.firstChild);
+if(list.length>0) playHLS(list[0], g.firstChild);
 }
-build();
+
+function switchTab(t){
+currentTab=t;
+document.querySelectorAll('.tab').forEach(x=>x.className='tab off');
+document.getElementById(t+'Tab').className='tab on';
+if(t=='tv') build(tvChannels);
+if(t=='radio') build(radioChannels);
+if(t=='gh') build(ghChannels);
+}
+build(tvChannels);
 </script></body></html>
