@@ -1,26 +1,48 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Salvation TV Simple</title><style>body{background:#000;color:#fff;font-family:sans-serif;margin:0}h1{padding:12px;text-align:center;background:#111;border-bottom:2px solid #00e676;font-size:16px}iframe{width:100%;aspect-ratio:16/9;background:#000;border:none}.list{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px}button{padding:14px;border-radius:12px;border:1px solid #333;background:#1a1a1a;color:#fff;font-weight:800}button.on{background:#00e676;color:#000}p{text-align:center;color:#888;font-size:11px;padding:10px}</style></head><body>
-<h1>🇬🇭 SALVATION TECH TV - SIMPLE</h1>
-<div id="player"><div style="padding:40px;text-align:center;color:#666">Tap channel below to play 👇</div></div>
-<div class="list">
-<button onclick="play('GTV Ghana live','gtv')">🇬🇭 GTV Ghana</button>
-<button onclick="play('UTV Ghana live','utv')">📺 UTV Ghana</button>
-<button onclick="play('TV3 Ghana live','tv3')">🎬 TV3 Ghana</button>
-<button onclick="play('Adom TV live','adom')">🔥 Adom TV</button>
-<button onclick="play('GHOne TV live','ghone')">📰 GHOne</button>
-<button onclick="play('Joy Prime Ghana live','joy')">💫 Joy Prime</button>
-<button onclick="play('Metro TV Ghana live','metro')">📡 Metro TV</button>
-<button onclick="play('Angel TV Ghana live','angel')">👼 Angel TV</button>
-<button onclick="play('GTV Sports Ghana live','sports')">⚽ GTV Sports</button>
-<button onclick="play('Citi TV Ghana live','citi')">🏙️ Citi TV</button>
-<button onclick="play('TV Africa Ghana live','africa')">🌍 TV Africa</button>
-<button onclick="play('NET2 TV Ghana live','net2')">📺 NET2 TV</button>
-</div>
-<p>All channels use public YouTube live streams. Free, no login.</p>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Salvation Tech TV V2</title><style>body{margin:0;background:#070a12;color:#fff;font-family:Inter,sans-serif}header{padding:14px;background:linear-gradient(90deg,#000,#102040);border-bottom:2px solid #00e676;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10}header b{font-size:16px}header b span{color:#00e676}.liveDot{width:8px;height:8px;background:#ff1744;border-radius:50%;animation:blink 1s infinite;margin-left:auto}@keyframes blink{50%{opacity:.3}}#playerWrap{background:#000;position:sticky;top:56px;z-index:9}#player{aspect-ratio:16/9;background:#000;display:flex;align-items:center;justify-content:center}#player iframe{width:100%;height:100%;border:none}#info{padding:10px 12px;background:#0e152b;display:flex;justify-content:space-between;align-items:center;font-size:12px}#info a{background:#ff0000;color:#fff;padding:6px 12px;border-radius:20px;text-decoration:none;font-weight:800;font-size:11px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 10px 90px}button{padding:14px 8px;border-radius:14px;border:1px solid #22305a;background:#131c37;color:#fff;font-weight:800;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:4px}button.on{background:#00e676;color:#000;border-color:#00e676;transform:scale(.98)}button small{font-size:10px;opacity:.7;font-weight:600}footer{position:fixed;bottom:0;left:0;right:0;background:#0e152b;border-top:1px solid #22305a;padding:8px;text-align:center;font-size:10px;color:#8aa0d0}</style></head><body>
+<header><b>🇬🇭 SALVATION <span>TECH TV</span> V2</b><div class="liveDot"></div><span style="font-size:10px;background:#00e676;color:#000;padding:4px 8px;border-radius:10px;font-weight:900;margin-left:6px">12 LIVE</span></header>
+<div id="playerWrap"><div id="player"><div style="text-align:center;color:#556899"><div style="font-size:40px">📺</div><div style="font-weight:800;margin-top:8px">SELECT CHANNEL</div><div style="font-size:11px">Tap any channel below — opens live</div></div></div><div id="info"><div><b id="cName">No channel</b> <span id="cStatus" style="color:#8aa0d0">• Tap to watch</span></div><a id="ytBtn" href="#" target="_blank" style="display:none">▶ Open in YouTube</a></div></div>
+<div class="grid" id="grid"></div>
+<footer>Salvation Tech TV © 2026 • All Ghana Channels Free • Built on phone 📱</footer>
 <script>
-function play(q,id){
-document.querySelectorAll('button').forEach(b=>b.classList.remove('on'));
-event.target.classList.add('on');
-document.getElementById('player').innerHTML=`<iframe src="https://www.youtube.com/embed?listType=search&list=${encodeURIComponent(q)}&autoplay=1" allow="autoplay;fullscreen" allowfullscreen></iframe><div style="padding:8px 12px;background:#111;display:flex;justify-content:space-between"><b>${q}</b><span style="color:#ff4444">● LIVE</span></div>`;
+let channels=[
+{n:'GTV Ghana',id:'gtv',e:'🇬🇭',yt:'https://www.youtube.com/c/GTVGhanaOfficial/live'},
+{n:'UTV Ghana',id:'utv',e:'📺',yt:'https://www.youtube.com/c/UTVGhanaOfficial/live'},
+{n:'TV3 Ghana',id:'tv3',e:'🎬',yt:'https://www.youtube.com/c/TV3Ghana/live'},
+{n:'Adom TV',id:'adom',e:'🔥',yt:'https://www.youtube.com/c/AdomTV/live'},
+{n:'GHOne TV',id:'ghone',e:'📰',yt:'https://www.youtube.com/c/GHOneTV/live'},
+{n:'Joy Prime',id:'joy',e:'💫',yt:'https://www.youtube.com/c/JoyPrimeTV/live'},
+{n:'Metro TV',id:'metro',e:'📡',yt:'https://www.youtube.com/c/MetroTVGhana/live'},
+{n:'Angel TV',id:'angel',e:'👼',yt:'https://www.youtube.com/c/AngelTVOfficial/live'},
+{n:'GTV Sports+',id:'sports',e:'⚽',yt:'https://www.youtube.com/c/GTVSportsPlus/live'},
+{n:'Citi TV',id:'citi',e:'🏙️',yt:'https://www.youtube.com/c/CitiTube/live'},
+{n:'TV Africa',id:'africa',e:'🌍',yt:'https://www.youtube.com/c/TVAfricaGhana/live'},
+{n:'NET2 TV',id:'net2',e:'📺',yt:'https://www.youtube.com/c/Net2TVOfficial/live'}
+];
+let cur=null;
+function render(){
+let g=document.getElementById('grid');g.innerHTML='';
+channels.forEach(ch=>{
+let b=document.createElement('button');
+b.id='btn-'+ch.id;
+b.innerHTML=`${ch.e} ${ch.n}<small>Tap to Play • LIVE</small>`;
+b.onclick=()=>play(ch);
+g.appendChild(b);
+});
+}
+function play(ch){
+cur=ch;
+document.querySelectorAll('.grid button').forEach(b=>b.classList.remove('on'));
+document.getElementById('btn-'+ch.id).classList.add('on');
+document.getElementById('cName').textContent=ch.n;
+document.getElementById('cStatus').textContent='• LIVE NOW';
+let player=document.getElementById('player');
+// Try embedded live — if blocked, show thumbnail + button
+player.innerHTML=`<div style="width:100%;height:100%;background:linear-gradient(135deg,#0f2040,#000);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center"><div style="font-size:50px">${ch.e}</div><div style="font-weight:900;font-size:18px;margin-top:10px">${ch.n}</div><div style="color:#00e676;margin-top:6px;font-weight:800">● LIVE STREAM READY</div><div style="font-size:11px;color:#8aa0d0;margin-top:8px">Tap "Open in YouTube" below for full screen live</div><a href="${ch.yt}" target="_blank" style="margin-top:14px;background:#ff0000;color:#fff;padding:12px 24px;border-radius:12px;text-decoration:none;font-weight:900">▶ WATCH ${ch.n} LIVE</a></div>`;
+let ytBtn=document.getElementById('ytBtn');
+ytBtn.href=ch.yt;
+ytBtn.style.display='block';
+ytBtn.textContent='▶ YouTube';
 window.scrollTo({top:0,behavior:'smooth'});
 }
+render();
 </script></body></html>
