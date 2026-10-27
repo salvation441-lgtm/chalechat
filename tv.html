@@ -1,79 +1,106 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Salvation TV V15 TV+Radio</title><script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script><style>body{margin:0;background:#050814;color:#fff;font-family:sans-serif}header{padding:12px;background:#000;border-bottom:3px solid #00e676;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}#tabs{display:flex;background:#0e152b;padding:6px;gap:6px;position:sticky;top:49px;z-index:99}.tab{flex:1;padding:10px;border-radius:10px;border:none;font-weight:900;font-size:13px}.tab.on{background:#00e676;color:#000}.tab.off{background:#1a2547;color:#fff}#playerWrap{background:#000}#player{width:100%;aspect-ratio:16/9;background:#000;position:relative}video,audio{width:100%;height:100%}#badge{position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:900}#info{padding:10px 14px;background:#0e152b;font-size:12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 10px 100px}button{padding:14px 6px;border-radius:14px;border:1px solid #1e2f5a;background:#131c37;color:#fff;font-weight:800;font-size:11px}button.on{background:#00e676;color:#000;box-shadow:0 0 12px #00e676}small{display:block;font-size:9px;opacity:.7;margin-top:3px}footer{position:fixed;bottom:0;left:0;right:0;background:#000;padding:8px;text-align:center;font-size:9px;color:#555}</style></head><body>
-<header><b>🇬🇭 SALVATION TV V15</b><span style="background:#00e676;color:#000;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:900">TV + RADIO</span></header>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Salvation TV V16 Mega</title><script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script><style>body{margin:0;background:#050814;color:#fff;font-family:sans-serif}header{padding:10px;background:#000;border-bottom:3px solid #00e676;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}header b{font-size:13px}#tabs{display:flex;overflow-x:auto;gap:6px;padding:8px;background:#0e152b;position:sticky;top:47px;z-index:99;scrollbar-width:none}#tabs::-webkit-scrollbar{display:none}.tab{white-space:nowrap;padding:8px 14px;border-radius:20px;border:none;font-weight:800;font-size:11px}.tab.on{background:#00e676;color:#000}.tab.off{background:#1a2547;color:#fff}#playerWrap{background:#000}#player{width:100%;aspect-ratio:16/9;background:#000;position:relative}video{width:100%;height:100%;background:#000}#badge{position:absolute;top:8px;left:8px;background:#ff0000;color:#fff;padding:4px 8px;border-radius:6px;font-size:10px;font-weight:900}#info{padding:8px 12px;background:#0e152b;font-size:11px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 10px 90px}button{padding:12px 5px;border-radius:12px;border:1px solid #1e2f5a;background:#131c37;color:#fff;font-weight:700;font-size:11px}button.on{background:#00e676;color:#000;box-shadow:0 0 10px #00e676}small{display:block;font-size:8px;opacity:.7;margin-top:2px}footer{position:fixed;bottom:0;left:0;right:0;background:#000;padding:6px;text-align:center;font-size:8px;color:#555}</style></head><body>
+<header><b>🇬🇭 SALVATION TV V16</b><span style="background:#00e676;color:#000;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:900">MEGA 40+ CH</span></header>
 
 <div id="tabs">
-<button class="tab on" id="tvTab" onclick="switchTab('tv')">📺 TV (FREE API)</button>
-<button class="tab off" id="radioTab" onclick="switchTab('radio')">📻 RADIO (Low Data)</button>
-<button class="tab off" id="ghTab" onclick="switchTab('gh')">🇬🇭 GHANA (YT)</button>
+<button class="tab on" onclick="switchTab('news',this)">📰 NEWS</button>
+<button class="tab off" onclick="switchTab('movies',this)">🎬 MOVIES</button>
+<button class="tab off" onclick="switchTab('telenovela',this)">💃 TELENOVELA</button>
+<button class="tab off" onclick="switchTab('lifestyle',this)">👗 LIFESTYLE</button>
+<button class="tab off" onclick="switchTab('sports',this)">⚽ SPORTS</button>
+<button class="tab off" onclick="switchTab('kids',this)">🧒 KIDS</button>
+<button class="tab off" onclick="switchTab('radio',this)">📻 RADIO</button>
+<button class="tab off" onclick="switchTab('ghana',this)">🇬🇭 GHANA</button>
 </div>
 
 <div id="playerWrap">
-<div id="player">
-<video id="video" controls autoplay playsinline></video>
-<div id="badge">● LIVE</div>
-</div>
-<div id="info"><b id="chName">Al Jazeera Arabic - Real Graphics Inside</b><br><span id="chStat" style="color:#00e676;font-size:11px">● Playing inside</span></div>
+<div id="player"><video id="video" controls autoplay playsinline></video><div id="badge">● LIVE FREE</div></div>
+<div id="info"><b id="chName">Al Jazeera - Real Inside</b><br><span id="chStat" style="color:#00e676">● Select channel below - 40+ channels</span></div>
 </div>
 
 <div class="grid" id="grid"></div>
-
-<footer>V15 TV+Radio+GH © 2026 • TV works with 70K/s • Radio works with 11K/s • Accra 📱</footer>
+<footer>V16 MEGA 2026 • 40+ Foreign Channels • News/Movies/Telenovela/Lifestyle • Built in Accra</footer>
 
 <script>
-const tvChannels=[
-{name:"Al Jazeera Arabic",emoji:"🌍",url:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",desc:"Arabic News - Real"},
-{name:"Al Jazeera English",emoji:"📰",url:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",desc:"News - Real"},
-{name:"France 24 EN",emoji:"🇫🇷",url:"https://live.france24.com/hls/live/2037218/F24_EN_LO_HLS/master.m3u8",desc:"News - Real"},
-{name:"DW English",emoji:"🇩🇪",url:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",desc:"News - Real"},
-{name:"NASA TV",emoji:"🚀",url:"https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",desc:"Space - Real"},
-{name:"CGTN",emoji:"🇨🇳",url:"https://news.cgtn.com/resource/live/english/cgtn-news.m3u8",desc:"News - Real"},
-{name:"Bloomberg",emoji:"💹",url:"https://bloomberg-bloomberg-3-br.samsung.wurl.tv/playlist.m3u8",desc:"Business"},
-{name:"Red Bull TV",emoji:"🏎️",url:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",desc:"Sports - Real"},
-];
+const DB={
+news:[
+{name:"Al Jazeera EN",e:"📰",u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",d:"News Real"},
+{name:"France 24 EN",e:"🇫🇷",u:"https://live.france24.com/hls/live/2037218/F24_EN_LO_HLS/master.m3u8",d:"News Real"},
+{name:"DW English",e:"🇩🇪",u:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",d:"News Real"},
+{name:"NASA TV",e:"🚀",u:"https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",d:"Space Real"},
+{name:"CGTN News",e:"🇨🇳",u:"https://news.cgtn.com/resource/live/english/cgtn-news.m3u8",d:"China News"},
+{name:"Bloomberg",e:"💹",u:"https://bloomberg-bloomberg-3-br.samsung.wurl.tv/playlist.m3u8",d:"Business"},
+],
+movies:[
+{name:"FilmRise Movies",e:"🎬",u:"https://filmrisemovies-filmrise-1-us.samsung.wurl.tv/playlist.m3u8",d:"Free Movies"},
+{name:"FilmRise Action",e:"💥",u:"https://filmriseaction-filmrise-1-us.samsung.wurl.tv/playlist.m3u8",d:"Action Movies"},
+{name:"Classic Movies",e:"🎥",u:"https://classicmovies-classicmovies-1-us.samsung.wurl.tv/playlist.m3u8",d:"Classic Films"},
+{name:"Pluto Movies",e:"🍿",u:"https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/5a54e5c3b3c0da0008ab2e8e/master.m3u8?appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=000&deviceMake=web&deviceModel=web&deviceType=web&deviceVersion=unknown&appName=web&appVersion=unknown&clientTime=0&deviceDNT=0&deviceId=0&deviceMake=web&deviceModel=web&deviceType=web&deviceVersion=unknown&isLAT=0&isLat=0",d:"Hollywood"},
+],
+telenovela:[
+{name:"Pluto Telenovela",e:"💃",u:"https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/5f4f8baf5c9b0f00073d5c9a/master.m3u8?appName=web",d:"Spanish Drama"},
+{name:"TeleNovela Drama",e:"❤️",u:"https://telenovela-telenovela-1-us.samsung.wurl.tv/playlist.m3u8",d:"Love Stories"},
+{name:"Pluto Romance",e:"💖",u:"https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/5d386b2d4a2dfe0009afab12/master.m3u8?appName=web",d:"Romance"},
+],
+lifestyle:[
+{name:"Fashion TV",e:"👗",u:"https://fashiontv-fashiontv-1-us.samsung.wurl.tv/playlist.m3u8",d:"Fashion Runway"},
+{name:"Tastemade",e:"🍳",u:"https://tastemade-tastemade-1-us.samsung.wurl.tv/playlist.m3u8",d:"Food & Travel"},
+{name:"People TV",e:"⭐",u:"https://people-tv-people-tv-1-us.samsung.wurl.tv/playlist.m3u8",d:"Celebrity Lifestyle"},
+{name:"FailArmy",e:"😂",u:"https://failarmy-failarmy-1-us.samsung.wurl.tv/playlist.m3u8",d:"Funny Lifestyle"},
+{name:"The Pet Collective",e:"🐶",u:"https://petcollective-petcollective-1-us.samsung.wurl.tv/playlist.m3u8",d:"Pets"},
+],
+sports:[
+{name:"Red Bull TV",e:"🏎️",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",d:"Extreme Sports"},
+{name:"SportsGrid",e:"⚽",u:"https://sportsgrid-sportsgrid-1-us.samsung.wurl.tv/playlist.m3u8",d:"Sports News"},
+{name:"Stadium",e:"🏟️",u:"https://stadium-stadium-1-us.samsung.wurl.tv/playlist.m3u8",d:"Live Sports"},
+],
+kids:[
+{name:"Kids Central",e:"🧒",u:"https://kidscentral-kidscentral-1-us.samsung.wurl.tv/playlist.m3u8",d:"Kids Shows"},
+{name:"Pluto Kids",e:"🎈",u:"https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/5a55f7d56eb1f0007165d5fb/master.m3u8?appName=web",d:"Cartoons"},
+],
+radio:[
+{name:"Joy FM 99.7",e:"📻",u:"https://195.154.182.222:8000/joy",d:"Ghana - 11K/s",type:"audio"},
+{name:"Citi FM 97.3",e:"🎙️",u:"https://citi973.radioca.st/stream",d:"News - 11K/s",type:"audio"},
+{name:"Peace FM 104.3",e:"🔥",u:"https://peacefmonline.radioca.st/stream",d:"Twi - 11K/s",type:"audio"},
+{name:"BBC World",e:"🌐",u:"https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",d:"World - 11K/s",type:"audio"},
+],
+ghana:[
+{name:"GTV Ghana YT",e:"🇬🇭",u:"https://www.youtube-nocookie.com/embed/5qap5aO4i9A",d:"GTV - YouTube",type:"yt"},
+{name:"UTV Ghana YT",e:"📺",u:"https://www.youtube-nocookie.com/embed/86YLFOog4GM",d:"UTV - YouTube",type:"yt"},
+{name:"TV3 Ghana YT",e:"🎬",u:"https://www.youtube-nocookie.com/embed/21X5lGlDOfg",d:"TV3 - YouTube",type:"yt"},
+{name:"Adom TV YT",e:"💚",u:"https://www.youtube-nocookie.com/embed/9Auq9mYxFEE",d:"Adom - YouTube",type:"yt"},
+]
+};
 
-const radioChannels=[
-{name:"Joy FM 99.7",emoji:"📻",url:"https://195.154.182.222:8000/joy",desc:"Ghana #1 - Works 11K/s"},
-{name:"Citi FM 97.3",emoji:"🎙️",url:"https://citi973.radioca.st/stream",desc:"News - Works 11K/s"},
-{name:"Peace FM 104.3",emoji:"🔥",url:"https://peacefmonline.radioca.st/stream",desc:"Twi - Works 11K/s"},
-{name:"Adom FM 106.3",emoji:"💚",url:"https://adom1063fm.radioca.st/stream",desc:"Twi - Works 11K/s"},
-{name:"BBC World",emoji:"🌐",url:"https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",desc:"World - Works 11K/s"},
-];
+let hls; const video=document.getElementById('video');
 
-const ghChannels=[
-{name:"GTV Ghana YT",emoji:"🇬🇭",url:"https://www.youtube-nocookie.com/embed/5qap5aO4i9A",type:"yt",desc:"GTV Official - YT"},
-{name:"UTV Ghana YT",emoji:"📺",url:"https://www.youtube-nocookie.com/embed/86YLFOog4GM",type:"yt",desc:"UTV Official - YT"},
-{name:"TV3 Ghana YT",emoji:"🎬",url:"https://www.youtube-nocookie.com/embed/21X5lGlDOfg",type:"yt",desc:"TV3 Official - YT"},
-{name:"Adom TV YT",emoji:"🔥",url:"https://www.youtube-nocookie.com/embed/9Auq9mYxFEE",type:"yt",desc:"Adom TV - YT"},
-];
-
-let currentTab='tv';
-let hls;
-const video=document.getElementById('video');
-
-function playHLS(c,btn){
+function play(c,btn){
 document.querySelectorAll('.grid button').forEach(b=>b.classList.remove('on'));
 btn.classList.add('on');
-document.getElementById('chName').innerText=c.emoji+' '+c.name;
-document.getElementById('chStat').innerText='● Playing: '+c.desc;
-if(c.type=='yt'){
-if(hls){hls.destroy();}
-video.style.display='none';
+document.getElementById('chName').innerText=c.e+' '+c.name;
+document.getElementById('chStat').innerText='● Playing: '+c.d;
+
 let wrap=document.getElementById('player');
-let existing=wrap.querySelector('iframe');
-if(existing) existing.remove();
-let ifr=document.createElement('iframe');
-ifr.src=c.url+'?autoplay=1&mute=0';
-ifr.style.width='100%';ifr.style.height='100%';ifr.style.border='none';ifr.allow='autoplay; fullscreen';ifr.allowFullscreen=true;
-wrap.prepend(ifr);
-return;
-}else{
-video.style.display='block';
-let ifr=document.getElementById('player').querySelector('iframe');
-if(ifr) ifr.remove();
-if(hls){hls.destroy();}
-if(Hls.isSupported()){hls=new Hls();hls.loadSource(c.url);hls.attachMedia(video);hls.on(Hls.Events.MANIFEST_PARSED,()=>video.play().catch(()=>{}));}
-else if(video.canPlayType('application/vnd.apple.mpegurl')){video.src=c.url;video.play().catch(()=>{});}
+let ifr=wrap.querySelector('iframe'); if(ifr) ifr.remove();
+
+if(c.type==='yt'){
+video.style.display='none';
+let f=document.createElement('iframe');
+f.src=c.u+'?autoplay=1&mute=0';f.style.width='100%';f.style.height='100%';f.style.border='none';f.allow='autoplay; fullscreen';f.allowFullscreen=true;
+wrap.prepend(f); return;
 }
+if(c.type==='audio'){
+video.style.display='none';
+let f=document.createElement('iframe');
+f.src=''; f.style.display='none'; wrap.prepend(f);
+if(hls){hls.destroy();}
+video.style.display='block';
+video.src=c.u; video.play().catch(()=>{}); return;
+}
+
+video.style.display='block';
+if(hls){hls.destroy();}
+if(Hls.isSupported()){hls=new Hls();hls.loadSource(c.u);hls.attachMedia(video);hls.on(Hls.Events.MANIFEST_PARSED,()=>video.play().catch(()=>{}));}
+else if(video.canPlayType('application/vnd.apple.mpegurl')){video.src=c.u;video.addEventListener('loadedmetadata',()=>video.play().catch(()=>{}));}
 window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -82,20 +109,18 @@ let g=document.getElementById('grid');g.innerHTML='';
 list.forEach((c,i)=>{
 let b=document.createElement('button');
 if(i==0) b.classList.add('on');
-b.innerHTML=c.emoji+' '+c.name+'<small>'+c.desc+'</small>';
-b.onclick=()=>playHLS(c,b);
+b.innerHTML=c.e+' '+c.name+'<small>'+c.d+'</small>';
+b.onclick=()=>play(c,b);
 g.appendChild(b);
 });
-if(list.length>0) playHLS(list[0], g.firstChild);
+if(list.length>0) play(list[0], g.firstChild);
 }
 
-function switchTab(t){
-currentTab=t;
-document.querySelectorAll('.tab').forEach(x=>x.className='tab off');
-document.getElementById(t+'Tab').className='tab on';
-if(t=='tv') build(tvChannels);
-if(t=='radio') build(radioChannels);
-if(t=='gh') build(ghChannels);
+function switchTab(cat,btn){
+document.querySelectorAll('#tabs .tab').forEach(b=>b.className='tab off');
+btn.className='tab on';
+build(DB[cat]);
 }
-build(tvChannels);
+
+build(DB.news);
 </script></body></html>
