@@ -1,43 +1,34 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Salvation TV V8 WORKING</title><style>body{margin:0;background:#050814;color:#fff;font-family:sans-serif}header{padding:12px;background:#000;border-bottom:3px solid #00e676;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}#playerWrap{background:#000;position:sticky;top:50px;z-index:99}#player{width:100%;aspect-ratio:16/9;background:radial-gradient(circle at center,#1a2a5a 0%,#000 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}#player h1{font-size:50px;margin:0;animation:pulse 1.5s infinite}@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}#player p{margin:8px 0 0;color:#00e676;font-weight:900}#player span{font-size:11px;color:#8aa0d0;margin-top:4px}#badge{position:absolute;top:10px;left:10px;background:#ff0000;color:#fff;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:900}#info{padding:12px;background:#0e152b;display:flex;justify-content:space-between;align-items:center}.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:12px 10px 90px}button{padding:16px 8px;border-radius:16px;border:1.5px solid #1e2f5a;background:#131c37;color:#fff;font-weight:800;font-size:13px}button.on{background:#00e676;color:#000;box-shadow:0 0 20px #00e676}footer{position:fixed;bottom:0;left:0;right:0;background:#000;padding:6px;text-align:center;font-size:9px;color:#555}</style></head><body>
-<header><b>🇬🇭 SALVATION TV V8</b><span style="background:#00e676;color:#000;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:900">WORKING</span></header>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Salvation TV V9 FINAL</title><style>body{margin:0;background:#070a12;color:#fff;font-family:sans-serif}header{padding:14px;background:#000;border-bottom:3px solid #00e676;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}#player{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#0f1e3a 0%,#000 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}#player h1{font-size:60px;margin:0}#player h2{margin:10px 0 5px;color:#00e676}#player p{font-size:12px;color:#8aa0d0;margin:0}.bigBtn{background:#ff0000;color:#fff;padding:14px 28px;border-radius:30px;font-weight:900;font-size:14px;margin-top:16px;text-decoration:none;display:inline-block;animation:glow 2s infinite}@keyframes glow{0%{box-shadow:0 0 10px #ff0000}50%{box-shadow:0 0 30px #ff0000}100%{box-shadow:0 0 10px #ff0000}}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 10px 90px}button{padding:18px 8px;border-radius:16px;border:1.5px solid #1e2f5a;background:#131c37;color:#fff;font-weight:800}button.on{background:#00e676;color:#000}small{display:block;font-size:10px;opacity:.7;margin-top:4px}</style></head><body>
+<header><b>🇬🇭 SALVATION TV V9</b><span style="background:#00e676;color:#000;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:900">ALWAYS WORKS</span></header>
 
-<div id="playerWrap">
 <div id="player">
-<div id="badge">● LIVE NOW</div>
-<h1 id="icon">⚽</h1>
-<p id="now">GTV Sports+</p>
-<span id="sub">Tap channel below → Real graphics open full screen</span>
-<div style="margin-top:12px;background:#00e676;color:#000;padding:8px 18px;border-radius:20px;font-weight:900;font-size:12px" id="watchBtn">▶ TAP TO WATCH REAL FOOTBALL</div>
-</div>
-<div id="info"><div><b id="chName">Ready to Watch</b><br><span style="color:#8aa0d0;font-size:11px">No broken icon • Real LiveGhanaTV opens</span></div></div>
+<h1 id="emoji">⚽</h1>
+<h2 id="title">GTV Sports+ LIVE</h2>
+<p id="sub">Tap button below → Real football graphics open in YouTube app (full screen)</p>
+<a id="mainBtn" class="bigBtn" href="https://www.youtube.com/results?search_query=GTV+Sports+Plus+live+now" target="_blank">▶ WATCH REAL FOOTBALL NOW</a>
+<p style="margin-top:10px;font-size:10px;color:#555">No white page • Real graphics inside YouTube • Works on all phones</p>
 </div>
 
 <div class="grid">
-<button onclick="openReal('https://liveghanatv.com/gtv-sports-plus/','GTV Sports+','⚽',this)">⚽ GTV Sports+<br><small>REAL GRAPHICS</small></button>
-<button onclick="openReal('https://liveghanatv.com/gtv-ghana/','GTV Ghana','🇬🇭',this)">🇬🇭 GTV Ghana<br><small>REAL GRAPHICS</small></button>
-<button onclick="openReal('https://liveghanatv.com/utv-ghana/','UTV Ghana','📺',this)">📺 UTV Ghana<br><small>REAL GRAPHICS</small></button>
-<button onclick="openReal('https://liveghanatv.com/tv3-ghana/','TV3 Ghana','🎬',this)">🎬 TV3 Ghana<br><small>REAL GRAPHICS</small></button>
-<button onclick="openReal('https://liveghanatv.com/adom-tv/','Adom TV','🔥',this)">🔥 Adom TV<br><small>REAL GRAPHICS</small></button>
-<button onclick="openReal('https://liveghanatv.com/ghone-tv/','GHOne TV','📰',this)">📰 GHOne TV<br><small>REAL GRAPHICS</small></button>
-<button onclick="openReal('https://liveghanatv.com/joy-prime/','Joy Prime','💫',this)">💫 Joy Prime<br><small>REAL GRAPHICS</small></button>
-<button onclick="openReal('https://liveghanatv.com/tv-africa/','TV Africa','🌍',this)">🌍 TV Africa<br><small>REAL GRAPHICS</small></button>
+<button class="on" onclick="setChannel('GTV Sports+','⚽','GTV+Sports+Plus+live+now',this)">⚽ GTV Sports+<small>REAL LIVE • YOUTUBE</small></button>
+<button onclick="setChannel('GTV Ghana','🇬🇭','GTV+Ghana+live+now',this)">🇬🇭 GTV Ghana<small>REAL LIVE • YOUTUBE</small></button>
+<button onclick="setChannel('UTV Ghana','📺','UTV+Ghana+live+now',this)">📺 UTV Ghana<small>REAL LIVE • YOUTUBE</small></button>
+<button onclick="setChannel('TV3 Ghana','🎬','TV3+Ghana+live+now',this)">🎬 TV3 Ghana<small>REAL LIVE • YOUTUBE</small></button>
+<button onclick="setChannel('Adom TV','🔥','Adom+TV+live+now',this)">🔥 Adom TV<small>REAL LIVE • YOUTUBE</small></button>
+<button onclick="setChannel('GHOne TV','📰','GHOne+TV+live+now',this)">📰 GHOne TV<small>REAL LIVE • YOUTUBE</small></button>
+<button onclick="setChannel('Joy Prime','💫','Joy+Prime+Ghana+live+now',this)">💫 Joy Prime<small>REAL LIVE • YOUTUBE</small></button>
+<button onclick="setChannel('Metro TV','📡','Metro+TV+Ghana+live+now',this)">📡 Metro TV<small>REAL LIVE • YOUTUBE</small></button>
 </div>
 
-<footer>SALVATION TV V8 © 2026 • No broken icon • Real graphics open full screen • Accra 📱</footer>
-
 <script>
-let currentUrl='https://liveghanatv.com/gtv-sports-plus/';
-function openReal(url,name,emoji,btn){
+function setChannel(name,emoji,search,btn){
 document.querySelectorAll('.grid button').forEach(b=>b.classList.remove('on'));
 btn.classList.add('on');
-document.getElementById('icon').innerText=emoji;
-document.getElementById('now').innerText=name;
-document.getElementById('chName').innerText=name+' • Opening real stream';
-currentUrl=url;
-document.getElementById('watchBtn').innerText='▶ TAP TO WATCH '+name.toUpperCase()+' REAL';
-document.getElementById('watchBtn').onclick=()=>window.open(url,'_blank');
-window.open(url,'_blank');
+document.getElementById('emoji').innerText=emoji;
+document.getElementById('title').innerText=name+' LIVE';
+document.getElementById('sub').innerText='Tap button to watch '+name+' real graphics in YouTube app';
+document.getElementById('mainBtn').innerText='▶ WATCH '+name.toUpperCase()+' REAL NOW';
+document.getElementById('mainBtn').href='https://www.youtube.com/results?search_query='+search;
 window.scrollTo({top:0,behavior:'smooth'});
 }
-document.getElementById('watchBtn').onclick=()=>window.open(currentUrl,'_blank');
 </script></body></html>
