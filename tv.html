@@ -1,34 +1,31 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Salvation TV V9 FINAL</title><style>body{margin:0;background:#070a12;color:#fff;font-family:sans-serif}header{padding:14px;background:#000;border-bottom:3px solid #00e676;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}#player{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#0f1e3a 0%,#000 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}#player h1{font-size:60px;margin:0}#player h2{margin:10px 0 5px;color:#00e676}#player p{font-size:12px;color:#8aa0d0;margin:0}.bigBtn{background:#ff0000;color:#fff;padding:14px 28px;border-radius:30px;font-weight:900;font-size:14px;margin-top:16px;text-decoration:none;display:inline-block;animation:glow 2s infinite}@keyframes glow{0%{box-shadow:0 0 10px #ff0000}50%{box-shadow:0 0 30px #ff0000}100%{box-shadow:0 0 10px #ff0000}}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 10px 90px}button{padding:18px 8px;border-radius:16px;border:1.5px solid #1e2f5a;background:#131c37;color:#fff;font-weight:800}button.on{background:#00e676;color:#000}small{display:block;font-size:10px;opacity:.7;margin-top:4px}</style></head><body>
-<header><b>🇬🇭 SALVATION TV V9</b><span style="background:#00e676;color:#000;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:900">ALWAYS WORKS</span></header>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Salvation TV V10 Lite</title><style>body{margin:0;background:#070a12;color:#fff;font-family:sans-serif}header{padding:14px;background:#000;border-bottom:3px solid #00e676;text-align:center}#card{margin:12px;background:#131c37;border-radius:16px;padding:16px;text-align:center;border:1px solid #1e2f5a}h2{color:#00e676;margin:0 0 8px}.btn{display:block;background:#ff0000;color:#fff;padding:14px;border-radius:12px;text-decoration:none;font-weight:900;margin:8px 0}.btn2{background:#00e676;color:#000}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px}button{padding:14px;border-radius:12px;border:1px solid #333;background:#222;color:#fff;font-weight:800;font-size:12px}</style></head><body>
+<header><b>🇬🇭 SALVATION TV V10 LITE</b><br><small style="color:#8aa0d0">Made for slow data (3K/s)</small></header>
 
-<div id="player">
-<h1 id="emoji">⚽</h1>
-<h2 id="title">GTV Sports+ LIVE</h2>
-<p id="sub">Tap button below → Real football graphics open in YouTube app (full screen)</p>
-<a id="mainBtn" class="bigBtn" href="https://www.youtube.com/results?search_query=GTV+Sports+Plus+live+now" target="_blank">▶ WATCH REAL FOOTBALL NOW</a>
-<p style="margin-top:10px;font-size:10px;color:#555">No white page • Real graphics inside YouTube • Works on all phones</p>
+<div id="card">
+<h2 id="name">📺 Choose Channel</h2>
+<p style="font-size:12px;color:#aaa;margin:0 0 12px" id="desc">Tap below - direct link loads faster with slow data</p>
+<a id="mainLink" class="btn" href="https://m.youtube.com/@gtvsportsplusghana" target="_blank">▶ OPEN GTV SPORTS+ OFFICIAL</a>
+<a class="btn btn2" href="https://m.youtube.com/results?search_query=GTV+Ghana+live" target="_blank">🔍 SEARCH GTV (if first slow)</a>
+<p style="font-size:10px;color:#666;margin-top:10px">Tip: Connect to WiFi or *138*1# bundle - 3.94K/s too slow for live video</p>
 </div>
 
 <div class="grid">
-<button class="on" onclick="setChannel('GTV Sports+','⚽','GTV+Sports+Plus+live+now',this)">⚽ GTV Sports+<small>REAL LIVE • YOUTUBE</small></button>
-<button onclick="setChannel('GTV Ghana','🇬🇭','GTV+Ghana+live+now',this)">🇬🇭 GTV Ghana<small>REAL LIVE • YOUTUBE</small></button>
-<button onclick="setChannel('UTV Ghana','📺','UTV+Ghana+live+now',this)">📺 UTV Ghana<small>REAL LIVE • YOUTUBE</small></button>
-<button onclick="setChannel('TV3 Ghana','🎬','TV3+Ghana+live+now',this)">🎬 TV3 Ghana<small>REAL LIVE • YOUTUBE</small></button>
-<button onclick="setChannel('Adom TV','🔥','Adom+TV+live+now',this)">🔥 Adom TV<small>REAL LIVE • YOUTUBE</small></button>
-<button onclick="setChannel('GHOne TV','📰','GHOne+TV+live+now',this)">📰 GHOne TV<small>REAL LIVE • YOUTUBE</small></button>
-<button onclick="setChannel('Joy Prime','💫','Joy+Prime+Ghana+live+now',this)">💫 Joy Prime<small>REAL LIVE • YOUTUBE</small></button>
-<button onclick="setChannel('Metro TV','📡','Metro+TV+Ghana+live+now',this)">📡 Metro TV<small>REAL LIVE • YOUTUBE</small></button>
+<button onclick="setCh('GTV Sports+','gtvsportsplusghana')">⚽ GTV Sports+</button>
+<button onclick="setCh('GTV Ghana','GTVGhanaOfficial')">🇬🇭 GTV Ghana</button>
+<button onclick="setCh('UTV Ghana','utvghanaonline')">📺 UTV Ghana</button>
+<button onclick="setCh('TV3 Ghana','TV3Ghana')">🎬 TV3 Ghana</button>
+<button onclick="setCh('Adom TV','adomtvGH')">🔥 Adom TV</button>
+<button onclick="setCh('GHOne TV','GHOneTV')">📰 GHOne</button>
+<button onclick="setCh('JoyNews','JoyNewsOnTV')">💫 JoyNews</button>
+<button onclick="setCh('Metro TV','metrotvgh')">📡 Metro TV</button>
 </div>
 
 <script>
-function setChannel(name,emoji,search,btn){
-document.querySelectorAll('.grid button').forEach(b=>b.classList.remove('on'));
-btn.classList.add('on');
-document.getElementById('emoji').innerText=emoji;
-document.getElementById('title').innerText=name+' LIVE';
-document.getElementById('sub').innerText='Tap button to watch '+name+' real graphics in YouTube app';
-document.getElementById('mainBtn').innerText='▶ WATCH '+name.toUpperCase()+' REAL NOW';
-document.getElementById('mainBtn').href='https://www.youtube.com/results?search_query='+search;
+function setCh(name,handle){
+document.getElementById('name').innerText='📺 '+name;
+document.getElementById('desc').innerText='Direct official page - loads faster than search';
+document.getElementById('mainLink').innerText='▶ OPEN '+name.toUpperCase()+' OFFICIAL';
+document.getElementById('mainLink').href='https://m.youtube.com/@'+handle;
 window.scrollTo({top:0,behavior:'smooth'});
 }
 </script></body></html>
