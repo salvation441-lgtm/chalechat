@@ -1,104 +1,71 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050814"><title>Salvation TV V27 - Tabs Fixed</title><script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;font-family:'Outfit',sans-serif}body{background:#050814;color:#fff}header{position:sticky;top:0;z-index:100;background:#050814;border-bottom:2px solid #00e676;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#00e676,#00b894);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900}.video-wrap{width:100%;aspect-ratio:16/9;background:#000;position:relative}video{width:100%;height:100%;background:#000}.badge{position:absolute;top:10px;left:10px;padding:6px 12px;border-radius:20px;font-size:10px;font-weight:900;z-index:2}.badge.live{background:#ff0000;color:#fff}.badge.radio{background:#ff9800;color:#000}.badge.movie{background:#00e676;color:#000}.info{padding:12px 16px;background:#0e152b}.info h2{font-size:15px;font-weight:900}.info p{font-size:11px;color:#00e676;margin-top:4px}
-#tabsTop{position:sticky;top:62px;z-index:99;background:#050814;border-bottom:1px solid rgba(255,255,255,0.08);padding:12px 16px;display:flex;overflow-x:auto;gap:10px}#tabsTop::-webkit-scrollbar{display:none}.tab{white-space:nowrap;padding:12px 20px;border-radius:25px;border:2px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#fff;font-size:12px;font-weight:900;transition:0.2s;flex-shrink:0}.tab.on{background:#00e676;color:#000;border-color:#00e676;box-shadow:0 4px 15px rgba(0,230,118,0.3);transform:scale(1.05)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px 16px 100px}.card{background:#131c37;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:14px;text-align:center;transition:0.2s}.card.on{background:#00e676;color:#000;transform:scale(1.03);box-shadow:0 8px 25px rgba(0,230,118,0.3)}.card-emoji{font-size:28px}.card-name{font-size:12px;font-weight:900;margin-top:6px}.card-desc{font-size:9px;opacity:0.8}.tag{font-size:9px;padding:4px 8px;border-radius:12px;margin-top:6px;display:inline-block;font-weight:700}.tag.live{background:rgba(255,0,0,0.2);color:#ff6b6b}.tag.movie{background:rgba(0,230,118,0.2);color:#00e676}.tag.radio{background:rgba(255,152,0,0.2);color:#ff9800}#bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(5,8,20,0.95);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.08);padding:10px 16px;display:flex;gap:8px}.btn{flex:1;padding:12px;border-radius:12px;border:none;font-weight:900;font-size:11px}.btn.p{background:#00e676;color:#000}.btn.s{background:rgba(255,255,255,0.1);color:#fff}
-#pop{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}#pop.show{display:flex}.popBox{width:100%;max-width:360px;background:#131c37;border:1px solid rgba(0,230,118,0.3);border-radius:20px;padding:20px}
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#060a1a"><title>Salvation TV - Free Live TV</title><script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;font-family:'Outfit',sans-serif}body{background:#060a1a;color:#fff}header{position:sticky;top:0;z-index:100;background:rgba(6,10,26,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);padding:14px 18px;display:flex;justify-content:space-between;align-items:center}.h-left{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;background:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#000}.h-left b{font-size:15px;font-weight:800}.h-left small{font-size:9px;color:#7a8ab0;font-weight:600;letter-spacing:0.5px;text-transform:uppercase}.video-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#000}video{width:100%;height:100%;background:#000}.v-info{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.85));padding:40px 18px 14px;pointer-events:none}.v-info h2{font-size:16px;font-weight:800}.v-info p{font-size:11px;color:rgba(255,255,255,0.7);margin-top:3px}.badge{position:absolute;top:14px;left:14px;padding:6px 12px;border-radius:20px;font-size:10px;font-weight:800}.badge.live{background:#ff1a1a;color:#fff}.badge.movie{background:#fff;color:#000}.badge.radio{background:#ff9800;color:#000}#tabs{position:sticky;top:71px;z-index:90;background:rgba(6,10,26,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);padding:12px 14px;display:flex;gap:8px;overflow-x:auto}#tabs::-webkit-scrollbar{display:none}.tab{white-space:nowrap;padding:10px 18px;border-radius:24px;border:1.5px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.7);font-size:11px;font-weight:700;transition:0.25s}.tab.on{background:#fff;color:#000;border-color:#fff;box-shadow:0 4px 20px rgba(255,255,255,0.15)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 14px 110px}.card{background:linear-gradient(145deg,#121a33,#0e152e);border:1px solid rgba(255,255,255,0.06);border-radius:18px;padding:18px 12px;text-align:center;transition:0.25s;cursor:pointer}.card.on{background:#fff;color:#000;transform:translateY(-2px) scale(1.02);box-shadow:0 12px 30px rgba(255,255,255,0.15)}.card-emoji{font-size:30px}.card-name{font-size:12px;font-weight:800;margin-top:8px}.card-desc{font-size:9px;opacity:0.6;margin-top:3px}.dot{width:6px;height:6px;border-radius:50%;display:inline-block;margin-right:4px}.dot.live{background:#ff1a1a}.dot.movie{background:#000}.dot.radio{background:#ff9800}#bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(6,10,26,0.92);backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,0.06);padding:12px 14px;display:flex;gap:10px}.btn{flex:1;padding:13px;border-radius:14px;border:none;font-weight:800;font-size:12px;cursor:pointer}.btn.s{background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.1)}.btn.p{background:#fff;color:#000}#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#fff;color:#000;padding:10px 18px;border-radius:24px;font-size:11px;font-weight:700;display:none;z-index:200}
 </style></head><body>
-<header><div style="display:flex;align-items:center;gap:10px"><div class="logo-icon">S</div><div><b>SALVATION TV</b><br><small style="font-size:8px;color:#8aa0d0">V27 TABS FIXED • RADIO FIXED</small></div></div><div style="background:#00e676;color:#000;padding:6px 12px;border-radius:20px;font-size:10px;font-weight:900">TABS TOP ✅</div></header>
+<header><div class="h-left"><div class="logo">S</div><div><b>Salvation TV</b><br><small>Free Live TV</small></div></div><div style="font-size:18px">📺</div></header>
 
-<div class="video-wrap" id="wrap">
-<video id="video" controls autoplay playsinline></video>
-<div class="badge radio" id="badge">📻 RADIO - TAP PLAY</div>
+<div class="video-wrap">
+<video id="video" controls playsinline></video>
+<div class="badge live" id="badge">● LIVE</div>
+<div class="v-info"><h2 id="chName">DW English</h2><p id="chStat">Live News 24/7</p></div>
 </div>
-<div class="info"><h2 id="chName">Joy FM 99.7 - Ghana #1</h2><p id="chStat">📻 Radio - 5K/s - Works with 42.8K/s (Your speed)</p></div>
 
-<!-- TABS NOW BIG FOR TOP - CAN'T MISS! -->
-<div id="tabsTop">
-<button class="tab" onclick="setCat('live',this)">🔴 LIVE NEWS</button>
-<button class="tab" onclick="setCat('movies',this)">🎬 FREE MOVIES</button>
-<button class="tab" onclick="setCat('telenovela',this)">💃 TELENOVELA</button>
-<button class="tab" onclick="setCat('lifestyle',this)">👗 LIFESTYLE</button>
-<button class="tab" onclick="setCat('sports',this)">⚽ SPORTS</button>
-<button class="tab on" onclick="setCat('radio',this)">📻 RADIO</button>
-<button class="tab" onclick="setCat('ghana',this)">🇬🇭 GHANA</button>
+<div id="tabs">
+<button class="tab on" onclick="setCat('live',this)">Live News</button>
+<button class="tab" onclick="setCat('movies',this)">Free Movies</button>
+<button class="tab" onclick="setCat('radio',this)">Radio</button>
+<button class="tab" onclick="setCat('all',this)">All</button>
 </div>
 
 <div class="grid" id="grid"></div>
 
-<div id="bottom"><button class="btn s" onclick="openPop('help')">❓ Help</button><button class="btn p" onclick="openPop('share')">📤 Share</button></div>
-
-<div id="pop" onclick="if(event.target===this)closePop()"><div class="popBox"><div style="text-align:center;font-size:32px" id="popIcon">📻</div><h3 style="text-align:center;font-size:16px;font-weight:900;margin:8px 0" id="popTitle">Tabs Fixed!</h3><div id="popContent"></div><button class="btn p" style="width:100%;margin-top:12px" onclick="closePop()">Got it! 🚀</button></div></div>
+<div id="bottom"><button class="btn s" onclick="shareApp()">Share</button><button class="btn p" onclick="installApp()">Add to Home</button></div>
+<div id="toast"></div>
 
 <script>
 const DB={
 live:[
-{n:"Al Jazeera EN",e:"📰",u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",d:"News Live 24/7",tag:"🔴 LIVE"},
-{n:"France 24 EN",e:"🇫🇷",u:"https://live.france24.com/hls/live/2037218/F24_EN_LO_HLS/master.m3u8",d:"France News",tag:"🔴 LIVE"},
-{n:"DW English",e:"🇩🇪",u:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",d:"Germany News",tag:"🔴 LIVE"},
-{n:"NASA TV",e:"🚀",u:"https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",d:"Space Live",tag:"🔴 LIVE"},
-{n:"Red Bull TV",e:"🏎️",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",d:"Extreme Sports",tag:"🔴 LIVE"},
+{n:"Al Jazeera",e:"📰",u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",d:"World News 24/7",type:"LIVE"},
+{n:"France 24",e:"🇫🇷",u:"https://live.france24.com/hls/live/2037218/F24_EN_LO_HLS/master.m3u8",d:"France Live",type:"LIVE"},
+{n:"DW English",e:"🇩🇪",u:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",d:"Germany News",type:"LIVE"},
+{n:"NASA TV",e:"🚀",u:"https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",d:"Space Live",type:"LIVE"},
+{n:"Red Bull TV",e:"🏎️",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",d:"Sports Live",type:"LIVE"},
+{n:"CGTN",e:"🌍",u:"https://news.cgtn.com/resource/live/english/cgtn-news.m3u8",d:"China News",type:"LIVE"},
 ],
 movies:[
-{n:"Sintel Movie",e:"🎬",u:"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",d:"Girl & Dragon - Free",tag:"▶️ FREE MOVIE"},
-{n:"Big Buck Bunny",e:"🐰",u:"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",d:"Rabbit Cartoon",tag:"▶️ FREE MOVIE"},
-{n:"Tears of Steel",e:"💥",u:"https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",d:"Sci-Fi Free",tag:"▶️ FREE MOVIE"},
-],
-telenovela:[
-{n:"Telenovela Drama",e:"💃",u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",d:"Drama Live",tag:"💃 TELENOVELA"},
-{n:"Romance TV",e:"❤️",u:"https://live.france24.com/hls/live/2037218/F24_EN_LO_HLS/master.m3u8",d:"Romance",tag:"💃 TELENOVELA"},
-{n:"Love Stories",e:"💖",u:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",d:"Love Drama",tag:"💃 TELENOVELA"},
-],
-lifestyle:[
-{n:"Fashion TV",e:"👗",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",d:"Fashion",tag:"👗 LIFESTYLE"},
-{n:"Food TV",e:"🍳",u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",d:"Food",tag:"👗 LIFESTYLE"},
-],
-sports:[
-{n:"Red Bull Sports",e:"🏎️",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",d:"Extreme",tag:"⚽ SPORTS"},
-{n:"NASA Sports Live",e:"🚀",u:"https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",d:"Live Events",tag:"⚽ SPORTS"},
+{n:"Sintel",e:"🎬",u:"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",d:"Animation Free",type:"MOVIE"},
+{n:"Big Buck Bunny",e:"🐰",u:"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",d:"Comedy Free",type:"MOVIE"},
+{n:"Tears of Steel",e:"💥",u:"https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",d:"Sci-Fi Free",type:"MOVIE"},
 ],
 radio:[
-// FIXED - HTTPS only - No more black spinning circle!
-{n:"Joy FM 99.7",e:"📻",u:"https://stream.zeno.fm/4x2b8q2kqg8uv",d:"Ghana #1 - Tap to Play",tag:"📻 RADIO 5K/s",t:"audio"},
-{n:"Citi FM 97.3",e:"🎙️",u:"https://citi973.radioca.st/stream",d:"News - HTTPS Works",tag:"📻 RADIO",t:"audio"},
-{n:"Peace FM 104.3",e:"🔥",u:"https://peacefmonline.radioca.st/stream",d:"Twi - HTTPS Works",tag:"📻 RADIO",t:"audio"},
-{n:"Adom FM",e:"💚",u:"https://adom1063fm.radioca.st/stream",d:"Twi Music",tag:"📻 RADIO",t:"audio"},
-{n:"BBC World",e:"🌐",u:"https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",d:"World News",tag:"📻 RADIO",t:"audio"},
+{n:"Joy FM 99.7",e:"📻",u:"https://stream.zeno.fm/4x2b8q2kqg8uv",d:"Hit Music",type:"RADIO",t:"audio"},
+{n:"Citi FM",e:"🎙️",u:"https://citi973.radioca.st/stream",d:"News & Talk",type:"RADIO",t:"audio"},
+{n:"Peace FM",e:"🔥",u:"https://peacefmonline.radioca.st/stream",d:"Twi Music",type:"RADIO",t:"audio"},
+{n:"Adom FM",e:"💚",u:"https://adom1063fm.radioca.st/stream",d:"Entertainment",type:"RADIO",t:"audio"},
 ],
-ghana:[
-{n:"GTV Ghana Mix",e:"🇬🇭",u:"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",d:"Ghana Mix",tag:"🇬🇭 GHANA"},
-]
 };
+DB.all=[...DB.live,...DB.movies,...DB.radio];
 
 let hls;
 const video=document.getElementById('video');
 
+function toast(msg){
+let t=document.getElementById('toast');
+t.innerText=msg;
+t.style.display='block';
+setTimeout(()=>t.style.display='none',2500);
+}
+
 function play(c,el){
 document.querySelectorAll('.card').forEach(b=>b.classList.remove('on'));
 el.classList.add('on');
-document.getElementById('chName').innerText=c.e+' '+c.n;
-document.getElementById('chStat').innerText=c.d+' • '+c.tag;
-
-let badge=document.getElementById('badge');
-if(c.tag.includes('RADIO')){
-badge.className='badge radio';
-badge.innerText='📻 RADIO - TAP PLAY BUTTON';
-}else if(c.tag.includes('LIVE')){
-badge.className='badge live';
-badge.innerText='● LIVE - NO DURATION';
-}else{
-badge.className='badge movie';
-badge.innerText='▶️ FREE MOVIE';
-}
-
+document.getElementById('chName').innerText=c.n;
+document.getElementById('chStat').innerText=c.d;
+let bdg=document.getElementById('badge');
+bdg.innerText=c.type==='LIVE'?'● LIVE':c.type==='RADIO'?'📻 RADIO':'▶️ MOVIE';
+bdg.className='badge '+c.type.toLowerCase();
 if(hls){hls.destroy();}
-video.style.display='block';
-
 if(c.t==='audio'){
 video.src=c.u;
-video.load();
-video.play().then(()=>{
-document.getElementById('chStat').innerText='✅ Playing! '+c.d;
-}).catch(e=>{
-document.getElementById('chStat').innerText='⚠️ Tap play button on video player - Browser block autoplay for audio';
-});
+video.play().then(()=>toast('Playing '+c.n)).catch(()=>toast('Tap play'));
 return;
 }
 if(Hls.isSupported()){
@@ -116,8 +83,8 @@ function build(list){
 let g=document.getElementById('grid');g.innerHTML='';
 list.forEach((c,i)=>{
 let d=document.createElement('div');d.className='card'+(i==0?' on':'');
-let tagClass=c.tag.includes('RADIO')?'radio':c.tag.includes('LIVE')?'live':'movie';
-d.innerHTML=`<div class="card-emoji">${c.e}</div><div class="card-name">${c.n}</div><div class="card-desc">${c.d}</div><div class="tag ${tagClass}">${c.tag}</div>`;
+let dotClass=c.type.toLowerCase();
+d.innerHTML=`<div class="card-emoji">${c.e}</div><div class="card-name">${c.n}</div><div class="card-desc">${c.d}</div><div style="margin-top:8px;font-size:9px;font-weight:700;opacity:0.6"><span class="dot ${dotClass}"></span>${c.type}</div>`;
 d.onclick=()=>play(c,d);
 g.appendChild(d);
 });
@@ -127,37 +94,12 @@ function setCat(cat,btn){
 document.querySelectorAll('.tab').forEach(b=>b.className='tab');
 btn.className='tab on';
 build(DB[cat]);
-// Scroll tabs to center
-btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
 }
-function openPop(type){
-document.getElementById('pop').classList.add('show');
-if(type==='help'){
-document.getElementById('popIcon').innerText='📑';
-document.getElementById('popTitle').innerText='Where are tabs?';
-document.getElementById('popContent').innerHTML=`
-<div style="font-size:11px;line-height:1.6;color:#8aa0d0">
-<b style="color:#fff">Tabs dey TOP now - Big & Clear!</b><br><br>
-Look <b style="color:#00e676">just below video</b> - Scroll left/right:<br>
-🔴 LIVE NEWS<br>
-🎬 FREE MOVIES<br>
-💃 TELENOVELA<br>
-👗 LIFESTYLE<br>
-⚽ SPORTS<br>
-📻 RADIO (you dey here)<br>
-🇬🇭 GHANA<br><br>
-<b>Your screenshot problem:</b><br>
-Joy FM black circle spinning = http link blocked!<br>
-Now V27 use https - Tap card, then tap PLAY button on video player!
-</div>`;
-}else{
-document.getElementById('popIcon').innerText='📤';
-document.getElementById('popTitle').innerText='Share App';
-document.getElementById('popContent').innerHTML=`<input style="width:100%;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:10px;font-size:10px;color:#00e676;text-align:center" value="${window.location.href}" readonly onclick="this.select();document.execCommand('copy')">`;
+function shareApp(){
+if(navigator.share){navigator.share({title:'Salvation TV',text:'Free Live TV',url:location.href});}
+else{navigator.clipboard.writeText(location.href);toast('Link copied!');}
 }
-}
-function closePop(){document.getElementById('pop').classList.remove('show');}
+function installApp(){toast('Tap ⋮ → Add to Home screen');}
 
-// Start with RADIO since you were there
-build(DB.radio);
+build(DB.live);
 </script></body></html>
