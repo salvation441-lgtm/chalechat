@@ -1,19 +1,19 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Salvation TV - TV Focus</title><script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script><style>*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}body{background:#080b14;color:#fff}header{background:#0e1220;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1a1f36}.mark{width:30px;height:30px;background:#fff;color:#000;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800}header b{font-size:13px}header small{font-size:8px;color:#8b95b5}#player{width:100%;aspect-ratio:16/9;background:#000;position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:center}video{width:100%;height:100%;background:#000}audio{width:100%;height:50px;background:#000}#tap{position:absolute;inset:0;background:rgba(0,0,0,0.85);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;cursor:pointer}#tap b{width:60px;height:60px;background:#fff;color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px}#meta{padding:10px 12px;background:#0e1220;border-bottom:1px solid #1a1f36}#meta h2{font-size:14px}#meta p{font-size:10px;color:#8b95b5;margin-top:3px}#tabs{display:flex;gap:6px;padding:10px 12px;overflow-x:auto;border-bottom:1px solid #1a1f36}.tab{white-space:nowrap;padding:8px 16px;border-radius:20px;border:1px solid #1a1f36;background:#121624;color:#8b95b5;font-size:11px;cursor:pointer}.tab.on{background:#fff;color:#000;font-weight:700}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 12px 90px}.card{background:#121624;border:1px solid #1a1f36;border-radius:12px;overflow:hidden;cursor:pointer}.card.on{border-color:#fff}.card.playing{border-color:#00e676;box-shadow:0 0 0 1px #00e676}.th{height:55px;background:#1a1f36;display:flex;align-items:center;justify-content:center;font-size:22px}.bd{padding:8px}.nm{font-size:11px;font-weight:700}.sb{font-size:9px;color:#8b95b5}.ok{font-size:8px;color:#00e676;font-weight:700;margin-top:3px}#btm{position:fixed;bottom:0;left:0;right:0;background:#0e1220;border-top:1px solid #1a1f36;padding:10px 12px;display:flex;gap:8px}.btn{flex:1;height:42px;border-radius:10px;border:none;font-weight:600;font-size:11px}.s{background:#1a1f36;color:#fff}.p{background:#fff;color:#000}
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Salvation TV V42 AutoPlay</title><script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script><style>*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}body{background:#080b14;color:#fff}header{background:#0e1220;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1a1f36}.mark{width:30px;height:30px;background:#fff;color:#000;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800}header b{font-size:13px}header small{font-size:8px;color:#8b95b5}#player{width:100%;aspect-ratio:16/9;background:#000;position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:center}video{width:100%;height:100%;background:#000}audio{width:100%;height:55px;background:#000}#loader{position:absolute;inset:0;background:rgba(0,0,0,0.9);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:15}#loader.on{display:flex}.spin{width:40px;height:40px;border:3px solid #1a1f36;border-top:3px solid #fff;border-radius:50%;animation:sp 0.8s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}#meta{padding:10px 12px;background:#0e1220;border-bottom:1px solid #1a1f36}#meta h2{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#meta p{font-size:10px;color:#8b95b5;margin-top:3px}#tabs{display:flex;gap:6px;padding:10px 12px;overflow-x:auto;border-bottom:1px solid #1a1f36}.tab{white-space:nowrap;padding:8px 16px;border-radius:20px;border:1px solid #1a1f36;background:#121624;color:#8b95b5;font-size:11px;cursor:pointer}.tab.on{background:#fff;color:#000;font-weight:700}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 12px 90px}.card{background:#121624;border:2px solid #1a1f36;border-radius:12px;overflow:hidden;cursor:pointer;transition:all 0.2s}.card:active{transform:scale(0.97)}.card.on{border-color:#fff}.card.playing{border-color:#00e676;background:rgba(0,230,118,0.12);box-shadow:0 0 15px rgba(0,230,118,0.2)}.th{height:55px;background:#1a1f36;display:flex;align-items:center;justify-content:center;font-size:22px}.bd{padding:8px}.nm{font-size:11px;font-weight:700}.sb{font-size:9px;color:#8b95b5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ok{font-size:8px;color:#00e676;font-weight:700;margin-top:3px}#status{position:absolute;bottom:6px;left:8px;right:8px;font-size:9px;background:rgba(0,0,0,0.75);padding:4px 8px;border-radius:8px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#btm{position:fixed;bottom:0;left:0;right:0;background:#0e1220;border-top:1px solid #1a1f36;padding:10px 12px;display:flex;gap:8px}.btn{flex:1;height:42px;border-radius:10px;border:none;font-weight:600;font-size:11px}.s{background:#1a1f36;color:#fff}.p{background:#fff;color:#000}
 </style></head><body>
-<header><div style="display:flex;gap:8px;align-items:center"><div class="mark">S</div><div><b>Salvation TV</b><br><small>V41 • BBC ONLY + TV FOCUS • LITE 30KB</small></div></div><div style="font-size:9px;color:#00e676;background:rgba(0,230,118,0.12);padding:5px 10px;border-radius:12px">✓ TV MODE</div></header>
+<header><div style="display:flex;gap:8px;align-items:center"><div class="mark">S</div><div><b>Salvation TV</b><br><small>V42 • ONE TAP AUTO PLAY • NO 2 TAPS</small></div></div><div style="font-size:9px;color:#00e676;background:rgba(0,230,118,0.12);padding:5px 10px;border-radius:12px">✓ AUTO</div></header>
 
 <div id="player">
 <video id="v" controls playsinline preload="none" style="display:none"></video>
 <audio id="a" controls preload="none" style="display:none"></audio>
-<div id="tap" onclick="goPlay()"><b id="tapIcon">▶️</b><div style="margin-top:10px;font-weight:700;font-size:13px" id="tapT">Tap to Play</div><div style="margin-top:4px;font-size:10px;background:rgba(255,255,255,0.15);padding:4px 10px;border-radius:12px" id="tapS">Select channel below</div></div>
-<div id="status" style="position:absolute;bottom:6px;left:8px;font-size:9px;background:rgba(0,0,0,0.7);padding:3px 8px;border-radius:8px">Ready</div>
+<div id="loader"><div class="spin"></div><div style="margin-top:12px;font-size:12px;font-weight:700" id="loadT">Loading...</div></div>
+<div id="status">Tap any card below - Auto plays!</div>
 </div>
 
-<div id="meta"><h2 id="title">Select TV Channel Below</h2><p id="sub">12 Working Live TVs + BBC Radio Only • Tap card then Tap Play</p></div>
+<div id="meta"><h2 id="title">Tap Any Channel - Auto Play</h2><p id="sub">12 TVs + BBC Radio • One tap only • No second tap needed</p></div>
 
 <div id="tabs">
-<button class="tab on" id="tvTab" onclick="cat('live',this)">📺 Live TV (12 Working)</button>
-<button class="tab" id="radioTab" onclick="cat('radio',this)">📻 Radio (BBC Only)</button>
+<button class="tab on" onclick="cat('live',this)">📺 Live TV (12)</button>
+<button class="tab" onclick="cat('radio',this)">📻 BBC Only</button>
 </div>
 
 <div class="grid" id="grid"></div>
@@ -22,83 +22,98 @@
 <script>
 const DB={
 radio:[
-{n:"BBC World",e:"🇬🇧",u:"https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",d:"BBC World Service • Only Radio • Proven",site:"BBC"},
+{n:"BBC World",e:"🇬🇧",u:"https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",d:"BBC World • Tap to auto play"},
 ],
 live:[
 {n:"Al Jazeera",e:"📰",u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",d:"World News • Qatar"},
 {n:"France 24 EN",e:"🇫🇷",u:"https://live.france24.com/hls/live/2037218/F24_EN_LO_HLS/master.m3u8",d:"France News"},
 {n:"DW English",e:"🇩🇪",u:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",d:"Germany News"},
 {n:"NASA TV",e:"🚀",u:"https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",d:"Space Live • NASA"},
-{n:"CGTN News",e:"🌏",u:"https://news.cgtn.com/resource/live/english/cgtn-news.m3u8",d:"China Global News"},
-{n:"Al Jazeera DOC",e:"🎬",u:"https://live-hls-web-adj.getaj.net/ADJ/index.m3u8",d:"Documentary • Al Jazeera"},
-{n:"Red Bull TV",e:"🏎️",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",d:"Sports • Extreme"},
+{n:"CGTN News",e:"🌏",u:"https://news.cgtn.com/resource/live/english/cgtn-news.m3u8",d:"China News"},
+{n:"Al Jazeera DOC",e:"🎬",u:"https://live-hls-web-adj.getaj.net/ADJ/index.m3u8",d:"Documentary"},
+{n:"Red Bull TV",e:"🏎️",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",d:"Sports Extreme"},
 {n:"Bloomberg",e:"💹",u:"https://liveprodeuwest.akamaized.net/Channel-Us-Bloomberg-Tv-Euwest-1_1HD-1080p-6M/hls/bloomberg.m3u8",d:"Business News"},
-{n:"ABC News",e:"🇺🇸",u:"https://content.uplynk.com/channel/3324f2467c414329b3b0cc5cd987b6a.m3u8",d:"USA News Live"},
-{n:"Sky News",e:"🇬🇧",u:"https://skynews1-pluto.akamaized.net/hls/live/2023452/skynews1/master.m3u8",d:"UK News • Sky"},
-{n:"RT News",e:"📡",u:"https://rt-glb.rttv.com/dvr/rtnews/RTNews_360p.m3u8",d:"RT Global News"},
-{n:"Euronews EN",e:"🇪🇺",u:"https://euronews-euronews-english-1-gb.samsung.wurl.tv/playlist.m3u8",d:"Europe News"},
+{n:"ABC News",e:"🇺🇸",u:"https://content.uplynk.com/channel/3324f2467c414329b3b0cc5cd987b6a.m3u8",d:"USA News"},
+{n:"Sky News",e:"🇬🇧",u:"https://skynews1-pluto.akamaized.net/hls/live/2023452/skynews1/master.m3u8",d:"UK News Sky"},
+{n:"RT News",e:"📡",u:"https://rt-glb.rttv.com/dvr/rtnews/RTNews_360p.m3u8",d:"RT Global"},
+{n:"Euronews",e:"🇪🇺",u:"https://euronews-euronews-english-1-gb.samsung.wurl.tv/playlist.m3u8",d:"Europe News"},
 ]
 };
 
 let cur=null, hls=null, mode='live';
 const v=document.getElementById('v');
 const a=document.getElementById('a');
-const tap=document.getElementById('tap');
+const loader=document.getElementById('loader');
+const loadT=document.getElementById('loadT');
 const status=document.getElementById('status');
 
-function setStatus(t){ status.textContent=t; }
+function showLoader(t){ loadT.textContent=t; loader.classList.add('on'); }
+function hideLoader(){ loader.classList.remove('on'); }
 
-function goPlay(){
-if(!cur) return;
-tap.style.display='none';
-setStatus('Connecting... '+cur.n);
-if(mode==='radio'){
-v.style.display='none';
-if(hls){ hls.destroy(); hls=null; }
-v.pause();
-a.style.display='block';
-a.src=cur.u;
-a.load();
-a.play().then(()=>{ setStatus('✓ Playing '+cur.n+' • BBC Only'); document.getElementById('title').textContent='🔊 Playing '+cur.n; }).catch(e=>{ setStatus('❌ Failed - Refresh'); tap.style.display='flex'; });
-}else{
-a.style.display='none'; a.pause();
-v.style.display='block';
-if(Hls.isSupported()){
-if(hls) hls.destroy();
-hls=new Hls({maxBufferLength:5, maxMaxBufferLength:10});
-hls.loadSource(cur.u);
-hls.attachMedia(v);
-hls.on(Hls.Events.MANIFEST_PARSED,()=>{ v.play().then(()=>{ setStatus('✓ Playing '+cur.n); document.getElementById('title').textContent='📺 Playing '+cur.n; }).catch(()=>{ setStatus('Tap Play on video'); }); });
-hls.on(Hls.Events.ERROR,(ev,data)=>{ if(data.fatal){ setStatus('❌ Stream error - Try another TV'); } });
-}else{ v.src=cur.u; v.play().then(()=>setStatus('✓ Playing')).catch(()=>setStatus('❌ Failed')); }
-}
-}
-
-function play(c,el,catMode){
+function autoPlay(c,el,catMode){
 cur=c; mode=catMode;
 document.querySelectorAll('.card').forEach(x=>{ x.classList.remove('on'); x.classList.remove('playing'); });
 el.classList.add('on');
-document.getElementById('title').textContent=c.n+' - Tap Play';
-document.getElementById('sub').textContent=c.d+' • Tap Play button on player';
-document.getElementById('tapT').textContent='Tap to Play '+c.n;
-document.getElementById('tapS').textContent=(catMode==='radio'?'BBC Radio • 5KB/s':'Live TV • 150KB/s');
-document.getElementById('tapIcon').textContent=catMode==='radio'?'📻':'▶️';
-tap.style.display='flex';
+el.classList.add('playing');
+
+document.getElementById('title').textContent='▶️ '+c.n;
+document.getElementById('sub').textContent=c.d+' • Loading... auto play';
+status.textContent='⏳ Loading '+c.n+'...';
+showLoader('Loading '+c.n+'...');
+
 a.pause(); v.pause();
-a.removeAttribute('src'); v.removeAttribute('src');
+a.style.display='none'; v.style.display='none';
 if(hls){ hls.destroy(); hls=null; }
-setStatus('Ready - Tap Play');
+a.removeAttribute('src'); v.removeAttribute('src');
+
+setTimeout(()=>{
+if(catMode==='radio'){
+a.style.display='block';
+a.src=c.u;
+a.load();
+a.play().then(()=>{
+hideLoader();
+status.textContent='✓ Playing '+c.n+' • BBC Only';
+document.getElementById('sub').textContent='🔊 Playing • BBC Radio • 5KB/s';
+}).catch(e=>{
+hideLoader();
+status.textContent='❌ Failed - Tap Refresh';
+});
+}else{
+v.style.display='block';
+if(Hls.isSupported()){
+hls=new Hls({maxBufferLength:6});
+hls.loadSource(c.u);
+hls.attachMedia(v);
+hls.on(Hls.Events.MANIFEST_PARSED,()=>{
+v.play().then(()=>{
+hideLoader();
+status.textContent='✓ Playing '+c.n+' • Live TV';
+document.getElementById('sub').textContent='📺 Playing • Live • Tap another card to switch';
+}).catch(()=>{ hideLoader(); status.textContent='Tap Play on video controls'; });
+});
+hls.on(Hls.Events.ERROR,(ev,data)=>{
+if(data.fatal){ hideLoader(); status.textContent='❌ Error - Try another TV'; }
+});
+}else{
+v.src=c.u;
+v.play().then(()=>{ hideLoader(); status.textContent='✓ Playing '+c.n; }).catch(()=>{ hideLoader(); });
+}
+}
+},100);
 }
 
 function build(list,catMode){
 let g=document.getElementById('grid'); g.innerHTML='';
-list.forEach((c,i)=>{
-let d=document.createElement('div'); d.className='card'+(i==0?' on':'');
-d.innerHTML=`<div class="th">${c.e}</div><div class="bd"><div class="nm">${c.n}</div><div class="sb">${c.d}</div><div class="ok">✓ WORKING • TAP TO PLAY</div></div>`;
-d.onclick=()=>play(c,d,catMode);
+list.forEach((c)=>{
+let d=document.createElement('div'); d.className='card';
+d.innerHTML=`<div class="th">${c.e}</div><div class="bd"><div class="nm">${c.n}</div><div class="sb">${c.d}</div><div class="ok">▶️ TAP = AUTO PLAY</div></div>`;
+d.onclick=()=>autoPlay(c,d,catMode);
 g.appendChild(d);
-if(i==0){ cur=c; mode=catMode; document.getElementById('title').textContent=c.n; document.getElementById('tapT').textContent='Tap to Play '+c.n; }
 });
+if(list.length>0){
+document.getElementById('title').textContent='Tap '+list[0].n+' - Auto play';
+}
 }
 
 function cat(k,btn){
@@ -110,11 +125,9 @@ a.style.display='none';
 build(DB.radio,'radio');
 }else{
 a.style.display='none'; a.pause();
-v.style.display='none';
 build(DB.live,'live');
 }
 }
 
 build(DB.live,'live');
-setStatus('Ready - Select TV');
 </script></body></html>
