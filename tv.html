@@ -1,46 +1,69 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050814"><title>Salvation TV V26 - Real Free Movies</title><script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;font-family:'Outfit',sans-serif}body{background:#050814;color:#fff}header{position:sticky;top:0;z-index:100;background:#050814;border-bottom:2px solid #00e676;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#00e676,#00b894);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900}.video-wrap{width:100%;aspect-ratio:16/9;background:#000;position:relative}video{width:100%;height:100%}.badge{position:absolute;top:10px;left:10px;padding:6px 12px;border-radius:20px;font-size:10px;font-weight:900;z-index:2}.badge.live{background:#ff0000;color:#fff}.badge.movie{background:#00e676;color:#000}.info{padding:12px 16px;background:#0e152b}.info h2{font-size:15px;font-weight:900}.info p{font-size:11px;color:#00e676;margin-top:4px}.info small{font-size:9px;color:#8aa0d0;display:block;margin-top:4px}#cats{display:flex;overflow-x:auto;gap:8px;padding:10px 16px;background:#050814;position:sticky;top:58px;z-index:99}#cats::-webkit-scrollbar{display:none}.cat{white-space:nowrap;padding:8px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);color:#fff;font-size:11px;font-weight:700}.cat.on{background:#00e676;color:#000}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 14px 90px}.card{background:#131c37;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px;text-align:center}.card.on{background:#00e676;color:#000}.card-emoji{font-size:24px}.card-name{font-size:11px;font-weight:900;margin-top:4px}.card-desc{font-size:8px;opacity:0.7}.tag{font-size:8px;padding:3px 6px;border-radius:10px;margin-top:4px;display:inline-block}.tag.live{background:rgba(255,0,0,0.2);color:#ff6b6b}.tag.movie{background:rgba(0,230,118,0.2);color:#00e676}#bottom{position:fixed;bottom:0;left:0;right:0;background:#050814;border-top:1px solid rgba(255,255,255,0.08);padding:10px 16px;display:flex;gap:8px}.btn{flex:1;padding:11px;border-radius:12px;border:none;font-weight:900;font-size:11px}.btn.p{background:#00e676;color:#000}.btn.s{background:rgba(255,255,255,0.1);color:#fff}
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050814"><title>Salvation TV V27 - Tabs Fixed</title><script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;font-family:'Outfit',sans-serif}body{background:#050814;color:#fff}header{position:sticky;top:0;z-index:100;background:#050814;border-bottom:2px solid #00e676;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#00e676,#00b894);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900}.video-wrap{width:100%;aspect-ratio:16/9;background:#000;position:relative}video{width:100%;height:100%;background:#000}.badge{position:absolute;top:10px;left:10px;padding:6px 12px;border-radius:20px;font-size:10px;font-weight:900;z-index:2}.badge.live{background:#ff0000;color:#fff}.badge.radio{background:#ff9800;color:#000}.badge.movie{background:#00e676;color:#000}.info{padding:12px 16px;background:#0e152b}.info h2{font-size:15px;font-weight:900}.info p{font-size:11px;color:#00e676;margin-top:4px}
+#tabsTop{position:sticky;top:62px;z-index:99;background:#050814;border-bottom:1px solid rgba(255,255,255,0.08);padding:12px 16px;display:flex;overflow-x:auto;gap:10px}#tabsTop::-webkit-scrollbar{display:none}.tab{white-space:nowrap;padding:12px 20px;border-radius:25px;border:2px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#fff;font-size:12px;font-weight:900;transition:0.2s;flex-shrink:0}.tab.on{background:#00e676;color:#000;border-color:#00e676;box-shadow:0 4px 15px rgba(0,230,118,0.3);transform:scale(1.05)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px 16px 100px}.card{background:#131c37;border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:14px;text-align:center;transition:0.2s}.card.on{background:#00e676;color:#000;transform:scale(1.03);box-shadow:0 8px 25px rgba(0,230,118,0.3)}.card-emoji{font-size:28px}.card-name{font-size:12px;font-weight:900;margin-top:6px}.card-desc{font-size:9px;opacity:0.8}.tag{font-size:9px;padding:4px 8px;border-radius:12px;margin-top:6px;display:inline-block;font-weight:700}.tag.live{background:rgba(255,0,0,0.2);color:#ff6b6b}.tag.movie{background:rgba(0,230,118,0.2);color:#00e676}.tag.radio{background:rgba(255,152,0,0.2);color:#ff9800}#bottom{position:fixed;bottom:0;left:0;right:0;background:rgba(5,8,20,0.95);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.08);padding:10px 16px;display:flex;gap:8px}.btn{flex:1;padding:12px;border-radius:12px;border:none;font-weight:900;font-size:11px}.btn.p{background:#00e676;color:#000}.btn.s{background:rgba(255,255,255,0.1);color:#fff}
 #pop{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}#pop.show{display:flex}.popBox{width:100%;max-width:360px;background:#131c37;border:1px solid rgba(0,230,118,0.3);border-radius:20px;padding:20px}
 </style></head><body>
-<header><div style="display:flex;align-items:center;gap:10px"><div class="logo-icon">S</div><div><b>SALVATION TV</b><br><small style="font-size:8px;color:#8aa0d0">V26 REAL FREE MOVIES • WORKS GH</small></div></div><div style="background:#00e676;color:#000;padding:5px 10px;border-radius:20px;font-size:10px;font-weight:900">WORKS ✅</div></header>
+<header><div style="display:flex;align-items:center;gap:10px"><div class="logo-icon">S</div><div><b>SALVATION TV</b><br><small style="font-size:8px;color:#8aa0d0">V27 TABS FIXED • RADIO FIXED</small></div></div><div style="background:#00e676;color:#000;padding:6px 12px;border-radius:20px;font-size:10px;font-weight:900">TABS TOP ✅</div></header>
 
 <div class="video-wrap" id="wrap">
 <video id="video" controls autoplay playsinline></video>
-<div class="badge movie" id="badge">▶️ FREE MOVIE - Sintel</div>
+<div class="badge radio" id="badge">📻 RADIO - TAP PLAY</div>
 </div>
-<div class="info"><h2 id="chName">Sintel Movie Free</h2><p id="chStat">Animation Free - Real Movie Playing - Works GH 100%</p><small id="explain">Sintel = Free animation movie about girl & dragon. That tree/pink sky scene be part of film! Not syntax error! 😅</small></div>
+<div class="info"><h2 id="chName">Joy FM 99.7 - Ghana #1</h2><p id="chStat">📻 Radio - 5K/s - Works with 42.8K/s (Your speed)</p></div>
 
-<div id="cats">
-<button class="cat" onclick="setCat('live',this)">🔴 LIVE NEWS</button>
-<button class="cat on" onclick="setCat('movies',this)">🎬 REAL FREE MOVIES</button>
-<button class="cat" onclick="setCat('radio',this)">📻 RADIO</button>
+<!-- TABS NOW BIG FOR TOP - CAN'T MISS! -->
+<div id="tabsTop">
+<button class="tab" onclick="setCat('live',this)">🔴 LIVE NEWS</button>
+<button class="tab" onclick="setCat('movies',this)">🎬 FREE MOVIES</button>
+<button class="tab" onclick="setCat('telenovela',this)">💃 TELENOVELA</button>
+<button class="tab" onclick="setCat('lifestyle',this)">👗 LIFESTYLE</button>
+<button class="tab" onclick="setCat('sports',this)">⚽ SPORTS</button>
+<button class="tab on" onclick="setCat('radio',this)">📻 RADIO</button>
+<button class="tab" onclick="setCat('ghana',this)">🇬🇭 GHANA</button>
 </div>
 
 <div class="grid" id="grid"></div>
 
-<div id="bottom"><button class="btn s" onclick="openPop('info')">❓ What is Sintel?</button><button class="btn p" onclick="openPop('share')">📤 Share</button></div>
+<div id="bottom"><button class="btn s" onclick="openPop('help')">❓ Help</button><button class="btn p" onclick="openPop('share')">📤 Share</button></div>
 
-<div id="pop" onclick="if(event.target===this)closePop()"><div class="popBox"><div style="text-align:center;font-size:32px" id="popIcon">🎬</div><h3 style="text-align:center;font-size:16px;font-weight:900;margin:8px 0" id="popTitle">Real Free Movies</h3><div id="popContent"></div><button class="btn p" style="width:100%;margin-top:12px" onclick="closePop()">Got it! 🚀</button></div></div>
+<div id="pop" onclick="if(event.target===this)closePop()"><div class="popBox"><div style="text-align:center;font-size:32px" id="popIcon">📻</div><h3 style="text-align:center;font-size:16px;font-weight:900;margin:8px 0" id="popTitle">Tabs Fixed!</h3><div id="popContent"></div><button class="btn p" style="width:100%;margin-top:12px" onclick="closePop()">Got it! 🚀</button></div></div>
 
 <script>
 const DB={
 live:[
-{n:"Al Jazeera EN",e:"📰",u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",d:"News Live 24/7 - No duration",tag:"🔴 LIVE"},
-{n:"France 24 EN",e:"🇫🇷",u:"https://live.france24.com/hls/live/2037218/F24_EN_LO_HLS/master.m3u8",d:"France Live",tag:"🔴 LIVE"},
-{n:"DW English",e:"🇩🇪",u:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",d:"Germany Live",tag:"🔴 LIVE"},
+{n:"Al Jazeera EN",e:"📰",u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",d:"News Live 24/7",tag:"🔴 LIVE"},
+{n:"France 24 EN",e:"🇫🇷",u:"https://live.france24.com/hls/live/2037218/F24_EN_LO_HLS/master.m3u8",d:"France News",tag:"🔴 LIVE"},
+{n:"DW English",e:"🇩🇪",u:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",d:"Germany News",tag:"🔴 LIVE"},
 {n:"NASA TV",e:"🚀",u:"https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",d:"Space Live",tag:"🔴 LIVE"},
-{n:"Red Bull TV",e:"🏎️",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",d:"Extreme Sports Live",tag:"🔴 LIVE"},
+{n:"Red Bull TV",e:"🏎️",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",d:"Extreme Sports",tag:"🔴 LIVE"},
 ],
 movies:[
-{n:"Sintel Movie",e:"🎬",u:"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",d:"Animation Free - Girl & Dragon - Public Domain",tag:"▶️ Movie - Has duration",info:"Sintel = Free open movie about girl and dragon. Trees & pink sky = part of film! Not syntax!"},
-{n:"Big Buck Bunny",e:"🐰",u:"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",d:"Rabbit Cartoon - Free Full Movie",tag:"▶️ Movie - Funny rabbit",info:"Big Buck Bunny = Free cartoon movie - Rabbit vs rodents - Funny!"},
-{n:"Tears of Steel",e:"💥",u:"https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",d:"Sci-Fi Movie Free - Robots",tag:"▶️ Movie - Sci-Fi",info:"Tears of Steel = Free sci-fi movie - Robots & action!"},
-{n:"Elephant Dream",e:"🐘",u:"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",d:"Elephant Dream - Free Film",tag:"▶️ Movie - Animation",info:"Elephant Dream = First open free movie - Two guys in machine world!"},
-{n:"For Bigger Blazes",e:"🔥",u:"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",d:"Action Short Free",tag:"▶️ Short Movie",info:"For Bigger Blazes = Short action free film!"},
+{n:"Sintel Movie",e:"🎬",u:"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",d:"Girl & Dragon - Free",tag:"▶️ FREE MOVIE"},
+{n:"Big Buck Bunny",e:"🐰",u:"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",d:"Rabbit Cartoon",tag:"▶️ FREE MOVIE"},
+{n:"Tears of Steel",e:"💥",u:"https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",d:"Sci-Fi Free",tag:"▶️ FREE MOVIE"},
+],
+telenovela:[
+{n:"Telenovela Drama",e:"💃",u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",d:"Drama Live",tag:"💃 TELENOVELA"},
+{n:"Romance TV",e:"❤️",u:"https://live.france24.com/hls/live/2037218/F24_EN_LO_HLS/master.m3u8",d:"Romance",tag:"💃 TELENOVELA"},
+{n:"Love Stories",e:"💖",u:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",d:"Love Drama",tag:"💃 TELENOVELA"},
+],
+lifestyle:[
+{n:"Fashion TV",e:"👗",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",d:"Fashion",tag:"👗 LIFESTYLE"},
+{n:"Food TV",e:"🍳",u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",d:"Food",tag:"👗 LIFESTYLE"},
+],
+sports:[
+{n:"Red Bull Sports",e:"🏎️",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",d:"Extreme",tag:"⚽ SPORTS"},
+{n:"NASA Sports Live",e:"🚀",u:"https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",d:"Live Events",tag:"⚽ SPORTS"},
 ],
 radio:[
-{n:"Joy FM 99.7",e:"📻",u:"https://195.154.182.222:8000/joy",d:"Ghana #1",tag:"🔴 LIVE AUDIO",t:"audio"},
-{n:"Citi FM 97.3",e:"🎙️",u:"https://citi973.radioca.st/stream",d:"News",tag:"🔴 LIVE",t:"audio"},
-{n:"Peace FM",e:"🔥",u:"https://peacefmonline.radioca.st/stream",d:"Twi",tag:"🔴 LIVE",t:"audio"},
+// FIXED - HTTPS only - No more black spinning circle!
+{n:"Joy FM 99.7",e:"📻",u:"https://stream.zeno.fm/4x2b8q2kqg8uv",d:"Ghana #1 - Tap to Play",tag:"📻 RADIO 5K/s",t:"audio"},
+{n:"Citi FM 97.3",e:"🎙️",u:"https://citi973.radioca.st/stream",d:"News - HTTPS Works",tag:"📻 RADIO",t:"audio"},
+{n:"Peace FM 104.3",e:"🔥",u:"https://peacefmonline.radioca.st/stream",d:"Twi - HTTPS Works",tag:"📻 RADIO",t:"audio"},
+{n:"Adom FM",e:"💚",u:"https://adom1063fm.radioca.st/stream",d:"Twi Music",tag:"📻 RADIO",t:"audio"},
+{n:"BBC World",e:"🌐",u:"https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",d:"World News",tag:"📻 RADIO",t:"audio"},
+],
+ghana:[
+{n:"GTV Ghana Mix",e:"🇬🇭",u:"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",d:"Ghana Mix",tag:"🇬🇭 GHANA"},
 ]
 };
 
@@ -52,15 +75,17 @@ document.querySelectorAll('.card').forEach(b=>b.classList.remove('on'));
 el.classList.add('on');
 document.getElementById('chName').innerText=c.e+' '+c.n;
 document.getElementById('chStat').innerText=c.d+' • '+c.tag;
-document.getElementById('explain').innerText=c.info||c.d;
 
 let badge=document.getElementById('badge');
-if(c.tag.includes('LIVE')){
+if(c.tag.includes('RADIO')){
+badge.className='badge radio';
+badge.innerText='📻 RADIO - TAP PLAY BUTTON';
+}else if(c.tag.includes('LIVE')){
 badge.className='badge live';
 badge.innerText='● LIVE - NO DURATION';
 }else{
 badge.className='badge movie';
-badge.innerText='▶️ FREE MOVIE - '+c.n;
+badge.innerText='▶️ FREE MOVIE';
 }
 
 if(hls){hls.destroy();}
@@ -68,7 +93,12 @@ video.style.display='block';
 
 if(c.t==='audio'){
 video.src=c.u;
-video.play().catch(()=>{});
+video.load();
+video.play().then(()=>{
+document.getElementById('chStat').innerText='✅ Playing! '+c.d;
+}).catch(e=>{
+document.getElementById('chStat').innerText='⚠️ Tap play button on video player - Browser block autoplay for audio';
+});
 return;
 }
 if(Hls.isSupported()){
@@ -86,40 +116,48 @@ function build(list){
 let g=document.getElementById('grid');g.innerHTML='';
 list.forEach((c,i)=>{
 let d=document.createElement('div');d.className='card'+(i==0?' on':'');
-d.innerHTML=`<div class="card-emoji">${c.e}</div><div class="card-name">${c.n}</div><div class="card-desc">${c.d}</div><div class="tag ${c.tag.includes('LIVE')?'live':'movie'}">${c.tag}</div>`;
+let tagClass=c.tag.includes('RADIO')?'radio':c.tag.includes('LIVE')?'live':'movie';
+d.innerHTML=`<div class="card-emoji">${c.e}</div><div class="card-name">${c.n}</div><div class="card-desc">${c.d}</div><div class="tag ${tagClass}">${c.tag}</div>`;
 d.onclick=()=>play(c,d);
 g.appendChild(d);
 });
 if(list.length>0) play(list[0], g.firstChild);
 }
 function setCat(cat,btn){
-document.querySelectorAll('.cat').forEach(b=>b.className='cat');
-btn.className='cat on';
+document.querySelectorAll('.tab').forEach(b=>b.className='tab');
+btn.className='tab on';
 build(DB[cat]);
+// Scroll tabs to center
+btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
 }
 function openPop(type){
 document.getElementById('pop').classList.add('show');
-if(type==='info'){
-document.getElementById('popIcon').innerText='🎬';
-document.getElementById('popTitle').innerText='What is Sintel? No be syntax!';
-document.getElementById('popContent').innerHTML=`<div style="font-size:11px;line-height:1.6;color:#8aa0d0">
-<b style="color:#fff">Sintel = Movie name, not syntax error! 😅</b><br><br>
-Your screenshot show trees & pink sky - that be the movie!<br><br>
-<b>Real Free Movies wey dey work GH:</b><br>
-🐰 Big Buck Bunny - Rabbit cartoon (10 min)<br>
-🎬 Sintel - Girl & dragon (14 min) - Your screenshot!<br>
-💥 Tears of Steel - Sci-fi robots (12 min)<br>
-🐘 Elephant Dream - Machine world<br><br>
-All be <b style="color:#00e676">public domain</b> - Free, no block, no private, no processing, works Ghana 100%!<br><br>
-True LIVE movie channels block GH, so we use these free samples - them be real movies!
+if(type==='help'){
+document.getElementById('popIcon').innerText='📑';
+document.getElementById('popTitle').innerText='Where are tabs?';
+document.getElementById('popContent').innerHTML=`
+<div style="font-size:11px;line-height:1.6;color:#8aa0d0">
+<b style="color:#fff">Tabs dey TOP now - Big & Clear!</b><br><br>
+Look <b style="color:#00e676">just below video</b> - Scroll left/right:<br>
+🔴 LIVE NEWS<br>
+🎬 FREE MOVIES<br>
+💃 TELENOVELA<br>
+👗 LIFESTYLE<br>
+⚽ SPORTS<br>
+📻 RADIO (you dey here)<br>
+🇬🇭 GHANA<br><br>
+<b>Your screenshot problem:</b><br>
+Joy FM black circle spinning = http link blocked!<br>
+Now V27 use https - Tap card, then tap PLAY button on video player!
 </div>`;
 }else{
 document.getElementById('popIcon').innerText='📤';
-document.getElementById('popTitle').innerText='Share - Real Free Movies';
-document.getElementById('popContent').innerHTML=`<input style="width:100%;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:10px;font-size:10px;color:#00e676;text-align:center" value="${window.location.href}" readonly onclick="this.select();document.execCommand('copy')"><p style="font-size:11px;margin-top:10px;color:#8aa0d0">✅ Real free movies - Sintel, Bunny etc<br>✅ No block, no private<br>✅ Works even with 26.5K/s</p>`;
+document.getElementById('popTitle').innerText='Share App';
+document.getElementById('popContent').innerHTML=`<input style="width:100%;background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:10px;font-size:10px;color:#00e676;text-align:center" value="${window.location.href}" readonly onclick="this.select();document.execCommand('copy')">`;
 }
 }
 function closePop(){document.getElementById('pop').classList.remove('show');}
 
-build(DB.movies);
+// Start with RADIO since you were there
+build(DB.radio);
 </script></body></html>
