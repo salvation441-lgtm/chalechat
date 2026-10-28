@@ -1,42 +1,55 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Salvation TV V42 AutoPlay</title><script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script><style>*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}body{background:#080b14;color:#fff}header{background:#0e1220;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1a1f36}.mark{width:30px;height:30px;background:#fff;color:#000;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800}header b{font-size:13px}header small{font-size:8px;color:#8b95b5}#player{width:100%;aspect-ratio:16/9;background:#000;position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:center}video{width:100%;height:100%;background:#000}audio{width:100%;height:55px;background:#000}#loader{position:absolute;inset:0;background:rgba(0,0,0,0.9);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:15}#loader.on{display:flex}.spin{width:40px;height:40px;border:3px solid #1a1f36;border-top:3px solid #fff;border-radius:50%;animation:sp 0.8s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}#meta{padding:10px 12px;background:#0e1220;border-bottom:1px solid #1a1f36}#meta h2{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#meta p{font-size:10px;color:#8b95b5;margin-top:3px}#tabs{display:flex;gap:6px;padding:10px 12px;overflow-x:auto;border-bottom:1px solid #1a1f36}.tab{white-space:nowrap;padding:8px 16px;border-radius:20px;border:1px solid #1a1f36;background:#121624;color:#8b95b5;font-size:11px;cursor:pointer}.tab.on{background:#fff;color:#000;font-weight:700}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 12px 90px}.card{background:#121624;border:2px solid #1a1f36;border-radius:12px;overflow:hidden;cursor:pointer;transition:all 0.2s}.card:active{transform:scale(0.97)}.card.on{border-color:#fff}.card.playing{border-color:#00e676;background:rgba(0,230,118,0.12);box-shadow:0 0 15px rgba(0,230,118,0.2)}.th{height:55px;background:#1a1f36;display:flex;align-items:center;justify-content:center;font-size:22px}.bd{padding:8px}.nm{font-size:11px;font-weight:700}.sb{font-size:9px;color:#8b95b5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ok{font-size:8px;color:#00e676;font-weight:700;margin-top:3px}#status{position:absolute;bottom:6px;left:8px;right:8px;font-size:9px;background:rgba(0,0,0,0.75);padding:4px 8px;border-radius:8px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#btm{position:fixed;bottom:0;left:0;right:0;background:#0e1220;border-top:1px solid #1a1f36;padding:10px 12px;display:flex;gap:8px}.btn{flex:1;height:42px;border-radius:10px;border:none;font-weight:600;font-size:11px}.s{background:#1a1f36;color:#fff}.p{background:#fff;color:#000}
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Salvation TV V45 Education</title><script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script><style>*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}body{background:#080b14;color:#fff}header{background:#0e1220;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1a1f36}.mark{width:30px;height:30px;background:#fff;color:#000;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800}header b{font-size:13px}header small{font-size:8px;color:#8b95b5}#player{width:100%;aspect-ratio:16/9;background:#000;position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:center}video{width:100%;height:100%;background:#000}audio{width:100%;height:55px;background:#000}#loader{position:absolute;inset:0;background:rgba(0,0,0,0.9);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:15}#loader.on{display:flex}.spin{width:40px;height:40px;border:3px solid #1a1f36;border-top:3px solid #fff;border-radius:50%;animation:sp 0.8s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}#meta{padding:10px 12px;background:#0e1220;border-bottom:1px solid #1a1f36}#meta h2{font-size:14px}#meta p{font-size:10px;color:#8b95b5;margin-top:3px}#tabs{display:flex;gap:6px;padding:10px 12px;overflow-x:auto;border-bottom:1px solid #1a1f36;scrollbar-width:none}#tabs::-webkit-scrollbar{display:none}.tab{white-space:nowrap;padding:8px 14px;border-radius:20px;border:1px solid #1a1f36;background:#121624;color:#8b95b5;font-size:10px;cursor:pointer;flex-shrink:0}.tab.on{color:#fff;font-weight:700}.tab.live.on{background:#fff;color:#000}.tab.radio.on{background:#00e676;color:#000}.tab.novela.on{background:#ff2d7b;color:#fff}.tab.action.on{background:#ff6a00;color:#fff}.tab.edu.on{background:#7c4dff;color:#fff;border-color:#7c4dff}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 12px 90px}.card{background:#121624;border:2px solid #1a1f36;border-radius:12px;overflow:hidden;cursor:pointer}.card:active{transform:scale(0.97)}.card.playing{border-color:#00e676;background:rgba(0,230,118,0.12)}.th{height:55px;background:#1a1f36;display:flex;align-items:center;justify-content:center;font-size:22px}.bd{padding:8px}.nm{font-size:11px;font-weight:700}.sb{font-size:9px;color:#8b95b5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ok{font-size:8px;font-weight:700;margin-top:3px}.ok.edu{color:#7c4dff}#status{position:absolute;bottom:6px;left:8px;right:8px;font-size:9px;background:rgba(0,0,0,0.75);padding:4px 8px;border-radius:8px;text-align:center}#btm{position:fixed;bottom:0;left:0;right:0;background:#0e1220;border-top:1px solid #1a1f36;padding:10px 12px;display:flex;gap:8px}.btn{flex:1;height:42px;border-radius:10px;border:none;font-weight:600;font-size:11px}.s{background:#1a1f36;color:#fff}.p{background:#fff;color:#000}
 </style></head><body>
-<header><div style="display:flex;gap:8px;align-items:center"><div class="mark">S</div><div><b>Salvation TV</b><br><small>V42 • ONE TAP AUTO PLAY • NO 2 TAPS</small></div></div><div style="font-size:9px;color:#00e676;background:rgba(0,230,118,0.12);padding:5px 10px;border-radius:12px">✓ AUTO</div></header>
+<header><div style="display:flex;gap:8px;align-items:center"><div class="mark">S</div><div><b>Salvation TV</b><br><small>V45 • + EDUCATION FREE • AUTO PLAY</small></div></div><div style="font-size:9px;color:#7c4dff;background:rgba(124,77,255,0.15);padding:5px 10px;border-radius:12px">📚 EDU</div></header>
 
 <div id="player">
 <video id="v" controls playsinline preload="none" style="display:none"></video>
 <audio id="a" controls preload="none" style="display:none"></audio>
 <div id="loader"><div class="spin"></div><div style="margin-top:12px;font-size:12px;font-weight:700" id="loadT">Loading...</div></div>
-<div id="status">Tap any card below - Auto plays!</div>
+<div id="status">Tap Education card - Auto play / Open free site!</div>
 </div>
 
-<div id="meta"><h2 id="title">Tap Any Channel - Auto Play</h2><p id="sub">12 TVs + BBC Radio • One tap only • No second tap needed</p></div>
+<div id="meta"><h2 id="title">Education - Free Learning</h2><p id="sub">5 Tabs: Live TV + BBC + Novelas + Action + Education Free</p></div>
 
 <div id="tabs">
-<button class="tab on" onclick="cat('live',this)">📺 Live TV (12)</button>
-<button class="tab" onclick="cat('radio',this)">📻 BBC Only</button>
+<button class="tab live on" onclick="cat('live',this)">📺 Live TV</button>
+<button class="tab radio" onclick="cat('radio',this)">📻 BBC</button>
+<button class="tab novela" onclick="cat('novela',this)">❤️ Novelas</button>
+<button class="tab action" onclick="cat('action',this)">💥 Action</button>
+<button class="tab edu" onclick="cat('edu',this)">📚 Education</button>
 </div>
 
 <div class="grid" id="grid"></div>
-<div id="btm"><button class="btn s" onclick="if(navigator.share){navigator.share({url:location.href})}else{navigator.clipboard.writeText(location.href)}">Share Link</button><button class="btn p" onclick="location.reload()">Refresh</button></div>
+<div id="btm"><button class="btn s" onclick="shareL()">Share Link</button><button class="btn p" onclick="location.reload()">Refresh</button></div>
 
 <script>
 const DB={
-radio:[
-{n:"BBC World",e:"🇬🇧",u:"https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",d:"BBC World • Tap to auto play"},
-],
+radio:[{n:"BBC World",e:"🇬🇧",u:"https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",d:"BBC World"}],
 live:[
-{n:"Al Jazeera",e:"📰",u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",d:"World News • Qatar"},
-{n:"France 24 EN",e:"🇫🇷",u:"https://live.france24.com/hls/live/2037218/F24_EN_LO_HLS/master.m3u8",d:"France News"},
+{n:"Al Jazeera",e:"📰",u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",d:"World News"},
+{n:"France 24",e:"🇫🇷",u:"https://live.france24.com/hls/live/2037218/F24_EN_LO_HLS/master.m3u8",d:"France News"},
 {n:"DW English",e:"🇩🇪",u:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",d:"Germany News"},
-{n:"NASA TV",e:"🚀",u:"https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",d:"Space Live • NASA"},
-{n:"CGTN News",e:"🌏",u:"https://news.cgtn.com/resource/live/english/cgtn-news.m3u8",d:"China News"},
-{n:"Al Jazeera DOC",e:"🎬",u:"https://live-hls-web-adj.getaj.net/ADJ/index.m3u8",d:"Documentary"},
-{n:"Red Bull TV",e:"🏎️",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",d:"Sports Extreme"},
-{n:"Bloomberg",e:"💹",u:"https://liveprodeuwest.akamaized.net/Channel-Us-Bloomberg-Tv-Euwest-1_1HD-1080p-6M/hls/bloomberg.m3u8",d:"Business News"},
-{n:"ABC News",e:"🇺🇸",u:"https://content.uplynk.com/channel/3324f2467c414329b3b0cc5cd987b6a.m3u8",d:"USA News"},
-{n:"Sky News",e:"🇬🇧",u:"https://skynews1-pluto.akamaized.net/hls/live/2023452/skynews1/master.m3u8",d:"UK News Sky"},
-{n:"RT News",e:"📡",u:"https://rt-glb.rttv.com/dvr/rtnews/RTNews_360p.m3u8",d:"RT Global"},
-{n:"Euronews",e:"🇪🇺",u:"https://euronews-euronews-english-1-gb.samsung.wurl.tv/playlist.m3u8",d:"Europe News"},
+{n:"NASA TV",e:"🚀",u:"https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",d:"Space Live"},
+],
+novela:[
+{n:"ViX Novelas",e:"❤️",u:"https://www.vix.com/en/tv-shows/novelas",d:"Free 500+ Novelas"},
+{n:"Tubi Novelas",e:"🍿",u:"https://www.tubitv.com/category/telenovelas",d:"Free Novelas"},
+],
+action:[
+{n:"Tubi Action",e:"💥",u:"https://www.tubitv.com/category/action",d:"1000+ Action Free - Best"},
+{n:"Pluto Action",e:"🔥",u:"https://pluto.tv/live-tv/pluto-tv-action",d:"Live Action 24/7"},
+{n:"Pluto Action Live",e:"🚀",u:"https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/5f12118d85d10e0007b704c0?advertisingId=&appName=web&appVersion=1.0&bmodel=external&brand=pluto&deviceDNT=0&deviceId=web&deviceMake=web&deviceModel=web&deviceType=web&deviceVersion=web&embedPartner=&isCoop=0&profileLimit=&profileFloor=0&svcId=5f12118d85d10e0007b704c0",d:"Action Auto Play"},
+],
+edu:[
+// FREE EDUCATION - 100% FREE LEGAL - BEST FOR GHANA STUDENTS
+{n:"Khan Academy",e:"🎓",u:"https://www.khanacademy.org/",d:"Free Maths/Science - Best for BECE/WASSCE!",site:"KHAN"},
+{n:"TED-Ed",e:"💡",u:"https://www.youtube.com/c/TEDEducation",d:"Free Lessons - 1000+ Educational Videos",site:"YOUTUBE"},
+{n:"NASA Education",e:"🚀",u:"https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",d:"NASA TV Live - Science Auto Play!"},
+{n:"CrashCourse",e:"📘",u:"https://www.youtube.com/c/crashcourse",d:"Free SHS Subjects - History, Science",site:"YOUTUBE"},
+{n:"Khan Kids",e:"👶",u:"https://learn.khanacademy.org/khan-academy-kids/",d:"Free for Kids - Primary School"},
+{n:"MIT OpenCourse",e:"🏛️",u:"https://ocw.mit.edu/",d:"MIT University Free Courses - SHS to Uni"},
+{n:"BBC Learning",e:"🇬🇧",u:"https://www.bbc.co.uk/learningenglish/",d:"Free English Learning - BBC Official"},
+{n:"DW Learning",e:"🇩🇪",u:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",d:"DW Documentary - Education Auto Play"},
 ]
 };
 
@@ -51,83 +64,63 @@ function showLoader(t){ loadT.textContent=t; loader.classList.add('on'); }
 function hideLoader(){ loader.classList.remove('on'); }
 
 function autoPlay(c,el,catMode){
-cur=c; mode=catMode;
-document.querySelectorAll('.card').forEach(x=>{ x.classList.remove('on'); x.classList.remove('playing'); });
-el.classList.add('on');
-el.classList.add('playing');
-
-document.getElementById('title').textContent='▶️ '+c.n;
-document.getElementById('sub').textContent=c.d+' • Loading... auto play';
-status.textContent='⏳ Loading '+c.n+'...';
-showLoader('Loading '+c.n+'...');
-
-a.pause(); v.pause();
-a.style.display='none'; v.style.display='none';
-if(hls){ hls.destroy(); hls=null; }
-a.removeAttribute('src'); v.removeAttribute('src');
-
-setTimeout(()=>{
-if(catMode==='radio'){
-a.style.display='block';
-a.src=c.u;
-a.load();
-a.play().then(()=>{
-hideLoader();
-status.textContent='✓ Playing '+c.n+' • BBC Only';
-document.getElementById('sub').textContent='🔊 Playing • BBC Radio • 5KB/s';
-}).catch(e=>{
-hideLoader();
-status.textContent='❌ Failed - Tap Refresh';
-});
-}else{
-v.style.display='block';
-if(Hls.isSupported()){
-hls=new Hls({maxBufferLength:6});
-hls.loadSource(c.u);
-hls.attachMedia(v);
-hls.on(Hls.Events.MANIFEST_PARSED,()=>{
-v.play().then(()=>{
-hideLoader();
-status.textContent='✓ Playing '+c.n+' • Live TV';
-document.getElementById('sub').textContent='📺 Playing • Live • Tap another card to switch';
-}).catch(()=>{ hideLoader(); status.textContent='Tap Play on video controls'; });
-});
-hls.on(Hls.Events.ERROR,(ev,data)=>{
-if(data.fatal){ hideLoader(); status.textContent='❌ Error - Try another TV'; }
-});
-}else{
-v.src=c.u;
-v.play().then(()=>{ hideLoader(); status.textContent='✓ Playing '+c.n; }).catch(()=>{ hideLoader(); });
-}
-}
-},100);
+ if(c.u.startsWith('https://www.')||c.u.startsWith('https://learn.')||c.u.startsWith('https://ocw.')){
+   window.open(c.u,'_blank');
+   document.getElementById('title').textContent='🌐 Opened '+c.n;
+   document.getElementById('sub').textContent=c.d+' • Free official education site!';
+   status.textContent='🌐 Opened '+c.n+' - Free learning - No account needed!';
+   document.querySelectorAll('.card').forEach(x=>x.classList.remove('playing'));
+   el.classList.add('playing');
+   return;
+ }
+ cur=c; mode=catMode;
+ document.querySelectorAll('.card').forEach(x=>{ x.classList.remove('on'); x.classList.remove('playing'); });
+ el.classList.add('on'); el.classList.add('playing');
+ document.getElementById('title').textContent='▶️ '+c.n;
+ document.getElementById('sub').textContent=c.d+' • Loading...';
+ status.textContent='⏳ Loading '+c.n+'...';
+ showLoader('Loading '+c.n+'...');
+ a.pause(); v.pause(); a.style.display='none'; v.style.display='none';
+ if(hls){ hls.destroy(); hls=null; }
+ a.removeAttribute('src'); v.removeAttribute('src');
+ setTimeout(()=>{
+ if(catMode==='radio'){ a.style.display='block'; a.src=c.u; a.load(); a.play().then(()=>{ hideLoader(); status.textContent='✓ Playing '+c.n; }).catch(()=>{ hideLoader(); }); }
+ else{
+   v.style.display='block';
+   if(Hls.isSupported()){
+     hls=new Hls({maxBufferLength:6});
+     hls.loadSource(c.u);
+     hls.attachMedia(v);
+     hls.on(Hls.Events.MANIFEST_PARSED,()=>{ v.play().then(()=>{ hideLoader(); status.textContent='✓ Playing '+c.n+' - Education Live'; }).catch(()=>{ hideLoader(); }); });
+     hls.on(Hls.Events.ERROR,(ev,data)=>{ if(data.fatal){ hideLoader(); status.textContent='❌ Try another education channel'; }});
+   }else{ v.src=c.u; v.play().then(()=>{ hideLoader(); }).catch(()=>{ hideLoader(); }); }
+ }
+ },100);
 }
 
 function build(list,catMode){
-let g=document.getElementById('grid'); g.innerHTML='';
-list.forEach((c)=>{
-let d=document.createElement('div'); d.className='card';
-d.innerHTML=`<div class="th">${c.e}</div><div class="bd"><div class="nm">${c.n}</div><div class="sb">${c.d}</div><div class="ok">▶️ TAP = AUTO PLAY</div></div>`;
-d.onclick=()=>autoPlay(c,d,catMode);
-g.appendChild(d);
-});
-if(list.length>0){
-document.getElementById('title').textContent='Tap '+list[0].n+' - Auto play';
-}
+ let g=document.getElementById('grid'); g.innerHTML='';
+ list.forEach((c)=>{
+   let isWeb=c.u.startsWith('https');
+   let btnText=isWeb && !c.u.endsWith('.m3u8') ? '🌐 TAP = OPEN FREE EDUCATION SITE' : '▶️ TAP = AUTO PLAY';
+   let colorClass=catMode;
+   g.innerHTML+=`<div class="card"><div class="th">${c.e}</div><div class="bd"><div class="nm">${c.n}</div><div class="sb">${c.d}</div><div class="ok ${colorClass}">${btnText}</div></div></div>`;
+ });
+ setTimeout(()=>{ document.querySelectorAll('.card').forEach((d,i)=>{ d.onclick=()=>autoPlay(list[i],d,catMode); }); },50);
 }
 
 function cat(k,btn){
-document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
-btn.classList.add('on');
-if(k==='radio'){
-v.style.display='none'; v.pause(); if(hls){ hls.destroy(); hls=null; }
-a.style.display='none';
-build(DB.radio,'radio');
-}else{
-a.style.display='none'; a.pause();
-build(DB.live,'live');
+ document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+ btn.classList.add('on');
+ v.style.display='none'; v.pause(); if(hls){ hls.destroy(); hls=null; } a.style.display='none'; a.pause();
+ if(k==='radio') build(DB.radio,'radio');
+ else if(k==='novela') build(DB.novela,'novela');
+ else if(k==='action') build(DB.action,'action');
+ else if(k==='edu') build(DB.edu,'edu');
+ else build(DB.live,'live');
 }
-}
+
+function shareL(){ let u=location.href; if(navigator.share) navigator.share({url:u}); else { navigator.clipboard.writeText(u); } }
 
 build(DB.live,'live');
 </script></body></html>
