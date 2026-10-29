@@ -3,199 +3,159 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Salvation TV V72 Real ESPN Free + Unlimited Sports</title>
+<title>Salvation TV - Professional</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
-body{background:#080a14;color:#fff}
-header{background:#0e1220;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1a1f36;position:sticky;top:0;z-index:30}
-.mark{width:34px;height:34px;background:#ff0000;color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900}
-header b{font-size:14px}header small{font-size:9px;color:#8b95b5}
-#playerWrap{width:100%;aspect-ratio:16/9;background:#000;position:sticky;top:54px;z-index:20;display:flex;align-items:center;justify-content:center}
-iframe,video{width:100%;height:100%;background:#000;border:none}
-#status{position:absolute;bottom:8px;left:10px;right:10px;font-size:9px;background:rgba(0,0,0,0.9);padding:6px 10px;border-radius:10px;text-align:center;z-index:10}
-#nextUp{position:absolute;top:10px;left:10px;right:10px;background:#ff0000;color:#fff;padding:8px 12px;border-radius:10px;font-size:10px;font-weight:900;text-align:center;display:none;z-index:11}
-#meta{padding:12px 14px;background:#0e1220;border-bottom:1px solid #1a1f36;display:flex;justify-content:space-between;align-items:center}
-#meta h2{font-size:14px;font-weight:800}#meta p{font-size:10px;color:#8b95b5;margin-top:4px}
-.toggle{padding:8px 14px;border-radius:20px;border:1px solid #242a4a;background:#1a1f36;color:#00ff88;font-size:9px;font-weight:800;cursor:pointer}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 12px 90px}
-.card{background:#121624;border:1px solid #1e2442;border-radius:14px;overflow:hidden;cursor:pointer;position:relative}
-.card.playing{border-color:#ff0000;background:rgba(255,0,0,0.18);box-shadow:0 0 20px rgba(255,0,0,0.3)}
-.card.next{border-color:#ffaa00;background:rgba(255,170,0,0.12)}
-.th{height:58px;background:#1a1f36;display:flex;align-items:center;justify-content:center;font-size:22px}
-.bd{padding:9px}.nm{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sb{font-size:9px;color:#8b95b5;margin-top:2px}.sb2{font-size:7px;font-weight:800;margin-top:4px;color:#ff0000}
-.num{position:absolute;top:6px;left:6px;background:#ff0000;color:#fff;font-size:8px;font-weight:800;padding:3px 7px;border-radius:10px}
-.section-title{padding:14px 14px 6px;font-size:11px;font-weight:800;color:#ff0000;text-transform:uppercase}
-#btm{position:fixed;bottom:0;left:0;right:0;background:#0e1220;border-top:1px solid #1a1f36;padding:10px 14px;display:flex;gap:10px}
-.btn{flex:1;height:44px;border-radius:12px;border:none;font-weight:700;font-size:11px}.s{background:#1a1f36;color:#fff}.p{background:#fff;color:#000}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system}
+body{background:#070a12;color:#fff;overflow-x:hidden}
+header{height:64px;background:#0c1020;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid #161c33;position:sticky;top:0;z-index:20}
+.logo{display:flex;align-items:center;gap:12px}
+.logoIcon{width:40px;height:40px;background:#fff;color:#000;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px}
+.logo b{font-size:16px;letter-spacing:-0.2px}
+.logo span{font-size:11px;color:#8b93b5;font-weight:500;display:block;margin-top:2px;letter-spacing:0.2px}
+.liveBadge{background:#ff1a1a;color:#fff;font-size:10px;font-weight:800;padding:7px 14px;border-radius:100px;letter-spacing:0.5px}
+#playerWrap{width:100%;aspect-ratio:16/9;background:#000;position:relative}
+#playerWrap iframe,#playerWrap video{width:100%;height:100%;border:0;display:block;background:#000}
+#nowPlaying{position:absolute;bottom:0;left:0;right:0;padding:18px 18px 14px;background:linear-gradient(transparent,rgba(0,0,0,0.9));display:flex;justify-content:space-between;align-items:flex-end;pointer-events:none}
+#nowPlaying h2{font-size:15px;font-weight:700;max-width:70%;line-height:1.3}
+#nowPlaying p{font-size:11px;color:#9aa3c2;margin-top:4px;font-weight:500}
+#autoBtn{pointer-events:auto;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);color:#fff;font-size:10px;font-weight:700;padding:8px 14px;border-radius:100px;backdrop-filter:blur(10px);cursor:pointer}
+.wrap{max-width:1100px;margin:0 auto}
+.section{padding:22px 16px 8px}
+.section h3{font-size:13px;font-weight:800;letter-spacing:1px;color:#fff;opacity:0.9;text-transform:uppercase;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(min-width:700px){.grid{grid-template-columns:1fr 1fr 1fr 1fr}}
+.card{background:#111629;border:1px solid #1c2340;border-radius:16px;overflow:hidden;cursor:pointer;transition:all 0.2s}
+.card:hover{transform:translateY(-2px);border-color:#2a355f;box-shadow:0 10px 30px rgba(0,0,0,0.4)}
+.card.active{border-color:#fff;box-shadow:0 0 0 1px #fff,0 10px 30px rgba(255,255,255,0.15)}
+.thumb{height:92px;background:#1a2040;position:relative;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5))}
+.thumb .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;background:rgba(255,255,255,0.9);border-radius:100%;display:flex;align-items:center;justify-content:center;color:#000;font-size:12px;z-index:2}
+.bd{padding:12px 12px 13px}
+.bd .name{font-size:12.5px;font-weight:700;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bd .meta{font-size:10.5px;color:#8b93b5;margin-top:4px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.footer{padding:30px 16px 90px;text-align:center;color:#5a648a;font-size:10px;letter-spacing:0.3px}
 </style>
 </head>
 <body>
 <header>
-<div style="display:flex;gap:10px;align-items:center"><div class="mark">E</div><div><b>Salvation TV</b><br><small>V72 REAL ESPN FREE + FIFA+ + UNLIMITED SPORTS - LEGAL</small></div></div>
-<div style="font-size:9px;color:#fff;background:#ff0000;padding:6px 12px;border-radius:20px">ESPN FREE</div>
+<div class="logo"><div class="logoIcon">S</div><div><b>Salvation TV</b><span>Live • Movies • Sports</span></div></div>
+<div class="liveBadge">● LIVE</div>
 </header>
 
 <div id="playerWrap">
-<div id="nextUp">Next Sport in 3s...</div>
-<div id="ytPlayer" style="width:100%;height:100%"></div>
-<video id="v" controls playsinline style="display:none;width:100%;height:100%"></video>
-<div id="status">V72 Real ESPN Free - ESPN official YouTube free + FIFA+ free + Red Bull unlimited - Legal - Ghana Works</div>
+<iframe id="ytFrame" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+<video id="v" controls playsinline style="display:none"></video>
+<div id="nowPlaying">
+<div><h2 id="title">Big Buck Bunny</h2><p id="subtitle">Blender Studio • 4K Animation</p></div>
+<button id="autoBtn" onclick="toggleAuto()">Autoplay On</button>
+</div>
 </div>
 
-<div id="meta">
-<div><h2 id="title">ESPN Free + Real Sport Streaming - Legal</h2><p id="sub">No pirate - ESPN official YouTube free clips + ESPN.com/watch free + FIFA+ HLS free + Red Bull unlimited - Ghana Works 100%</p></div>
-<button class="toggle" id="autoToggle" onclick="toggleAuto()">AUTO: ON</button>
-</div>
-
+<div class="wrap">
 <div id="content"></div>
+<div class="footer">Salvation TV • Professional Streaming • Ghana • 2026</div>
+</div>
 
-<div id="btm"><button class="btn s" onclick="shareApp()">Share ESPN Sports</button><button class="btn p" onclick="location.reload()">Refresh</button></div>
-
-<script src="https://www.youtube.com/iframe_api"></script>
 <script>
-const SPORTS=[
-{section:"ESPN OFFICIAL FREE - ESPN YouTube Channel - Free Highlights News Interviews Analysis - Legal Free【3978527672781679373†L64-L71】"},
-{n:"ESPN Official YouTube - SportsCenter",e:"🏀",id:"5bZApq4s5k4",d:"ESPN SportsCenter Official - Free highlights news - ESPN YouTube - Legal free - Ghana works",badge:"ESPN OFFICIAL FREE - YOUTUBE - LEGAL",type:"youtube"},
-{n:"ESPN First Take Free",e:"🎙️",id:"wTcNtgA6gHs",d:"ESPN First Take Official - Free debate - ESPN YouTube",badge:"ESPN OFFICIAL FREE - LEGAL",type:"youtube"},
-{n:"ESPN NBA Free Highlights",e:"🏀",id:"9Z8r2r3w4e5",d:"ESPN NBA Highlights Free - ESPN YouTube official",badge:"ESPN NBA FREE - LEGAL",type:"youtube"},
-{n:"ESPN Football Free",e:"⚽",id:"2bC4e6g8i0k",d:"ESPN Football Free - Highlights - Official",badge:"ESPN FOOTBALL FREE - LEGAL",type:"youtube"},
+const CHANNELS=[
+{group:"Featured Movies"},
+{id:"YE7VzlLtp-4",name:"Big Buck Bunny",meta:"Blender • 4K • 9:56",type:"youtube"},
+{id:"eRsGyueVLvQ",name:"Sintel",meta:"Blender • Epic • 14:48",type:"youtube"},
+{id:"TlB_eWDSMt4",name:"Elephants Dream",meta:"Blender • 10:54",type:"youtube"},
+{id:"VBGp_K_Y1uo",name:"Tears of Steel",meta:"Sci-Fi • 12:14",type:"youtube"},
+{id:"Y-rmzh0Biu8",name:"Cosmos Laundromat",meta:"Blender • Adventure",type:"youtube"},
+{id:"mN0zPOpADL4",name:"Agent 327",meta:"Action • 4:00",type:"youtube"},
+{id:"jNQXAC9IVRw",name:"Me at the Zoo",meta:"Classic • First Video",type:"youtube"},
+{id:"9bZkp7q19f0",name:"Music Highlights",meta:"Entertainment • 4K",type:"youtube"},
 
-{section:"REAL SPORT STREAMING FREE HLS - FIFA+ - RED BULL - OLYMPICS - LEGAL FREE - GHANA WORKS 100% - UNLIMITED"},
-{n:"Red Bull TV - Unlimited Sports Free",e:"🏎️",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",d:"Red Bull TV Free Live - Unlimited sports free legal - Racing Bike Surf Football extreme - Ghana works 100% - Real sport streaming",badge:"REAL SPORT FREE HLS - UNLIMITED - LEGAL - GHANA WORKS",type:"hls"},
-{n:"Red Bull 720p - Unlimited",e:"🚴",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_720.m3u8",d:"Red Bull 720p Free - Unlimited sports free",badge:"REAL SPORT FREE - UNLIMITED - LEGAL",type:"hls"},
-{n:"FIFA+ Style - Al Jazeera Sports News Free",e:"⚽",u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",d:"Sports News Free - Al Jazeera - Football news free legal - Ghana works",badge:"SPORTS NEWS FREE - LEGAL - GHANA WORKS",type:"hls"},
-{n:"DW Sports News Free",e:"🇩🇪",u:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",d:"DW Sports News Free Legal - Ghana works",badge:"SPORTS NEWS FREE - LEGAL",type:"hls"},
-{n:"France24 Sports Free",e:"🇫🇷",u:"https://live.france24.com/hls/live/2037218/F24_EN_LO_HLS/master.m3u8",d:"France24 Sports Free - Legal free sport news",badge:"SPORTS FREE - LEGAL - GHANA WORKS",type:"hls"},
-{n:"NASA Free - Olympics Style",e:"🚀",u:"https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",d:"NASA Free Live - Olympics style - Free legal - Ghana works",badge:"FREE LIVE - LEGAL - GHANA WORKS",type:"hls"},
-
-{section:"YOUTUBE SPORTS FREE - TESTED EMBED ALLOWED - PLAY INSIDE - LEGAL FREE - NO PROCESSING"},
-{n:"Big Buck Bunny - Test Regular Video",e:"🐰",id:"YE7VzlLtp-4",d:"Big Buck Bunny - Test regular video - Embed allowed 100% - Ghana works",badge:"REGULAR VIDEO - TESTED - INSIDE",type:"youtube"},
-{n:"Sintel - Test Regular",e:"🐉",id:"eRsGyueVLvQ",d:"Sintel - Test regular - Embed allowed",badge:"REGULAR VIDEO - TESTED - INSIDE",type:"youtube"},
+{group:"Live Sports & News • Ghana Works"},
+{u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",name:"Red Bull TV",meta:"Live Sports • Unlimited",type:"hls"},
+{u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",name:"Al Jazeera Live",meta:"News • 24/7",type:"hls"},
+{u:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",name:"DW News",meta:"Global News • Live",type:"hls"},
+{u:"https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",name:"NASA Live",meta:"Space • Live",type:"hls"},
 ];
 
-let currentIndex=0, autoOn=true, ytPlayer=null, ytReady=false, hls=null;
-function onYouTubeIframeAPIReady(){ ytReady=true; }
+let current=0, autoOn=true, hls=null;
+
 function toggleAuto(){
  autoOn=!autoOn;
- let b=document.getElementById('autoToggle');
- b.textContent=autoOn?'AUTO: ON':'AUTO: OFF';
- document.getElementById('status').textContent=autoOn?'Auto ON - Real sport unlimited - When ends next sport auto':'Auto OFF';
+ document.getElementById('autoBtn').textContent=autoOn?'Autoplay On':'Autoplay Off';
 }
-function getAll(){ return SPORTS.filter(x=>!x.section); }
+
+function getAll(){ return CHANNELS.filter(c=>!c.group); }
 
 function playAt(idx){
  let all=getAll();
- if(idx<0) idx=0;
  if(idx>=all.length) idx=0;
- currentIndex=idx;
+ if(idx<0) idx=0;
+ current=idx;
  let c=all[idx];
- let cards=document.querySelectorAll('.card');
- cards.forEach(x=>{ x.classList.remove('playing'); x.classList.remove('next'); });
- if(cards[idx]) cards[idx].classList.add('playing');
- if(autoOn){
-   let nextIdx=(idx+1)%all.length;
-   if(cards[nextIdx]) cards[nextIdx].classList.add('next');
- }
- document.getElementById('title').textContent=(idx+1)+'/'+all.length+' '+c.n;
- document.getElementById('sub').textContent=c.d;
- document.getElementById('status').textContent='Playing '+(idx+1)+'/'+all.length+': '+c.n+' - Real sport free - Legal - Ghana works';
- window.scrollTo({top:0,behavior:'smooth'});
 
+ document.querySelectorAll('.card').forEach((el,i)=>{ el.classList.toggle('active', i===idx); });
+ document.getElementById('title').textContent=c.name;
+ document.getElementById('subtitle').textContent=c.meta;
+
+ let ytFrame=document.getElementById('ytFrame');
  let v=document.getElementById('v');
- let ytDiv=document.getElementById('ytPlayer');
- let nextUp=document.getElementById('nextUp');
-
- function autoNextCountdown(){
-   if(!autoOn) return;
-   let nextIdx=(currentIndex+1)%all.length;
-   let nextName=all[nextIdx].n;
-   let count=3;
-   nextUp.style.display='block';
-   let timer=setInterval(function(){
-     nextUp.textContent='Next Sport: '+nextName+' in '+count+'s... Real sport unlimited';
-     count--;
-     if(count<0){ clearInterval(timer); nextUp.style.display='none'; playAt(nextIdx); }
-   },1000);
- }
 
  if(c.type==='hls'){
-   if(ytPlayer){ try{ ytPlayer.stopVideo(); }catch(e){} }
-   ytDiv.style.display='none';
+   ytFrame.style.display='none';
+   ytFrame.src='about:blank';
    v.style.display='block';
    if(hls){ hls.destroy(); hls=null; }
    if(Hls.isSupported()){
      hls=new Hls();
      hls.loadSource(c.u);
      hls.attachMedia(v);
-     hls.on(Hls.Events.MANIFEST_PARSED,function(){ v.play(); });
-   }else{ v.src=c.u; v.play(); }
-   v.onended=function(){ autoNextCountdown(); };
+     hls.on(Hls.Events.MANIFEST_PARSED,()=>v.play().catch(()=>{}));
+   }else{ v.src=c.u; v.play().catch(()=>{}); }
+   v.onended=()=>{ if(autoOn) playAt((idx+1)%all.length); };
  }else{
    v.style.display='none';
    v.pause();
    if(hls){ hls.destroy(); hls=null; }
-   ytDiv.style.display='block';
-   if(!ytReady){ setTimeout(function(){ playAt(idx); },1000); return; }
-   let vid=c.id;
-   const fixMap={
-     "5bZApq4s5k4":"YE7VzlLtp-4",
-     "wTcNtgA6gHs":"eRsGyueVLvQ",
-     "9Z8r2r3w4e5":"YE7VzlLtp-4",
-     "2bC4e6g8i0k":"eRsGyueVLvQ"
-   };
-   if(fixMap[vid]) vid=fixMap[vid];
-   if(ytPlayer){
-     ytPlayer.loadVideoById(vid);
-   }else{
-     ytPlayer=new YT.Player('ytPlayer',{
-       videoId:vid,
-       playerVars:{autoplay:1, modestbranding:1, rel:0, playsinline:1, origin:window.location.origin},
-       events:{
-         onReady:function(e){ e.target.playVideo(); },
-         onStateChange:function(e){ if(e.data===YT.PlayerState.ENDED) autoNextCountdown(); },
-         onError:function(e){
-           document.getElementById('status').textContent='Skipping blocked - Next sport in 2s - Real sport unlimited';
-           nextUp.style.display='block';
-           nextUp.textContent='Skipping - Next real sport in 2s...';
-           setTimeout(function(){ nextUp.style.display='none'; playAt((currentIndex+1)%all.length); },2000);
-         }
-       }
-     });
-   }
+   ytFrame.style.display='block';
+   ytFrame.src='https://www.youtube-nocookie.com/embed/'+c.id+'?autoplay=1&modestbranding=1&rel=0&playsinline=1';
  }
+ window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function build(){
  let content=document.getElementById('content');
- content.innerHTML='';
  let grid=null;
- let idx=0;
- SPORTS.forEach(function(c){
-   if(c.section){
+ let count=0;
+ CHANNELS.forEach(item=>{
+   if(item.group){
      let sec=document.createElement('div');
-     sec.className='section-title';
-     sec.textContent=c.section;
-     content.appendChild(sec);
+     sec.className='section';
+     sec.innerHTML='<h3>'+item.group+'</h3>';
      grid=document.createElement('div');
      grid.className='grid';
-     grid.style.paddingTop='4px';
-     content.appendChild(grid);
+     sec.appendChild(grid);
+     content.appendChild(sec);
    }else{
+     let thumbUrl=item.id ? 'https://img.youtube.com/vi/'+item.id+'/hqdefault.jpg' : '';
+     let isHls=item.type==='hls';
+     let thumbContent=isHls ? '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;background:#121831">🏎️</div>' : '<img src="'+thumbUrl+'" loading="lazy" onerror="this.style.display=\'none\'"><div class="play">▶</div>';
+     if(item.name.includes('Al Jazeera')) thumbContent='<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;background:#1a2040">📺</div>';
+     if(item.name.includes('DW')) thumbContent='<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;background:#1a2040">🌍</div>';
+     if(item.name.includes('NASA')) thumbContent='<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;background:#1a2040">🚀</div>';
+     if(item.name.includes('Red Bull')) thumbContent='<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;background:#1a2040">🏁</div>';
+
      let card=document.createElement('div');
      card.className='card';
-     card.innerHTML='<div class="num">'+(idx+1)+'</div><div class="th">'+c.e+'</div><div class="bd"><div class="nm">'+c.n+'</div><div class="sb">'+c.d+'</div><div class="sb2">'+c.badge+'</div></div>';
-     (function(i,cardCopy){ cardCopy.onclick=function(){ playAt(i); }; })(idx,card);
+     card.innerHTML='<div class="thumb">'+thumbContent+'</div><div class="bd"><div class="name">'+item.name+'</div><div class="meta">'+item.meta+'</div></div>';
+     (function(i){ card.onclick=()=>playAt(i); })(count);
      if(grid) grid.appendChild(card);
-     idx++;
+     count++;
    }
  });
 }
 
-function shareApp(){ if(navigator.share){ navigator.share({title:'Salvation TV V72 Real ESPN Free', url:location.href}); } else{ navigator.clipboard.writeText(location.href); } }
-
 build();
-setTimeout(function(){ playAt(4); },1200);
+setTimeout(()=>playAt(0),600);
 </script>
 </body>
 </html>
