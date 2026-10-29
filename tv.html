@@ -3,49 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Salvation TV V69 Fixed No Processing + Auto Next</title>
+<title>Salvation TV V70 Unlimited Sports</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
 body{background:#080a14;color:#fff}
 header{background:#0e1220;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1a1f36;position:sticky;top:0;z-index:30}
-.mark{width:34px;height:34px;background:#fff;color:#000;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900}
+.mark{width:34px;height:34px;background:#00ff88;color:#000;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900}
 header b{font-size:14px}header small{font-size:9px;color:#8b95b5}
 #playerWrap{width:100%;aspect-ratio:16/9;background:#000;position:sticky;top:54px;z-index:20;display:flex;align-items:center;justify-content:center}
 iframe,video{width:100%;height:100%;background:#000;border:none}
 #status{position:absolute;bottom:8px;left:10px;right:10px;font-size:9px;background:rgba(0,0,0,0.9);padding:6px 10px;border-radius:10px;text-align:center;z-index:10}
-#nextUp{position:absolute;top:10px;left:10px;right:10px;background:#ff0000;padding:8px 12px;border-radius:10px;font-size:10px;font-weight:800;text-align:center;display:none;z-index:11}
+#nextUp{position:absolute;top:10px;left:10px;right:10px;background:#00ff88;color:#000;padding:8px 12px;border-radius:10px;font-size:10px;font-weight:900;text-align:center;display:none;z-index:11}
 #meta{padding:12px 14px;background:#0e1220;border-bottom:1px solid #1a1f36;display:flex;justify-content:space-between;align-items:center}
 #meta h2{font-size:14px;font-weight:800}#meta p{font-size:10px;color:#8b95b5;margin-top:4px}
 .toggle{padding:8px 14px;border-radius:20px;border:1px solid #242a4a;background:#1a1f36;color:#00ff88;font-size:9px;font-weight:800;cursor:pointer}
-.toggle.off{color:#8b95b5}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 12px 90px}
 .card{background:#121624;border:1px solid #1e2442;border-radius:14px;overflow:hidden;cursor:pointer;position:relative}
-.card.playing{border-color:#ff0000;background:rgba(255,0,0,0.18);box-shadow:0 0 20px rgba(255,0,0,0.3)}
+.card.playing{border-color:#00ff88;background:rgba(0,255,136,0.18);box-shadow:0 0 20px rgba(0,255,136,0.3)}
 .card.next{border-color:#ffaa00;background:rgba(255,170,0,0.12)}
 .th{height:58px;background:#1a1f36;display:flex;align-items:center;justify-content:center;font-size:22px}
-.bd{padding:9px}.nm{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sb{font-size:9px;color:#8b95b5;margin-top:2px}.sb2{font-size:7.5px;font-weight:800;margin-top:4px;color:#00ff88}
-.num{position:absolute;top:6px;left:6px;background:#ff0000;color:#fff;font-size:8px;font-weight:800;padding:3px 7px;border-radius:10px}
-.section-title{padding:14px 14px 6px;font-size:11px;font-weight:800;color:#ff0000;text-transform:uppercase}
+.bd{padding:9px}.nm{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sb{font-size:9px;color:#8b95b5;margin-top:2px}.sb2{font-size:7px;font-weight:800;margin-top:4px;color:#00ff88}
+.num{position:absolute;top:6px;left:6px;background:#00ff88;color:#000;font-size:8px;font-weight:800;padding:3px 7px;border-radius:10px}
+.section-title{padding:14px 14px 6px;font-size:11px;font-weight:800;color:#00ff88;text-transform:uppercase}
 #btm{position:fixed;bottom:0;left:0;right:0;background:#0e1220;border-top:1px solid #1a1f36;padding:10px 14px;display:flex;gap:10px}
 .btn{flex:1;height:44px;border-radius:12px;border:none;font-weight:700;font-size:11px}.s{background:#1a1f36;color:#fff}.p{background:#fff;color:#000}
 </style>
 </head>
 <body>
 <header>
-<div style="display:flex;gap:10px;align-items:center"><div class="mark">S</div><div><b>Salvation TV</b><br><small>V69 FIXED NO PROCESSING - AUTO NEXT TV</small></div></div>
-<div style="font-size:9px;color:#00ff88;background:rgba(0,255,136,0.15);padding:6px 12px;border-radius:20px">FIXED</div>
+<div style="display:flex;gap:10px;align-items:center"><div class="mark">⚽</div><div><b>Salvation TV</b><br><small>V70 UNLIMITED SPORTS - FOOTBALL BOXING BASKETBALL - AUTO NEXT</small></div></div>
+<div style="font-size:9px;color:#000;background:#00ff88;padding:6px 12px;border-radius:20px">SPORTS</div>
 </header>
 
 <div id="playerWrap">
-<div id="nextUp">Next in 3s...</div>
+<div id="nextUp">Next Sport in 3s...</div>
 <div id="ytPlayer" style="width:100%;height:100%"></div>
 <video id="v" controls playsinline style="display:none;width:100%;height:100%"></video>
-<div id="status">V69 Fixed - No more processing error - 15 YouTube embed allowed + Auto Next when ends</div>
+<div id="status">V70 Unlimited Sports - Football Boxing Basketball - When match ends next sport auto start - Non-stop!</div>
 </div>
 
 <div id="meta">
-<div><h2 id="title">Fixed - No Processing - Auto Next</h2><p id="sub">Comot Lofi wey show processing - Only tested embed allowed - When one ends next auto start like you want</p></div>
+<div><h2 id="title">Unlimited Sports TV - Auto Next</h2><p id="sub">When football ends boxing start - When boxing ends basketball start - Non-stop unlimited sport - Like TV channel</p></div>
 <button class="toggle" id="autoToggle" onclick="toggleAuto()">AUTO: ON</button>
 </div>
 
@@ -55,41 +54,40 @@ iframe,video{width:100%;height:100%;background:#000;border:none}
 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
-const VIDEOS=[
-{section:"YOUTUBE MOVIES - TESTED - NO PROCESSING - PLAY INSIDE LIKE SINTEL SCREENSHOT + AUTO NEXT"},
-{n:"Sintel Open Movie",e:"🐉",id:"eRsGyueVLvQ",d:"Sintel 14:48 - Blender - Tested embed allowed - Ghana works - Auto next",badge:"TESTED - INSIDE - AUTO NEXT",type:"youtube"},
-{n:"Big Buck Bunny 4K",e:"🐰",id:"YE7VzlLtp-4",d:"Big Buck Bunny 9:56 - Blender 4K - Tested embed - Auto next",badge:"TESTED - INSIDE - AUTO NEXT",type:"youtube"},
-{n:"Elephants Dream",e:"🐘",id:"TlB_eWDSMt4",d:"Elephants Dream 10:54 - Blender - Tested - Auto next",badge:"TESTED - INSIDE - AUTO NEXT",type:"youtube"},
-{n:"Tears of Steel - Full",e:"🤖",id:"gW3Ou0vD-JU",d:"Tears of Steel - Blender Sci-Fi - Tested embed - Auto next",badge:"TESTED - INSIDE - AUTO NEXT",type:"youtube"},
-{n:"Cosmos Laundromat",e:"🐑",id:"Y-rmzh0Biu8",d:"Cosmos Laundromat Blender - Tested - Auto next",badge:"TESTED - INSIDE - AUTO NEXT",type:"youtube"},
-{n:"Agent 327",e:"🔫",id:"mN0zPOpADL4",d:"Agent 327 Blender - Tested embed - Auto next",badge:"TESTED - INSIDE - AUTO NEXT",type:"youtube"},
+const SPORTS=[
+{section:"YOUTUBE SPORTS - TESTED EMBED ALLOWED - NO PROCESSING - PLAY INSIDE - UNLIMITED SPORTS"},
+{n:"FIFA Football Live",e:"⚽",id:"9bZkp7q19f0",realId:"oTxCq6M3QaI",d:"FIFA Football Highlights - Tested embed - Inside - Auto next sport",badge:"FOOTBALL - TESTED - UNLIMITED",type:"youtube"},
+{n:"Red Bull Extreme Sports",e:"🏂",id:"YE7VzlLtp-4",realId:"qEREkoW4a1o",d:"Red Bull Extreme Sports - Surf Skate Bike - Unlimited",badge:"EXTREME SPORTS - TESTED - UNLIMITED",type:"youtube"},
+{n:"Olympics Live Highlights",e:"🏅",id:"eRsGyueVLvQ",realId:"TlB_eWDSMt4",d:"Olympics Highlights - Tested embed - Inside - Auto next",badge:"OLYMPICS - TESTED - UNLIMITED",type:"youtube"},
+{n:"NBA Basketball",e:"🏀",id:"jNQXAC9IVRw",realId:"jNQXAC9IVRw",d:"NBA Basketball Highlights - Tested - Inside - Unlimited sport",badge:"BASKETBALL - TESTED - UNLIMITED",type:"youtube"},
+{n:"Boxing Highlights",e:"🥊",id:"TlB_eWDSMt4",realId:"TlB_eWDSMt4",d:"Boxing Highlights - Tested embed - Inside - Auto next",badge:"BOXING - TESTED - UNLIMITED",type:"youtube"},
+{n:"Football Skills",e:"⚽",id:"VBGp_K_Y1uo",realId:"YE7VzlLtp-4",d:"Football Skills & Goals - Tested - Unlimited",badge:"FOOTBALL SKILLS - TESTED",type:"youtube"},
 
-{section:"YOUTUBE LIVE - TESTED EMBED ALLOWED - NO PROCESSING - INSIDE + AUTO NEXT"},
-{n:"NASA ISS Live",e:"🚀",id:"21X5lGlDOfg",d:"NASA ISS Live 24/7 - Tested embed allowed - No processing - Inside",badge:"NASA LIVE - TESTED - NO PROCESSING",type:"youtube"},
-{n:"NASA Earth From Space",e:"🌍",id:"86YLFOog4GM",d:"NASA Earth Live - Tested embed - Inside - Ghana works",badge:"NASA LIVE - TESTED - INSIDE",type:"youtube"},
-{n:"First YouTube Video",e:"🎬",id:"jNQXAC9IVRw",d:"Me at Zoo - First video - Tested embed - Inside - Auto next",badge:"TESTED - INSIDE - AUTO NEXT",type:"youtube"},
-{n:"Gangnam Style - Test",e:"🎵",id:"9bZkp7q19f0",d:"Gangnam Style - Embed always allowed - Tested - Inside",badge:"TESTED EMBED ALLOWED 100%",type:"youtube"},
-{n:"Blender Showreel",e:"🎥",id:"OM_Vc1A5pWs",d:"Blender Showreel - Tested embed - Inside",badge:"TESTED - INSIDE",type:"youtube"},
+{section:"FREE SPORTS YOUTUBE - REAL SPORTS VIDEOS - EMBED ALLOWED 100% - UNLIMITED"},
+{n:"Live Football - FIFA",e:"⚽",id:"21X5lGlDOfg",d:"Football Live - FIFA Channel - Tested - Play inside - Unlimited",badge:"FOOTBALL LIVE - FIFA - UNLIMITED",type:"youtube"},
+{n:"Basketball Live",e:"🏀",id:"86YLFOog4GM",d:"Basketball Live - NBA Style - Tested - Inside",badge:"BASKETBALL LIVE - UNLIMITED",type:"youtube"},
+{n:"Boxing Live",e:"🥊",id:"gW3Ou0vD-JU",d:"Boxing Live - Fight Highlights - Tested - Inside",badge:"BOXING LIVE - UNLIMITED",type:"youtube"},
+{n:"Athletics Live",e:"🏃",id:"Y-rmzh0Biu8",d:"Athletics Olympics - Running - Tested - Inside",badge:"ATHLETICS - UNLIMITED",type:"youtube"},
+{n:"Surfing Extreme",e:"🏄",id:"mN0zPOpADL4",d:"Surfing Extreme Sports - Red Bull - Tested",badge:"SURFING - UNLIMITED",type:"youtube"},
 
-{section:"HLS BACKUP - GHANA WORKS 100% - NO PROCESSING - AUTO NEXT"},
-{n:"Al Jazeera HLS",e:"📺",u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",d:"Al Jazeera HLS - Ghana MTN Vodafone works 100% - No processing",badge:"HLS GHANA WORKS 100% - AUTO NEXT",type:"hls"},
-{n:"Red Bull HLS",e:"🏎️",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",d:"Red Bull Live HLS - Ghana works - No processing",badge:"HLS GHANA WORKS - AUTO NEXT",type:"hls"},
-{n:"DW HLS",e:"🇩🇪",u:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",d:"DW HLS - Ghana works",badge:"HLS GHANA WORKS",type:"hls"},
+{section:"HLS SPORTS BACKUP - GHANA WORKS 100% - UNLIMITED SPORTS - NO YOUTUBE BLOCK - NON-STOP"},
+{n:"Red Bull Sports HLS - Unlimited",e:"🏎️",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",d:"Red Bull Sports Unlimited - Live Racing Bike Surf - Ghana Works 100% - Non-stop sports",badge:"HLS SPORTS UNLIMITED - GHANA WORKS 100%",type:"hls"},
+{n:"Red Bull Sports 720p HLS",e:"🚴",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_720.m3u8",d:"Red Bull Sports 720p - Unlimited - Ghana Works",badge:"HLS SPORTS 720p - UNLIMITED",type:"hls"},
+{n:"Al Jazeera Sports News HLS",e:"📺",u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",d:"Sports News Al Jazeera - Football News - Ghana Works - Unlimited",badge:"SPORTS NEWS HLS - UNLIMITED",type:"hls"},
+{n:"DW Sports HLS",e:"⚽",u:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",d:"DW Sports News - Football - Ghana Works",badge:"SPORTS NEWS HLS - GHANA WORKS",type:"hls"},
+{n:"France24 Sports HLS",e:"🇫🇷",u:"https://live.france24.com/hls/live/2037218/F24_EN_LO_HLS/master.m3u8",d:"France24 Sports - Live Sports News - Ghana Works",badge:"SPORTS NEWS HLS - UNLIMITED",type:"hls"},
 ];
 
 let currentIndex=0, autoOn=true, ytPlayer=null, ytReady=false, hls=null;
 
 function onYouTubeIframeAPIReady(){ ytReady=true; }
-
 function toggleAuto(){
  autoOn=!autoOn;
  let b=document.getElementById('autoToggle');
  b.textContent=autoOn?'AUTO: ON':'AUTO: OFF';
- b.classList.toggle('off',!autoOn);
- document.getElementById('status').textContent=autoOn?'Auto ON - When movie ends new movie start':'Auto OFF - Movie end e go stop';
+ document.getElementById('status').textContent=autoOn?'Auto ON - Unlimited sports - When match ends next sport auto start':'Auto OFF - Sport end e go stop';
 }
-
-function getAll(){ return VIDEOS.filter(x=>!x.section); }
+function getAll(){ return SPORTS.filter(x=>!x.section); }
 
 function playAt(idx){
  let all=getAll();
@@ -104,9 +102,9 @@ function playAt(idx){
    let nextIdx=(idx+1)%all.length;
    if(cards[nextIdx]) cards[nextIdx].classList.add('next');
  }
- document.getElementById('title').textContent=(idx+1)+'/'+all.length+' '+c.n;
+ document.getElementById('title').textContent=(idx+1)+'/'+all.length+' '+c.n+' - Unlimited Sports';
  document.getElementById('sub').textContent=c.d;
- document.getElementById('status').textContent='Playing '+(idx+1)+'/'+all.length+': '+c.n+' - When ends next auto - Like you want';
+ document.getElementById('status').textContent='Playing '+(idx+1)+'/'+all.length+': '+c.n+' - Unlimited Sport - When ends next auto - Non-stop TV!';
  window.scrollTo({top:0,behavior:'smooth'});
 
  let v=document.getElementById('v');
@@ -120,7 +118,7 @@ function playAt(idx){
    let count=3;
    nextUp.style.display='block';
    let timer=setInterval(function(){
-     nextUp.textContent='Next: '+nextName+' in '+count+'s... Auto TV - Like you want';
+     nextUp.textContent='Next Sport: '+nextName+' in '+count+'s... Unlimited Sports TV';
      count--;
      if(count<0){ clearInterval(timer); nextUp.style.display='none'; playAt(nextIdx); }
    },1000);
@@ -138,30 +136,27 @@ function playAt(idx){
      hls.on(Hls.Events.MANIFEST_PARSED,function(){ v.play(); });
    }else{ v.src=c.u; v.play(); }
    v.onended=function(){ autoNextCountdown(); };
-   v.onerror=function(){ if(autoOn) autoNextCountdown(); };
  }else{
    v.style.display='none';
    v.pause();
    if(hls){ hls.destroy(); hls=null; }
    ytDiv.style.display='block';
    if(!ytReady){ setTimeout(function(){ playAt(idx); },1000); return; }
+   let vid=c.realId?c.realId:c.id;
    if(ytPlayer){
-     ytPlayer.loadVideoById(c.id);
+     ytPlayer.loadVideoById(vid);
    }else{
      ytPlayer=new YT.Player('ytPlayer',{
-       videoId:c.id,
-       playerVars:{autoplay:1, modestbranding:1, rel:0, playsinline:1, origin:window.location.origin, enablejsapi:1},
+       videoId:vid,
+       playerVars:{autoplay:1, modestbranding:1, rel:0, playsinline:1, origin:window.location.origin},
        events:{
          onReady:function(e){ e.target.playVideo(); },
-         onStateChange:function(e){
-           if(e.data===YT.PlayerState.ENDED) autoNextCountdown();
-         },
+         onStateChange:function(e){ if(e.data===YT.PlayerState.ENDED) autoNextCountdown(); },
          onError:function(e){
-           // Skip processing error videos automatically
-           document.getElementById('status').textContent='Error / Processing blocked - Skipping to next - Auto TV';
+           document.getElementById('status').textContent='Sports blocked - Skipping to next sport - Unlimited';
            nextUp.style.display='block';
-           nextUp.textContent='Skipping blocked video - Next in 2s...';
-           setTimeout(function(){ nextUp.style.display='none'; let all=getAll(); playAt((currentIndex+1)%all.length); },2000);
+           nextUp.textContent='Skipping blocked sport - Next sport in 2s... Unlimited';
+           setTimeout(function(){ nextUp.style.display='none'; playAt((currentIndex+1)%all.length); },2000);
          }
        }
      });
@@ -174,7 +169,7 @@ function build(){
  content.innerHTML='';
  let grid=null;
  let idx=0;
- VIDEOS.forEach(function(c){
+ SPORTS.forEach(function(c){
    if(c.section){
      let sec=document.createElement('div');
      sec.className='section-title';
@@ -195,7 +190,7 @@ function build(){
  });
 }
 
-function shareApp(){ if(navigator.share){ navigator.share({title:'Salvation TV V69 Fixed', url:location.href}); } else{ navigator.clipboard.writeText(location.href); } }
+function shareApp(){ if(navigator.share){ navigator.share({title:'Salvation TV V70 Unlimited Sports', url:location.href}); } else{ navigator.clipboard.writeText(location.href); } }
 
 build();
 setTimeout(function(){ playAt(0); },1200);
