@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Salvation TV V67 20 YouTube Channels Inside</title>
+<title>Salvation TV V68 Auto Next Movie</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
@@ -14,13 +14,18 @@ header b{font-size:14px}header small{font-size:9px;color:#8b95b5}
 #playerWrap{width:100%;aspect-ratio:16/9;background:#000;position:sticky;top:54px;z-index:20;display:flex;align-items:center;justify-content:center}
 iframe,video{width:100%;height:100%;background:#000;border:none}
 #status{position:absolute;bottom:8px;left:10px;right:10px;font-size:9px;background:rgba(0,0,0,0.9);padding:6px 10px;border-radius:10px;text-align:center;z-index:10}
-#meta{padding:12px 14px;background:#0e1220;border-bottom:1px solid #1a1f36}
+#nextUp{position:absolute;top:10px;left:10px;right:10px;background:rgba(255,0,0,0.9);padding:8px 12px;border-radius:10px;font-size:10px;font-weight:800;text-align:center;display:none;z-index:11}
+#meta{padding:12px 14px;background:#0e1220;border-bottom:1px solid #1a1f36;display:flex;justify-content:space-between;align-items:center}
 #meta h2{font-size:14px;font-weight:800}#meta p{font-size:10px;color:#8b95b5;margin-top:4px}
+.toggle{padding:8px 14px;border-radius:20px;border:1px solid #242a4a;background:#1a1f36;color:#00ff88;font-size:9px;font-weight:800;cursor:pointer}
+.toggle.off{color:#8b95b5;border-color:#1e2442}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 12px 90px}
-.card{background:#121624;border:1px solid #1e2442;border-radius:14px;overflow:hidden;cursor:pointer}
+.card{background:#121624;border:1px solid #1e2442;border-radius:14px;overflow:hidden;cursor:pointer;position:relative}
 .card.playing{border-color:#ff0000;background:rgba(255,0,0,0.15);box-shadow:0 0 20px rgba(255,0,0,0.25)}
+.card.next{border-color:#ffaa00;background:rgba(255,170,0,0.12)}
 .th{height:58px;background:#1a1f36;display:flex;align-items:center;justify-content:center;font-size:20px}
 .bd{padding:9px}.nm{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sb{font-size:9px;color:#8b95b5;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ok{font-size:7px;font-weight:800;margin-top:4px;color:#ff0000}
+.num{position:absolute;top:6px;left:6px;background:#ff0000;color:#fff;font-size:8px;font-weight:800;padding:3px 6px;border-radius:10px}
 .section-title{padding:14px 14px 6px;font-size:11px;font-weight:800;color:#ff0000;text-transform:uppercase}
 #btm{position:fixed;bottom:0;left:0;right:0;background:#0e1220;border-top:1px solid #1a1f36;padding:10px 14px;display:flex;gap:10px}
 .btn{flex:1;height:44px;border-radius:12px;border:none;font-weight:700;font-size:11px}.s{background:#1a1f36;color:#fff}.p{background:#fff;color:#000}
@@ -28,92 +33,151 @@ iframe,video{width:100%;height:100%;background:#000;border:none}
 </head>
 <body>
 <header>
-<div style="display:flex;gap:10px;align-items:center"><div class="mark">S</div><div><b>Salvation TV</b><br><small>V67 20+ YOUTUBE INSIDE - ALL EMBED ALLOWED</small></div></div>
-<div style="font-size:9px;color:#ff0000;background:rgba(255,0,0,0.15);padding:6px 12px;border-radius:20px">20 YOUTUBE</div>
+<div style="display:flex;gap:10px;align-items:center"><div class="mark">S</div><div><b>Salvation TV</b><br><small>V68 AUTO NEXT - WHEN MOVIE END NEW START - TV MODE</small></div></div>
+<div style="font-size:9px;color:#ff0000;background:rgba(255,0,0,0.15);padding:6px 12px;border-radius:20px">AUTO TV</div>
 </header>
 
 <div id="playerWrap">
-<video id="v" controls playsinline style="display:none"></video>
-<iframe id="frame" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
-<div id="status">V67 - 20+ YouTube channels - All embed allowed - Play inside app like Sintel screenshot - Tap below!</div>
+<div id="nextUp">Next: Big Buck Bunny in 3s...</div>
+<div id="ytPlayer" style="width:100%;height:100%"></div>
+<video id="v" controls playsinline style="display:none;width:100%;height:100%"></video>
+<div id="status">V68 Auto TV - When movie ends, new movie start - Like TV channel - Tap first movie!</div>
 </div>
 
 <div id="meta">
-<h2 id="title">20+ YouTube Channels - Play Inside App</h2>
-<p id="sub">All embed allowed - No more unavailable - Like Sintel in your screenshot - Ghana Works - You see am inside!</p>
+<div><h2 id="title">Auto TV Mode - Continuous Movies</h2><p id="sub">When Sintel ends 14:48, next movie auto start - Like TV - Non-stop - You see like your screenshot</p></div>
+<button class="toggle" id="autoToggle" onclick="toggleAuto()">AUTO: ON</button>
 </div>
 
 <div id="content"></div>
 
 <div id="btm"><button class="btn s" onclick="shareApp()">Share App</button><button class="btn p" onclick="location.reload()">Refresh</button></div>
 
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
 const DB=[
-{section:"YOUTUBE MOVIES - Embed Allowed - Play Inside Like Sintel Screenshot"},
-{n:"Big Buck Bunny 4K",e:"🐰",u:"https://www.youtube-nocookie.com/embed/YE7VzlLtp-4?autoplay=1",d:"Big Buck Bunny 4K - Blender - Embed Allowed - Inside",badge:"YOUTUBE MOVIE - INSIDE APP",type:"youtube"},
-{n:"Sintel Movie",e:"🐉",u:"https://www.youtube-nocookie.com/embed/eRsGyueVLvQ?autoplay=1",d:"Sintel Full Movie - Durian Project - Inside - Works",badge:"YOUTUBE MOVIE - INSIDE APP",type:"youtube"},
-{n:"Tears of Steel",e:"🤖",u:"https://www.youtube-nocookie.com/embed/VBGp_K_Y1uo?autoplay=1",d:"Tears of Steel Sci-Fi - Blender - Inside App",badge:"YOUTUBE MOVIE - INSIDE APP",type:"youtube"},
-{n:"Elephants Dream",e:"🐘",u:"https://www.youtube-nocookie.com/embed/TlB_eWDSMt4?autoplay=1",d:"Elephants Dream - Blender Movie - Inside",badge:"YOUTUBE MOVIE - INSIDE APP",type:"youtube"},
-{n:"Subaru Outback Test",e:"🚗",u:"https://www.youtube-nocookie.com/embed/cB8c2Bz6H1E?autoplay=1",d:"Action Test Drive - Embed Allowed - Inside",badge:"YOUTUBE - INSIDE APP",type:"youtube"},
+{section:"YOUTUBE MOVIES PLAYLIST - Auto Next When Ends - Like TV - Inside App"},
+{n:"Sintel - Open Movie",e:"🐉",u:"eRsGyueVLvQ",d:"Sintel 14:48 - When ends, Big Buck Bunny auto start",badge:"MOVIE 1 - 14:48 - AUTO NEXT",type:"youtube"},
+{n:"Big Buck Bunny",e:"🐰",u:"YE7VzlLtp-4",d:"Big Buck Bunny 9:56 - When ends, Tears of Steel auto",badge:"MOVIE 2 - 9:56 - AUTO NEXT",type:"youtube"},
+{n:"Tears of Steel",e:"🤖",u:"VBGp_K_Y1uo",d:"Tears of Steel 12:14 - When ends, Elephants Dream auto",badge:"MOVIE 3 - 12:14 - AUTO NEXT",type:"youtube"},
+{n:"Elephants Dream",e:"🐘",u:"TlB_eWDSMt4",d:"Elephants Dream 10:54 - When ends, NASA Live auto",badge:"MOVIE 4 - 10:54 - AUTO NEXT",type:"youtube"},
+{n:"Subaru Test",e:"🚗",u:"cB8c2Bz6H1E",d:"Action Movie - When ends, Africa Doc auto",badge:"MOVIE 5 - AUTO NEXT",type:"youtube"},
+{n:"Ghana Doc",e:"🇬🇭",u:"hT_nvWreIhg",d:"Ghana Doc - When ends, next auto",badge:"MOVIE 6 - GHANA - AUTO NEXT",type:"youtube"},
+{n:"Africa Travel",e:"🌍",u:"ScMzIvxBSi4",d:"Africa Travel - When ends, loop back to Sintel",badge:"MOVIE 7 - AFRICA - AUTO NEXT",type:"youtube"},
+{n:"Comedy Cartoon",e:"😂",u:"jNQXAC9IVRw",d:"Me at Zoo - When ends, loop to first",badge:"MOVIE 8 - AUTO LOOP",type:"youtube"},
 
-{section:"YOUTUBE LIVE NEWS - Embed Allowed - Play Inside App - Ghana Works"},
-{n:"NASA Live ISS",e:"🚀",u:"https://www.youtube-nocookie.com/embed/21X5lGlDOfg?autoplay=1",d:"NASA Live ISS - Space Live - Embed Allowed - Inside",badge:"YOUTUBE LIVE NASA - INSIDE",type:"youtube"},
-{n:"Al Jazeera English Live",e:"📺",u:"https://www.youtube-nocookie.com/embed/gCNeDWCI0vo?autoplay=1",d:"Al Jazeera English Live - News - Embed Allowed - Inside",badge:"YOUTUBE LIVE NEWS - INSIDE",type:"youtube"},
-{n:"DW News Live",e:"🇩🇪",u:"https://www.youtube-nocookie.com/embed/GE_SfNVNy2g?autoplay=1",d:"DW News Live - Germany - Embed Allowed - Inside",badge:"YOUTUBE LIVE DW - INSIDE",type:"youtube"},
-{n:"France 24 Live",e:"🇫🇷",u:"https://www.youtube-nocookie.com/embed/Ap-ugFU1uzA?autoplay=1",d:"France 24 Live - World News - Embed Allowed - Inside",badge:"YOUTUBE LIVE FRANCE24 - INSIDE",type:"youtube"},
-{n:"ABC News Live",e:"🇺🇸",u:"https://www.youtube-nocookie.com/embed/w_Ma8oQLmSM?autoplay=1",d:"ABC News Live USA - Embed Allowed - Inside",badge:"YOUTUBE LIVE ABC - INSIDE",type:"youtube"},
-
-{section:"YOUTUBE GHANA & AFRICA STYLE - Embed Allowed - Inside App"},
-{n:"Africa Travel Doc",e:"🌍",u:"https://www.youtube-nocookie.com/embed/ScMzIvxBSi4?autoplay=1",d:"Africa Travel Documentary - Embed Allowed - Inside",badge:"AFRICA DOC - YOUTUBE INSIDE",type:"youtube"},
-{n:"African Music Live",e:"🎵",u:"https://www.youtube-nocookie.com/embed/5qap5aO4i9A?autoplay=1",d:"Lofi Africa Beats Live - Music - Embed Allowed - Inside",badge:"AFRICA MUSIC - YOUTUBE INSIDE",type:"youtube"},
-{n:"Ghana Documentary",e:"🇬🇭",u:"https://www.youtube-nocookie.com/embed/hT_nvWreIhg?autoplay=1",d:"Ghana Documentary - Embed Allowed - Inside App",badge:"GHANA DOC - YOUTUBE INSIDE",type:"youtube"},
-{n:"Nature Africa 4K",e:"🦁",u:"https://www.youtube-nocookie.com/embed/9bZkp7q19f0?autoplay=1",d:"Nature Africa - 4K - Embed Allowed - Inside",badge:"NATURE AFRICA - YOUTUBE INSIDE",type:"youtube"},
-{n:"Comedy Cartoon",e:"😂",u:"https://www.youtube-nocookie.com/embed/jNQXAC9IVRw?autoplay=1",d:"First YouTube Video - Me at Zoo - Embed Allowed - Inside",badge:"COMEDY - YOUTUBE INSIDE",type:"youtube"},
-
-{section:"HLS BACKUP - Ghana Works 100% - No YouTube Block - Inside"},
-{n:"Ghana News HLS Backup",e:"📡",u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",d:"Al Jazeera HLS Backup - If YouTube fails - Ghana Works 100%",badge:"HLS BACKUP - GHANA WORKS 100%",type:"hls"},
-{n:"Africa Sports HLS Backup",e:"🏎️",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",d:"Red Bull HLS Backup - Ghana Works - No Unavailable",badge:"HLS BACKUP - GHANA WORKS",type:"hls"},
-{n:"DW HLS Backup",e:"📶",u:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",d:"DW HLS Backup - Ghana Works",badge:"HLS BACKUP - GHANA WORKS",type:"hls"},
-{n:"NASA HLS Backup",e:"🛰️",u:"https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",d:"NASA HLS Backup - Ghana Works",badge:"HLS BACKUP - GHANA WORKS",type:"hls"},
+{section:"HLS BACKUP PLAYLIST - Auto Next - Ghana Works 100%"},
+{n:"Al Jazeera Live HLS",e:"📺",u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",d:"Al Jazeera HLS - 2 hours - When ends next auto",badge:"HLS - AUTO NEXT - GHANA WORKS",type:"hls"},
+{n:"Red Bull Live HLS",e:"🏎️",u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",d:"Red Bull Live - When ends next auto",badge:"HLS - AUTO NEXT - GHANA WORKS",type:"hls"},
 ];
 
-const v=document.getElementById('v');
-const frame=document.getElementById('frame');
-const status=document.getElementById('status');
 const content=document.getElementById('content');
+const status=document.getElementById('status');
+const nextUp=document.getElementById('nextUp');
+const v=document.getElementById('v');
+const ytDiv=document.getElementById('ytPlayer');
 let hls=null;
+let ytPlayer=null;
+let currentIndex=0;
+let autoOn=true;
+let ytReady=false;
 
-function play(c,el){
- document.querySelectorAll('.card').forEach(x=>x.classList.remove('playing'));
- el.classList.add('playing');
- document.getElementById('title').textContent=c.n;
- document.getElementById('sub').textContent=c.d;
- status.textContent='Loading '+c.n+'... Inside App';
+function onYouTubeIframeAPIReady(){ ytReady=true; }
+
+function toggleAuto(){
+ autoOn=!autoOn;
+ let btn=document.getElementById('autoToggle');
+ btn.textContent=autoOn?'AUTO: ON':'AUTO: OFF';
+ btn.classList.toggle('off',!autoOn);
+ status.textContent=autoOn?'Auto TV ON - When movie ends new movie start':'Auto TV OFF - Movie end e go stop';
+}
+
+function showNext(countdown, nextName){
+ nextUp.style.display='block';
+ nextUp.textContent='Next: '+nextName+' in '+countdown+'s... Auto TV';
+}
+
+function hideNext(){ nextUp.style.display='none'; }
+
+function playAt(index){
+ if(index<0 || index>=DB.filter(x=>!x.section).length) index=0;
+ currentIndex=index;
+ let allCards=DB.filter(x=>!x.section);
+ let c=allCards[index];
+ let cards=document.querySelectorAll('.card');
+ cards.forEach(x=>{ x.classList.remove('playing'); x.classList.remove('next'); });
+ if(cards[index]) cards[index].classList.add('playing');
+ if(autoOn && cards[index+1]) cards[index+1].classList.add('next');
+ else if(autoOn && index===allCards.length-1 && cards[0]) cards[0].classList.add('next');
+
+ document.getElementById('title').textContent=c.n+' - Playing '+(index+1)+'/'+allCards.length;
+ document.getElementById('sub').textContent=c.d+' - Auto TV - When ends new start - Like your screenshot 0:59/14:48';
+ status.textContent='Playing '+(index+1)+'/'+allCards.length+': '+c.n+' - When ends, next auto start - Auto TV Mode!';
  window.scrollTo({top:0, behavior:'smooth'});
 
  if(c.type==='hls'){
-   frame.style.display='none';
+   if(ytPlayer){ try{ ytPlayer.stopVideo(); }catch(e){} }
+   ytDiv.style.display='none';
    v.style.display='block';
    if(hls){ hls.destroy(); hls=null; }
    if(Hls.isSupported()){
      hls=new Hls();
      hls.loadSource(c.u);
      hls.attachMedia(v);
-     hls.on(Hls.Events.MANIFEST_PARSED,function(){ v.play().then(function(){ status.textContent='Playing '+c.n+' - HLS Backup - Ghana Works Inside!'; }); });
+     hls.on(Hls.Events.MANIFEST_PARSED,function(){ v.play(); });
    }else{ v.src=c.u; v.play(); }
+   v.onended=function(){
+     if(autoOn){
+       let nextIdx=(index+1)%allCards.length;
+       let count=3;
+       let nextName=allCards[nextIdx].n;
+       let timer=setInterval(function(){
+         showNext(count, nextName);
+         count--;
+         if(count<0){ clearInterval(timer); hideNext(); playAt(nextIdx); }
+       },1000);
+     }
+   };
  }else{
    v.style.display='none';
    v.pause();
    if(hls){ hls.destroy(); hls=null; }
-   frame.style.display='block';
-   frame.src=c.u;
-   status.textContent='Playing '+c.n+' - YouTube Inside App - Like Sintel Screenshot - No Unavailable!';
+   ytDiv.style.display='block';
+   if(!ytReady){
+     status.textContent='Loading YouTube player... Wait small';
+     setTimeout(function(){ playAt(index); },1000);
+     return;
+   }
+   if(ytPlayer){
+     ytPlayer.loadVideoById(c.u);
+   }else{
+     ytPlayer=new YT.Player('ytPlayer',{
+       videoId:c.u,
+       playerVars:{autoplay:1, modestbranding:1, rel:0, playsinline:1, origin:window.location.origin},
+       events:{
+         onReady:function(e){ e.target.playVideo(); },
+         onStateChange:function(e){
+           if(e.data===YT.PlayerState.ENDED && autoOn){
+             let nextIdx=(index+1)%allCards.length;
+             let count=3;
+             let nextName=allCards[nextIdx].n;
+             let timer=setInterval(function(){
+               showNext(count, nextName);
+               count--;
+               if(count<0){ clearInterval(timer); hideNext(); playAt(nextIdx); }
+             },1000);
+           }
+         }
+       }
+     });
+   }
  }
 }
 
 function build(){
  content.innerHTML='';
  let grid=null;
+ let idx=0;
  DB.forEach(function(c){
    if(c.section){
      let sec=document.createElement('div');
@@ -127,17 +191,17 @@ function build(){
    }else{
      let card=document.createElement('div');
      card.className='card';
-     card.innerHTML='<div class="th">'+c.e+'</div><div class="bd"><div class="nm">'+c.n+'</div><div class="sb">'+c.d+'</div><div class="ok">'+c.badge+'</div></div>';
-     (function(cCopy,cardCopy){ cardCopy.onclick=function(){ play(cCopy,cardCopy); }; })(c,card);
+     card.innerHTML='<div class="num">'+(idx+1)+'</div><div class="th">'+c.e+'</div><div class="bd"><div class="nm">'+c.n+'</div><div class="sb">'+c.d+'</div><div class="ok">'+c.badge+'</div></div>';
+     (function(i,cardCopy){ cardCopy.onclick=function(){ playAt(i); }; })(idx,card);
      if(grid) grid.appendChild(card);
+     idx++;
    }
  });
 }
 
-function shareApp(){ if(navigator.share){ navigator.share({title:'Salvation TV V67 20 YouTube Inside', url:location.href}); } else{ navigator.clipboard.writeText(location.href); status.textContent='Link copied!'; } }
+function shareApp(){ if(navigator.share){ navigator.share({title:'Salvation TV V68 Auto TV', url:location.href}); } else{ navigator.clipboard.writeText(location.href); status.textContent='Link copied!'; } }
 
 build();
-setTimeout(function(){ let first=document.querySelector('.card'); if(first) first.click(); },900);
 </script>
 </body>
 </html>
