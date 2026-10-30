@@ -2,54 +2,54 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Salvation TV - Ghana</title>
+<title>Salvation TV - Ghana Inside App</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <style>
-:root{--bg:#0a0f0a;--card:#131f13;--green:#3ddb6a;--muted:#9ab49a;--red:#ff3b30}
+:root{--bg:#0a0f0a;--card:#131f13;--green:#3ddb6a;--muted:#9ab49a}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:#fff;font-family:system-ui;padding:10px;min-height:100vh}
-header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--card);border-radius:14px;border:1px solid #1f3a1f;margin-bottom:12px}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--card);border-radius:14px;border:1px solid #1f3a1f;margin-bottom:14px}
 .logo{font-weight:900;font-size:22px}.logo span{color:var(--green)}
 .badge{background:var(--green);color:#000;padding:5px 12px;border-radius:20px;font-weight:800;font-size:11px}
-.status{background:#112111;border:1px solid #1f3a1f;padding:10px 14px;border-radius:10px;font-size:12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
-.btn{background:var(--green);color:#000;border:0;padding:6px 14px;border-radius:20px;font-weight:800;font-size:11px;cursor:pointer}
-.wrap{margin:0 0 14px;background:#000;border-radius:16px;overflow:hidden;aspect-ratio:16/9;position:relative;border:1px solid #1f3a1f}
+.wrap{margin-bottom:14px;background:#000;border-radius:16px;overflow:hidden;aspect-ratio:16/9;position:relative;border:1px solid #1f3a1f}
 .wrap iframe,.wrap video{width:100%;height:100%;border:0;display:block}
-.now{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.85);padding:6px 12px;border-radius:8px;font-size:12px;z-index:2}
-.filters{display:flex;gap:8px;overflow-x:auto;padding:8px 0}
-.f{padding:8px 18px;border-radius:24px;border:1px solid #1f3a1f;background:var(--card);color:var(--muted);cursor:pointer;white-space:nowrap;font-weight:600}
+.now{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.75);padding:6px 12px;border-radius:8px;font-size:12px;z-index:2}
+.filters{display:flex;gap:8px;overflow-x:auto;padding:6px 0 12px}
+.f{padding:8px 18px;border-radius:24px;border:1px solid #1f3a1f;background:var(--card);color:var(--muted);cursor:pointer;white-space:nowrap;font-weight:600;font-size:13px}
 .f.active{background:var(--green);color:#000}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
 .card{background:var(--card);border:1px solid #1f3a1f;border-radius:12px;padding:12px;cursor:pointer}
-.card.active{border-color:var(--green)}.t{font-weight:800;font-size:14px;margin-top:6px}.s{font-size:10px;color:var(--muted);margin-top:4px}
-footer{text-align:center;padding:18px 10px;color:var(--muted);font-size:11px;letter-spacing:1.2px}
+.card.active{border-color:var(--green)}
+.card:hover{border-color:var(--green)}
+.t{font-weight:800;font-size:14px;margin-top:6px}
+.s{font-size:11px;color:var(--muted)}
+.dot{width:8px;height:8px;background:var(--green);border-radius:50%;display:inline-block;margin-right:4px}
+footer{text-align:center;padding:20px 10px 10px;color:var(--muted);font-size:11px;letter-spacing:1.5px}
 </style>
 </head>
 <body>
-<header><div class="logo">Salvation <span>TV</span></div><div class="badge">🇬🇭 HYBRID AUTO</div></header>
-<div class="status"><span id="statusText">Auto: LIVE first → Recorded if offline (15s)</span><button class="btn" id="toggleBtn">Switch to Recorded</button></div>
+<header><div class="logo">Salvation <span>TV</span></div><div class="badge">🇬🇭 GHANA INSIDE APP</div></header>
 <div class="wrap" id="playerWrap"><div class="now" id="now">Select channel</div></div>
 <div class="filters" id="filters"></div>
 <div class="grid" id="grid"></div>
 <footer>POWERED BY SALVATION TECH-GHANA</footer>
 <script>
 const channels=[
- {name:'TV3 Ghana', cat:'Ghana', channelId:'UC9VSDs4ZXo3sjOoPkmW2iRQ', fallback:'Hqjj2MnGyQI', type:'hybrid'},
- {name:'JoyNews', cat:'Ghana', channelId:'INVALID', fallback:'W4yu5MA4te0', type:'hybrid'},
- {name:'UTV Ghana', cat:'Ghana', channelId:'INVALID', fallback:'y8yPX--QSVU', type:'hybrid'},
- {name:'GTV Ghana', cat:'Ghana', channelId:'INVALID', fallback:'_Yhyp-_p2ow', type:'hybrid'},
- {name:'Channel One / Citi TV', cat:'Ghana', channelId:'INVALID', fallback:'MnNQkRWo8iY', type:'hybrid'},
+ {name:'JoyNews Live', cat:'Ghana', type:'yt', vid:'W4yu5MA4te0'},
+ {name:'TV3 Ghana', cat:'Ghana', type:'yt', vid:'Hqjj2MnGyQI'},
+ {name:'UTV Ghana', cat:'Ghana', type:'yt', vid:'y8yPX--QSVU'},
+ {name:'GTV Ghana', cat:'Ghana', type:'yt', vid:'_Yhyp-_p2ow'},
+ {name:'Channel One / Citi TV', cat:'Ghana', type:'yt', vid:'MnNQkRWo8iY'},
  {name:'Al Jazeera', cat:'News', type:'hls', src:'https://live-hls-web-aje.getaj.net/AJE/01.m3u8'},
+ {name:'DW News', cat:'News', type:'hls', src:'https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8'},
+ {name:'NASA TV', cat:'Live', type:'hls', src:'https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8'},
 ];
-let curCat='Ghana',curChannel=null,mode='live',fallbackTimer=null;
-const fEl=document.getElementById('filters'),gEl=document.getElementById('grid'),wrap=document.getElementById('playerWrap'),nowEl=document.getElementById('now'),statusText=document.getElementById('statusText'),toggleBtn=document.getElementById('toggleBtn');
-function renderF(){fEl.innerHTML='';['Ghana','All','News'].forEach(c=>{const b=document.createElement('button');b.className='f'+(curCat===c?' active':'');b.textContent=c;b.onclick=()=>{curCat=c;renderF();renderG();};fEl.appendChild(b);});}
-function renderG(){gEl.innerHTML='';const list=curCat==='All'?channels:channels.filter(x=>x.cat===curCat);list.forEach(ch=>{const d=document.createElement('div');d.className='card'+(curChannel&&curChannel.name===ch.name?' active':'');d.innerHTML=`<div class="s">HYBRID AUTO</div><div class="t">${ch.name}</div><div class="s">Live when available, recorded if offline</div>`;d.onclick=()=>{play(ch,'live');};gEl.appendChild(d);});}
-function clearPlayer(){if(fallbackTimer)clearTimeout(fallbackTimer);wrap.querySelectorAll('iframe,video').forEach(e=>e.remove());}
-function play(ch,newMode){clearPlayer();curChannel=ch;mode=newMode||'live';renderG();if(ch.type==='hybrid'){if(mode==='live'){if(ch.channelId&&ch.channelId.length>20){const iframe=document.createElement('iframe');iframe.src=`https://www.youtube.com/embed/live_stream?channel=${ch.channelId}&autoplay=1&mute=0&playsinline=1`;iframe.allow='autoplay; fullscreen; encrypted-media';iframe.allowFullscreen=true;wrap.appendChild(iframe);nowEl.textContent=`Now: ${ch.name} (Trying LIVE - 15s)`;statusText.textContent=`Trying LIVE for ${ch.name}... switches to recorded in 15s if offline`;toggleBtn.textContent='Switch to Recorded Now';fallbackTimer=setTimeout(()=>{if(mode==='live')playRecorded(ch);},15000);}else{playRecorded(ch);}}else{playRecorded(ch);}}else{const v=document.createElement('video');v.controls=true;v.autoplay=true;wrap.appendChild(v);if(Hls.isSupported()){const h=new Hls();h.loadSource(ch.src);h.attachMedia(v);}else{v.src=ch.src;}}}
-function playRecorded(ch){clearPlayer();mode='recorded';const iframe=document.createElement('iframe');iframe.src=`https://www.youtube-nocookie.com/embed/${ch.fallback}?autoplay=1&mute=0&playsinline=1`;iframe.allow='autoplay; fullscreen; encrypted-media';iframe.allowFullscreen=true;wrap.appendChild(iframe);nowEl.textContent=`Now: ${ch.name} (Recorded - LIVE offline)`;statusText.textContent=`Playing recorded for ${ch.name} - Will retry LIVE in 60s`;toggleBtn.textContent='Try LIVE Again';fallbackTimer=setTimeout(()=>{if(curChannel)play(curChannel,'live');},60000);}
-toggleBtn.onclick=()=>{if(!curChannel)return;if(mode==='live')playRecorded(curChannel);else play(curChannel,'live');};
-renderF();renderG();play(channels[0],'live');
+let curCat='Ghana',curChannel=null;
+const fEl=document.getElementById('filters'),gEl=document.getElementById('grid'),wrap=document.getElementById('playerWrap'),nowEl=document.getElementById('now');
+function renderF(){fEl.innerHTML='';['Ghana','All','News','Live'].forEach(c=>{const b=document.createElement('button');b.className='f'+(curCat===c?' active':'');b.textContent=c;b.onclick=()=>{curCat=c;renderF();renderG();};fEl.appendChild(b);});}
+function renderG(){gEl.innerHTML='';const list=curCat==='All'?channels:channels.filter(x=>x.cat===curCat);list.forEach(ch=>{const d=document.createElement('div');d.className='card'+(curChannel&&curChannel.name===ch.name?' active':'');d.innerHTML=`<div><span class="dot"></span><span class="s">${ch.cat} • LIVE</span></div><div class="t">${ch.name}</div>`;d.onclick=()=>play(ch);gEl.appendChild(d);});}
+function play(ch){curChannel=ch;wrap.querySelectorAll('iframe,video').forEach(e=>e.remove());nowEl.textContent='Now: '+ch.name;renderG();if(ch.type==='yt'){const iframe=document.createElement('iframe');iframe.src=`https://www.youtube-nocookie.com/embed/${ch.vid}?autoplay=1&mute=0&playsinline=1&modestbranding=1&rel=0`;iframe.allow='autoplay; fullscreen; encrypted-media';iframe.allowFullscreen=true;wrap.appendChild(iframe);}else{const v=document.createElement('video');v.controls=true;v.autoplay=true;v.playsInline=true;wrap.appendChild(v);if(Hls.isSupported()){const h=new Hls();h.loadSource(ch.src);h.attachMedia(v);}else{v.src=ch.src;}}window.scrollTo({top:0,behavior:'smooth'});}
+renderF();renderG();play(channels[0]);
 </script>
 </body>
 </html>
