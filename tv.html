@@ -5,23 +5,33 @@
 <title>Salvation TV - Ghana Inside App</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <style>
-:root{--bg:#0a0f0a;--card:#131f13;--green:#3ddb6a;--muted:#9ab49a}
+:root{--bg:#0a0f0a;--card:#131f13;--green:#3ddb6a;--muted:#9ab49a;--gold:#ffcc00;--fifa:#0a1931}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:#fff;font-family:system-ui;padding:10px;min-height:100vh}
-header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--card);border-radius:14px;border:1px solid #1f3a1f;margin-bottom:14px}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--card);border-radius:14px;border:1px solid #1f3a1f;margin-bottom:12px}
 .logo{font-weight:900;font-size:22px}.logo span{color:var(--green)}
 .badge{background:var(--green);color:#000;padding:5px 12px;border-radius:20px;font-weight:800;font-size:11px}
+/* WWC FREE HUB */
+.wwc-hub{background:linear-gradient(135deg,#0a1931,#ff0055);border:1px solid #ffcc00;border-radius:16px;padding:14px;margin-bottom:14px}
+.wwc-title{font-weight:900;font-size:16px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.wwc-title .live-dot{width:10px;height:10px;background:#ff0000;border-radius:50%;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.wwc-btns{display:flex;gap:8px;flex-wrap:wrap}
+.wwc-btn{padding:10px 16px;border-radius:24px;font-weight:800;font-size:12px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;cursor:pointer;border:0}
+.btn-fifa{background:#fff;color:#0a1931}
+.btn-free{background:var(--gold);color:#000}
+.btn-sched{background:var(--green);color:#000}
 .wrap{margin-bottom:14px;background:#000;border-radius:16px;overflow:hidden;aspect-ratio:16/9;position:relative;border:1px solid #1f3a1f}
 .wrap iframe,.wrap video,#ytdiv{width:100%;height:100%;border:0;display:block}
 .now{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.85);padding:6px 12px;border-radius:8px;font-size:12px;z-index:2}
-.yt-err{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#111;border:1px solid #333;padding:16px;border-radius:12px;text-align:center;z-index:3;width:90%}
-.yt-err a{display:inline-block;margin-top:10px;background:var(--green);color:#000;padding:10px 18px;border-radius:20px;font-weight:800;text-decoration:none}
 .filters{display:flex;gap:8px;overflow-x:auto;padding:6px 0 12px}
 .f{padding:8px 18px;border-radius:24px;border:1px solid #1f3a1f;background:var(--card);color:var(--muted);cursor:pointer;white-space:nowrap;font-weight:600;font-size:13px}
 .f.active{background:var(--green);color:#000}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.card{background:var(--card);border:1px solid #1f3a1f;border-radius:12px;padding:12px;cursor:pointer}
+.card{background:var(--card);border:1px solid #1f3a1f;border-radius:12px;padding:12px;cursor:pointer;position:relative}
 .card.active{border-color:var(--green);background:#1a2e1a}.card:hover{border-color:var(--green)}
+.card.featured{border-color:var(--gold);background:linear-gradient(135deg,#1a1a0a,#2a2010)}
+.card.featured::after{content:'FREE LEGAL';position:absolute;top:6px;right:6px;background:var(--gold);color:#000;font-size:8px;font-weight:900;padding:3px 7px;border-radius:10px}
 .t{font-weight:800;font-size:14px;margin-top:6px}.s{font-size:11px;color:var(--muted)}
 .dot{width:8px;height:8px;background:var(--green);border-radius:50%;display:inline-block;margin-right:4px}
 footer{text-align:center;padding:20px 10px 10px;color:var(--muted);font-size:11px;letter-spacing:1.5px}
@@ -29,37 +39,52 @@ footer{text-align:center;padding:20px 10px 10px;color:var(--muted);font-size:11p
 </head>
 <body>
 <header><div class="logo">Salvation <span>TV</span></div><div class="badge">🇬🇭 GHANA INSIDE APP</div></header>
+
+<!-- WOMEN WORLD CUP FREE LEGAL HUB - ATTENTION DRAWER -->
+<div class="wwc-hub">
+  <div class="wwc-title"><span class="live-dot"></span> FIFA WOMEN'S WORLD CUP - WATCH FREE LEGALLY IN GHANA</div>
+  <div class="wwc-btns">
+    <a class="wwc-btn btn-fifa" href="https://www.plus.fifa.com" target="_blank">▶ Watch FREE on FIFA+ (Official)</a>
+    <a class="wwc-btn btn-free" href="https://www.youtube.com/@FIFA/videos" target="_blank">⚽ Free Highlights on FIFA YouTube</a>
+    <a class="wwc-btn btn-sched" href="https://www.livesoccertv.com/competitions/womens-world-cup/" target="_blank">📅 Free TV Schedule Ghana</a>
+  </div>
+</div>
+
 <div class="wrap" id="playerWrap"><div class="now" id="now">Loading...</div></div>
 <div class="filters" id="filters"></div>
 <div class="grid" id="grid"></div>
-<footer>POWERED BY SALVATION TECH-GHANA • NO FIFA BLOCK</footer>
+<footer>POWERED BY SALVATION TECH-GHANA • WOMEN WORLD CUP FREE LEGAL EDITION • NO DSTV PAYWALL</footer>
 <script>
 const channels=[
-// Ghana - Working 100%
+// FEATURED FREE LEGAL WWC
+ {name:"🔴 WATCH FREE on FIFA+ Official", cat:'Sports', type:'link', url:'https://www.plus.fifa.com', featured:true},
+ {name:"FIFA YouTube Free Live & Highlights", cat:'Sports', type:'link', url:'https://www.youtube.com/@FIFA/videos', featured:true},
+ {name:"Free Schedule Ghana - LiveSoccerTV", cat:'Sports', type:'link', url:'https://www.livesoccertv.com/competitions/womens-world-cup/', featured:true},
+// Ghana - Working
  {name:'JoyNews Live', cat:'Ghana', type:'yt', vid:'W4yu5MA4te0'},
  {name:'TV3 Ghana', cat:'Ghana', type:'yt', vid:'Hqjj2MnGyQI'},
  {name:'UTV Ghana', cat:'Ghana', type:'yt', vid:'y8yPX--QSVU'},
  {name:'GTV Ghana', cat:'Ghana', type:'yt', vid:'_Yhyp-_p2ow'},
  {name:'Channel One / Citi TV', cat:'Ghana', type:'yt', vid:'MnNQkRWo8iY'},
-// News / Live - Working
+// News / Live
  {name:'Al Jazeera', cat:'News', type:'hls', src:'https://live-hls-web-aje.getaj.net/AJE/01.m3u8'},
  {name:'DW News', cat:'News', type:'hls', src:'https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8'},
  {name:'NASA TV', cat:'Live', type:'hls', src:'https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8'},
-// Sports - ONLY Embed-Allowed IDs (NO FIFA - FIFA blocks github.io)
- {name:'Chelsea 0-2 Spurs Highlights', cat:'Sports', type:'yt', vid:'qSmpCizhtkw'},
+// Sports Embed-Allowed
+ {name:'Chelsea 0-2 Spurs', cat:'Sports', type:'yt', vid:'qSmpCizhtkw'},
  {name:'Liverpool 2-0 Brighton', cat:'Sports', type:'yt', vid:'oQ801H0LOT8'},
  {name:'Sunderland 2-1 Chelsea', cat:'Sports', type:'yt', vid:'MQSYNcknHL0'},
- {name:'Man City Goals Today', cat:'Sports', type:'yt', vid:'E7wJTI-1dvQ'},
- {name:'Arsenal Extended Highlights', cat:'Sports', type:'yt', vid:'wTcNtgA6gHs'},
- {name:'Ghana Black Stars Highlights', cat:'Sports', type:'yt', vid:'k85mRPqvMbE'},
+ {name:'Man City Goals', cat:'Sports', type:'yt', vid:'E7wJTI-1dvQ'},
+ {name:'Arsenal Highlights', cat:'Sports', type:'yt', vid:'wTcNtgA6gHs'},
+ {name:'Ghana Black Stars', cat:'Sports', type:'yt', vid:'k85mRPqvMbE'},
 ];
 let curCat='All',curChannel=null,played=[],ytPlayer=null;
 const fEl=document.getElementById('filters'),gEl=document.getElementById('grid'),wrap=document.getElementById('playerWrap'),nowEl=document.getElementById('now');
 function renderF(){fEl.innerHTML='';['Ghana','All','News','Sports','Live'].forEach(c=>{const b=document.createElement('button');b.className='f'+(curCat===c?' active':'');b.textContent=c;b.onclick=()=>{curCat=c;played=[];renderF();renderG();};fEl.appendChild(b);});}
-function renderG(){gEl.innerHTML='';const list=curCat==='All'?channels:channels.filter(x=>x.cat===curCat);list.forEach(ch=>{const d=document.createElement('div');d.className='card'+(curChannel&&curChannel.name===ch.name?' active':'');d.innerHTML=`<div><span class="dot"></span><span class="s">${ch.cat} • LIVE</span></div><div class="t">${ch.name}</div>`;d.onclick=()=>{played=[];play(ch);};gEl.appendChild(d);});}
+function renderG(){gEl.innerHTML='';const list=curCat==='All'?channels:channels.filter(x=>x.cat===curCat);list.forEach(ch=>{const d=document.createElement('div');d.className='card'+(ch.featured?' featured':'')+(curChannel&&curChannel.name===ch.name?' active':'');d.innerHTML=`<div><span class="dot"></span><span class="s">${ch.cat} • ${ch.type==='link'?'FREE LEGAL':'LIVE'}</span></div><div class="t">${ch.name}</div>`;d.onclick=()=>{if(ch.type==='link'){window.open(ch.url,'_blank');nowEl.textContent='Opening FREE legal: '+ch.name;}else{played=[];play(ch);}};gEl.appendChild(d);});}
 function playNextNew(){
-  let list = curCat==='All' ? channels : channels.filter(x=>x.cat===curCat);
-  if(list.length===0) list=channels;
+  let list = channels.filter(x=>x.type!=='link' && (curCat==='All' || x.cat===curCat));
+  if(list.length===0) list=channels.filter(x=>x.type!=='link');
   let available = list.filter(x=>!played.includes(x.name));
   if(available.length===0){played=[];available=list.filter(x=>x.name!==curChannel.name);}
   let next = available[Math.floor(Math.random()*available.length)];
@@ -68,24 +93,19 @@ function playNextNew(){
 function play(ch){
   curChannel=ch;
   if(!played.includes(ch.name)) played.push(ch.name);
-  wrap.querySelectorAll('iframe,video,#ytdiv,.yt-err').forEach(e=>e.remove());
-  nowEl.textContent='Now: '+ch.name+' • NEW #'+played.length+' • Unlimited';
+  wrap.querySelectorAll('iframe,video,#ytdiv').forEach(e=>e.remove());
+  nowEl.textContent='Now: '+ch.name+' • #'+played.length+' • Unlimited Random';
   renderG();
   if(ch.type==='yt'){
     const div=document.createElement('div');div.id='ytdiv';wrap.appendChild(div);
-    ytPlayer=new YT.Player('ytdiv',{width:'100%',height:'100%',videoId:ch.vid,playerVars:{autoplay:1,playsinline:1,modestbranding:1,rel:0,origin:window.location.origin},events:{onReady:e=>e.target.playVideo(),onStateChange:e=>{if(e.data===0){playNextNew();}},onError:e=>{
-      // If still blocked, show Watch on YouTube button
-      wrap.querySelectorAll('.yt-err').forEach(el=>el.remove());
-      const err=document.createElement('div');err.className='yt-err';err.innerHTML=`Video blocked on this domain<br><a href="https://www.youtube.com/watch?v=${ch.vid}" target="_blank">▶ Watch on YouTube</a><br><br><small style="color:#999">Next auto plays in 5s</small>`;wrap.appendChild(err);setTimeout(()=>playNextNew(),5000);
-    }}});
+    ytPlayer=new YT.Player('ytdiv',{width:'100%',height:'100%',videoId:ch.vid,playerVars:{autoplay:1,playsinline:1,modestbranding:1,rel:0},events:{onReady:e=>e.target.playVideo(),onStateChange:e=>{if(e.data===0){playNextNew();}}}});
   }else{
     const v=document.createElement('video');v.controls=true;v.autoplay=true;v.playsInline=true;wrap.appendChild(v);
     v.onended=()=>{playNextNew();};
     if(Hls.isSupported()){const h=new Hls();h.loadSource(ch.src);h.attachMedia(v);}else{v.src=ch.src;}
   }
-  window.scrollTo({top:0,behavior:'smooth'});
 }
-function onYouTubeIframeAPIReady(){renderF();renderG();play(channels[0]);}
+function onYouTubeIframeAPIReady(){renderF();renderG();play(channels[3]);}
 renderF();renderG();
 </script>
 <script src="https://www.youtube.com/iframe_api"></script>
