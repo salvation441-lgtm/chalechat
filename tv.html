@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Salvation TV </title>
+<title>Salvation TV - Ghana Inside App</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <style>
 :root{--bg:#0a0f0a;--card:#131f13;--green:#3ddb6a;--muted:#9ab49a}
@@ -35,24 +35,21 @@ footer{text-align:center;padding:20px 10px 10px;color:var(--muted);font-size:11p
 <footer>POWERED BY SALVATION TECH-GHANA</footer>
 <script>
 const channels=[
- // Ghana - working
  {name:'JoyNews Live', cat:'Ghana', type:'yt', vid:'W4yu5MA4te0'},
  {name:'TV3 Ghana', cat:'Ghana', type:'yt', vid:'Hqjj2MnGyQI'},
  {name:'UTV Ghana', cat:'Ghana', type:'yt', vid:'y8yPX--QSVU'},
  {name:'GTV Ghana', cat:'Ghana', type:'yt', vid:'_Yhyp-_p2ow'},
  {name:'Channel One / Citi TV', cat:'Ghana', type:'yt', vid:'MnNQkRWo8iY'},
- // News - working
  {name:'Al Jazeera', cat:'News', type:'hls', src:'https://live-hls-web-aje.getaj.net/AJE/01.m3u8'},
  {name:'DW News', cat:'News', type:'hls', src:'https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8'},
  {name:'NASA TV', cat:'Live', type:'hls', src:'https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8'},
- // Sports - Soccer Recorded Matches (YouTube - always works, never offline)
- {name:'FIFA - Full Matches', cat:'Sports', type:'yt', vid:'0vS0E9bBSL0'},
- {name:'Premier League', cat:'Sports', type:'yt', vid:'eIromJ4BToU'},
- {name:'LaLiga', cat:'Sports', type:'yt', vid:'z9Uz1icj_zM'},
- {name:'Bundesliga', cat:'Sports', type:'yt', vid:'pY1B9S1S5Zo'},
- {name:'CAF - African Football', cat:'Sports', type:'yt', vid:'L0MK7qz13bU'},
- {name:'Ghana FA TV', cat:'Sports', type:'yt', vid:'3s1rvMFUguI'},
- {name:'UEFA Champions League', cat:'Sports', type:'yt', vid:'JMiDPe2Bq4o'},
+ // Sports - Soccer - REAL WORKING IDS (no unavailable)
+ {name:'FIFA Women World Cup', cat:'Sports', type:'yt', vid:'d78qutOa2Os'},
+ {name:'FIFA U17 Brazil vs Poland', cat:'Sports', type:'yt', vid:'w3_DwgvmWaE'},
+ {name:'Chelsea 0-2 Spurs Highlights', cat:'Sports', type:'yt', vid:'qSmpCizhtkw'},
+ {name:'Liverpool 2-0 Brighton Highlights', cat:'Sports', type:'yt', vid:'oQ801H0LOT8'},
+ {name:'Brazil vs Poland U17 Highlights', cat:'Sports', type:'yt', vid:'P9TyHUiyIh0'},
+ {name:'DPR Korea vs Morocco U17', cat:'Sports', type:'yt', vid:'OrFs27viFuw'},
 ];
 let curCat='All',curChannel=null;
 const fEl=document.getElementById('filters'),gEl=document.getElementById('grid'),wrap=document.getElementById('playerWrap'),nowEl=document.getElementById('now');
