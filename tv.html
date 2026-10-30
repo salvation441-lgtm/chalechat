@@ -1,161 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Salvation TV - Professional</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Salvation TV V76 - Ghana Edition</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,-apple-system}
-body{background:#070a12;color:#fff;overflow-x:hidden}
-header{height:64px;background:#0c1020;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid #161c33;position:sticky;top:0;z-index:20}
-.logo{display:flex;align-items:center;gap:12px}
-.logoIcon{width:40px;height:40px;background:#fff;color:#000;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px}
-.logo b{font-size:16px;letter-spacing:-0.2px}
-.logo span{font-size:11px;color:#8b93b5;font-weight:500;display:block;margin-top:2px;letter-spacing:0.2px}
-.liveBadge{background:#ff1a1a;color:#fff;font-size:10px;font-weight:800;padding:7px 14px;border-radius:100px;letter-spacing:0.5px}
-#playerWrap{width:100%;aspect-ratio:16/9;background:#000;position:relative}
-#playerWrap iframe,#playerWrap video{width:100%;height:100%;border:0;display:block;background:#000}
-#nowPlaying{position:absolute;bottom:0;left:0;right:0;padding:18px 18px 14px;background:linear-gradient(transparent,rgba(0,0,0,0.9));display:flex;justify-content:space-between;align-items:flex-end;pointer-events:none}
-#nowPlaying h2{font-size:15px;font-weight:700;max-width:70%;line-height:1.3}
-#nowPlaying p{font-size:11px;color:#9aa3c2;margin-top:4px;font-weight:500}
-#autoBtn{pointer-events:auto;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);color:#fff;font-size:10px;font-weight:700;padding:8px 14px;border-radius:100px;backdrop-filter:blur(10px);cursor:pointer}
-.wrap{max-width:1100px;margin:0 auto}
-.section{padding:22px 16px 8px}
-.section h3{font-size:13px;font-weight:800;letter-spacing:1px;color:#fff;opacity:0.9;text-transform:uppercase;margin-bottom:12px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(min-width:700px){.grid{grid-template-columns:1fr 1fr 1fr 1fr}}
-.card{background:#111629;border:1px solid #1c2340;border-radius:16px;overflow:hidden;cursor:pointer;transition:all 0.2s}
-.card:hover{transform:translateY(-2px);border-color:#2a355f;box-shadow:0 10px 30px rgba(0,0,0,0.4)}
-.card.active{border-color:#fff;box-shadow:0 0 0 1px #fff,0 10px 30px rgba(255,255,255,0.15)}
-.thumb{height:92px;background:#1a2040;position:relative;overflow:hidden}
-.thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(transparent,rgba(0,0,0,0.5))}
-.thumb .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;background:rgba(255,255,255,0.9);border-radius:100%;display:flex;align-items:center;justify-content:center;color:#000;font-size:12px;z-index:2}
-.bd{padding:12px 12px 13px}
-.bd .name{font-size:12.5px;font-weight:700;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bd .meta{font-size:10.5px;color:#8b93b5;margin-top:4px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.footer{padding:30px 16px 90px;text-align:center;color:#5a648a;font-size:10px;letter-spacing:0.3px}
+:root{--bg:#0a0f0a;--card:#131f13;--green:#3ddb6a;--muted:#9ab49a}
+*{box-sizing:border-box;margin:0;padding:0}body{background:var(--bg);color:#fff;font-family:system-ui;padding:10px}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--card);border-radius:14px;border:1px solid #1f3a1f}
+.logo{font-weight:900;font-size:22px}.logo span{color:var(--green)}.badge{background:var(--green);color:#000;padding:5px 12px;border-radius:20px;font-weight:800;font-size:12px}
+.wrap{margin:14px 0;background:#000;border-radius:16px;overflow:hidden;aspect-ratio:16/9;position:relative;border:1px solid #1f3a1f}
+.wrap iframe,.wrap video{width:100%;height:100%;border:0}
+.now{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.75);padding:6px 12px;border-radius:8px;font-size:13px;z-index:2}
+.filters{display:flex;gap:8px;overflow:auto;padding:10px 0}
+.f{padding:8px 18px;border-radius:24px;border:1px solid #1f3a1f;background:var(--card);color:var(--muted);cursor:pointer;white-space:nowrap;font-weight:600}
+.f.active{background:var(--green);color:#000}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.card{background:var(--card);border:1px solid #1f3a1f;border-radius:12px;padding:12px;cursor:pointer}
+.card:hover{border-color:var(--green)}.t{font-weight:800;font-size:14px;margin-top:6px}.s{font-size:11px;color:var(--muted)}.dot{width:8px;height:8px;background:var(--green);border-radius:50%;display:inline-block;margin-right:4px}
 </style>
 </head>
 <body>
-<header>
-<div class="logo"><div class="logoIcon">S</div><div><b>Salvation TV</b><span>Live • Movies • Sports</span></div></div>
-<div class="liveBadge">● LIVE</div>
-</header>
-
-<div id="playerWrap">
-<iframe id="ytFrame" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-<video id="v" controls playsinline style="display:none"></video>
-<div id="nowPlaying">
-<div><h2 id="title">Big Buck Bunny</h2><p id="subtitle">Blender Studio • 4K Animation</p></div>
-<button id="autoBtn" onclick="toggleAuto()">Autoplay On</button>
-</div>
-</div>
-
-<div class="wrap">
-<div id="content"></div>
-<div class="footer">Salvation TV • Professional Streaming • Ghana • 2026</div>
-</div>
-
+<header><div class="logo">Salvation <span>TV</span> V76</div><div class="badge">🇬🇭 GHANA INSIDE APP</div></header>
+<div class="wrap" id="playerWrap"><div class="now" id="now">Select channel</div></div>
+<div class="filters" id="filters"></div>
+<div class="grid" id="grid"></div>
 <script>
-const CHANNELS=[
-{group:"Featured Movies"},
-{id:"YE7VzlLtp-4",name:"Big Buck Bunny",meta:"Blender • 4K • 9:56",type:"youtube"},
-{id:"eRsGyueVLvQ",name:"Sintel",meta:"Blender • Epic • 14:48",type:"youtube"},
-{id:"TlB_eWDSMt4",name:"Elephants Dream",meta:"Blender • 10:54",type:"youtube"},
-{id:"VBGp_K_Y1uo",name:"Tears of Steel",meta:"Sci-Fi • 12:14",type:"youtube"},
-{id:"Y-rmzh0Biu8",name:"Cosmos Laundromat",meta:"Blender • Adventure",type:"youtube"},
-{id:"mN0zPOpADL4",name:"Agent 327",meta:"Action • 4:00",type:"youtube"},
-{id:"jNQXAC9IVRw",name:"Me at the Zoo",meta:"Classic • First Video",type:"youtube"},
-{id:"9bZkp7q19f0",name:"Music Highlights",meta:"Entertainment • 4K",type:"youtube"},
-
-{group:"Live Sports & News • Ghana Works"},
-{u:"https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8",name:"Red Bull TV",meta:"Live Sports • Unlimited",type:"hls"},
-{u:"https://live-hls-web-aja.getaj.net/AJA/index.m3u8",name:"Al Jazeera Live",meta:"News • 24/7",type:"hls"},
-{u:"https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/index.m3u8",name:"DW News",meta:"Global News • Live",type:"hls"},
-{u:"https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8",name:"NASA Live",meta:"Space • Live",type:"hls"},
+const channels=[
+ {id:'joynews1', name:'JoyNews Live', cat:'Ghana', type:'yt', vid:'W4yu5MA4te0'},
+ {id:'joynews2', name:'JoyNews Backup', cat:'Ghana', type:'yt', vid:'MHFpXY4d_LI'},
+ {id:'tv3_1', name:'TV3 Ghana - Newday', cat:'Ghana', type:'yt', vid:'Hqjj2MnGyQI'},
+ {id:'tv3_2', name:'TV3 Ghana Tonight', cat:'Ghana', type:'yt', vid:'PjTSRcDvNkQ'},
+ {id:'tv3_3', name:'TV3 Business', cat:'Ghana', type:'yt', vid:'wonF0aer2rg'},
+ {id:'cititv', name:'Channel One / Citi', cat:'Ghana', type:'yt', vid:'MnNQkRWo8iY'},
+ {id:'utv', name:'UTV Ghana', cat:'Ghana', type:'yt', vid:'y8yPX--QSVU'},
+ {id:'gtv', name:'GTV Ghana', cat:'Ghana', type:'yt', vid:'_Yhyp-_p2ow'},
+ {id:'aljazeera', name:'Al Jazeera', cat:'News', type:'hls', src:'https://live-hls-web-aje.getaj.net/AJE/01.m3u8'},
+ {id:'dw', name:'DW News', cat:'News', type:'hls', src:'https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8'},
+ {id:'redbull', name:'Red Bull TV', cat:'Sports', type:'hls', src:'https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_1660.m3u8'},
+ {id:'nasa', name:'NASA TV', cat:'Live', type:'hls', src:'https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8'},
 ];
-
-let current=0, autoOn=true, hls=null;
-
-function toggleAuto(){
- autoOn=!autoOn;
- document.getElementById('autoBtn').textContent=autoOn?'Autoplay On':'Autoplay Off';
-}
-
-function getAll(){ return CHANNELS.filter(c=>!c.group); }
-
-function playAt(idx){
- let all=getAll();
- if(idx>=all.length) idx=0;
- if(idx<0) idx=0;
- current=idx;
- let c=all[idx];
-
- document.querySelectorAll('.card').forEach((el,i)=>{ el.classList.toggle('active', i===idx); });
- document.getElementById('title').textContent=c.name;
- document.getElementById('subtitle').textContent=c.meta;
-
- let ytFrame=document.getElementById('ytFrame');
- let v=document.getElementById('v');
-
- if(c.type==='hls'){
-   ytFrame.style.display='none';
-   ytFrame.src='about:blank';
-   v.style.display='block';
-   if(hls){ hls.destroy(); hls=null; }
-   if(Hls.isSupported()){
-     hls=new Hls();
-     hls.loadSource(c.u);
-     hls.attachMedia(v);
-     hls.on(Hls.Events.MANIFEST_PARSED,()=>v.play().catch(()=>{}));
-   }else{ v.src=c.u; v.play().catch(()=>{}); }
-   v.onended=()=>{ if(autoOn) playAt((idx+1)%all.length); };
+let curCat='Ghana'; const cats=['Ghana','All','News','Sports','Live'];
+const fEl=document.getElementById('filters'), gEl=document.getElementById('grid'), wrap=document.getElementById('playerWrap'), nowEl=document.getElementById('now');
+function renderF(){fEl.innerHTML='';cats.forEach(c=>{const b=document.createElement('button');b.className='f'+(curCat===c?' active':'');b.textContent=c;b.onclick=()=>{curCat=c;renderF();renderG();};fEl.appendChild(b);});}
+function renderG(){gEl.innerHTML='';const list=curCat==='All'?channels:channels.filter(x=>x.cat===curCat);list.forEach(ch=>{const d=document.createElement('div');d.className='card';d.innerHTML=`<div><span class="dot"></span><span class="s">${ch.cat} • LIVE</span></div><div class="t">${ch.name}</div>`;d.onclick=()=>play(ch);gEl.appendChild(d);});}
+function play(ch){
+ nowEl.textContent='Now: '+ch.name; wrap.querySelectorAll('iframe,video').forEach(e=>e.remove());
+ if(ch.type==='yt'){
+   const iframe=document.createElement('iframe');
+   iframe.src=`https://www.youtube-nocookie.com/embed/${ch.vid}?autoplay=1&mute=0&playsinline=1&modestbranding=1&rel=0`;
+   iframe.allow='autoplay; fullscreen; encrypted-media'; iframe.allowFullscreen=true; wrap.appendChild(iframe);
  }else{
-   v.style.display='none';
-   v.pause();
-   if(hls){ hls.destroy(); hls=null; }
-   ytFrame.style.display='block';
-   ytFrame.src='https://www.youtube-nocookie.com/embed/'+c.id+'?autoplay=1&modestbranding=1&rel=0&playsinline=1';
+   const v=document.createElement('video'); v.controls=true; v.autoplay=true; wrap.appendChild(v);
+   if(Hls.isSupported()){const h=new Hls();h.loadSource(ch.src);h.attachMedia(v);}else v.src=ch.src;
  }
- window.scrollTo({top:0,behavior:'smooth'});
 }
-
-function build(){
- let content=document.getElementById('content');
- let grid=null;
- let count=0;
- CHANNELS.forEach(item=>{
-   if(item.group){
-     let sec=document.createElement('div');
-     sec.className='section';
-     sec.innerHTML='<h3>'+item.group+'</h3>';
-     grid=document.createElement('div');
-     grid.className='grid';
-     sec.appendChild(grid);
-     content.appendChild(sec);
-   }else{
-     let thumbUrl=item.id ? 'https://img.youtube.com/vi/'+item.id+'/hqdefault.jpg' : '';
-     let isHls=item.type==='hls';
-     let thumbContent=isHls ? '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;background:#121831">🏎️</div>' : '<img src="'+thumbUrl+'" loading="lazy" onerror="this.style.display=\'none\'"><div class="play">▶</div>';
-     if(item.name.includes('Al Jazeera')) thumbContent='<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;background:#1a2040">📺</div>';
-     if(item.name.includes('DW')) thumbContent='<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;background:#1a2040">🌍</div>';
-     if(item.name.includes('NASA')) thumbContent='<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;background:#1a2040">🚀</div>';
-     if(item.name.includes('Red Bull')) thumbContent='<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;background:#1a2040">🏁</div>';
-
-     let card=document.createElement('div');
-     card.className='card';
-     card.innerHTML='<div class="thumb">'+thumbContent+'</div><div class="bd"><div class="name">'+item.name+'</div><div class="meta">'+item.meta+'</div></div>';
-     (function(i){ card.onclick=()=>playAt(i); })(count);
-     if(grid) grid.appendChild(card);
-     count++;
-   }
- });
-}
-
-build();
-setTimeout(()=>playAt(0),600);
+renderF();renderG();play(channels[0]);
 </script>
 </body>
 </html>
