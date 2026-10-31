@@ -5,98 +5,82 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Salvation TV - Ghana Inside App</title>
 <style>
-:root{--gold:#FFD700;--green:#00FF88;--bg:#080a08}
+:root{--gold:#FFD700;--green:#00FF88}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#080a08;color:#fff;font-family:system-ui,sans-serif}
-.header{display:flex;align-items:center;gap:12px;padding:14px 16px;background:rgba(20,28,20,.92);border-bottom:1px solid rgba(255,215,0,.18);position:sticky;top:0;z-index:20}
-.logo-s{width:48px;height:48px;border-radius:12px;overflow:hidden;box-shadow:0 0 18px rgba(255,215,0,.7);animation:pulseGlow 2.5s infinite}
+.header{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#141e14;border-bottom:1px solid rgba(255,215,0,.18);position:sticky;top:0;z-index:10}
+.logo-s{width:48px;height:48px;border-radius:12px;overflow:hidden;box-shadow:0 0 18px rgba(255,215,0,.7);animation:pulse 2.5s infinite}
 .logo-s img{width:100%;height:100%;object-fit:cover}
-@keyframes pulseGlow{0%,100%{box-shadow:0 0 14px rgba(255,215,0,.6)}50%{box-shadow:0 0 28px rgba(255,215,0,.95),0 0 50px rgba(0,255,136,.35);transform:scale(1.04)}}
-.brand h1{font-size:19px;letter-spacing:.5px}
-.brand h1 span{color:#00FF88}
-.brand p{font-size:11px;opacity:.6;letter-spacing:1.2px}
+@keyframes pulse{0%,100%{box-shadow:0 0 14px rgba(255,215,0,.6)}50%{box-shadow:0 0 28px rgba(255,215,0,.95),0 0 50px rgba(0,255,136,.35);transform:scale(1.04)}}
+.brand h1{font-size:19px} .brand h1 span{color:#00FF88} .brand p{font-size:11px;opacity:.6}
 .live-badge{margin-left:auto;border:1px solid #00FF88;color:#00FF88;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;display:flex;gap:6px;align-items:center}
 .dot{width:8px;height:8px;background:#ff2a2a;border-radius:50%;animation:blink 1s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-logo{margin:20px auto 10px;width:200px;height:200px;border-radius:50%;overflow:hidden;box-shadow:0 0 40px rgba(255,215,0,.6);animation:pulse 3s infinite}
+.hero-logo img{width:100%;height:100%;object-fit:cover}
 .video-wrap{margin:12px;background:#000;border-radius:18px;overflow:hidden;border:1px solid rgba(255,215,0,.18);position:relative}
 .video-wrap iframe{width:100%;aspect-ratio:16/9;border:0}
 .chips{position:absolute;bottom:10px;left:10px;right:10px;display:flex;justify-content:space-between}
-.chip{padding:6px 12px;border-radius:20px;font-size:11px;background:rgba(0,0,0,.75);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(6px)}
+.chip{padding:6px 12px;border-radius:20px;font-size:11px;background:rgba(0,0,0,.75);border:1px solid rgba(255,255,255,.12)}
 .chip.live{border-color:#ff4d4d;color:#ff8a8a}
 .tabs{display:flex;gap:10px;padding:12px 16px;overflow:auto}
 .tab{padding:10px 22px;border-radius:24px;border:1px solid rgba(255,255,255,.12);background:#121612;color:#9aa79a;font-weight:600;white-space:nowrap;cursor:pointer}
-.tab.active{background:#00FF88;color:#000;border-color:#00FF88;box-shadow:0 0 18px rgba(0,255,136,.5)}
-.section{padding:2px 16px;font-size:11px;letter-spacing:2px;color:#8aa08a}
+.tab.active{background:#00FF88;color:#000;border-color:#00FF88}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 16px 90px}
 .card{background:linear-gradient(180deg,#141e14,#0e140e);border:1px solid rgba(0,255,136,.14);border-radius:16px;padding:12px;cursor:pointer}
-.thumb{height:72px;background:radial-gradient(ellipse at center,#1e341e,#0d1a0d);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:10px}
-.hero-logo{margin:20px auto 10px;width:200px;height:200px;border-radius:50%;overflow:hidden;box-shadow:0 0 40px rgba(255,215,0,.6),0 0 80px rgba(0,255,136,.2);animation:pulseGlow 3s infinite}
-.hero-logo img{width:100%;height:100%;object-fit:cover}
+.thumb{height:72px;background:#1e341e;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:10px}
 .nav{position:fixed;bottom:0;left:0;right:0;background:#0e140e;border-top:1px solid rgba(255,215,0,.15);display:flex;justify-content:space-around;padding:10px 0}
-.nav div{font-size:10px;text-align:center;color:#6a7a6a}
-.nav .active{color:#00FF88}
-.card-top{display:flex;justify-content:space-between;margin-bottom:10px}
-.live-mini{font-size:10px;border:1px solid #ff4d4d;color:#ff6b6b;padding:4px 10px;border-radius:14px;display:flex;gap:4px;align-items:center}
-.tag{font-size:10px;padding:4px 10px;border-radius:14px;background:#1c2a1c;color:#8aa08a}
-.card h3{font-size:13px;margin-bottom:3px}
-.card p{font-size:11px;color:#7a8a7a}
+.nav div{font-size:10px;text-align:center;color:#6a7a6a} .nav .active{color:#00FF88}
 </style>
 </head>
 <body>
 <div class="header">
-<div class="logo-s"><img src="salvation_final_logo.webp"></div>
+<div class="logo-s"><img src="https://on441-lgtm.github.io/salvation_final_logo.webp" onerror="this.src='salvation_final_logo.webp'"></div>
 <div class="brand"><h1>Salvation <span>TV</span></h1><p>GHANA INSIDE APP</p></div>
 <div class="live-badge"><span class="dot"></span> LIVE</div>
 </div>
 
-<div class="hero-logo"><img src="salvation_final_logo.webp"></div>
-
 <div class="video-wrap">
-<iframe id="player" src="https://www.youtube.com/embed/JGwWNGJdvx8?autoplay=1&mute=1" allowfullscreen></iframe>
+<iframe id="player" src="https://www.youtube.com/embed/JGwWNGJdvx8" allowfullscreen></iframe>
 <div class="chips">
 <div class="chip live" id="nowPlaying">● FIFA TV • LIVE</div>
-<div class="chip" id="nowStatus">LIVE • CURRENT</div>
+<div class="chip">LIVE • CURRENT</div>
 </div>
 </div>
 
 <div class="tabs">
+<div class="tab active" onclick="filterTab('all',this)">All</div>
 <div class="tab" onclick="filterTab('ghana',this)">Ghana</div>
-<div class="tab active" onclick="filterTab('sports',this)">Sports</div>
-<div class="tab" onclick="filterTab('all',this)">All</div>
+<div class="tab" onclick="filterTab('sports',this)">Sports</div>
 </div>
 
-<div class="section">SPORTS • GHANA • ALWAYS CURRENT • NO OLD SCORE</div>
 <div class="grid" id="grid"></div>
 
 <div class="nav"><div class="active">🏠<br>Home</div><div>📺<br>Live</div><div>⚽<br>Sports</div><div>👤<br>Profile</div></div>
 
 <script>
 const channels=[
-{id:"fifa",cat:"sports",name:"FIFA TV",icon:"⚽",desc:"FIFA official live & goals",url:"https://www.youtube.com/embed/JGwWNGJdvx8?autoplay=1"},
-{id:"supersport",cat:"sports",name:"SuperSport",icon:"🏆",desc:"African football highlights",url:"https://www.youtube.com/embed/86YLFOog4GM?autoplay=1"},
-{id:"espn",cat:"sports",name:"ESPN Africa",icon:"🏈",desc:"Live analysis & highlights",url:"https://www.youtube.com/embed/5qap5aO4i9A?autoplay=1"},
-{id:"gpl",cat:"sports",name:"Ghana Premier League",icon:"🇬🇭",desc:"GPL goals & live",url:"https://www.youtube.com/embed/l9AzO1FmSxQ?autoplay=1"},
-{id:"gtv",cat:"ghana",name:"GTV Ghana",icon:"📺",desc:"Ghana National TV",url:"https://www.youtube.com/embed/2OEL4P1Rz04?autoplay=1"},
-{id:"utv",cat:"ghana",name:"UTV Ghana",icon:"📡",desc:"Despite Media",url:"https://www.youtube.com/embed/W0L6l2GfR5o?autoplay=1"},
-{id:"joy",cat:"ghana",name:"JoyNews",icon:"📰",desc:"JoyNews Live 24/7",url:"https://www.youtube.com/embed/live?channel=UC8d8PVoOWc6H7u2b4T8y4LQ"},
-{id:"adom",cat:"ghana",name:"Adom TV",icon:"🎬",desc:"Telenovela & Entertain",url:"https://www.youtube.com/embed/hruD7fS563M?autoplay=1"},
-{id:"tv3",cat:"ghana",name:"TV3 Ghana",icon:"🌟",desc:"News & Entertainment",url:"https://www.youtube.com/embed/IQ2a1aKz6dQ?autoplay=1"},
-{id:"ghone",cat:"ghana",name:"GHOne TV",icon:"🔥",desc:"EIB Network Live",url:"https://www.youtube.com/embed/k9o2b3u4v5w?autoplay=1"},
-{id:"metro",cat:"ghana",name:"Metro TV",icon:"📢",desc:"Good Morning Ghana",url:"https://www.youtube.com/embed/hruD7fS563M?autoplay=1"},
-{id:"onua",cat:"ghana",name:"Onua TV",icon:"🎙️",desc:"Onua Maakye Live",url:"https://www.youtube.com/embed/J2p4dQa2a2o?autoplay=1"},
+{id:"fifa",cat:"sports",name:"FIFA TV",icon:"⚽",desc:"FIFA official",url:"https://www.youtube.com/embed/JGwWNGJdvx8"},
+{id:"supersport",cat:"sports",name:"SuperSport",icon:"🏆",desc:"Highlights",url:"https://www.youtube.com/embed/86YLFOog4GM"},
+{id:"espn",cat:"sports",name:"ESPN Africa",icon:"🏈",desc:"Analysis",url:"https://www.youtube.com/embed/5qap5aO4i9A"},
+{id:"gtv",cat:"ghana",name:"GTV Ghana",icon:"📺",desc:"National TV",url:"https://www.youtube.com/embed/2OEL4P1Rz04"},
+{id:"utv",cat:"ghana",name:"UTV Ghana",icon:"📡",desc:"Despite Media",url:"https://www.youtube.com/embed/kJQP7kiw5Fk"},
+{id:"joy",cat:"ghana",name:"JoyNews",icon:"📰",desc:"News 24/7",url:"https://www.youtube.com/embed/OPf0YbXqDm0"},
+{id:"adom",cat:"ghana",name:"Adom TV",icon:"🎬",desc:"Entertainment",url:"https://www.youtube.com/embed/RgKAFK5djSk"},
+{id:"ghone",cat:"ghana",name:"GHOne TV",icon:"🔥",desc:"EIB Network",url:"https://www.youtube.com/embed/hT_nvWreIhg"},
 ];
-let filter='sports';
+let filter='all';
 function render(){
  const g=document.getElementById('grid');g.innerHTML='';
  channels.filter(c=>filter==='all'||c.cat===filter).forEach(ch=>{
   const d=document.createElement('div');d.className='card';d.onclick=()=>play(ch);
-  d.innerHTML=`<div class="card-top"><span class="live-mini"><span class="dot"></span> LIVE</span><span class="tag">${ch.cat}</span></div><div class="thumb">${ch.icon}</div><h3>${ch.name}</h3><p>${ch.desc}</p>`;
+  d.innerHTML=`<div style="display:flex;justify-content:space-between;margin-bottom:10px"><span style="font-size:10px;border:1px solid #ff4d4d;color:#ff6b6b;padding:4px 10px;border-radius:14px">● LIVE</span><span style="font-size:10px;background:#1c2a1c;padding:4px 10px;border-radius:14px">${ch.cat}</span></div><div class="thumb">${ch.icon}</div><h3 style="font-size:13px">${ch.name}</h3><p style="font-size:11px;color:#7a8a7a">${ch.desc}</p>`;
   g.appendChild(d);
  });
 }
 function play(ch){
- document.getElementById('player').src=ch.url;
- document.getElementById('nowPlaying').textContent='● '+ch.name+' • LIVE';
+ document.getElementById('player').src=ch.url+"?autoplay=1";
+ document.getElementById('nowPlaying').textContent="● "+ch.name+" • LIVE";
  window.scrollTo({top:0,behavior:'smooth'});
 }
 function filterTab(cat,el){
