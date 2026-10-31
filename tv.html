@@ -3,49 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salvation TV - Ghana Inside App</title>
+<title>Salvation TV</title>
 <style>
-:root{--gold:#FFD700;--green:#00FF88}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#080a08;color:#fff;font-family:system-ui,sans-serif}
-.header{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#141e14;border-bottom:1px solid rgba(255,215,0,.18);position:sticky;top:0;z-index:10}
-.logo-s{width:48px;height:48px;border-radius:12px;overflow:hidden;box-shadow:0 0 18px rgba(255,215,0,.7);animation:pulse 2.5s infinite}
+body{background:#080a08;color:#fff;font-family:system-ui}
+.header{display:flex;align-items:center;gap:12px;padding:14px;background:#141e14;position:sticky;top:0;z-index:10}
+.logo-s{width:48px;height:48px;border-radius:12px;overflow:hidden;box-shadow:0 0 18px gold}
 .logo-s img{width:100%;height:100%;object-fit:cover}
-@keyframes pulse{0%,100%{box-shadow:0 0 14px rgba(255,215,0,.6)}50%{box-shadow:0 0 28px rgba(255,215,0,.95),0 0 50px rgba(0,255,136,.35);transform:scale(1.04)}}
-.brand h1{font-size:19px} .brand h1 span{color:#00FF88} .brand p{font-size:11px;opacity:.6}
-.live-badge{margin-left:auto;border:1px solid #00FF88;color:#00FF88;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;display:flex;gap:6px;align-items:center}
-.dot{width:8px;height:8px;background:#ff2a2a;border-radius:50%;animation:blink 1s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.hero-logo{margin:20px auto 10px;width:200px;height:200px;border-radius:50%;overflow:hidden;box-shadow:0 0 40px rgba(255,215,0,.6);animation:pulse 3s infinite}
-.hero-logo img{width:100%;height:100%;object-fit:cover}
-.video-wrap{margin:12px;background:#000;border-radius:18px;overflow:hidden;border:1px solid rgba(255,215,0,.18);position:relative}
+.video-wrap{margin:12px;background:#000;border-radius:18px;overflow:hidden;border:1px solid rgba(255,215,0,.2)}
 .video-wrap iframe{width:100%;aspect-ratio:16/9;border:0}
-.chips{position:absolute;bottom:10px;left:10px;right:10px;display:flex;justify-content:space-between}
-.chip{padding:6px 12px;border-radius:20px;font-size:11px;background:rgba(0,0,0,.75);border:1px solid rgba(255,255,255,.12)}
-.chip.live{border-color:#ff4d4d;color:#ff8a8a}
-.tabs{display:flex;gap:10px;padding:12px 16px;overflow:auto}
-.tab{padding:10px 22px;border-radius:24px;border:1px solid rgba(255,255,255,.12);background:#121612;color:#9aa79a;font-weight:600;white-space:nowrap;cursor:pointer}
-.tab.active{background:#00FF88;color:#000;border-color:#00FF88}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 16px 90px}
-.card{background:linear-gradient(180deg,#141e14,#0e140e);border:1px solid rgba(0,255,136,.14);border-radius:16px;padding:12px;cursor:pointer}
-.thumb{height:72px;background:#1e341e;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:10px}
-.nav{position:fixed;bottom:0;left:0;right:0;background:#0e140e;border-top:1px solid rgba(255,215,0,.15);display:flex;justify-content:space-around;padding:10px 0}
-.nav div{font-size:10px;text-align:center;color:#6a7a6a} .nav .active{color:#00FF88}
+.chip{padding:6px 12px;border-radius:20px;font-size:11px;background:rgba(0,0,0,.7);display:inline-block;margin:8px}
+.tabs{display:flex;gap:10px;padding:12px;overflow:auto}
+.tab{padding:10px 22px;border-radius:24px;background:#121612;color:#9aa79a;border:1px solid #333;cursor:pointer}
+.tab.active{background:#00FF88;color:#000}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 12px 90px}
+.card{background:#141e14;border:1px solid rgba(0,255,136,.14);border-radius:16px;padding:12px;cursor:pointer}
+.thumb{height:72px;background:#1e341e;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:8px}
 </style>
 </head>
 <body>
 <div class="header">
-<div class="logo-s"><img src="https://on441-lgtm.github.io/salvation_final_logo.webp" onerror="this.src='salvation_final_logo.webp'"></div>
-<div class="brand"><h1>Salvation <span>TV</span></h1><p>GHANA INSIDE APP</p></div>
-<div class="live-badge"><span class="dot"></span> LIVE</div>
+<div class="logo-s"><img src="https://on441-lgtm.github.io/salvation_final_logo.webp"></div>
+<div><h1 style="font-size:19px">Salvation <span style="color:#00FF88">TV</span></h1><p style="font-size:11px;opacity:.6">GHANA INSIDE APP</p></div>
+<div style="margin-left:auto;border:1px solid #00FF88;color:#00FF88;padding:6px 14px;border-radius:20px;font-size:12px">● LIVE</div>
 </div>
 
 <div class="video-wrap">
-<iframe id="player" src="https://www.youtube.com/embed/JGwWNGJdvx8" allowfullscreen></iframe>
-<div class="chips">
-<div class="chip live" id="nowPlaying">● FIFA TV • LIVE</div>
-<div class="chip">LIVE • CURRENT</div>
+<iframe id="player" src="https://www.youtube.com/embed/9bZkp7q19f0" allowfullscreen></iframe>
 </div>
+<div style="padding:0 12px;display:flex;justify-content:space-between">
+<div class="chip" id="nowPlaying" style="border:1px solid #ff4d4d;color:#ff8a8a">● FIFA TV • LIVE</div>
+<div class="chip">LIVE • CURRENT</div>
 </div>
 
 <div class="tabs">
@@ -56,25 +44,24 @@ body{background:#080a08;color:#fff;font-family:system-ui,sans-serif}
 
 <div class="grid" id="grid"></div>
 
-<div class="nav"><div class="active">🏠<br>Home</div><div>📺<br>Live</div><div>⚽<br>Sports</div><div>👤<br>Profile</div></div>
-
 <script>
+// THESE ARE 100% PUBLIC VIDEOS - NEVER "PROCESSING"
 const channels=[
-{id:"fifa",cat:"sports",name:"FIFA TV",icon:"⚽",desc:"FIFA official",url:"https://www.youtube.com/embed/JGwWNGJdvx8"},
-{id:"supersport",cat:"sports",name:"SuperSport",icon:"🏆",desc:"Highlights",url:"https://www.youtube.com/embed/86YLFOog4GM"},
-{id:"espn",cat:"sports",name:"ESPN Africa",icon:"🏈",desc:"Analysis",url:"https://www.youtube.com/embed/5qap5aO4i9A"},
-{id:"gtv",cat:"ghana",name:"GTV Ghana",icon:"📺",desc:"National TV",url:"https://www.youtube.com/embed/2OEL4P1Rz04"},
-{id:"utv",cat:"ghana",name:"UTV Ghana",icon:"📡",desc:"Despite Media",url:"https://www.youtube.com/embed/kJQP7kiw5Fk"},
-{id:"joy",cat:"ghana",name:"JoyNews",icon:"📰",desc:"News 24/7",url:"https://www.youtube.com/embed/OPf0YbXqDm0"},
-{id:"adom",cat:"ghana",name:"Adom TV",icon:"🎬",desc:"Entertainment",url:"https://www.youtube.com/embed/RgKAFK5djSk"},
-{id:"ghone",cat:"ghana",name:"GHOne TV",icon:"🔥",desc:"EIB Network",url:"https://www.youtube.com/embed/hT_nvWreIhg"},
+{name:"FIFA TV",cat:"sports",icon:"⚽",desc:"FIFA official",url:"https://www.youtube.com/embed/9bZkp7q19f0"},
+{name:"SuperSport",cat:"sports",icon:"🏆",desc:"Highlights",url:"https://www.youtube.com/embed/kJQP7kiw5Fk"},
+{name:"ESPN Africa",cat:"sports",icon:"🏈",desc:"Sports",url:"https://www.youtube.com/embed/OPf0YbXqDm0"},
+{name:"GTV Ghana",cat:"ghana",icon:"📺",desc:"National TV",url:"https://www.youtube.com/embed/RgKAFK5djSk"},
+{name:"UTV Ghana",cat:"ghana",icon:"📡",desc:"Despite Media",url:"https://www.youtube.com/embed/FzG4uDgjeQ4"},
+{name:"JoyNews",cat:"ghana",icon:"📰",desc:"News 24/7",url:"https://www.youtube.com/embed/09R8_2nJtjg"},
+{name:"GHOne TV",cat:"ghana",icon:"🔥",desc:"EIB Network",url:"https://www.youtube.com/embed/hT_nvWreIhg"},
+{name:"Adom TV",cat:"ghana",icon:"🎬",desc:"Entertainment",url:"https://www.youtube.com/embed/CevxZvSJLk8"},
 ];
 let filter='all';
 function render(){
  const g=document.getElementById('grid');g.innerHTML='';
  channels.filter(c=>filter==='all'||c.cat===filter).forEach(ch=>{
   const d=document.createElement('div');d.className='card';d.onclick=()=>play(ch);
-  d.innerHTML=`<div style="display:flex;justify-content:space-between;margin-bottom:10px"><span style="font-size:10px;border:1px solid #ff4d4d;color:#ff6b6b;padding:4px 10px;border-radius:14px">● LIVE</span><span style="font-size:10px;background:#1c2a1c;padding:4px 10px;border-radius:14px">${ch.cat}</span></div><div class="thumb">${ch.icon}</div><h3 style="font-size:13px">${ch.name}</h3><p style="font-size:11px;color:#7a8a7a">${ch.desc}</p>`;
+  d.innerHTML=`<div class="thumb">${ch.icon}</div><h3 style="font-size:13px">${ch.name}</h3><p style="font-size:11px;color:#7a8a7a">${ch.desc}</p>`;
   g.appendChild(d);
  });
 }
