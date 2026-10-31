@@ -3,71 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salvation TV - Final</title>
+<title>Salvation TV - Ghana Live</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#080a08;color:#fff;font-family:system-ui}
 .header{display:flex;align-items:center;gap:12px;padding:14px;background:#141e14;position:sticky;top:0;z-index:20}
-.logo-s{width:48px;height:48px;border-radius:12px;background:#000;display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px gold;font-weight:900;color:gold;font-size:22px}
-.player-box{margin:12px;background:#000;border-radius:18px;overflow:hidden;border:1px solid gold;height:52vh}
-.player-box iframe{width:100%;height:100%;border:0}
-.note{padding:8px 16px;font-size:11px;text-align:center;background:#0f1a0f}
-.note.inside{color:#00FF88}
-.note.outside{color:#ff9a9a}
+.logo-s{width:52px;height:52px;border-radius:14px;background:#000;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px gold;font-weight:900;color:gold;font-size:24px}
+.hero{margin:12px;background:linear-gradient(135deg,#141e14,#0f1a0f);border-radius:20px;padding:20px;text-align:center;border:1px solid rgba(0,255,136,.2)}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 12px 90px}
-.card{background:#141e14;border-radius:16px;padding:14px;cursor:pointer;text-align:center;border:1px solid #333}
-.card.inside{border-color:rgba(0,255,136,.4)}
-.card.outside{border-color:rgba(255,80,80,.4);background:#1a1414}
-.badge{font-size:10px;padding:3px 8px;border-radius:10px;margin-top:6px;display:inline-block}
-.badge.inside{background:#00FF88;color:#000}
-.badge.outside{background:#ff5050;color:#fff}
+.card{background:#141e14;border:1px solid rgba(0,255,136,.15);border-radius:18px;padding:16px;cursor:pointer;text-align:center;transition:.2s}
+.card:active{transform:scale(.96);background:#1e2e1e}
+.badge{font-size:10px;padding:4px 10px;border-radius:20px;background:#ff0000;color:#fff;margin-top:8px;display:inline-block}
+.note{padding:10px;text-align:center;font-size:11px;color:#9aa79a}
 </style>
 </head>
 <body>
-<div class="header"><div class="logo-s">S</div><div><h1 style="font-size:19px">Salvation <span style="color:#00FF88">TV</span></h1><p style="font-size:11px;opacity:.6">FINAL - GHANA INSIDE, FIFA+ OUTSIDE</p></div></div>
+<div class="header"><div class="logo-s">S</div><div><h1 style="font-size:20px">Salvation <span style="color:#00FF88">TV</span></h1><p style="font-size:11px;opacity:.6">TAP TO WATCH LIVE ON YOUTUBE</p></div></div>
 
-<div class="player-box"><iframe id="player" src="https://www.youtube-nocookie.com/embed/@myjoyonline/live?autoplay=1&mute=1&origin=https://on441-lgtm.github.io" allowfullscreen allow="autoplay; fullscreen"></iframe></div>
-<div class="note inside" id="status">Playing: JoyNews NOW - CURRENT LIVE Inside ✓</div>
+<div class="hero">
+<h2 style="font-size:18px">🇬🇭 Ghana Live TV</h2>
+<p style="font-size:12px;opacity:.7;margin-top:6px">Tap any station — e go carry you go YouTube Live directly. No error, no block.</p>
+</div>
 
 <div class="grid" id="grid"></div>
+<div class="note">All stations open on official YouTube Live • No more "Video unavailable"</div>
 
 <script>
-const origin="https://on441-lgtm.github.io";
-const ytLive = (h) => `https://www.youtube-nocookie.com/embed/${h}/live?autoplay=1&mute=1&origin=${origin}`;
-const ytId = (id) => `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&origin=${origin}`;
-
-const channels=[
-{name:"JoyNews NOW",icon:"📰",src:ytLive("@myjoyonline"),type:"inside",note:"CURRENT LIVE - Plays Inside"},
-{name:"Adom TV NOW",icon:"🎬",src:ytLive("@adomtvgh"),type:"inside",note:"Plays Inside"},
-{name:"TV3 Ghana NOW",icon:"📺",src:ytLive("@TV3Ghana"),type:"inside",note:"Plays Inside"},
-{name:"UTV Ghana NOW",icon:"📡",src:ytLive("@utvghanaOfficial"),type:"inside",note:"Plays Inside"},
-
-{name:"Ghana vs Argentina",icon:"🇬🇭",id:"-XRmFkzKq5E",type:"outside",note:"FIFA+ blocks - Tap to watch on YouTube"},
-{name:"Zambia vs France",icon:"🏆",id:"z6PCKMYoDSs",type:"outside",note:"FIFA+ blocks - Tap to YouTube"},
-{name:"Spain vs USA",icon:"🥅",id:"LbfvOpmiA7g",type:"outside",note:"FIFA+ blocks - Tap to YouTube"},
-{name:"Nigeria vs Mexico",icon:"🇳🇬",id:"1e-Yq-GATiY",type:"outside",note:"FIFA+ blocks - Tap to YouTube"},
+const stations=[
+{name:"JoyNews",handle:"@myjoyonline",icon:"📰",color:"#ff0000"},
+{name:"Joy Prime",handle:"@JoyPrimeTV",icon:"⭐",color:"#ff0055"},
+{name:"Adom TV",handle:"@adomtvgh",icon:"🎬",color:"#00a651"},
+{name:"UTV Ghana",handle:"@utvghanaOfficial",icon:"📡",color:"#ffcc00"},
+{name:"GTV Ghana",handle:"@GTVGhana",icon:"📺",color:"#006b3d"},
+{name:"TV3 Ghana",handle:"@TV3Ghana",icon:"📺",color:"#e4002b"},
+{name:"GHOne TV",handle:"@GHOneTV",icon:"📡",color:"#001489"},
+{name:"Onua TV",handle:"@OnuaTV",icon:"🎥",color:"#ff6600"},
+{name:"Metro TV",handle:"@metrotvgh",icon:"📺",color:"#0047ab"},
+{name:"Angel TV",handle:"@AngelTVGhana",icon:"😇",color:"#7b00ff"},
+{name:"Net2 TV",handle:"@Net2TVGhana",icon:"📡",color:"#222"},
+{name:"Citi TV",handle:"@CitiTube",icon:"🏙️",color:"#00b4d8"},
+{name:"Ghana vs Argentina",handle:"@fifa",id:"-XRmFkzKq5E",icon:"🇬🇭",color:"#ff5050",isVideo:true},
+{name:"Zambia vs France",handle:"@fifa",id:"z6PCKMYoDSs",icon:"🏆",color:"#ff5050",isVideo:true},
+{name:"Nigeria vs Mexico",handle:"@fifa",id:"1e-Yq-GATiY",icon:"🇳🇬",color:"#ff5050",isVideo:true},
 ];
 
 const grid=document.getElementById('grid');
-const status=document.getElementById('status');
-const player=document.getElementById('player');
-
-channels.forEach(ch=>{
- const d=document.createElement('div');
- d.className='card '+ch.type;
+stations.forEach(s=>{
+ const d=document.createElement('div');d.className='card';
  d.onclick=()=>{
-  if(ch.type==='inside'){
-   player.src=ch.src;
-   status.className='note inside';
-   status.textContent=`Playing: ${ch.name} • Inside App ✓`;
+  if(s.isVideo){
+   window.open(`https://www.youtube.com/watch?v=${s.id}`,'_blank');
   }else{
-   // FIFA+ style - Ghana vs too - open YouTube directly
-   status.className='note outside';
-   status.textContent=`Opening ${ch.name} on YouTube (FIFA+ requires it)`;
-   window.open(`https://www.youtube.com/watch?v=${ch.id}`,'_blank');
+   window.open(`https://www.youtube.com/${s.handle}/live`,'_blank');
   }
  };
- d.innerHTML=`<div style="font-size:32px">${ch.icon}</div><h3 style="font-size:13px;margin-top:8px">${ch.name}</h3><p style="font-size:10px;opacity:.7;margin-top:4px">${ch.note}</p><span class="badge ${ch.type}">${ch.type==='inside'?'Inside ✓':'YouTube ↗'}</span>`;
+ d.innerHTML=`
+  <div style="font-size:36px">${s.icon}</div>
+  <h3 style="font-size:13px;margin-top:8px">${s.name}</h3>
+  <span class="badge">LIVE ↗ YouTube</span>
+  <p style="font-size:10px;opacity:.5;margin-top:6px">${s.handle}</p>
+ `;
  grid.appendChild(d);
 });
 </script>
