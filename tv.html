@@ -31,7 +31,7 @@ body{background:#080a08;color:#fff;font-family:system-ui}
 <body>
 <div class="header"><img src="logo.png" class="logo-img"><div><h1 style="font-size:19px">Salvation <span style="color:#00FF88">TV</span></h1><p style="font-size:10px;opacity:.6">Live Television</p></div></div>
 
-<div class="player-box"><iframe id="player" src="https://www.youtube.com/embed/live_stream?channel=UCNye-wNBqNL5ZzHSJj3l8Bg&autoplay=1&mute=1" allowfullscreen allow="autoplay; fullscreen"></iframe></div>
+<div class="player-box"><iframe id="player" src="https://www.youtube-nocookie.com/embed/gCNeDWCI0vo?autoplay=1&mute=1" allowfullscreen allow="autoplay; fullscreen"></iframe></div>
 <div class="note" id="status">Al Jazeera Live</div>
 
 <div class="tabs">
@@ -47,12 +47,23 @@ body{background:#080a08;color:#fff;font-family:system-ui}
 <div class="grid hidden" id="grid-links"></div>
 
 <script>
-const ytChannel = (c) => `https://www.youtube.com/embed/live_stream?channel=${c}&autoplay=1&mute=1`;
+const gi=document.getElementById('grid-intl');
+const gg=document.getElementById('grid-ghana');
+const gf=document.getElementById('grid-fifa');
+const gll=document.getElementById('grid-links');
+const player=document.getElementById('player');
+const status=document.getElementById('status');
+
+function playVideo(id,name){
+ player.src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1`;
+ status.textContent=name+" Live";
+ window.scrollTo({top:0,behavior:'smooth'});
+}
 
 const intl=[
-{name:"Al Jazeera",icon:"W",channel:"UCNye-wNBqNL5ZzHSJj3l8Bg"},
-{name:"DW News",icon:"D",channel:"UCknLrEdhRCp1aegoMqRaAUA"},
-{name:"France 24",icon:"F",channel:"UCCCPCZNChQdGa9EkATeye4g"},
+{name:"Al Jazeera",icon:"W",video:"gCNeDWCI0vo"},
+{name:"DW News",icon:"D",video:"4IfaKA1sGhA"},
+{name:"France 24",icon:"F",video:"Ap-og3N-pFU"},
 ];
 
 const ghana=[
@@ -101,16 +112,9 @@ const footballLinks=[
 {name:"Max TV Live",url:"https://max.com.gh/live",icon:"M"},
 ];
 
-const gi=document.getElementById('grid-intl');
-const gg=document.getElementById('grid-ghana');
-const gf=document.getElementById('grid-fifa');
-const gll=document.getElementById('grid-links');
-const player=document.getElementById('player');
-const status=document.getElementById('status');
-
 intl.forEach(s=>{
  const d=document.createElement('div');d.className='card inside';
- d.onclick=()=>{player.src=ytChannel(s.channel);status.textContent=s.name;window.scrollTo({top:0,behavior:'smooth'});};
+ d.onclick=()=>playVideo(s.video,s.name);
  d.innerHTML=`<div style="font-size:28px">${s.icon}</div><h3 style="font-size:11px;margin-top:6px">${s.name}</h3><span class="badge inside">Live</span>`;
  gi.appendChild(d);
 });
