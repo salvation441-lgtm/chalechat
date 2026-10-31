@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salvation TV - Real Football</title>
+<title>Salvation TV - Smart Play</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#080a08;color:#fff;font-family:system-ui}
@@ -11,34 +11,70 @@ body{background:#080a08;color:#fff;font-family:system-ui}
 .logo-s{width:48px;height:48px;border-radius:12px;background:#000;display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px gold;font-weight:900;color:gold;font-size:22px}
 .player-box{margin:12px;background:#000;border-radius:18px;overflow:hidden;border:1px solid gold;height:52vh}
 .player-box iframe{width:100%;height:100%;border:0}
+.tabs{display:flex;gap:10px;padding:12px;overflow:auto}
+.tab{padding:10px 22px;border-radius:24px;background:#121612;color:#9aa79a;border:1px solid #333;white-space:nowrap;cursor:pointer}
+.tab.active{background:#00FF88;color:#000}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 12px 90px}
 .card{background:#141e14;border:1px solid rgba(0,255,136,.14);border-radius:16px;padding:12px;cursor:pointer;text-align:center}
+.card.blocked{border-color:#ff5050;background:#1a1414}
 .note{padding:8px 16px;font-size:11px;color:#00FF88;text-align:center;background:#0f1a0f}
 </style>
 </head>
 <body>
-<div class="header"><div class="logo-s">S</div><div><h1 style="font-size:19px">Salvation <span style="color:#00FF88">TV</span></h1><p style="font-size:11px;opacity:.6">REAL FOOTBALL - NO ED SHEERAN</p></div></div>
-<div class="player-box"><iframe id="player" src="https://www.youtube-nocookie.com/embed/-XRmFkzKq5E?autoplay=1&mute=1&origin=https://on441-lgtm.github.io" allowfullscreen allow="autoplay; fullscreen"></iframe></div>
-<div class="note" id="status">Playing: Ghana vs Argentina - Real FIFA U-17 - Inside App ✓</div>
+<div class="header"><div class="logo-s">S</div><div><h1 style="font-size:19px">Salvation <span style="color:#00FF88">TV</span></h1><p style="font-size:11px;opacity:.6">SMART PLAY - NO BLOCK BOX</p></div></div>
+<div class="player-box"><iframe id="player" src="https://www.youtube-nocookie.com/embed/WZl6xCiT0LE?autoplay=1&mute=1&origin=https://on441-lgtm.github.io" allowfullscreen allow="autoplay; fullscreen"></iframe></div>
+<div class="note" id="status">Playing: JoyNews REAL LIVE - Inside App ✓</div>
+
+<div class="tabs">
+<div class="tab active" onclick="filterTab('ghana',this)">Ghana Real</div>
+<div class="tab" onclick="filterTab('sports',this)">Sports</div>
+</div>
 <div class="grid" id="grid"></div>
+
 <script>
 const origin="https://on441-lgtm.github.io";
-const yt=(id)=>`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&origin=${origin}&modestbranding=1&rel=0`;
-const channels=[
-{name:"Ghana vs Argentina",id:"-XRmFkzKq5E",icon:"🇬🇭"},
-{name:"Zambia vs France",id:"z6PCKMYoDSs",icon:"🏆"},
-{name:"Spain vs USA",id:"LbfvOpmiA7g",icon:"🥅"},
-{name:"Nigeria vs Mexico",id:"1e-Yq-GATiY",icon:"🇳🇬"},
-{name:"Chile vs Spain",id:"Cmz94Pbgf5Q",icon:"⚽"},
-{name:"JoyNews REAL",id:"WZl6xCiT0LE",icon:"📰"},
+const yt=(id)=>`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&origin=${origin}`;
+
+const ghanaChannels=[
+{name:"JoyNews REAL LIVE",icon:"📰",id:"WZl6xCiT0LE",type:"inside",desc:"Plays Inside ✓"},
+{name:"UTV Ghana Live",icon:"📡",id:"l9AzO1FmSxQ",type:"inside",desc:"Plays Inside ✓"},
+{name:"GTV Ghana",icon:"📺",id:"2OEL4P1Rz04",type:"inside",desc:"Plays Inside ✓"},
 ];
-const g=document.getElementById('grid');
-channels.forEach(ch=>{
- const d=document.createElement('div');d.className='card';
- d.onclick=()=>{document.getElementById('player').src=yt(ch.id);document.getElementById('status').textContent=`Playing: ${ch.name} • REAL Football ✓`;};
- d.innerHTML=`<div style="font-size:28px">${ch.icon}</div><h3 style="font-size:13px;margin-top:6px">${ch.name}</h3><p style="font-size:10px;color:#00FF88">REAL FOOTBALL ✓</p>`;
- g.appendChild(d);
-});
+
+const sportsChannels=[
+{name:"Ghana vs Argentina",icon:"🇬🇭",id:"-XRmFkzKq5E",type:"outside",desc:"FIFA blocks inside - tap to watch on YouTube"},
+{name:"Zambia vs France",icon:"🏆",id:"z6PCKMYoDSs",type:"outside",desc:"FIFA blocks inside - tap to watch"},
+{name:"Spain vs USA",icon:"🥅",id:"LbfvOpmiA7g",type:"outside",desc:"FIFA blocks inside"},
+{name:"Nigeria vs Mexico",icon:"🇳🇬",id:"1e-Yq-GATiY",type:"outside",desc:"FIFA blocks inside"},
+];
+
+let current='ghana';
+function filterTab(cat,el){
+ current=cat;
+ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+ el.classList.add('active');
+ render();
+}
+function render(){
+ const g=document.getElementById('grid');g.innerHTML='';
+ const list=current==='sports'?sportsChannels:ghanaChannels;
+ list.forEach(ch=>{
+  const d=document.createElement('div');d.className='card'+(ch.type==='outside'?' blocked':'');
+  d.onclick=()=>{
+   if(ch.type==='inside'){
+     document.getElementById('player').src=yt(ch.id);
+     document.getElementById('status').textContent=`Playing: ${ch.name} • Inside App ✓`;
+   } else {
+     // FIFA blocks inside, so open directly on YouTube - no ugly box
+     window.open(`https://www.youtube.com/watch?v=${ch.id}`,'_blank');
+     document.getElementById('status').textContent=`Opening: ${ch.name} on YouTube (FIFA requires it)`;
+   }
+  };
+  d.innerHTML=`<div style="font-size:28px">${ch.icon}</div><h3 style="font-size:13px;margin-top:6px">${ch.name}</h3><p style="font-size:10px;color:${ch.type==='inside'?'#00FF88':'#ff9a9a'}">${ch.desc}</p>`;
+  g.appendChild(d);
+ });
+}
+render();
 </script>
 </body>
 </html>
