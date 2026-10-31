@@ -18,18 +18,18 @@ body{
 }
 .header{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(10,20,10,.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
 .logo-img{width:32px;height:32px;border-radius:8px;box-shadow:0 0 12px gold;object-fit:cover}
-.player-box{margin:8px 10px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.12);height:28dvh;min-height:160px;background:#000;box-shadow:0 8px 30px rgba(0,0,0,.6);flex-shrink:0}
+.player-box{margin:8px 10px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.12);height:28dvh;min-height:160px;background:#000;flex-shrink:0}
 .player-box video{width:100%;height:100%;background:#000}
 .tabs{display:flex;gap:6px;padding:8px 10px;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
 .tab{padding:8px 16px;border-radius:20px;font-weight:800;font-size:9px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);backdrop-filter:blur(10px);white-space:nowrap;cursor:pointer}
-.tab.active{background:#fff;color:#000;border-color:#fff;box-shadow:0 4px 15px rgba(255,255,255,.4)}
+.tab.active{background:#fff;color:#000;border-color:#fff}
 .content{flex:1;overflow-y:auto;padding-bottom:10px}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px 10px}
-.card{background:linear-gradient(145deg, rgba(255,255,255,.09), rgba(255,255,255,.03));backdrop-filter:blur(14px);border-radius:14px;padding:12px 6px;text-align:center;border:1px solid rgba(255,255,255,.1);box-shadow:0 4px 12px rgba(0,0,0,.3);cursor:pointer}
+.card{background:linear-gradient(145deg, rgba(255,255,255,.09), rgba(255,255,255,.03));backdrop-filter:blur(14px);border-radius:14px;padding:12px 6px;text-align:center;border:1px solid rgba(255,255,255,.1);cursor:pointer}
 .card:active{transform:scale(.95)}
 .card.free{border-color:rgba(0,255,136,.5)}
 .card div{font-size:20px;font-weight:900}
-.card h3{font-size:9px;margin-top:4px;line-height:1.1;font-weight:700}
+.card h3{font-size:9px;margin-top:4px;font-weight:700;line-height:1.1}
 .badge{font-size:6px;padding:3px 6px;border-radius:10px;margin-top:6px;display:inline-block;font-weight:800}
 .badge.free{background:#00ff88;color:#000}
 .badge.gold{background:linear-gradient(90deg,gold,#ffcc00);color:#000}
@@ -39,95 +39,45 @@ body{
 </head>
 <body>
 <div class="header"><img src="logo.png" class="logo-img"><div><h1 style="font-size:13px">Salvation <span style="color:#00FF88">TV</span></h1></div></div>
-<div class="player-box"><video id="playerVideo" controls autoplay muted playsinline></video></div>
+<div class="player-box"><video id="v" controls autoplay muted playsinline></video></div>
 <div class="tabs">
-<div class="tab active" id="tab-intl" onclick="switchTab('intl')">Inside</div>
-<div class="tab" id="tab-ghana" onclick="switchTab('ghana')">Ghana</div>
-<div class="tab" id="tab-global" onclick="switchTab('global')">Global</div>
-<div class="tab" id="tab-fifa" onclick="switchTab('fifa')">FIFA+</div>
-<div class="tab" id="tab-links" onclick="switchTab('links')">Paid</div>
+<div class="tab active" id="t-intl" onclick="st('intl')">Inside</div>
+<div class="tab" id="t-ghana" onclick="st('ghana')">Ghana</div>
+<div class="tab" id="t-global" onclick="st('global')">Global</div>
+<div class="tab" id="t-fifa" onclick="st('fifa')">FIFA+</div>
+<div class="tab" id="t-links" onclick="st('links')">Paid</div>
 </div>
 <div class="content">
-<div class="grid" id="grid-intl"></div>
-<div class="grid hidden" id="grid-ghana"></div>
-<div class="grid hidden" id="grid-global"></div>
-<div class="grid hidden" id="grid-fifa"></div>
-<div class="grid hidden" id="grid-links"></div>
+<div class="grid" id="g-intl"></div>
+<div class="grid hidden" id="g-ghana"></div>
+<div class="grid hidden" id="g-global"></div>
+<div class="grid hidden" id="g-fifa"></div>
+<div class="grid hidden" id="g-links"></div>
 </div>
 <script>
-const gi=document.getElementById('grid-intl'),gg=document.getElementById('grid-ghana'),gglobal=document.getElementById('grid-global'),gf=document.getElementById('grid-fifa'),gll=document.getElementById('grid-links'),video=document.getElementById('playerVideo');
-let hls=null;
-function playHLS(url){
-  if(hls){hls.destroy();}
-  if(Hls.isSupported()){hls=new Hls();hls.loadSource(url);hls.attachMedia(video);hls.on(Hls.Events.MANIFEST_PARSED,()=>video.play());}
-  else if(video.canPlayType('application/vnd.apple.mpegurl')){video.src=url;video.play();}
-}
-const intl=[
-{name:"Al Jazeera",icon:"W",hls:"https://live-hls-web-aje.getaj.net/AJE/01.m3u8"},
-{name:"DW News",icon:"D",hls:"https://dwamdstream104.akamaized.net/hls/live/2015526/dwstream104/master.m3u8"},
-{name:"France 24",icon:"F",hls:"https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master.m3u8"},
-];
-const ghana=[
-{name:"Max TV",icon:"M",hls:"https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8",gold:true},
-{name:"JoyNews",handle:"@myjoyonline",icon:"J"},
-{name:"UTV",handle:"@UTVGhanaOnline",icon:"U"},
-{name:"GTV",handle:"@GTVGhana",icon:"G"},
-{name:"TV3",handle:"@TV3Ghana",icon:"3"},
-{name:"GHOne",handle:"@GHOneTV",icon:"G"},
-{name:"Metro",handle:"@metrotvgh",icon:"M"},
-{name:"Citi",handle:"@CitiTube",icon:"C"},
-{name:"Angel",handle:"@AngelTVGhana",icon:"A"},
-];
+const v=document.getElementById('v');let h=null;
+function p(u){if(h){h.destroy();}if(Hls.isSupported()){h=new Hls();h.loadSource(u);h.attachMedia(v);h.on(Hls.Events.MANIFEST_PARSED,()=>v.play());}else{v.src=u;v.play();}}
+const intl=[{n:"Al Jazeera",i:"W",u:"https://live-hls-web-aje.getaj.net/AJE/01.m3u8"},{n:"DW News",i:"D",u:"https://dwamdstream104.akamaized.net/hls/live/2015526/dwstream104/master.m3u8"},{n:"France 24",i:"F",u:"https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master.m3u8"}];
+const ghana=[{n:"Max TV",i:"M",u:"https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8",g:true},{n:"JoyNews",h:"@myjoyonline",i:"J"},{n:"UTV",h:"@UTVGhanaOnline",i:"U"},{n:"GTV",h:"@GTVGhana",i:"G"},{n:"TV3",h:"@TV3Ghana",i:"3"},{n:"GHOne",h:"@GHOneTV",i:"G"},{n:"Metro",h:"@metrotvgh",i:"M"},{n:"Citi",h:"@CitiTube",i:"C"},{n:"Angel",h:"@AngelTVGhana",i:"A"}];
 const globalFree=[
-{name:"FIFA+ Global",url:"https://www.fifa.com/fifaplus/en/live",icon:"F"},
-{name:"J-League",url:"https://www.youtube.com/@JLEAGUEINTERNATIONAL/live",icon:"J"},
-{name:"ISL",url:"https://www.youtube.com/@IndianSuperLeague/live",icon:"I"},
+{n:"FIFA+ Global",u:"https://www.fifa.com/fifaplus/en/live",i:"F"},
+{n:"J-League",u:"https://www.youtube.com/@JLEAGUEINTERNATIONAL/live",i:"J"},
+{n:"ISL",u:"https://www.youtube.com/@IndianSuperLeague/live",i:"I"},
+{n:"LaLiga",u:"https://www.youtube.com/@LaLiga/live",i:"L"},
+{n:"Bundesliga",u:"https://www.youtube.com/@Bundesliga/live",i:"B"},
+{n:"Serie A",u:"https://www.youtube.com/@SerieA/live",i:"S"}
 ];
-const fifa=[{name:"FIFA+",url:"https://www.fifa.com/fifaplus/en/live",icon:"F"}];
-const paidEPL=[
-{name:"SuperSport",url:"https://www.supersport.com/",icon:"S"},
-{name:"Canal+",url:"https://www.canalplus-afrique.com/",icon:"C"},
-{name:"DStv Now",url:"https://now.dstv.com/",icon:"D"},
-];
-intl.forEach(s=>{
- const d=document.createElement('div');d.className='card free';
- d.onclick=()=>playHLS(s.hls);
- d.innerHTML=`<div>${s.icon}</div><h3>${s.name}</h3><span class="badge free">INSIDE</span>`;gi.appendChild(d);
-});
-ghana.forEach(s=>{
- const d=document.createElement('div');
- if(s.gold){
-   d.className='card free';d.style.borderColor='gold';d.style.background='linear-gradient(145deg, rgba(255,215,0,.15), rgba(255,255,255,.05))';
-   d.onclick=()=>playHLS(s.hls);
-   d.innerHTML=`<div>${s.icon}</div><h3>${s.name}</h3><span class="badge gold">PLAY INSIDE</span>`;
- }else{
-   d.className='card';d.onclick=()=>window.open(`https://www.youtube.com/${s.handle}/live`,'_blank');
-   d.innerHTML=`<div>${s.icon}</div><h3>${s.name}</h3><span class="badge out">YT LIVE</span>`;
- }
- gg.appendChild(d);
-});
-globalFree.forEach(s=>{
- const d=document.createElement('div');d.className='card free';
- d.onclick=()=>window.open(s.url,'_blank');
- d.innerHTML=`<div>${s.icon}</div><h3>${s.name}</h3><span class="badge free">FREE</span>`;gglobal.appendChild(d);
-});
-fifa.forEach(s=>{
- const d=document.createElement('div');d.className='card';d.style.borderColor='#ff5050';
- d.onclick=()=>window.open(s.url,'_blank');
- d.innerHTML=`<div>${s.icon}</div><h3>${s.name}</h3><span class="badge" style="background:#ff5050;color:#fff">FIFA+</span>`;gf.appendChild(d);
-});
-paidEPL.forEach(s=>{
- const d=document.createElement('div');d.className='card';d.style.borderColor='#ff5050';
- d.onclick=()=>window.open(s.url,'_blank');
- d.innerHTML=`<div>${s.icon}</div><h3>${s.name}</h3><span class="badge" style="background:#ff5050;color:#fff">PAID</span>`;gll.appendChild(d);
-});
-function switchTab(t){
- ['intl','ghana','global','fifa','links'].forEach(id=>{
-   document.getElementById('grid-'+id).classList.toggle('hidden',t!==id);
-   document.getElementById('tab-'+id).classList.toggle('active',t===id);
- });
-}
-playHLS('https://live-hls-web-aje.getaj.net/AJE/01.m3u8');
+const fifa=[{n:"FIFA+",u:"https://www.fifa.com/fifaplus/en/live",i:"F"}];
+const paid=[{n:"SuperSport",u:"https://www.supersport.com/",i:"S"},{n:"Canal+",u:"https://www.canalplus-afrique.com/",i:"C"},{n:"DStv Now",u:"https://now.dstv.com/",i:"D"}];
+function mk(g,fn,o){const e=document.createElement('div');e.className='card '+(o.g||o.free?'free':'');if(o.g){e.style.borderColor='gold';}e.onclick=fn;e.innerHTML=`<div>${o.i}</div><h3>${o.n}</h3><span class="badge ${o.g?'gold':o.free?'free':'out'}">${o.g?'PLAY INSIDE':o.free?'FREE':o.b||'YT'}</span>`;g.appendChild(e);}
+const gi=document.getElementById('g-intl'),gg=document.getElementById('g-ghana'),ggl=document.getElementById('g-global'),gf=document.getElementById('g-fifa'),gl=document.getElementById('g-links');
+intl.forEach(s=>mk(gi,()=>p(s.u),{n:s.n,i:s.i,free:true}));
+ghana.forEach(s=>{if(s.g){mk(gg,()=>p(s.u),{n:s.n,i:s.i,g:true});}else{mk(gg,()=>window.open(`https://www.youtube.com/${s.h}/live`,'_blank'),{n:s.n,i:s.i});}});
+globalFree.forEach(s=>mk(ggl,()=>window.open(s.u,'_blank'),{n:s.n,i:s.i,free:true}));
+fifa.forEach(s=>mk(gf,()=>window.open(s.u,'_blank'),{n:s.n,i:s.i,b:'FIFA+'}));
+paid.forEach(s=>mk(gl,()=>window.open(s.u,'_blank'),{n:s.n,i:s.i,b:'PAID'}));
+function st(t){['intl','ghana','global','fifa','links'].forEach(id=>{document.getElementById('g-'+id).classList.toggle('hidden',t!==id);document.getElementById('t-'+id).classList.toggle('active',t===id);});}
+p("https://live-hls-web-aje.getaj.net/AJE/01.m3u8");
 </script>
 </body>
 </html>
