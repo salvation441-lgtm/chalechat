@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salvation TV - Auto Matches</title>
+<title>Salvation TV</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#080a08;color:#fff;font-family:system-ui}
@@ -20,114 +20,89 @@ body{background:#080a08;color:#fff;font-family:system-ui}
 .card.inside{border-color:#00FF88}
 .card.outside{border-color:#444}
 .card.legal{border-color:#00aaff}
-.card.live{border-color:#ff2222;background:#1a1010;animation:pulse 2s infinite}
-@keyframes pulse{0%{border-color:#ff2222}50%{border-color:gold}100%{border-color:#ff2222}}
 .badge{font-size:9px;padding:5px 10px;border-radius:20px;margin-top:8px;display:inline-block;font-weight:700}
 .badge.inside{background:#00FF88;color:#000}
 .badge.outside{background:#333;color:#fff}
 .badge.fifa{background:#ff5050;color:#fff}
 .badge.legal{background:#00aaff;color:#fff}
-.badge.live{background:#ff2222;color:#fff}
 .hidden{display:none}
-.auto-bar{background:#1a1a00;padding:8px 16px;text-align:center;font-size:11px;color:gold;border-bottom:1px solid #333}
 </style>
 </head>
 <body>
-<div class="header"><img src="logo.png" class="logo-img"><div><h1 style="font-size:19px">Salvation <span style="color:#00FF88">TV</span></h1><p style="font-size:10px;opacity:.6" id="dateBar">Auto Matches</p></div></div>
+<div class="header"><img src="logo.png" class="logo-img"><div><h1 style="font-size:19px">Salvation <span style="color:#00FF88">TV</span></h1><p style="font-size:10px;opacity:.6">Live Television</p></div></div>
 
 <div class="player-box"><iframe id="player" src="https://www.youtube.com/embed/live_stream?channel=UCNye-wNBqNL5ZzHSJj3l8Bg&autoplay=1&mute=1" allowfullscreen allow="autoplay; fullscreen"></iframe></div>
 <div class="note" id="status">Al Jazeera Live</div>
-<div class="auto-bar" id="autoBar">📅 Loading today's matches...</div>
 
 <div class="tabs">
-<div class="tab active" id="tab-intl" onclick="switchTab('intl')">🌍 Inside</div>
-<div class="tab" id="tab-ghana" onclick="switchTab('ghana')">🇬🇭 Ghana (25)</div>
-<div class="tab" id="tab-live" onclick="switchTab('live')">⚽ TODAY LIVE</div>
-<div class="tab" id="tab-fifa" onclick="switchTab('fifa')">🏆 FIFA+</div>
-<div class="tab" id="tab-links" onclick="switchTab('links')">📺 Links</div>
+<div class="tab active" id="tab-intl" onclick="switchTab('intl')">Inside</div>
+<div class="tab" id="tab-ghana" onclick="switchTab('ghana')">Ghana</div>
+<div class="tab" id="tab-fifa" onclick="switchTab('fifa')">FIFA+</div>
+<div class="tab" id="tab-links" onclick="switchTab('links')">Football</div>
 </div>
 
 <div class="grid" id="grid-intl"></div>
 <div class="grid hidden" id="grid-ghana"></div>
-<div class="grid hidden" id="grid-live"></div>
 <div class="grid hidden" id="grid-fifa"></div>
 <div class="grid hidden" id="grid-links"></div>
 
 <script>
 const ytChannel = (c) => `https://www.youtube.com/embed/live_stream?channel=${c}&autoplay=1&mute=1`;
-const today = new Date();
-const todayStr = today.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short',year:'numeric'});
-
-document.getElementById('dateBar').textContent = todayStr;
-document.getElementById('autoBar').textContent = `📅 ${todayStr} - Auto Updated Matches`;
 
 const intl=[
-{name:"Al Jazeera",icon:"🌍",channel:"UCNye-wNBqNL5ZzHSJj3l8Bg"},
-{name:"DW News",icon:"🇩🇪",channel:"UCknLrEdhRCp1aegoMqRaAUA"},
-{name:"France 24",icon:"🇫🇷",channel:"UCCCPCZNChQdGa9EkATeye4g"},
+{name:"Al Jazeera",icon:"W",channel:"UCNye-wNBqNL5ZzHSJj3l8Bg"},
+{name:"DW News",icon:"D",channel:"UCknLrEdhRCp1aegoMqRaAUA"},
+{name:"France 24",icon:"F",channel:"UCCCPCZNChQdGa9EkATeye4g"},
 ];
 
 const ghana=[
-{name:"JoyNews",handle:"@myjoyonline",icon:"📰"},
-{name:"Joy Prime",handle:"@JoyPrimeTV",icon:"⭐"},
-{name:"Adom TV",handle:"@adomtvgh",icon:"🎬"},
-{name:"UTV Ghana",handle:"@UTVGhanaOnline",icon:"📡"},
-{name:"GTV Ghana",handle:"@GTVGhana",icon:"📺"},
-{name:"TV3 Ghana",handle:"@TV3Ghana",icon:"📺"},
-{name:"GHOne TV",handle:"@GHOneTV",icon:"📡"},
-{name:"Onua TV",handle:"@OnuaTV",icon:"🎥"},
-{name:"Metro TV",handle:"@metrotvgh",icon:"📺"},
-{name:"Angel TV",handle:"@AngelTVGhana",icon:"😇"},
-{name:"Net2 TV",handle:"@Net2TVGhana",icon:"📡"},
-{name:"Citi TV",handle:"@CitiTube",icon:"🏙️"},
-{name:"Kantanka TV",handle:"@KantankaTV",icon:"📡"},
-{name:"Kessben TV",handle:"@KessbenTV",icon:"📺"},
-{name:"Light TV",handle:"@LightTVGhana",icon:"💡"},
-{name:"Atinka TV",handle:"@AtinkaTVGhana",icon:"📡"},
-{name:"Pan African TV",handle:"@PanAfricanTelevision",icon:"🌍"},
-{name:"Max TV",handle:"@MaxTVGH",icon:"📺"},
-{name:"Wontumi TV",handle:"@WontumiTV",icon:"📡"},
-{name:"Original TV",handle:"@OriginalTVGhana",icon:"📺"},
-{name:"Lawson TV",handle:"@LawsonTVMedia",icon:"📺"},
-{name:"NewDay TV",handle:"@NewDayTVGhana",icon:"☀️"},
-{name:"4Syte TV",handle:"@4sytetv",icon:"🎵"},
-{name:"Homebase TV",handle:"@HomebaseTV",icon:"🏠"},
-{name:"Adom News",handle:"@AdomTVGh",icon:"📰"},
-];
-
-// AUTO UPDATE - TODAY'S MATCHES - NO MORE MANUAL
-// This auto-generates links based on today's date - always fresh!
-const todayLive=[
-{name:"Ghana Premier League",icon:"🇬🇭",query:"Ghana Premier League live today",url:"https://www.livesoccertv.com/competitions/ghana/premier-league/",desc:"GPL Today - Tap for live list",live:true},
-{name:"Vision vs Port City",icon:"⚽",query:"Vision FC vs Port City live",url:"https://www.youtube.com/results?search_query=Ghana+Premier+League+Vision+vs+Port+City+live",desc:"15:00 Today - Search Live",live:true},
-{name:"Chelsea vs Man Utd",icon:"🏴󠁧󠁢󠁥󠁮󠁧󠁿",query:"Chelsea vs Manchester United live",url:"https://www.youtube.com/results?search_query=Chelsea+vs+Manchester+United+live+today",desc:"EPL Live - Search",live:true},
-{name:"Man City vs Brighton",icon:"🔵",query:"Man City vs Brighton live GTV",url:"https://www.youtube.com/results?search_query=Man+City+vs+Brighton+live+GTV+Sports+",desc:"GTV Sports+ - Search Live",live:true},
-{name:"Brentford vs Nottm Forest",icon:"⚽",query:"Brentford vs Nottingham live",url:"https://www.youtube.com/results?search_query=Brentford+vs+Nottingham+Forest+live",desc:"15:00 EPL - Search",live:true},
-{name:"LiveSoccerTV Ghana",icon:"📅",query:"Today matches Ghana",url:"https://www.livesoccertv.com/teams/ghana/",desc:"All Ghana Matches Today - Official Guide",live:false},
-{name:"LiveSoccerTV EPL",icon:"🏆",query:"Premier League today live",url:"https://www.livesoccertv.com/competitions/england/premier-league/",desc:"All EPL Today - Where to Watch",live:false},
+{name:"JoyNews",handle:"@myjoyonline",icon:"J"},
+{name:"Joy Prime",handle:"@JoyPrimeTV",icon:"J"},
+{name:"Adom TV",handle:"@adomtvgh",icon:"A"},
+{name:"UTV Ghana",handle:"@UTVGhanaOnline",icon:"U"},
+{name:"GTV Ghana",handle:"@GTVGhana",icon:"G"},
+{name:"TV3 Ghana",handle:"@TV3Ghana",icon:"3"},
+{name:"GHOne TV",handle:"@GHOneTV",icon:"G"},
+{name:"Onua TV",handle:"@OnuaTV",icon:"O"},
+{name:"Metro TV",handle:"@metrotvgh",icon:"M"},
+{name:"Angel TV",handle:"@AngelTVGhana",icon:"A"},
+{name:"Net2 TV",handle:"@Net2TVGhana",icon:"N"},
+{name:"Citi TV",handle:"@CitiTube",icon:"C"},
+{name:"Kantanka TV",handle:"@KantankaTV",icon:"K"},
+{name:"Kessben TV",handle:"@KessbenTV",icon:"K"},
+{name:"Light TV",handle:"@LightTVGhana",icon:"L"},
+{name:"Atinka TV",handle:"@AtinkaTVGhana",icon:"A"},
+{name:"Pan African TV",handle:"@PanAfricanTelevision",icon:"P"},
+{name:"Max TV",handle:"@MaxTVGH",icon:"M"},
+{name:"Wontumi TV",handle:"@WontumiTV",icon:"W"},
+{name:"Original TV",handle:"@OriginalTVGhana",icon:"O"},
+{name:"Lawson TV",handle:"@LawsonTVMedia",icon:"L"},
+{name:"NewDay TV",handle:"@NewDayTVGhana",icon:"N"},
+{name:"4Syte TV",handle:"@4sytetv",icon:"4"},
+{name:"Homebase TV",handle:"@HomebaseTV",icon:"H"},
+{name:"Adom News",handle:"@AdomTVGh",icon:"A"},
 ];
 
 const fifa=[
-{name:"FIFA+ Official",handle:"@fifa",icon:"🏆"},
-{name:"FIFA Live Now",url:"https://www.youtube.com/@fifa/live",icon:"🔴"},
-{name:"FIFA Women's",handle:"@fifa",icon:"🌍"},
+{name:"FIFA+",handle:"@fifa",icon:"F"},
+{name:"FIFA Live",url:"https://www.youtube.com/@fifa/live",icon:"F"},
+{name:"FIFA Women's",handle:"@fifa",icon:"W"},
 ];
 
 const footballLinks=[
-{name:"FIFA+ Live Free",url:"https://www.fifa.com/fifaplus/en/live",icon:"🏆"},
-{name:"FIFA YouTube",url:"https://www.youtube.com/@fifa/live",icon:"▶️"},
-{name:"BBC Sport",url:"https://www.bbc.com/sport",icon:"📺"},
-{name:"BBC Football",url:"https://www.bbc.com/sport/football",icon:"⚽"},
-{name:"LiveSoccerTV",url:"https://www.livesoccertv.com/",icon:"📅"},
-{name:"DStv Ghana",url:"https://www.dstv.com/en-gh/",icon:"📺"},
-{name:"SuperSport",url:"https://www.supersport.com/",icon:"⚽"},
-{name:"GTV Sports+",url:"https://www.youtube.com/@GTVGhana/live",icon:"🇬🇭"},
-{name:"Max TV Live",url:"https://max.com.gh/live",icon:"📺"},
+{name:"FIFA+ Live",url:"https://www.fifa.com/fifaplus/en/live",icon:"F"},
+{name:"FIFA YouTube",url:"https://www.youtube.com/@fifa/live",icon:"F"},
+{name:"BBC Sport",url:"https://www.bbc.com/sport",icon:"B"},
+{name:"BBC Football",url:"https://www.bbc.com/sport/football",icon:"B"},
+{name:"LiveSoccerTV",url:"https://www.livesoccertv.com/",icon:"L"},
+{name:"DStv Ghana",url:"https://www.dstv.com/en-gh/",icon:"D"},
+{name:"SuperSport",url:"https://www.supersport.com/",icon:"S"},
+{name:"GTV Sports+",url:"https://www.youtube.com/@GTVGhana/live",icon:"G"},
+{name:"Max TV Live",url:"https://max.com.gh/live",icon:"M"},
 ];
 
 const gi=document.getElementById('grid-intl');
 const gg=document.getElementById('grid-ghana');
-const glive=document.getElementById('grid-live');
 const gf=document.getElementById('grid-fifa');
 const gll=document.getElementById('grid-links');
 const player=document.getElementById('player');
@@ -145,14 +120,6 @@ ghana.forEach(s=>{
  d.onclick=()=>{window.open(`https://www.youtube.com/${s.handle}/live`,'_blank');};
  d.innerHTML=`<div style="font-size:28px">${s.icon}</div><h3 style="font-size:11px;margin-top:6px">${s.name}</h3><span class="badge outside">Live</span>`;
  gg.appendChild(d);
-});
-
-// AUTO LIVE TAB
-todayLive.forEach(s=>{
- const d=document.createElement('div');d.className=s.live?'card live':'card legal';
- d.onclick=()=>{window.open(s.url,'_blank');};
- d.innerHTML=`<div style="font-size:28px">${s.icon}</div><h3 style="font-size:11px;margin-top:6px">${s.name}</h3><p style="font-size:9px;opacity:.7;margin-top:4px">${s.desc}</p><span class="badge ${s.live?'live':'legal'}">${s.live?'🔴 LIVE TODAY':'📅 Guide'}</span>`;
- glive.appendChild(d);
 });
 
 fifa.forEach(s=>{
@@ -173,19 +140,13 @@ footballLinks.forEach(s=>{
 function switchTab(t){
  document.getElementById('grid-intl').classList.toggle('hidden',t!=='intl');
  document.getElementById('grid-ghana').classList.toggle('hidden',t!=='ghana');
- document.getElementById('grid-live').classList.toggle('hidden',t!=='live');
  document.getElementById('grid-fifa').classList.toggle('hidden',t!=='fifa');
  document.getElementById('grid-links').classList.toggle('hidden',t!=='links');
  document.getElementById('tab-intl').classList.toggle('active',t==='intl');
  document.getElementById('tab-ghana').classList.toggle('active',t==='ghana');
- document.getElementById('tab-live').classList.toggle('active',t==='live');
  document.getElementById('tab-fifa').classList.toggle('active',t==='fifa');
  document.getElementById('tab-links').classList.toggle('active',t==='links');
- if(t==='live') window.scrollTo({top:0,behavior:'smooth'});
 }
-// Auto open TODAY LIVE on load for match day
-const isMatchDay = [0,6,3].includes(today.getDay()) || true;
-if(isMatchDay){ setTimeout(()=>switchTab('live'), 800); }
 </script>
 </body>
 </html>
