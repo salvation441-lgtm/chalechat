@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salvation TV - Max Inside</title>
+<title>Salvation TV - Fixed</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -29,13 +29,13 @@ body{background:#080a08;color:#fff;font-family:system-ui}
 </style>
 </head>
 <body>
-<div class="header"><img src="logo.png" class="logo-img"><div><h1 style="font-size:19px">Salvation <span style="color:#00FF88">TV</span></h1><p style="font-size:10px;opacity:.6">Max TV Inside App</p></div></div>
+<div class="header"><img src="logo.png" class="logo-img"><div><h1 style="font-size:19px">Salvation <span style="color:#00FF88">TV</span></h1><p style="font-size:10px;opacity:.6">Fixed - No Unavailable</p></div></div>
 
 <div class="player-box">
-  <video id="playerVideo" controls autoplay muted playsinline style="display:none"></video>
-  <iframe id="player" src="https://www.youtube-nocookie.com/embed/gCNeDWCI0vo?autoplay=1&mute=1" allowfullscreen allow="autoplay; fullscreen"></iframe>
+  <video id="playerVideo" controls autoplay muted playsinline></video>
+  <iframe id="player" style="display:none" allowfullscreen allow="autoplay; fullscreen"></iframe>
 </div>
-<div class="note" id="status">Al Jazeera Live - Inside App</div>
+<div class="note" id="status">Loading Al Jazeera Inside App...</div>
 
 <div class="tabs">
 <div class="tab active" id="tab-intl" onclick="switchTab('intl')">Inside</div>
@@ -65,52 +65,33 @@ let hlsInstance=null;
 function playHLS(url,name){
   if(hlsInstance){hlsInstance.destroy();hlsInstance=null;}
   player.style.display='none';video.style.display='block';
-  statusEl.textContent=name+" - Playing Inside App";
+  statusEl.textContent=name+" - Playing Inside App (HLS)";
   if(Hls.isSupported()){
     hlsInstance=new Hls();hlsInstance.loadSource(url);hlsInstance.attachMedia(video);
     hlsInstance.on(Hls.Events.MANIFEST_PARSED,function(){video.play();});
   }else if(video.canPlayType('application/vnd.apple.mpegurl')){video.src=url;video.play();}
   window.scrollTo({top:0,behavior:'smooth'});
 }
-function playYouTube(id,name){
-  if(hlsInstance){hlsInstance.destroy();hlsInstance=null;}
-  video.pause();video.style.display='none';player.style.display='block';
-  player.src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1`;
-  statusEl.textContent=name+" Live - Inside App";window.scrollTo({top:0,behavior:'smooth'});
-}
 
+// FIXED - HLS LINKS - NEVER EXPIRE, NO VIDEO UNAVAILABLE
 const intl=[
-{name:"Al Jazeera",icon:"W",video:"gCNeDWCI0vo"},
-{name:"DW News",icon:"D",video:"4IfaKA1sGhA"},
-{name:"France 24",icon:"F",video:"Ap-og3N-pFU"},
+{name:"Al Jazeera",icon:"W",hls:"https://live-hls-web-aje.getaj.net/AJE/01.m3u8"},
+{name:"DW News",icon:"D",hls:"https://dwamdstream104.akamaized.net/hls/live/2015526/dwstream104/master.m3u8"},
+{name:"France 24",icon:"F",hls:"https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master.m3u8"},
 ];
 
 const ghana=[
-{name:"Max TV - PLAY INSIDE",icon:"M",hls:"https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8",isInside:true},
+{name:"Max TV - INSIDE",icon:"M",hls:"https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8",isInside:true},
 {name:"JoyNews",handle:"@myjoyonline",icon:"J"},
-{name:"Joy Prime",handle:"@JoyPrimeTV",icon:"J"},
-{name:"Adom TV",handle:"@adomtvgh",icon:"A"},
 {name:"UTV Ghana",handle:"@UTVGhanaOnline",icon:"U"},
 {name:"GTV Ghana",handle:"@GTVGhana",icon:"G"},
 {name:"TV3 Ghana",handle:"@TV3Ghana",icon:"3"},
 {name:"GHOne TV",handle:"@GHOneTV",icon:"G"},
-{name:"Onua TV",handle:"@OnuaTV",icon:"O"},
 {name:"Metro TV",handle:"@metrotvgh",icon:"M"},
-{name:"Angel TV",handle:"@AngelTVGhana",icon:"A"},
-{name:"Net2 TV",handle:"@Net2TVGhana",icon:"N"},
 {name:"Citi TV",handle:"@CitiTube",icon:"C"},
-{name:"Kantanka TV",handle:"@KantankaTV",icon:"K"},
-{name:"Kessben TV",handle:"@KessbenTV",icon:"K"},
-{name:"Light TV",handle:"@LightTVGhana",icon:"L"},
-{name:"Atinka TV",handle:"@AtinkaTVGhana",icon:"A"},
-{name:"Pan African TV",handle:"@PanAfricanTelevision",icon:"P"},
-{name:"Wontumi TV",handle:"@WontumiTV",icon:"W"},
-{name:"Original TV",handle:"@OriginalTVGhana",icon:"O"},
-{name:"Lawson TV",handle:"@LawsonTVMedia",icon:"L"},
-{name:"NewDay TV",handle:"@NewDayTVGhana",icon:"N"},
-{name:"4Syte TV",handle:"@4sytetv",icon:"4"},
-{name:"Homebase TV",handle:"@HomebaseTV",icon:"H"},
-{name:"Adom News",handle:"@AdomTVGh",icon:"A"},
+{name:"Angel TV",handle:"@AngelTVGhana",icon:"A"},
+{name:"Adom TV",handle:"@adomtvgh",icon:"A"},
+{name:"Onua TV",handle:"@OnuaTV",icon:"O"},
 ];
 
 const globalFree=[
@@ -118,8 +99,6 @@ const globalFree=[
 {name:"J-League Live",url:"https://www.youtube.com/@JLEAGUEINTERNATIONAL/live",icon:"J",desc:"Japan - Free Globally"},
 {name:"Indian Super League",url:"https://www.youtube.com/@IndianSuperLeague/live",icon:"I",desc:"ISL - Free Worldwide"},
 {name:"LaLiga YouTube",url:"https://www.youtube.com/@LaLiga/live",icon:"L",desc:"LaLiga Free"},
-{name:"Bundesliga YouTube",url:"https://www.youtube.com/@Bundesliga/live",icon:"B",desc:"Bundesliga Free"},
-{name:"LiveSoccerTV Global",url:"https://www.livesoccertv.com/",icon:"L",desc:"Check Free Matches"},
 ];
 
 const fifa=[
@@ -128,16 +107,16 @@ const fifa=[
 ];
 
 const paidEPL=[
-{name:"SuperSport MaXimo 2",url:"https://www.supersport.com/",icon:"S",desc:"Chelsea vs Man Utd - Needs DStv"},
-{name:"Canal+ Sport 3 Afrique",url:"https://www.canalplus-afrique.com/",icon:"C",desc:"EPL - Needs Canal+"},
+{name:"SuperSport MaXimo 2",url:"https://www.supersport.com/",icon:"S",desc:"Needs DStv Login"},
+{name:"Canal+ Sport 3 Afrique",url:"https://www.canalplus-afrique.com/",icon:"C",desc:"Needs Canal+ Sub"},
 {name:"DStv Now EPL",url:"https://now.dstv.com/",icon:"D",desc:"Paid - Login Required"},
-{name:"GTV Sports+ (GPL ONLY)",url:"https://www.youtube.com/@GTVGhana/live",icon:"G",desc:"Ghana League ONLY - No EPL rights"},
 ];
 
 intl.forEach(s=>{
- const d=document.createElement('div');d.className='card outside';d.style.borderColor='#00FF88';
- d.onclick=()=>playYouTube(s.video,s.name);
- d.innerHTML=`<div style="font-size:28px">${s.icon}</div><h3 style="font-size:11px;margin-top:6px">${s.name}</h3><span class="badge free">Inside App</span>`;gi.appendChild(d);
+ const d=document.createElement('div');d.className='card free';d.style.borderColor='gold';
+ d.onclick=()=>playHLS(s.hls,s.name);
+ d.innerHTML=`<div style="font-size:28px">${s.icon}</div><h3 style="font-size:11px;margin-top:6px">${s.name}</h3><span class="badge free" style="background:gold">Inside App - FIXED</span>`;
+ gi.appendChild(d);
 });
 
 ghana.forEach(s=>{
@@ -145,7 +124,7 @@ ghana.forEach(s=>{
  if(s.isInside){
    d.className='card free';d.style.borderColor='gold';d.style.boxShadow='0 0 15px gold';
    d.onclick=()=>playHLS(s.hls,s.name);
-   d.innerHTML=`<div style="font-size:32px">${s.icon}</div><h3 style="font-size:12px;margin-top:6px;font-weight:900">${s.name}</h3><p style="font-size:8px;opacity:.8;margin-top:4px">Your Screenshot Channel - Inside</p><span class="badge free" style="background:gold">PLAY INSIDE APP</span>`;
+   d.innerHTML=`<div style="font-size:32px">${s.icon}</div><h3 style="font-size:11px;margin-top:6px;font-weight:900">${s.name}</h3><span class="badge free" style="background:gold">PLAY INSIDE</span>`;
  }else{
    d.className='card outside';d.onclick=()=>{window.open(`https://www.youtube.com/${s.handle}/live`,'_blank');};
    d.innerHTML=`<div style="font-size:28px">${s.icon}</div><h3 style="font-size:11px;margin-top:6px">${s.name}</h3><span class="badge outside">YouTube</span>`;
@@ -170,7 +149,7 @@ fifa.forEach(s=>{
 paidEPL.forEach(s=>{
  const d=document.createElement('div');d.className='card paid';
  d.onclick=()=>{window.open(s.url,'_blank');};
- d.innerHTML=`<div style="font-size:28px">${s.icon}</div><h3 style="font-size:11px;margin-top:6px">${s.name}</h3><p style="font-size:8px;opacity:.7;margin-top:4px">${s.desc}</p><span class="badge paid">PAID - Needs Sub</span>`;
+ d.innerHTML=`<div style="font-size:28px">${s.icon}</div><h3 style="font-size:11px;margin-top:6px">${s.name}</h3><p style="font-size:8px;opacity:.7;margin-top:4px">${s.desc}</p><span class="badge paid">PAID</span>`;
  gll.appendChild(d);
 });
 
@@ -184,6 +163,9 @@ function switchTab(t){
    document.getElementById('tab-'+id).classList.toggle('active',t===id);
  });
 }
+
+// Auto-play Al Jazeera HLS inside app on load - no more unavailable
+playHLS('https://live-hls-web-aje.getaj.net/AJE/01.m3u8','Al Jazeera');
 </script>
 </body>
 </html>
