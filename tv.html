@@ -2,38 +2,44 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salvation TV - Slim</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Salvation TV</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#060806;color:#fff;font-family:system-ui;max-width:480px;margin:0 auto}
-.header{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#0e160e;position:sticky;top:0;z-index:20;border-bottom:1px solid #1a2a1a}
-.logo-img{width:36px;height:36px;border-radius:10px;box-shadow:0 0 10px gold;object-fit:cover}
-.player-box{margin:8px;border-radius:12px;overflow:hidden;border:1px solid #222;height:26vh;background:#000}
+html,body{height:100%;overflow:hidden}
+body{
+  background: radial-gradient(1200px 600px at 10% -10%, #00ff88 0%, transparent 50%),
+              radial-gradient(1000px 500px at 90% 0%, #ffcc00 0%, transparent 40%),
+              radial-gradient(800px 400px at 50% 120%, #aa55ff 0%, transparent 50%),
+              #050a05;
+  color:#fff;font-family:system-ui;display:flex;flex-direction:column;
+  max-width:480px;margin:0 auto;height:100dvh;
+}
+.header{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(10,20,10,.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.logo-img{width:32px;height:32px;border-radius:8px;box-shadow:0 0 12px gold;object-fit:cover}
+.player-box{margin:8px 10px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.12);height:28dvh;min-height:160px;background:#000;box-shadow:0 8px 30px rgba(0,0,0,.6);flex-shrink:0}
 .player-box video{width:100%;height:100%;background:#000}
-.note{padding:5px 12px;font-size:9px;text-align:center;color:#00FF88;background:#0a120a;letter-spacing:.5px}
-.tabs{display:flex;gap:5px;padding:8px;background:#080c08;position:sticky;top:57px;z-index:15;overflow-x:auto;scrollbar-width:none}
-.tab{padding:7px 14px;border-radius:20px;text-align:center;cursor:pointer;font-weight:700;font-size:9px;border:1px solid #222;background:#121812;white-space:nowrap;transition:.2s}
-.tab.active{background:#fff;color:#000;border-color:#fff;box-shadow:0 0 8px rgba(255,255,255,.3)}
-.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:8px 8px 20px}
-.card{background:#111911;border-radius:12px;padding:10px 6px;cursor:pointer;text-align:center;border:1px solid #1e2e1e;transition:.15s}
-.card:active{transform:scale(.96)}
-.card.free{border-color:#00FF88}
-.card.paid{border-color:#ff5050}
-.card.outside{border-color:#222}
-.card div{font-size:18px!important}
-.card h3{font-size:9px!important;margin-top:4px!important;line-height:1.2;height:18px;overflow:hidden}
-.badge{font-size:7px!important;padding:3px 6px!important;border-radius:10px!important;margin-top:5px!important}
+.tabs{display:flex;gap:6px;padding:8px 10px;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
+.tab{padding:8px 16px;border-radius:20px;font-weight:800;font-size:9px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);backdrop-filter:blur(10px);white-space:nowrap;cursor:pointer}
+.tab.active{background:#fff;color:#000;border-color:#fff;box-shadow:0 4px 15px rgba(255,255,255,.4)}
+.content{flex:1;overflow-y:auto;padding-bottom:10px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px 10px}
+.card{background:linear-gradient(145deg, rgba(255,255,255,.09), rgba(255,255,255,.03));backdrop-filter:blur(14px);border-radius:14px;padding:12px 6px;text-align:center;border:1px solid rgba(255,255,255,.1);box-shadow:0 4px 12px rgba(0,0,0,.3);cursor:pointer}
+.card:active{transform:scale(.95)}
+.card.free{border-color:rgba(0,255,136,.5)}
+.card div{font-size:20px;font-weight:900}
+.card h3{font-size:9px;margin-top:4px;line-height:1.1;font-weight:700}
+.badge{font-size:6px;padding:3px 6px;border-radius:10px;margin-top:6px;display:inline-block;font-weight:800}
+.badge.free{background:#00ff88;color:#000}
+.badge.gold{background:linear-gradient(90deg,gold,#ffcc00);color:#000}
+.badge.out{background:rgba(255,255,255,.15);color:#fff}
 .hidden{display:none}
 </style>
 </head>
 <body>
-<div class="header"><img src="logo.png" class="logo-img"><div><h1 style="font-size:14px">Salvation <span style="color:#00FF88">TV</span></h1><p style="font-size:8px;opacity:.5">Slim • Fast • Inside</p></div></div>
-
+<div class="header"><img src="logo.png" class="logo-img"><div><h1 style="font-size:13px">Salvation <span style="color:#00FF88">TV</span></h1></div></div>
 <div class="player-box"><video id="playerVideo" controls autoplay muted playsinline></video></div>
-<div class="note" id="status">Al Jazeera - Inside (HLS)</div>
-
 <div class="tabs">
 <div class="tab active" id="tab-intl" onclick="switchTab('intl')">Inside</div>
 <div class="tab" id="tab-ghana" onclick="switchTab('ghana')">Ghana</div>
@@ -41,22 +47,20 @@ body{background:#060806;color:#fff;font-family:system-ui;max-width:480px;margin:
 <div class="tab" id="tab-fifa" onclick="switchTab('fifa')">FIFA+</div>
 <div class="tab" id="tab-links" onclick="switchTab('links')">Paid</div>
 </div>
-
+<div class="content">
 <div class="grid" id="grid-intl"></div>
 <div class="grid hidden" id="grid-ghana"></div>
 <div class="grid hidden" id="grid-global"></div>
 <div class="grid hidden" id="grid-fifa"></div>
 <div class="grid hidden" id="grid-links"></div>
-
+</div>
 <script>
-const gi=document.getElementById('grid-intl'),gg=document.getElementById('grid-ghana'),gglobal=document.getElementById('grid-global'),gf=document.getElementById('grid-fifa'),gll=document.getElementById('grid-links'),video=document.getElementById('playerVideo'),statusEl=document.getElementById('status');
-let hlsInstance=null;
-function playHLS(url,name){
-  if(hlsInstance){hlsInstance.destroy();}
-  statusEl.textContent=name+" • Inside";
-  if(Hls.isSupported()){hlsInstance=new Hls();hlsInstance.loadSource(url);hlsInstance.attachMedia(video);hlsInstance.on(Hls.Events.MANIFEST_PARSED,()=>video.play());}
+const gi=document.getElementById('grid-intl'),gg=document.getElementById('grid-ghana'),gglobal=document.getElementById('grid-global'),gf=document.getElementById('grid-fifa'),gll=document.getElementById('grid-links'),video=document.getElementById('playerVideo');
+let hls=null;
+function playHLS(url){
+  if(hls){hls.destroy();}
+  if(Hls.isSupported()){hls=new Hls();hls.loadSource(url);hls.attachMedia(video);hls.on(Hls.Events.MANIFEST_PARSED,()=>video.play());}
   else if(video.canPlayType('application/vnd.apple.mpegurl')){video.src=url;video.play();}
-  window.scrollTo({top:0,behavior:'smooth'});
 }
 const intl=[
 {name:"Al Jazeera",icon:"W",hls:"https://live-hls-web-aje.getaj.net/AJE/01.m3u8"},
@@ -64,7 +68,7 @@ const intl=[
 {name:"France 24",icon:"F",hls:"https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master.m3u8"},
 ];
 const ghana=[
-{name:"Max TV",icon:"M",hls:"https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8",isInside:true},
+{name:"Max TV",icon:"M",hls:"https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8",gold:true},
 {name:"JoyNews",handle:"@myjoyonline",icon:"J"},
 {name:"UTV",handle:"@UTVGhanaOnline",icon:"U"},
 {name:"GTV",handle:"@GTVGhana",icon:"G"},
@@ -73,35 +77,32 @@ const ghana=[
 {name:"Metro",handle:"@metrotvgh",icon:"M"},
 {name:"Citi",handle:"@CitiTube",icon:"C"},
 {name:"Angel",handle:"@AngelTVGhana",icon:"A"},
-{name:"Adom",handle:"@adomtvgh",icon:"A"},
-{name:"Onua",handle:"@OnuaTV",icon:"O"},
-{name:"Kessben",handle:"@KessbenTV",icon:"K"},
 ];
 const globalFree=[
-{name:"FIFA+ Global",url:"https://www.fifa.com/fifaplus/en/live",icon:"F",desc:"Free"},
-{name:"J-League",url:"https://www.youtube.com/@JLEAGUEINTERNATIONAL/live",icon:"J",desc:"Free"},
-{name:"ISL",url:"https://www.youtube.com/@IndianSuperLeague/live",icon:"I",desc:"Free"},
+{name:"FIFA+ Global",url:"https://www.fifa.com/fifaplus/en/live",icon:"F"},
+{name:"J-League",url:"https://www.youtube.com/@JLEAGUEINTERNATIONAL/live",icon:"J"},
+{name:"ISL",url:"https://www.youtube.com/@IndianSuperLeague/live",icon:"I"},
 ];
-const fifa=[{name:"FIFA+ Official",url:"https://www.fifa.com/fifaplus/en/live",icon:"F"}];
+const fifa=[{name:"FIFA+",url:"https://www.fifa.com/fifaplus/en/live",icon:"F"}];
 const paidEPL=[
-{name:"SuperSport",url:"https://www.supersport.com/",icon:"S",desc:"DStv"},
-{name:"Canal+",url:"https://www.canalplus-afrique.com/",icon:"C",desc:"Canal+"},
-{name:"DStv Now",url:"https://now.dstv.com/",icon:"D",desc:"Paid"},
+{name:"SuperSport",url:"https://www.supersport.com/",icon:"S"},
+{name:"Canal+",url:"https://www.canalplus-afrique.com/",icon:"C"},
+{name:"DStv Now",url:"https://now.dstv.com/",icon:"D"},
 ];
 intl.forEach(s=>{
- const d=document.createElement('div');d.className='card free';d.style.borderColor='#fff';
- d.onclick=()=>playHLS(s.hls,s.name);
+ const d=document.createElement('div');d.className='card free';
+ d.onclick=()=>playHLS(s.hls);
  d.innerHTML=`<div>${s.icon}</div><h3>${s.name}</h3><span class="badge free">INSIDE</span>`;gi.appendChild(d);
 });
 ghana.forEach(s=>{
  const d=document.createElement('div');
- if(s.isInside){
-   d.className='card free';d.style.borderColor='gold';
-   d.onclick=()=>playHLS(s.hls,s.name);
-   d.innerHTML=`<div>${s.icon}</div><h3>${s.name}</h3><span class="badge free" style="background:gold">INSIDE</span>`;
+ if(s.gold){
+   d.className='card free';d.style.borderColor='gold';d.style.background='linear-gradient(145deg, rgba(255,215,0,.15), rgba(255,255,255,.05))';
+   d.onclick=()=>playHLS(s.hls);
+   d.innerHTML=`<div>${s.icon}</div><h3>${s.name}</h3><span class="badge gold">PLAY INSIDE</span>`;
  }else{
-   d.className='card outside';d.onclick=()=>window.open(`https://www.youtube.com/${s.handle}/live`,'_blank');
-   d.innerHTML=`<div>${s.icon}</div><h3>${s.name}</h3><span class="badge outside">YT</span>`;
+   d.className='card';d.onclick=()=>window.open(`https://www.youtube.com/${s.handle}/live`,'_blank');
+   d.innerHTML=`<div>${s.icon}</div><h3>${s.name}</h3><span class="badge out">YT LIVE</span>`;
  }
  gg.appendChild(d);
 });
@@ -111,24 +112,22 @@ globalFree.forEach(s=>{
  d.innerHTML=`<div>${s.icon}</div><h3>${s.name}</h3><span class="badge free">FREE</span>`;gglobal.appendChild(d);
 });
 fifa.forEach(s=>{
- const d=document.createElement('div');d.className='card outside';d.style.borderColor='#ff5050';
+ const d=document.createElement('div');d.className='card';d.style.borderColor='#ff5050';
  d.onclick=()=>window.open(s.url,'_blank');
  d.innerHTML=`<div>${s.icon}</div><h3>${s.name}</h3><span class="badge" style="background:#ff5050;color:#fff">FIFA+</span>`;gf.appendChild(d);
 });
 paidEPL.forEach(s=>{
- const d=document.createElement('div');d.className='card paid';
+ const d=document.createElement('div');d.className='card';d.style.borderColor='#ff5050';
  d.onclick=()=>window.open(s.url,'_blank');
- d.innerHTML=`<div>${s.icon}</div><h3>${s.name}</h3><span class="badge paid">PAID</span>`;gll.appendChild(d);
+ d.innerHTML=`<div>${s.icon}</div><h3>${s.name}</h3><span class="badge" style="background:#ff5050;color:#fff">PAID</span>`;gll.appendChild(d);
 });
 function switchTab(t){
- document.getElementById('grid-intl').classList.toggle('hidden',t!=='intl');
- document.getElementById('grid-ghana').classList.toggle('hidden',t!=='ghana');
- document.getElementById('grid-global').classList.toggle('hidden',t!=='global');
- document.getElementById('grid-fifa').classList.toggle('hidden',t!=='fifa');
- document.getElementById('grid-links').classList.toggle('hidden',t!=='links');
- ['intl','ghana','global','fifa','links'].forEach(id=>document.getElementById('tab-'+id).classList.toggle('active',t===id));
+ ['intl','ghana','global','fifa','links'].forEach(id=>{
+   document.getElementById('grid-'+id).classList.toggle('hidden',t!==id);
+   document.getElementById('tab-'+id).classList.toggle('active',t===id);
+ });
 }
-playHLS('https://live-hls-web-aje.getaj.net/AJE/01.m3u8','Al Jazeera');
+playHLS('https://live-hls-web-aje.getaj.net/AJE/01.m3u8');
 </script>
 </body>
 </html>
