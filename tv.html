@@ -3,67 +3,88 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salvation TV - Ghana Live</title>
+<title>Salvation TV - International Inside</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#080a08;color:#fff;font-family:system-ui}
 .header{display:flex;align-items:center;gap:12px;padding:14px;background:#141e14;position:sticky;top:0;z-index:20}
-.logo-s{width:52px;height:52px;border-radius:14px;background:#000;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px gold;font-weight:900;color:gold;font-size:24px}
-.hero{margin:12px;background:linear-gradient(135deg,#141e14,#0f1a0f);border-radius:20px;padding:20px;text-align:center;border:1px solid rgba(0,255,136,.2)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 12px 90px}
-.card{background:#141e14;border:1px solid rgba(0,255,136,.15);border-radius:18px;padding:16px;cursor:pointer;text-align:center;transition:.2s}
-.card:active{transform:scale(.96);background:#1e2e1e}
-.badge{font-size:10px;padding:4px 10px;border-radius:20px;background:#ff0000;color:#fff;margin-top:8px;display:inline-block}
-.note{padding:10px;text-align:center;font-size:11px;color:#9aa79a}
+.logo-img{width:52px;height:52px;border-radius:14px;box-shadow:0 0 20px gold;object-fit:cover}
+.player-box{margin:12px;background:#000;border-radius:18px;overflow:hidden;border:1px solid gold;height:52vh}
+.player-box iframe{width:100%;height:100%;border:0}
+.note{padding:8px 16px;font-size:11px;text-align:center}
+.note.inside{color:#00FF88;background:#0f1a0f}
+.note.outside{color:#ff9a9a;background:#1a1414}
+.section-title{padding:12px 16px 0;font-size:13px;font-weight:700;color:gold}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 12px 20px}
+.card{background:#141e14;border-radius:16px;padding:14px;cursor:pointer;text-align:center;border:1px solid #333}
+.card.inside{border-color:#00FF88}
+.card.outside{border-color:#444}
+.badge{font-size:10px;padding:4px 10px;border-radius:20px;margin-top:6px;display:inline-block}
+.badge.inside{background:#00FF88;color:#000}
+.badge.outside{background:#333;color:#fff}
 </style>
 </head>
 <body>
-<div class="header"><div class="logo-s">S</div><div><h1 style="font-size:20px">Salvation <span style="color:#00FF88">TV</span></h1><p style="font-size:11px;opacity:.6">TAP TO WATCH LIVE ON YOUTUBE</p></div></div>
+<div class="header"><img src="logo.png" class="logo-img"><div><h1 style="font-size:19px">Salvation <span style="color:#00FF88">TV</span></h1><p style="font-size:11px;opacity:.6">INTERNATIONAL INSIDE • GHANA OUTSIDE</p></div></div>
 
-<div class="hero">
-<h2 style="font-size:18px">🇬🇭 Ghana Live TV</h2>
-<p style="font-size:12px;opacity:.7;margin-top:6px">Tap any station — e go carry you go YouTube Live directly. No error, no block.</p>
-</div>
+<div class="player-box"><iframe id="player" src="https://www.youtube-nocookie.com/embed/XWq5kBlakcQ?autoplay=1&mute=1&origin=https://on441-lgtm.github.io" allowfullscreen allow="autoplay; fullscreen"></iframe></div>
+<div class="note inside" id="status">Playing: Al Jazeera English - LIVE Inside App ✓</div>
 
-<div class="grid" id="grid"></div>
-<div class="note">All stations open on official YouTube Live • No more "Video unavailable"</div>
+<div class="section-title">🌍 International - Plays INSIDE App</div>
+<div class="grid" id="grid-inside"></div>
+
+<div class="section-title">🇬🇭 Ghana Local - Opens on YouTube Live</div>
+<div class="grid" id="grid-outside"></div>
 
 <script>
-const stations=[
-{name:"JoyNews",handle:"@myjoyonline",icon:"📰",color:"#ff0000"},
-{name:"Joy Prime",handle:"@JoyPrimeTV",icon:"⭐",color:"#ff0055"},
-{name:"Adom TV",handle:"@adomtvgh",icon:"🎬",color:"#00a651"},
-{name:"UTV Ghana",handle:"@utvghanaOfficial",icon:"📡",color:"#ffcc00"},
-{name:"GTV Ghana",handle:"@GTVGhana",icon:"📺",color:"#006b3d"},
-{name:"TV3 Ghana",handle:"@TV3Ghana",icon:"📺",color:"#e4002b"},
-{name:"GHOne TV",handle:"@GHOneTV",icon:"📡",color:"#001489"},
-{name:"Onua TV",handle:"@OnuaTV",icon:"🎥",color:"#ff6600"},
-{name:"Metro TV",handle:"@metrotvgh",icon:"📺",color:"#0047ab"},
-{name:"Angel TV",handle:"@AngelTVGhana",icon:"😇",color:"#7b00ff"},
-{name:"Net2 TV",handle:"@Net2TVGhana",icon:"📡",color:"#222"},
-{name:"Citi TV",handle:"@CitiTube",icon:"🏙️",color:"#00b4d8"},
-{name:"Ghana vs Argentina",handle:"@fifa",id:"-XRmFkzKq5E",icon:"🇬🇭",color:"#ff5050",isVideo:true},
-{name:"Zambia vs France",handle:"@fifa",id:"z6PCKMYoDSs",icon:"🏆",color:"#ff5050",isVideo:true},
-{name:"Nigeria vs Mexico",handle:"@fifa",id:"1e-Yq-GATiY",icon:"🇳🇬",color:"#ff5050",isVideo:true},
+const origin="https://on441-lgtm.github.io";
+const yt = (id) => `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&origin=${origin}`;
+
+const insideStations=[
+{name:"Al Jazeera Live",icon:"🌍",id:"XWq5kBlakcQ",desc:"Live News - Inside"},
+{name:"DW News Live",icon:"🇩🇪",id:"u9a1u2z8w9g",desc:"Germany Live - Inside"},
+{name:"France 24 Live",icon:"🇫🇷",id:"--U7P1V2p4Q",desc:"France Live - Inside"},
+{name:"Sky News Live",icon:"🇬🇧",id:"9Auq9mYxFEE",desc:"UK Live - Inside"},
+{name:"NASA Live",icon:"🚀",id:"21X5lGlDOfg",desc:"Space Live - Inside"},
+{name:"African News",icon:"🌍",id:"Ql6bX5Zv3aU",desc:"Africa Live - Inside"},
 ];
 
-const grid=document.getElementById('grid');
-stations.forEach(s=>{
- const d=document.createElement('div');d.className='card';
+const outsideStations=[
+{name:"JoyNews",handle:"@myjoyonline",icon:"📰"},
+{name:"Joy Prime",handle:"@JoyPrimeTV",icon:"⭐"},
+{name:"Adom TV",handle:"@adomtvgh",icon:"🎬"},
+{name:"UTV Ghana",handle:"@utvghanaOfficial",icon:"📡"},
+{name:"GTV Ghana",handle:"@GTVGhana",icon:"📺"},
+{name:"TV3 Ghana",handle:"@TV3Ghana",icon:"📺"},
+{name:"Ghana vs Argentina",id:"-XRmFkzKq5E",icon:"🇬🇭",isVideo:true},
+];
+
+const gridIn=document.getElementById('grid-inside');
+const gridOut=document.getElementById('grid-outside');
+const status=document.getElementById('status');
+const player=document.getElementById('player');
+
+insideStations.forEach(s=>{
+ const d=document.createElement('div');d.className='card inside';
  d.onclick=()=>{
-  if(s.isVideo){
-   window.open(`https://www.youtube.com/watch?v=${s.id}`,'_blank');
-  }else{
-   window.open(`https://www.youtube.com/${s.handle}/live`,'_blank');
-  }
+  player.src=yt(s.id);
+  status.className='note inside';
+  status.textContent=`Playing: ${s.name} • Inside App ✓`;
+  window.scrollTo({top:0,behavior:'smooth'});
  };
- d.innerHTML=`
-  <div style="font-size:36px">${s.icon}</div>
-  <h3 style="font-size:13px;margin-top:8px">${s.name}</h3>
-  <span class="badge">LIVE ↗ YouTube</span>
-  <p style="font-size:10px;opacity:.5;margin-top:6px">${s.handle}</p>
- `;
- grid.appendChild(d);
+ d.innerHTML=`<div style="font-size:28px">${s.icon}</div><h3 style="font-size:12px;margin-top:6px">${s.name}</h3><p style="font-size:9px;opacity:.6">${s.desc}</p><span class="badge inside">Inside ✓</span>`;
+ gridIn.appendChild(d);
+});
+
+outsideStations.forEach(s=>{
+ const d=document.createElement('div');d.className='card outside';
+ d.onclick=()=>{
+  status.className='note outside';
+  if(s.isVideo){status.textContent=`Opening ${s.name} on YouTube`;window.open(`https://www.youtube.com/watch?v=${s.id}`,'_blank');}
+  else{status.textContent=`Opening ${s.name} on YouTube Live`;window.open(`https://www.youtube.com/${s.handle}/live`,'_blank');}
+ };
+ d.innerHTML=`<div style="font-size:28px">${s.icon}</div><h3 style="font-size:12px;margin-top:6px">${s.name}</h3><p style="font-size:9px;opacity:.6">YouTube Live</p><span class="badge outside">YouTube ↗</span>`;
+ gridOut.appendChild(d);
 });
 </script>
 </body>
