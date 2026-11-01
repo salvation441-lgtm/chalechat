@@ -26,7 +26,7 @@ body{background: radial-gradient(1200px 600px at 10% -10%, #00ff88 0%, transpare
 .badge{font-size:6px;padding:3px 6px;border-radius:10px;margin-top:6px;display:inline-block;font-weight:800}
 .badge.free{background:#00ff88;color:#000}
 .badge.gold{background:linear-gradient(90deg,gold,#ffcc00);color:#000}
-.badge.out{background:rgba(255,255,255,.15);color:#fff}
+.badge.movie{background:linear-gradient(90deg,#ff0055,#ff8800);color:#fff}
 .hidden{display:none}
 </style>
 </head>
@@ -37,6 +37,7 @@ body{background: radial-gradient(1200px 600px at 10% -10%, #00ff88 0%, transpare
 <div class="tab active" id="t-intl" onclick="st('intl')">Inside</div>
 <div class="tab" id="t-ghana" onclick="st('ghana')">Ghana</div>
 <div class="tab" id="t-global" onclick="st('global')">Global</div>
+<div class="tab" id="t-movies" onclick="st('movies')">Movies</div>
 <div class="tab" id="t-fifa" onclick="st('fifa')">FIFA+</div>
 <div class="tab" id="t-links" onclick="st('links')">Paid</div>
 </div>
@@ -44,6 +45,7 @@ body{background: radial-gradient(1200px 600px at 10% -10%, #00ff88 0%, transpare
 <div class="grid" id="g-intl"></div>
 <div class="grid hidden" id="g-ghana"></div>
 <div class="grid hidden" id="g-global"></div>
+<div class="grid hidden" id="g-movies"></div>
 <div class="grid hidden" id="g-fifa"></div>
 <div class="grid hidden" id="g-links"></div>
 </div>
@@ -71,20 +73,26 @@ const globalFree=[
 {n:"Bundesliga",u:"https://www.youtube.com/@Bundesliga/live",i:"B"},
 {n:"Serie A",u:"https://www.youtube.com/@SerieA/live",i:"S"}
 ];
+const movies=[
+{n:"YT Free Movies",u:"https://www.youtube.com/feed/storefront?bp=ogUCKAI%3D",i:"YT",m:true},
+{n:"Tubi Movies",u:"https://tubitv.com/",i:"T",m:true},
+{n:"Pluto Movies",u:"https://pluto.tv/live-tv",i:"P",m:true},
+{n:"Plex Free",u:"https://watch.plex.tv/movies",i:"P",m:true},
+{n:"Crackle",u:"https://www.crackle.com/",i:"C",m:true},
+{n:"FilmRise",u:"https://filmrise.com/",i:"F",m:true}
+];
 const fifa=[{n:"FIFA+",u:"https://www.fifa.com/fifaplus/en/live",i:"F"}];
 const paid=[{n:"SuperSport",u:"https://www.supersport.com/",i:"S"},{n:"Canal+",u:"https://www.canalplus-afrique.com/",i:"C"},{n:"DStv Now",u:"https://now.dstv.com/",i:"D"}];
-function mk(g,fn,o){const e=document.createElement('div');e.className='card '+(o.g||o.free?'free':'');if(o.g){e.style.borderColor='gold';}e.onclick=fn;e.innerHTML=`<div>${o.i}</div><h3>${o.n}</h3><span class="badge ${o.g?'gold':o.free?'free':'out'}">${o.g?'PLAY INSIDE':o.free?'FREE':o.b||'YT LIVE'}</span>`;g.appendChild(e);}
-const gi=document.getElementById('g-intl'),gg=document.getElementById('g-ghana'),ggl=document.getElementById('g-global'),gf=document.getElementById('g-fifa'),gl=document.getElementById('g-links');
+function mk(g,fn,o){const e=document.createElement('div');e.className='card '+(o.g||o.free||o.m?'free':'');if(o.g){e.style.borderColor='gold';}if(o.m){e.style.borderColor='#ff0055';}e.onclick=fn;e.innerHTML=`<div>${o.i}</div><h3>${o.n}</h3><span class="badge ${o.g?'gold':o.m?'movie':o.free?'free':'out'}">${o.g?'PLAY INSIDE':o.m?'FREE MOVIES':o.free?'FREE':o.b||'YT'}</span>`;g.appendChild(e);}
+const gi=document.getElementById('g-intl'),gg=document.getElementById('g-ghana'),ggl=document.getElementById('g-global'),gm=document.getElementById('g-movies'),gf=document.getElementById('g-fifa'),gl=document.getElementById('g-links');
 intl.forEach(s=>mk(gi,()=>p(s.u),{n:s.n,i:s.i,free:true}));
-ghana.forEach(s=>{
- if(s.g){mk(gg,()=>p(s.u),{n:s.n,i:s.i,g:true});}
- else{mk(gg,()=>window.open(`https://www.youtube.com/${s.h}/live`,'_blank'),{n:s.n,i:s.i});}
-});
+ghana.forEach(s=>{if(s.g){mk(gg,()=>p(s.u),{n:s.n,i:s.i,g:true});}else{mk(gg,()=>window.open(`https://www.youtube.com/${s.h}/live`,'_blank'),{n:s.n,i:s.i});}});
 globalFree.forEach(s=>mk(ggl,()=>window.open(s.u,'_blank'),{n:s.n,i:s.i,free:true}));
+movies.forEach(s=>mk(gm,()=>window.open(s.u,'_blank'),{n:s.n,i:s.i,m:true}));
 fifa.forEach(s=>mk(gf,()=>window.open(s.u,'_blank'),{n:s.n,i:s.i,b:'FIFA+'}));
 paid.forEach(s=>mk(gl,()=>window.open(s.u,'_blank'),{n:s.n,i:s.i,b:'PAID'}));
-function st(t){['intl','ghana','global','fifa','links'].forEach(id=>{document.getElementById('g-'+id).classList.toggle('hidden',t!==id);document.getElementById('t-'+id).classList.toggle('active',t===id);});}
-p("https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8");
+function st(t){['intl','ghana','global','movies','fifa','links'].forEach(id=>{document.getElementById('g-'+id).classList.toggle('hidden',t!==id);document.getElementById('t-'+id).classList.toggle('active',t===id);});}
+p("https://live-hls-web-aje.getaj.net/AJE/01.m3u8");
 </script>
 </body>
 </html>
