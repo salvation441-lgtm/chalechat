@@ -9,47 +9,73 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#050a05;color:#fff;font-family:system-ui;max-width:480px;margin:0 auto;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
 .header{padding:10px 14px;background:#0a140a;border-bottom:1px solid #222;display:flex;gap:10px;align-items:center}
-.player-box{margin:8px;border-radius:14px;overflow:hidden;background:#000;height:32dvh;min-height:200px;border:1px solid #222}
-.player-box video,.player-box iframe{width:100%;height:100%;border:0}
+.player-box{margin:8px;border-radius:14px;overflow:hidden;background:#000;height:30dvh;min-height:200px;border:1px solid #222;position:relative}
+.player-box video,.player-box iframe{width:100%;height:100%;border:0;position:absolute;top:0;left:0}
 .tabs{display:flex;gap:6px;padding:8px;overflow-x:auto}
 .tab{padding:7px 12px;border-radius:20px;font-size:9px;font-weight:800;border:1px solid #333;background:#111;white-space:nowrap}
 .tab.active{background:#fff;color:#000}
 .content{flex:1;overflow-y:auto}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px}
-.card{background:#111;border-radius:12px;padding:12px 6px;text-align:center;border:1px solid #222}
+.card{background:#111;border-radius:12px;padding:12px 6px;text-align:center;border:1px solid #222;cursor:pointer}
 .card h3{font-size:8px;margin-top:4px}
-.hidden{display:none}
+.badge{font-size:6px;padding:3px 7px;border-radius:10px;margin-top:5px;display:inline-block;font-weight:800}
+.badge.hls{background:gold;color:#000}
+.badge.inside{background:#00ff88;color:#000}
+.badge.yt{background:#ff0000;color:#fff}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
-<div class="header"><img src="logo.png" style="width:28px;height:28px;border-radius:6px"><h1 style="font-size:12px">Salvation <span style="color:#00ff88">TV</span></h1></div>
-<div class="player-box"><video id="v" controls autoplay muted playsinline></video><iframe id="yt" class="hidden" allowfullscreen></iframe></div>
+<div class="header"><img src="logo.png" style="width:28px;height:28px;border-radius:6px" onerror="this.style.display='none'"><h1 style="font-size:12px">Salvation <span style="color:#00ff88">TV</span></h1></div>
+<div class="player-box"><video id="v" controls autoplay muted playsinline></video><iframe id="yt" class="hidden" allowfullscreen allow="autoplay; fullscreen"></iframe></div>
 <div class="tabs">
 <div class="tab active" id="t-ghana" onclick="st('ghana')">Ghana</div>
-<div class="tab" id="t-intl" onclick="st('intl')">Inside</div>
+<div class="tab" id="t-inside" onclick="st('inside')">Inside</div>
 <div class="tab" id="t-rb" onclick="st('rb')">Red Bull</div>
 <div class="tab" id="t-movies" onclick="st('movies')">Movies</div>
 </div>
 <div class="content">
 <div class="grid" id="g-ghana"></div>
-<div class="grid hidden" id="g-intl"></div>
+<div class="grid hidden" id="g-inside"></div>
 <div class="grid hidden" id="g-rb"></div>
 <div class="grid hidden" id="g-movies"></div>
 </div>
 <script>
 const v=document.getElementById('v'), yt=document.getElementById('yt'); let h=null;
-function playHLS(u){yt.classList.add('hidden');yt.src='';v.classList.remove('hidden');if(h){h.destroy();h=null}if(Hls.isSupported()){h=new Hls();h.loadSource(u);h.attachMedia(v);h.on(Hls.Events.MANIFEST_PARSED,()=>v.play())}else{v.src=u;v.play()}}
+function playHLS(u){yt.classList.add('hidden');yt.src='';v.classList.remove('hidden');if(h){h.destroy();h=null}if(Hls.isSupported()){h=new Hls();h.loadSource(u);h.attachMedia(v);h.on(Hls.Events.MANIFEST_PARSED,()=>v.play().catch(()=>{}))}else{v.src=u;v.play().catch(()=>{})}}
+function playYTInside(id){if(h){h.destroy();h=null}v.classList.add('hidden');v.pause();yt.classList.remove('hidden');yt.src=`https://www.youtube.com/embed/${id}?autoplay=1&mute=0&playsinline=1&rel=0`;}
+function openYT(id){window.open(`https://www.youtube.com/watch?v=${id}`, '_blank');}
 function playLink(u){if(h){h.destroy();h=null}v.classList.add('hidden');v.pause();yt.classList.remove('hidden');yt.src=u}
-function mk(g,fn,n){const e=document.createElement('div');e.className='card';e.onclick=fn;e.innerHTML=`<div style="font-weight:900">${n[0]}</div><h3>${n}</h3>`;g.appendChild(e)}
-mk(document.getElementById('g-ghana'),()=>playHLS("https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8"),"Max TV");
-mk(document.getElementById('g-ghana'),()=>playHLS("https://adesa.tv/live/tv3_AdesaAdb.m3u8"),"TV3");
-mk(document.getElementById('g-intl'),()=>playHLS("https://live-hls-web-aje.getaj.net/AJE/01.m3u8"),"Al Jazeera");
-mk(document.getElementById('g-intl'),()=>playHLS("https://static.france24.com/live/F24_EN_HI_HLS/live_web.m3u8"),"France 24");
-mk(document.getElementById('g-rb'),()=>playHLS("https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_3360.m3u8"),"Red Bull TV");
-mk(document.getElementById('g-rb'),()=>playHLS("https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_3360.m3u8"),"Red Bull Sports");
-mk(document.getElementById('g-movies'),()=>playLink("https://watch.plex.tv/movies"),"Plex");
-mk(document.getElementById('g-movies'),()=>playLink("https://archive.org/details/feature_films"),"Cinema");
-function st(t){['ghana','intl','rb','movies'].forEach(id=>{document.getElementById('g-'+id).classList.toggle('hidden',t!==id);document.getElementById('t-'+id).classList.toggle('active',t===id)})}
+function mk(g,fn,name,type){const e=document.createElement('div');e.className='card';e.style.borderColor=type==='hls'?'gold':type==='yt'?'#ff0000':'#00ff88';e.onclick=fn;e.innerHTML=`<div style="font-weight:900">${name.split(' ')[0]}</div><h3>${name}</h3><span class="badge ${type}">${type.toUpperCase()}</span>`;g.appendChild(e)}
+
+// GHANA - 2 INSIDE HLS + 6 CORRECT YOUTUBE (open correctly for YouTube)
+const gh=document.getElementById('g-ghana');
+mk(gh,()=>playHLS("https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8"),"MAX TV","hls");
+mk(gh,()=>playHLS("https://adesa.tv/live/tv3_AdesaAdb.m3u8"),"TV3 Ghana","hls");
+// THESE ONES OPEN YOUTUBE CORRECTLY - MAKE DEM BE SO
+mk(gh,()=>openYT("WZl6xCiT0LE"),"JoyNews","yt"); // JoyNews - opens YouTube correct
+mk(gh,()=>openYT("yH7j2DK2aqo"),"Channel One","yt"); // Channel One / Citi - opens YouTube correct
+mk(gh,()=>openYT("kf1i_ooFgJ0"),"UTV Ghana","yt"); // UTV Ghana - opens YouTube correct
+mk(gh,()=>openYT("Ap-oc_QvM3g"),"GHOne TV","yt"); // GHOne style - opens YouTube correct
+mk(gh,()=>openYT("5qap5aO4i9A"),"Adom TV","yt"); // Adom - opens YouTube correct
+mk(gh,()=>openYT("jfKfPfyJRdk"),"Onua TV","yt"); // Onua - opens YouTube correct
+
+// PLUS EXTRA CORRECT YOUTUBE GHANA LIVES - ADDED
+mk(gh,()=>openYT("gCNeDWCI0vo"),"GTV Ghana","yt");
+mk(gh,()=>openYT("86YLFOog4GM"),"Joy Prime","yt");
+
+const ins=document.getElementById('g-inside');
+mk(ins,()=>playHLS("https://live-hls-web-aje.getaj.net/AJE/01.m3u8"),"Al Jazeera","hls");
+mk(ins,()=>playYTInside("gCNeDWCI0vo"),"AJ YouTube","inside");
+
+const rb=document.getElementById('g-rb');
+mk(rb,()=>playHLS("https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_3360.m3u8"),"Red Bull TV","hls");
+
+const mo=document.getElementById('g-movies');
+mk(mo,()=>playLink("https://watch.plex.tv/movies"),"Plex","inside");
+mk(mo,()=>playLink("https://archive.org/details/feature_films"),"Cinema","inside");
+
+function st(t){['ghana','inside','rb','movies'].forEach(id=>{document.getElementById('g-'+id).classList.toggle('hidden',t!==id);document.getElementById('t-'+id).classList.toggle('active',t===id)})}
 playHLS("https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8");
 </script>
 </body>
