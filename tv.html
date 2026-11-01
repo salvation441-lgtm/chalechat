@@ -4,15 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Salvation TV</title>
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
 body{background: radial-gradient(1200px 600px at 10% -10%, #00ff88 0%, transparent 50%), radial-gradient(1000px 500px at 90% 0%, #ffcc00 0%, transparent 40%), radial-gradient(800px 400px at 50% 120%, #aa55ff 0%, transparent 50%), #050a05;color:#fff;font-family:system-ui;display:flex;flex-direction:column;max-width:480px;margin:0 auto;height:100dvh;}
 .header{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(10,20,10,.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
 .logo-img{width:32px;height:32px;border-radius:8px;box-shadow:0 0 12px gold;object-fit:cover}
-.player-box{margin:8px 10px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.12);height:28dvh;min-height:160px;background:#000;flex-shrink:0}
+.player-box{margin:8px 10px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.12);height:30dvh;min-height:180px;background:#000;flex-shrink:0;position:relative}
 .player-box video{width:100%;height:100%;background:#000}
+#status{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.7);padding:6px 12px;border-radius:20px;font-size:10px;display:none}
 .tabs{display:flex;gap:6px;padding:8px 10px;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
 .tab{padding:8px 16px;border-radius:20px;font-weight:800;font-size:9px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);backdrop-filter:blur(10px);white-space:nowrap;cursor:pointer}
 .tab.active{background:#fff;color:#000;border-color:#fff}
@@ -32,7 +33,10 @@ body{background: radial-gradient(1200px 600px at 10% -10%, #00ff88 0%, transpare
 </head>
 <body>
 <div class="header"><img src="logo.png" class="logo-img"><div><h1 style="font-size:13px">Salvation <span style="color:#00FF88">TV</span></h1></div></div>
-<div class="player-box"><video id="v" controls autoplay muted playsinline></video></div>
+<div class="player-box">
+<video id="v" controls autoplay muted playsinline crossorigin="anonymous"></video>
+<div id="status">Loading...</div>
+</div>
 <div class="tabs">
 <div class="tab active" id="t-intl" onclick="st('intl')">Inside</div>
 <div class="tab" id="t-ghana" onclick="st('ghana')">Ghana</div>
@@ -50,9 +54,47 @@ body{background: radial-gradient(1200px 600px at 10% -10%, #00ff88 0%, transpare
 <div class="grid hidden" id="g-links"></div>
 </div>
 <script>
-const v=document.getElementById('v');let h=null;
-function p(u){if(h){h.destroy();}if(Hls.isSupported()){h=new Hls();h.loadSource(u);h.attachMedia(v);h.on(Hls.Events.MANIFEST_PARSED,()=>v.play());}else{v.src=u;v.play();}}
-const intl=[{n:"Al Jazeera",i:"W",u:"https://live-hls-web-aje.getaj.net/AJE/01.m3u8"},{n:"DW News",i:"D",u:"https://dwamdstream104.akamaized.net/hls/live/2015526/dwstream104/master.m3u8"},{n:"France 24",i:"F",u:"https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master.m3u8"}];
+const v=document.getElementById('v');
+const stat=document.getElementById('status');
+let h=null;
+let currentUrl="";
+
+function showStat(t){stat.textContent=t;stat.style.display='block';}
+function hideStat(){stat.style.display='none';}
+
+function p(u){
+ currentUrl=u;
+ showStat("Loading...");
+ if(h){h.destroy();h=null;}
+ v.pause();
+ v.removeAttribute('src');
+ v.load();
+ if(u.endsWith('.m3u8')){
+  if(Hls.isSupported()){
+   h=new Hls({enableWorker:true,lowLatencyMode:true,backBufferLength:90});
+   h.loadSource(u);
+   h.attachMedia(v);
+   h.on(Hls.Events.MANIFEST_PARSED,()=>{hideStat();v.play().catch(()=>{showStat("Tap to play");});});
+   h.on(Hls.Events.ERROR,(e,data)=>{
+    if(data.fatal){
+     console.log("HLS fatal",data);
+     if(data.type==='networkError'){showStat("Network error, retrying...");setTimeout(()=>p(u),2000);}
+     else {showStat("Tap channel again to play");}
+    }
+   });
+  }else if(v.canPlayType('application/vnd.apple.mpegurl')){
+   v.src=u;v.addEventListener('loadedmetadata',()=>{hideStat();v.play();});
+  }
+ }else{
+  v.src=u;v.play();
+ }
+}
+
+const intl=[
+{n:"Al Jazeera",i:"W",u:"https://live-hls-web-aje.getaj.net/AJE/01.m3u8",fallback:"https://aljazeera-english.4k-cdn.4k.live/live/aljazeera-eng/master.m3u8"},
+{n:"DW News",i:"D",u:"https://dwamdstream104.akamaized.net/hls/live/2015526/dwstream104/master.m3u8"},
+{n:"France 24",i:"F",u:"https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master_360_250.m3u8",fallback:"https://f24hls-en-abc.akamaized.net/1300000_1@1299938/vod_to_live_new/master_360_250.m3u8"}
+];
 const ghana=[
 {n:"Max TV",i:"M",u:"https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8",g:true},
 {n:"TV3",i:"3",u:"https://adesa.tv/live/tv3_AdesaAdb.m3u8",g:true},
@@ -83,16 +125,32 @@ const movies=[
 ];
 const fifa=[{n:"FIFA+",u:"https://www.fifa.com/fifaplus/en/live",i:"F"}];
 const paid=[{n:"SuperSport",u:"https://www.supersport.com/",i:"S"},{n:"Canal+",u:"https://www.canalplus-afrique.com/",i:"C"},{n:"DStv Now",u:"https://now.dstv.com/",i:"D"}];
+
 function mk(g,fn,o){const e=document.createElement('div');e.className='card '+(o.g||o.free||o.m?'free':'');if(o.g){e.style.borderColor='gold';}if(o.m){e.style.borderColor='#ff0055';}e.onclick=fn;e.innerHTML=`<div>${o.i}</div><h3>${o.n}</h3><span class="badge ${o.g?'gold':o.m?'movie':o.free?'free':'out'}">${o.g?'PLAY INSIDE':o.m?'FREE GH':o.free?'FREE':o.b||'YT'}</span>`;g.appendChild(e);}
+
 const gi=document.getElementById('g-intl'),gg=document.getElementById('g-ghana'),ggl=document.getElementById('g-global'),gm=document.getElementById('g-movies'),gf=document.getElementById('g-fifa'),gl=document.getElementById('g-links');
-intl.forEach(s=>mk(gi,()=>p(s.u),{n:s.n,i:s.i,free:true}));
-ghana.forEach(s=>{if(s.g){mk(gg,()=>p(s.u),{n:s.n,i:s.i,g:true});}else{mk(gg,()=>window.open(`https://www.youtube.com/${s.h}/live`,'_blank'),{n:s.n,i:s.i});}});
+
+intl.forEach(s=>{
+ mk(gi,()=>{
+  p(s.u);
+  setTimeout(()=>{if(v.paused || v.currentTime===0){if(s.fallback) p(s.fallback);}},4000);
+ },{n:s.n,i:s.i,free:true});
+});
+ghana.forEach(s=>{
+ if(s.g){mk(gg,()=>p(s.u),{n:s.n,i:s.i,g:true});}
+ else{mk(gg,()=>window.open(`https://www.youtube.com/${s.h}/live`,'_blank'),{n:s.n,i:s.i});}
+});
 globalFree.forEach(s=>mk(ggl,()=>window.open(s.u,'_blank'),{n:s.n,i:s.i,free:true}));
 movies.forEach(s=>mk(gm,()=>window.open(s.u,'_blank'),{n:s.n,i:s.i,m:true}));
 fifa.forEach(s=>mk(gf,()=>window.open(s.u,'_blank'),{n:s.n,i:s.i,b:'FIFA+'}));
 paid.forEach(s=>mk(gl,()=>window.open(s.u,'_blank'),{n:s.n,i:s.i,b:'PAID'}));
+
 function st(t){['intl','ghana','global','movies','fifa','links'].forEach(id=>{document.getElementById('g-'+id).classList.toggle('hidden',t!==id);document.getElementById('t-'+id).classList.toggle('active',t===id);});}
-p("https://live-hls-web-aje.getaj.net/AJE/01.m3u8");
+
+v.addEventListener('click',()=>{if(v.paused) v.play();});
+
+// START with DW News (most stable for Ghana) not Al Jazeera
+p("https://dwamdstream104.akamaized.net/hls/live/2015526/dwstream104/master.m3u8");
 </script>
 </body>
 </html>
