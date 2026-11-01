@@ -7,106 +7,50 @@
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#050a05;color:#fff;font-family:system-ui;display:flex;flex-direction:column;max-width:480px;margin:0 auto;height:100dvh;overflow:hidden}
-.header{padding:10px 14px;background:#0a140a;border-bottom:1px solid #222;display:flex;align-items:center;gap:10px}
-.logo-img{width:32px;height:32px;border-radius:8px;box-shadow:0 0 10px gold}
-.player-box{margin:8px 10px;border-radius:14px;overflow:hidden;border:1px solid #222;height:32dvh;min-height:200px;background:#000}
+body{background:#050a05;color:#fff;font-family:system-ui;max-width:480px;margin:0 auto;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+.header{padding:10px 14px;background:#0a140a;border-bottom:1px solid #222;display:flex;gap:10px;align-items:center}
+.player-box{margin:8px;border-radius:14px;overflow:hidden;background:#000;height:32dvh;min-height:200px;border:1px solid #222}
 .player-box video,.player-box iframe{width:100%;height:100%;border:0}
-.tabs{display:flex;gap:6px;padding:8px 10px;overflow-x:auto}
-.tab{padding:8px 14px;border-radius:20px;font-weight:800;font-size:9px;border:1px solid #333;background:#111;white-space:nowrap;cursor:pointer}
+.tabs{display:flex;gap:6px;padding:8px;overflow-x:auto}
+.tab{padding:7px 12px;border-radius:20px;font-size:9px;font-weight:800;border:1px solid #333;background:#111;white-space:nowrap}
 .tab.active{background:#fff;color:#000}
 .content{flex:1;overflow-y:auto}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px 10px}
-.card{background:#111;border-radius:14px;padding:12px 6px;text-align:center;border:1px solid #222;cursor:pointer}
-.card div{font-size:16px;font-weight:900}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px}
+.card{background:#111;border-radius:12px;padding:12px 6px;text-align:center;border:1px solid #222}
 .card h3{font-size:8px;margin-top:4px}
-.badge{font-size:6px;padding:3px 6px;border-radius:10px;margin-top:5px;display:inline-block;font-weight:800}
-.badge.free{background:#00ff88;color:#000}
-.badge.gold{background:gold;color:#000}
-.badge.movie{background:#ff0055;color:#fff}
-.badge.rb{background:linear-gradient(90deg,#001aff,#ff0040);color:#fff}
 .hidden{display:none}
 </style>
 </head>
 <body>
-<div class="header"><img src="logo.png" class="logo-img"><h1 style="font-size:13px">Salvation <span style="color:#00FF88">TV</span></h1></div>
-<div class="player-box"><video id="v" controls autoplay muted playsinline class="hidden"></video><iframe id="yt" class="hidden" allowfullscreen allow="autoplay; fullscreen"></iframe></div>
+<div class="header"><img src="logo.png" style="width:28px;height:28px;border-radius:6px"><h1 style="font-size:12px">Salvation <span style="color:#00ff88">TV</span></h1></div>
+<div class="player-box"><video id="v" controls autoplay muted playsinline></video><iframe id="yt" class="hidden" allowfullscreen></iframe></div>
 <div class="tabs">
-<div class="tab active" id="t-intl" onclick="st('intl')">Inside</div>
-<div class="tab" id="t-ghana" onclick="st('ghana')">Ghana</div>
-<div class="tab" id="t-global" onclick="st('global')">Global</div>
+<div class="tab active" id="t-ghana" onclick="st('ghana')">Ghana</div>
+<div class="tab" id="t-intl" onclick="st('intl')">Inside</div>
 <div class="tab" id="t-rb" onclick="st('rb')">Red Bull</div>
 <div class="tab" id="t-movies" onclick="st('movies')">Movies</div>
-<div class="tab" id="t-fifa" onclick="st('fifa')">FIFA+</div>
 </div>
 <div class="content">
-<div class="grid" id="g-intl"></div>
-<div class="grid hidden" id="g-ghana"></div>
-<div class="grid hidden" id="g-global"></div>
+<div class="grid" id="g-ghana"></div>
+<div class="grid hidden" id="g-intl"></div>
 <div class="grid hidden" id="g-rb"></div>
 <div class="grid hidden" id="g-movies"></div>
-<div class="grid hidden" id="g-fifa"></div>
 </div>
 <script>
 const v=document.getElementById('v'), yt=document.getElementById('yt'); let h=null;
-function playHLS(u){
- yt.classList.add('hidden'); yt.src=''; v.classList.remove('hidden');
- if(h){h.destroy();h=null;}
- if(Hls.isSupported()){h=new Hls();h.loadSource(u);h.attachMedia(v);h.on(Hls.Events.MANIFEST_PARSED,()=>v.play());}
- else{v.src=u;v.play();}
-}
-function playYT(id){
- if(h){h.destroy();h=null;} v.classList.add('hidden'); v.pause();
- yt.classList.remove('hidden');
- yt.src=`https://www.youtube.com/embed/${id}?autoplay=1&mute=0&playsinline=1&rel=0`;
-}
-function playLink(url){
- if(h){h.destroy();h=null;} v.classList.add('hidden'); v.pause();
- yt.classList.remove('hidden'); yt.src=url;
-}
-function mk(g,fn,o){const e=document.createElement('div');e.className='card';e.style.borderColor=o.g?'gold':o.m?'#ff0055':o.rb?'#0040ff':'#222';e.onclick=fn;e.innerHTML=`<div>${o.i}</div><h3>${o.n}</h3><span class="badge ${o.g?'gold':o.m?'movie':o.rb?'rb':'free'}">${o.g?'HLS':o.rb?'RED BULL':'INSIDE'}</span>`;g.appendChild(e);}
-
-// Inside - WORKING HLS + VOD
-mk(document.getElementById('g-intl'),()=>playHLS("https://live-hls-web-aje.getaj.net/AJE/01.m3u8"),{n:"Al Jazeera",i:"AJ"});
-mk(document.getElementById('g-intl'),()=>playYT("gCNeDWCI0vo"),{n:"AJ YT Live",i:"AJ2"});
-mk(document.getElementById('g-intl'),()=>playYT("86YLFOog4GM"),{n:"DW News",i:"DW"}); // DW docu VOD - never expire
-mk(document.getElementById('g-intl'),()=>playYT("Ap-oc_QvM3g"),{n:"France 24",i:"F24"});
-
-// Ghana
-const gg=document.getElementById('g-ghana');
-mk(gg,()=>playHLS("https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8"),{n:"Max TV",i:"MAX",g:true});
-mk(gg,()=>playHLS("https://adesa.tv/live/tv3_AdesaAdb.m3u8"),{n:"TV3",i:"TV3",g:true});
-mk(gg,()=>playYT("y60wDzZt8yg"),{n:"JoyNews",i:"JOY"});
-mk(gg,()=>playYT("QH2-TGUlwu4"),{n:"UTV",i:"UTV"});
-
-// Global
-const ggl=document.getElementById('g-global');
-mk(ggl,()=>playYT("5qap5aO4i9A"),{n:"Premier",i:"PL"}); // lofi = always live, never unavailable
-mk(ggl,()=>playYT("jfKfPfyJRdk"),{n:"LaLiga",i:"LL"});
-mk(ggl,()=>playYT("DWaB4PXCwFU"),{n:"Bundesliga",i:"BL"});
-
-// RED BULL - PERMANENT VIDEOS - NO MORE UNAVAILABLE
-const rb=document.getElementById('g-rb');
-// These be real Red Bull permanent videos - never expire
-mk(rb,()=>playYT("YQHsXMglC9A"),{n:"Red Bull TV",i:"RB TV",rb:true}); // Red Bull Rampage
-mk(rb,()=>playYT("V6d0p8-Vf8U"),{n:"F1 Racing",i:"F1",rb:true}); // Verstappen F1
-mk(rb,()=>playYT("x76VEPfl2nA"),{n:"Moto GP",i:"MOTO",rb:true}); // MotoGP
-mk(rb,()=>playYT("r8LHTHC3bL0"),{n:"Bike MTB",i:"BIKE",rb:true}); // MTB
-mk(rb,()=>playYT("9eJx8Y3wS3Q"),{n:"Surf Skate",i:"SURF",rb:true}); // Surf
-mk(rb,()=>playYT("3SsK-cxl7z0"),{n:"Cliff Dive",i:"CLIFF",rb:true}); // Cliff
-
-// MOVIES - PERMANENT + PLEX + ARCHIVE
-const gm=document.getElementById('g-movies');
-mk(gm,()=>playYT("5qap5aO4i9A"),{n:"FilmRise",i:"F",m:true}); // always live
-mk(gm,()=>playYT("jfKfPfyJRdk"),{n:"Free Movies+",i:"FM",m:true}); // always live
-mk(gm,()=>playYT("b5cROa9a0yA"),{n:"Nollywood",i:"NOLLY",m:true}); // VOD
-mk(gm,()=>playLink("https://watch.plex.tv/movies"),{n:"Plex Free",i:"PLEX",m:true});
-mk(gm,()=>playLink("https://archive.org/details/feature_films"),{n:"Old Movies",i:"OLD",m:true});
-
-mk(document.getElementById('g-fifa'),()=>playYT("5qap5aO4i9A"),{n:"FIFA+ Live",i:"FIFA"});
-
-function st(t){['intl','ghana','global','rb','movies','fifa'].forEach(id=>{document.getElementById('g-'+id).classList.toggle('hidden',t!==id);document.getElementById('t-'+id).classList.toggle('active',t===id);});}
-playHLS("https://live-hls-web-aje.getaj.net/AJE/01.m3u8");
+function playHLS(u){yt.classList.add('hidden');yt.src='';v.classList.remove('hidden');if(h){h.destroy();h=null}if(Hls.isSupported()){h=new Hls();h.loadSource(u);h.attachMedia(v);h.on(Hls.Events.MANIFEST_PARSED,()=>v.play())}else{v.src=u;v.play()}}
+function playLink(u){if(h){h.destroy();h=null}v.classList.add('hidden');v.pause();yt.classList.remove('hidden');yt.src=u}
+function mk(g,fn,n){const e=document.createElement('div');e.className='card';e.onclick=fn;e.innerHTML=`<div style="font-weight:900">${n[0]}</div><h3>${n}</h3>`;g.appendChild(e)}
+mk(document.getElementById('g-ghana'),()=>playHLS("https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8"),"Max TV");
+mk(document.getElementById('g-ghana'),()=>playHLS("https://adesa.tv/live/tv3_AdesaAdb.m3u8"),"TV3");
+mk(document.getElementById('g-intl'),()=>playHLS("https://live-hls-web-aje.getaj.net/AJE/01.m3u8"),"Al Jazeera");
+mk(document.getElementById('g-intl'),()=>playHLS("https://static.france24.com/live/F24_EN_HI_HLS/live_web.m3u8"),"France 24");
+mk(document.getElementById('g-rb'),()=>playHLS("https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_3360.m3u8"),"Red Bull TV");
+mk(document.getElementById('g-rb'),()=>playHLS("https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_3360.m3u8"),"Red Bull Sports");
+mk(document.getElementById('g-movies'),()=>playLink("https://watch.plex.tv/movies"),"Plex");
+mk(document.getElementById('g-movies'),()=>playLink("https://archive.org/details/feature_films"),"Cinema");
+function st(t){['ghana','intl','rb','movies'].forEach(id=>{document.getElementById('g-'+id).classList.toggle('hidden',t!==id);document.getElementById('t-'+id).classList.toggle('active',t===id)})}
+playHLS("https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8");
 </script>
 </body>
 </html>
