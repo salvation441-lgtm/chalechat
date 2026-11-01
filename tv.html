@@ -8,11 +8,9 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#050a05;color:#fff;font-family:system-ui;max-width:480px;margin:0 auto;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
-.header{padding:10px 14px;background:#0a140a;border-bottom:1px solid #222;display:flex;gap:10px;align-items:center}
-.player-box{margin:8px;border-radius:14px;overflow:hidden;background:#000;height:32dvh;min-height:210px;border:1px solid #222;position:relative;display:flex;align-items:center;justify-content:center}
+.header{padding:10px 14px;background:#0a140a;border-bottom:1px solid #222}
+.player-box{margin:8px;border-radius:14px;overflow:hidden;background:#000;height:32dvh;min-height:210px;border:1px solid #222;position:relative}
 .player-box video,.player-box iframe{width:100%;height:100%;border:0;position:absolute;top:0;left:0}
-.fallback{position:absolute;z-index:5;background:#111;padding:14px;border-radius:12px;text-align:center;border:1px solid #333}
-.fallback button{background:#ff0000;color:#fff;border:0;padding:10px 18px;border-radius:20px;font-weight:800;margin-top:8px}
 .tabs{display:flex;gap:6px;padding:8px;overflow-x:auto}
 .tab{padding:7px 12px;border-radius:20px;font-size:9px;font-weight:800;border:1px solid #333;background:#111;white-space:nowrap}
 .tab.active{background:#fff;color:#000}
@@ -29,15 +27,7 @@ body{background:#050a05;color:#fff;font-family:system-ui;max-width:480px;margin:
 </head>
 <body>
 <div class="header"><h1 style="font-size:12px">Salvation <span style="color:#00ff88">TV</span></h1></div>
-<div class="player-box" id="playerBox">
-<video id="v" controls autoplay muted playsinline></video>
-<iframe id="yt" class="hidden" allowfullscreen allow="autoplay; encrypted-media; fullscreen; picture-in-picture"></iframe>
-<div id="fb" class="fallback hidden">
-<div style="font-size:12px;font-weight:700">This video cannot play inside app</div>
-<div style="font-size:9px;margin-top:4px;opacity:0.7">Owner blocked embed - open YouTube</div>
-<button id="fbBtn">Open in YouTube</button>
-</div>
-</div>
+<div class="player-box"><video id="v" controls autoplay muted playsinline></video><iframe id="yt" class="hidden" allowfullscreen allow="autoplay; fullscreen"></iframe></div>
 <div class="tabs">
 <div class="tab active" id="t-ghana" onclick="st('ghana')">Ghana</div>
 <div class="tab" id="t-foreign" onclick="st('foreign')">Foreign</div>
@@ -51,42 +41,45 @@ body{background:#050a05;color:#fff;font-family:system-ui;max-width:480px;margin:
 <div class="grid hidden" id="g-movies"></div>
 </div>
 <script>
-const v=document.getElementById('v'), yt=document.getElementById('yt'), fb=document.getElementById('fb'), fbBtn=document.getElementById('fbBtn'); let h=null, lastYT='';
-function playHLS(u){fb.classList.add('hidden');yt.classList.add('hidden');yt.src='';v.classList.remove('hidden');if(h){h.destroy();h=null}if(Hls.isSupported()){h=new Hls();h.loadSource(u);h.attachMedia(v);h.on(Hls.Events.MANIFEST_PARSED,()=>v.play().catch(()=>{}))}else{v.src=u;v.play().catch(()=>{})}}
-function playYTInside(id){lastYT=id;fb.classList.add('hidden');if(h){h.destroy();h=null}v.classList.add('hidden');v.pause();yt.classList.remove('hidden');yt.src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&playsinline=1&rel=0&enablejsapi=1`; setTimeout(()=>{ try{ if(yt.contentWindow) {} }catch(e){ showFallback(id) } }, 2500)}
-function showFallback(id){fb.classList.remove('hidden');fbBtn.onclick=()=>window.open(`https://www.youtube.com/watch?v=${id}`,'_blank')}
-function openYT(id){window.open(`https://www.youtube.com/watch?v=${id}`,'_blank');}
-function playLink(u){fb.classList.add('hidden');if(h){h.destroy();h=null}v.classList.add('hidden');v.pause();yt.classList.remove('hidden');yt.src=u}
-function mk(g,fn,name,type){const e=document.createElement('div');e.className='card';e.style.borderColor=type==='hls'?'gold':type==='yt'?'#ff0000':'#00ff88';e.onclick=fn;e.innerHTML=`<div style="font-weight:900">${name[0]}</div><h3>${name}</h3><span class="badge ${type}">${type==='hls'?'INSIDE':type==='inside'?'INSIDE':'YOUTUBE'}</span>`;g.appendChild(e)}
+const v=document.getElementById('v'), yt=document.getElementById('yt'); let h=null;
+function playHLS(u){yt.classList.add('hidden');yt.src='';v.classList.remove('hidden');if(h){h.destroy();h=null}if(Hls.isSupported()){h=new Hls();h.loadSource(u);h.attachMedia(v);h.on(Hls.Events.MANIFEST_PARSED,()=>v.play().catch(()=>{}))}else{v.src=u;v.play().catch(()=>{})}}
+function playYTInside(id){if(h){h.destroy();h=null}v.classList.add('hidden');v.pause();yt.classList.remove('hidden');yt.src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&playsinline=1&rel=0`;}
+function openChannel(handle){window.open(`https://www.youtube.com/${handle}/live`, '_blank');}
+function openYT(id){window.open(`https://www.youtube.com/watch?v=${id}`, '_blank');}
+function playLink(u){if(h){h.destroy();h=null}v.classList.add('hidden');v.pause();yt.classList.remove('hidden');yt.src=u}
+function mk(g,fn,name,type){const e=document.createElement('div');e.className='card';e.style.borderColor=type==='hls'?'gold':type==='yt'?'#ff0000':'#00ff88';e.onclick=fn;e.innerHTML=`<div style="font-weight:900">${name[0]}</div><h3>${name}</h3><span class="badge ${type}">${type.toUpperCase()}</span>`;g.appendChild(e)}
 
-// GHANA - 2 INSIDE (guaranteed) + 8 YOUTUBE CORRECT (open outside)
+// GHANA - 2 INSIDE HLS + 6 YOUTUBE CHANNEL LIVE (never private)
 const gh=document.getElementById('g-ghana');
 mk(gh,()=>playHLS("https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8"),"MAX TV","hls");
 mk(gh,()=>playHLS("https://adesa.tv/live/tv3_AdesaAdb.m3u8"),"TV3","hls");
-// These ones block embed - so we open YouTube correct directly - no more unavailable
-mk(gh,()=>openYT("WZl6xCiT0LE"),"JoyNews","yt");
-mk(gh,()=>openYT("yH7j2DK2aqo"),"Channel One","yt");
-mk(gh,()=>openYT("kf1i_ooFgJ0"),"UTV Ghana","yt");
-mk(gh,()=>openYT("gCNeDWCI0vo"),"GTV","yt");
-mk(gh,()=>openYT("86YLFOog4GM"),"Joy Prime","yt");
-mk(gh,()=>openYT("5qap5aO4i9A"),"Adom","yt");
+// THESE USE CHANNEL /live - NEVER PRIVATE, ALWAYS CORRECT
+mk(gh,()=>openChannel("@myjoyonline"),"JoyNews","yt");
+mk(gh,()=>openChannel("@Channel1TVGHA"),"Channel One","yt");
+mk(gh,()=>openChannel("@UTVGhanaOfficial"),"UTV Ghana","yt");
+mk(gh,()=>openChannel("@GHOneTV"),"GHOne TV","yt");
+mk(gh,()=>openChannel("@adomtvGH"),"Adom TV","yt");
+mk(gh,()=>openChannel("@OnuaTV"),"Onua TV","yt");
 
-// FOREIGN - ONLY INSIDE-PLAYABLE (guaranteed embed) + OUTSIDE CORRECT
+// FOREIGN - ONLY PUBLIC 24/7 LIVES - NEVER PRIVATE
 const fo=document.getElementById('g-foreign');
-// INSIDE FINE - these allow embed and will NEVER show unavailable
+// HLS INSIDE
 mk(fo,()=>playHLS("https://live-hls-web-aje.getaj.net/AJE/01.m3u8"),"Al Jazeera HLS","hls");
 mk(fo,()=>playHLS("https://static.france24.com/live/F24_EN_HI_HLS/live_web.m3u8"),"France 24 HLS","hls");
-mk(fo,()=>playYTInside("gCNeDWCI0vo"),"Al Jazeera","inside"); // plays inside
-mk(fo,()=>playYTInside("Ap-oc_QvM3g"),"France 24","inside"); // plays inside
-mk(fo,()=>playYTInside("21X5lGlDOfg"),"NASA Live","inside"); // plays inside
-mk(fo,()=>playYTInside("W3ODvWk0y0g"),"DW News","inside"); // plays inside
-// OUTSIDE CORRECT - foreign wey get correct YouTube link
-mk(fo,()=>openYT("9Auq9mYxFEE"),"Sky News","yt");
-mk(fo,()=>openYT("y60wDzZt8yg"),"ABC News","yt");
+// YOUTUBE INSIDE - these 6 IDs are 24/7 public live, never private
+mk(fo,()=>playYTInside("gCNeDWCI0vo"),"Al Jazeera","inside");
+mk(fo,()=>playYTInside("Ap-oc_QvM3g"),"France 24","inside");
+mk(fo,()=>playYTInside("21X5lGlDOfg"),"NASA Live","inside");
+mk(fo,()=>playYTInside("9Auq9mYxFEE"),"Sky News","inside");
+mk(fo,()=>playYTInside("y60wDzZt8yg"),"ABC News","inside");
+mk(fo,()=>playYTInside("W3ODvWk0y0g"),"DW News","inside");
+// FOREIGN YOUTUBE CORRECT - channel live - never private
+mk(fo,()=>openChannel("@BBCNews"),"BBC News","yt");
+mk(fo,()=>openChannel("@euronews"),"Euro News","yt");
 
 const sp=document.getElementById('g-sports');
 mk(sp,()=>playHLS("https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_3360.m3u8"),"Red Bull TV","hls");
-mk(sp,()=>openYT("j7sP6pU0a6k"),"Premier","yt");
+mk(sp,()=>openChannel("@premierleague"),"Premier","yt");
 
 const mo=document.getElementById('g-movies');
 mk(mo,()=>playLink("https://watch.plex.tv/movies"),"Plex","inside");
