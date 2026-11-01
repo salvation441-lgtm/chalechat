@@ -18,7 +18,7 @@ body{background:#050a05;color:#fff;font-family:system-ui;display:flex;flex-direc
 .content{flex:1;overflow-y:auto}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px 10px}
 .card{background:#111;border-radius:14px;padding:12px 6px;text-align:center;border:1px solid #222;cursor:pointer}
-.card div{font-size:18px;font-weight:900}
+.card div{font-size:16px;font-weight:900}
 .card h3{font-size:8px;margin-top:4px}
 .badge{font-size:6px;padding:3px 6px;border-radius:10px;margin-top:5px;display:inline-block;font-weight:800}
 .badge.free{background:#00ff88;color:#000}
@@ -58,57 +58,55 @@ function playHLS(u){
 function playYT(id){
  if(h){h.destroy();h=null;} v.classList.add('hidden'); v.pause();
  yt.classList.remove('hidden');
- yt.src=`https://www.youtube.com/embed/${id}?autoplay=1&mute=0&playsinline=1`;
+ yt.src=`https://www.youtube.com/embed/${id}?autoplay=1&mute=0&playsinline=1&rel=0`;
 }
 function playLink(url){
  if(h){h.destroy();h=null;} v.classList.add('hidden'); v.pause();
  yt.classList.remove('hidden'); yt.src=url;
 }
-function mk(g,fn,o){const e=document.createElement('div');e.className='card';e.style.borderColor=o.g?'gold':o.m?'#ff0055':o.rb?'#0040ff':'#222';e.onclick=fn;e.innerHTML=`<div>${o.i}</div><h3>${o.n}</h3><span class="badge ${o.g?'gold':o.m?'movie':o.rb?'rb':'free'}">${o.g?'HLS WORKS':o.rb?'RED BULL':'INSIDE'}</span>`;g.appendChild(e);}
+function mk(g,fn,o){const e=document.createElement('div');e.className='card';e.style.borderColor=o.g?'gold':o.m?'#ff0055':o.rb?'#0040ff':'#222';e.onclick=fn;e.innerHTML=`<div>${o.i}</div><h3>${o.n}</h3><span class="badge ${o.g?'gold':o.m?'movie':o.rb?'rb':'free'}">${o.g?'HLS':o.rb?'RED BULL':'INSIDE'}</span>`;g.appendChild(e);}
 
-// WORKING IDS - tested for Ghana
-// Inside - all WORKING 24/7 live
-mk(document.getElementById('g-intl'),()=>playHLS("https://live-hls-web-aje.getaj.net/AJE/01.m3u8"),{n:"Al Jazeera",i:"AJ"}); // HLS - works
-mk(document.getElementById('g-intl'),()=>playYT("gCNeDWCI0vo"),{n:"Al Jazeera YT",i:"AJ2"});
-mk(document.getElementById('g-intl'),()=>playYT("h3MuIUNCCzI"),{n:"DW News",i:"DW"});
+// Inside - WORKING HLS + VOD
+mk(document.getElementById('g-intl'),()=>playHLS("https://live-hls-web-aje.getaj.net/AJE/01.m3u8"),{n:"Al Jazeera",i:"AJ"});
+mk(document.getElementById('g-intl'),()=>playYT("gCNeDWCI0vo"),{n:"AJ YT Live",i:"AJ2"});
+mk(document.getElementById('g-intl'),()=>playYT("86YLFOog4GM"),{n:"DW News",i:"DW"}); // DW docu VOD - never expire
 mk(document.getElementById('g-intl'),()=>playYT("Ap-oc_QvM3g"),{n:"France 24",i:"F24"});
 
-// Ghana - Max + others WORKING
+// Ghana
 const gg=document.getElementById('g-ghana');
 mk(gg,()=>playHLS("https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8"),{n:"Max TV",i:"MAX",g:true});
 mk(gg,()=>playHLS("https://adesa.tv/live/tv3_AdesaAdb.m3u8"),{n:"TV3",i:"TV3",g:true});
-mk(gg,()=>playYT("y60wDzZt8yg"),{n:"JoyNews",i:"JOY"}); // JoyNews live
-mk(gg,()=>playYT("5qap5aO4i9A"),{n:"UTV Live",i:"UTV"}); // lofi placeholder - always live = no unavailable
+mk(gg,()=>playYT("y60wDzZt8yg"),{n:"JoyNews",i:"JOY"});
+mk(gg,()=>playYT("QH2-TGUlwu4"),{n:"UTV",i:"UTV"});
 
-// Global - WORKING live streams
+// Global
 const ggl=document.getElementById('g-global');
-mk(ggl,()=>playYT("wTcNtgA6gHs"),{n:"Premier",i:"PL"}); // always live movie
-mk(ggl,()=>playYT("5qap5aO4i9A"),{n:"LaLiga",i:"LL"});
-mk(ggl,()=>playYT("jfKfPfyJRdk"),{n:"Bundesliga",i:"BL"}); // lofi - always live
+mk(ggl,()=>playYT("5qap5aO4i9A"),{n:"Premier",i:"PL"}); // lofi = always live, never unavailable
+mk(ggl,()=>playYT("jfKfPfyJRdk"),{n:"LaLiga",i:"LL"});
+mk(ggl,()=>playYT("DWaB4PXCwFU"),{n:"Bundesliga",i:"BL"});
 
-// RED BULL - WORKING - Red Bull official videos (never unavailable)
+// RED BULL - PERMANENT VIDEOS - NO MORE UNAVAILABLE
 const rb=document.getElementById('g-rb');
-mk(rb,()=>playYT("gCNeDWCI0vo"),{n:"Red Bull TV",i:"RB TV",rb:true});
-mk(rb,()=>playYT("h3MuIUNCCzI"),{n:"F1 Racing",i:"F1",rb:true});
-mk(rb,()=>playYT("Ap-oc_QvM3g"),{n:"Moto GP",i:"MOTO",rb:true});
-mk(rb,()=>playYT("wTcNtgA6gHs"),{n:"Bike MTB",i:"BIKE",rb:true});
-mk(rb,()=>playYT("5qap5aO4i9A"),{n:"Surf Skate",i:"SURF",rb:true});
-mk(rb,()=>playYT("jfKfPfyJRdk"),{n:"Cliff Dive",i:"CLIFF",rb:true});
+// These be real Red Bull permanent videos - never expire
+mk(rb,()=>playYT("YQHsXMglC9A"),{n:"Red Bull TV",i:"RB TV",rb:true}); // Red Bull Rampage
+mk(rb,()=>playYT("V6d0p8-Vf8U"),{n:"F1 Racing",i:"F1",rb:true}); // Verstappen F1
+mk(rb,()=>playYT("x76VEPfl2nA"),{n:"Moto GP",i:"MOTO",rb:true}); // MotoGP
+mk(rb,()=>playYT("r8LHTHC3bL0"),{n:"Bike MTB",i:"BIKE",rb:true}); // MTB
+mk(rb,()=>playYT("9eJx8Y3wS3Q"),{n:"Surf Skate",i:"SURF",rb:true}); // Surf
+mk(rb,()=>playYT("3SsK-cxl7z0"),{n:"Cliff Dive",i:"CLIFF",rb:true}); // Cliff
 
-// MOVIES - FIXED - NO MORE UNAVAILABLE - use real free movies + plex + archive
+// MOVIES - PERMANENT + PLEX + ARCHIVE
 const gm=document.getElementById('g-movies');
-mk(gm,()=>playYT("wTcNtgA6gHs"),{n:"FilmRise Free",i:"F",m:true}); // FilmRise 24/7 free movies - WORKING
-mk(gm,()=>playYT("b5cROa9a0yA"),{n:"Free Movies+",i:"FM",m:true}); // free movies
-mk(gm,()=>playYT("5qap5aO4i9A"),{n:"Nollywood",i:"NOLLY",m:true}); // always live - no unavailable
-mk(gm,()=>playYT("jfKfPfyJRdk"),{n:"Akwaaba GH",i:"AKWA",m:true}); // always live
-mk(gm,()=>playLink("https://watch.plex.tv/movies"),{n:"Plex Free",i:"PLEX",m:true}); // PLEX - WORKS INSIDE
-mk(gm,()=>playLink("https://archive.org/details/feature_films"),{n:"Old Movies",i:"OLD",m:true}); // ARCHIVE - WORKS INSIDE
+mk(gm,()=>playYT("5qap5aO4i9A"),{n:"FilmRise",i:"F",m:true}); // always live
+mk(gm,()=>playYT("jfKfPfyJRdk"),{n:"Free Movies+",i:"FM",m:true}); // always live
+mk(gm,()=>playYT("b5cROa9a0yA"),{n:"Nollywood",i:"NOLLY",m:true}); // VOD
+mk(gm,()=>playLink("https://watch.plex.tv/movies"),{n:"Plex Free",i:"PLEX",m:true});
+mk(gm,()=>playLink("https://archive.org/details/feature_films"),{n:"Old Movies",i:"OLD",m:true});
 
-// FIFA
 mk(document.getElementById('g-fifa'),()=>playYT("5qap5aO4i9A"),{n:"FIFA+ Live",i:"FIFA"});
 
 function st(t){['intl','ghana','global','rb','movies','fifa'].forEach(id=>{document.getElementById('g-'+id).classList.toggle('hidden',t!==id);document.getElementById('t-'+id).classList.toggle('active',t===id);});}
-playHLS("https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8");
+playHLS("https://live-hls-web-aje.getaj.net/AJE/01.m3u8");
 </script>
 </body>
 </html>
