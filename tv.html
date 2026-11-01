@@ -74,16 +74,16 @@ const globalFree=[
 {n:"Serie A",u:"https://www.youtube.com/@SerieA/live",i:"S"}
 ];
 const movies=[
-{n:"YT Free Movies",u:"https://www.youtube.com/feed/storefront?bp=ogUCKAI%3D",i:"YT",m:true},
-{n:"Tubi Movies",u:"https://tubitv.com/",i:"T",m:true},
-{n:"Pluto Movies",u:"https://pluto.tv/live-tv",i:"P",m:true},
-{n:"Plex Free",u:"https://watch.plex.tv/movies",i:"P",m:true},
-{n:"Crackle",u:"https://www.crackle.com/",i:"C",m:true},
-{n:"FilmRise",u:"https://filmrise.com/",i:"F",m:true}
+{n:"FilmRise",u:"https://www.youtube.com/@FilmRiseMovies/videos",i:"F",m:true},
+{n:"Free Movies+",u:"https://www.youtube.com/@FreeMoviesPlus/videos",i:"FM",m:true},
+{n:"Nollywood GH",u:"https://www.youtube.com/@NollywoodPicturesTV",i:"N",m:true},
+{n:"Akwaaba Magic",u:"https://www.youtube.com/@AkwaabaMagic",i:"A",m:true},
+{n:"Plex Free GH",u:"https://watch.plex.tv/movies",i:"PX",m:true},
+{n:"Archive Movies",u:"https://archive.org/details/movies",i:"AR",m:true}
 ];
 const fifa=[{n:"FIFA+",u:"https://www.fifa.com/fifaplus/en/live",i:"F"}];
 const paid=[{n:"SuperSport",u:"https://www.supersport.com/",i:"S"},{n:"Canal+",u:"https://www.canalplus-afrique.com/",i:"C"},{n:"DStv Now",u:"https://now.dstv.com/",i:"D"}];
-function mk(g,fn,o){const e=document.createElement('div');e.className='card '+(o.g||o.free||o.m?'free':'');if(o.g){e.style.borderColor='gold';}if(o.m){e.style.borderColor='#ff0055';}e.onclick=fn;e.innerHTML=`<div>${o.i}</div><h3>${o.n}</h3><span class="badge ${o.g?'gold':o.m?'movie':o.free?'free':'out'}">${o.g?'PLAY INSIDE':o.m?'FREE MOVIES':o.free?'FREE':o.b||'YT'}</span>`;g.appendChild(e);}
+function mk(g,fn,o){const e=document.createElement('div');e.className='card '+(o.g||o.free||o.m?'free':'');if(o.g){e.style.borderColor='gold';}if(o.m){e.style.borderColor='#ff0055';}e.onclick=fn;e.innerHTML=`<div>${o.i}</div><h3>${o.n}</h3><span class="badge ${o.g?'gold':o.m?'movie':o.free?'free':'out'}">${o.g?'PLAY INSIDE':o.m?'FREE GH':o.free?'FREE':o.b||'YT'}</span>`;g.appendChild(e);}
 const gi=document.getElementById('g-intl'),gg=document.getElementById('g-ghana'),ggl=document.getElementById('g-global'),gm=document.getElementById('g-movies'),gf=document.getElementById('g-fifa'),gl=document.getElementById('g-links');
 intl.forEach(s=>mk(gi,()=>p(s.u),{n:s.n,i:s.i,free:true}));
 ghana.forEach(s=>{if(s.g){mk(gg,()=>p(s.u),{n:s.n,i:s.i,g:true});}else{mk(gg,()=>window.open(`https://www.youtube.com/${s.h}/live`,'_blank'),{n:s.n,i:s.i});}});
