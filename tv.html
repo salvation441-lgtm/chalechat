@@ -8,14 +8,7 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
-body{
-  background: radial-gradient(1200px 600px at 10% -10%, #00ff88 0%, transparent 50%),
-              radial-gradient(1000px 500px at 90% 0%, #ffcc00 0%, transparent 40%),
-              radial-gradient(800px 400px at 50% 120%, #aa55ff 0%, transparent 50%),
-              #050a05;
-  color:#fff;font-family:system-ui;display:flex;flex-direction:column;
-  max-width:480px;margin:0 auto;height:100dvh;
-}
+body{background: radial-gradient(1200px 600px at 10% -10%, #00ff88 0%, transparent 50%), radial-gradient(1000px 500px at 90% 0%, #ffcc00 0%, transparent 40%), radial-gradient(800px 400px at 50% 120%, #aa55ff 0%, transparent 50%), #050a05;color:#fff;font-family:system-ui;display:flex;flex-direction:column;max-width:480px;margin:0 auto;height:100dvh;}
 .header{display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(10,20,10,.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
 .logo-img{width:32px;height:32px;border-radius:8px;box-shadow:0 0 12px gold;object-fit:cover}
 .player-box{margin:8px 10px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.12);height:28dvh;min-height:160px;background:#000;flex-shrink:0}
@@ -58,8 +51,19 @@ body{
 const v=document.getElementById('v');let h=null;
 function p(u){if(h){h.destroy();}if(Hls.isSupported()){h=new Hls();h.loadSource(u);h.attachMedia(v);h.on(Hls.Events.MANIFEST_PARSED,()=>v.play());}else{v.src=u;v.play();}}
 const intl=[{n:"Al Jazeera",i:"W",u:"https://live-hls-web-aje.getaj.net/AJE/01.m3u8"},{n:"DW News",i:"D",u:"https://dwamdstream104.akamaized.net/hls/live/2015526/dwstream104/master.m3u8"},{n:"France 24",i:"F",u:"https://live.france24.com/hls/live/2037218/F24_EN_HI_HLS/master.m3u8"}];
-const ghana=[{n:"Max TV",i:"M",u:"https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8",g:true},{n:"JoyNews",h:"@myjoyonline",i:"J"},{n:"UTV",h:"@UTVGhanaOnline",i:"U"},{n:"GTV",h:"@GTVGhana",i:"G"},{n:"TV3",h:"@TV3Ghana",i:"3"},{n:"GHOne",h:"@GHOneTV",i:"G"},{n:"Metro",h:"@metrotvgh",i:"M"},{n:"Citi",h:"@CitiTube",i:"C"},{n:"Angel",h:"@AngelTVGhana",i:"A"}];
+const ghana=[
+{n:"Max TV",i:"M",u:"https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8",g:true},
+{n:"TV3",i:"3",u:"https://adesa.tv/live/tv3_AdesaAdb.m3u8",g:true},
+{n:"JoyNews",h:"@myjoyonline",i:"J"},
+{n:"UTV",h:"@UTVGhanaOnline",i:"U"},
+{n:"GTV",h:"@GTVGhana",i:"G"},
+{n:"GHOne",h:"@GHOneTV",i:"G"},
+{n:"Metro",h:"@metrotvgh",i:"M"},
+{n:"Citi",h:"@CitiTube",i:"C"},
+{n:"Angel",h:"@AngelTVGhana",i:"A"}
+];
 const globalFree=[
+{n:"Premier League",u:"https://www.youtube.com/@premierleague/live",i:"P"},
 {n:"FIFA+ Global",u:"https://www.fifa.com/fifaplus/en/live",i:"F"},
 {n:"J-League",u:"https://www.youtube.com/@JLEAGUEINTERNATIONAL/live",i:"J"},
 {n:"ISL",u:"https://www.youtube.com/@IndianSuperLeague/live",i:"I"},
@@ -69,15 +73,18 @@ const globalFree=[
 ];
 const fifa=[{n:"FIFA+",u:"https://www.fifa.com/fifaplus/en/live",i:"F"}];
 const paid=[{n:"SuperSport",u:"https://www.supersport.com/",i:"S"},{n:"Canal+",u:"https://www.canalplus-afrique.com/",i:"C"},{n:"DStv Now",u:"https://now.dstv.com/",i:"D"}];
-function mk(g,fn,o){const e=document.createElement('div');e.className='card '+(o.g||o.free?'free':'');if(o.g){e.style.borderColor='gold';}e.onclick=fn;e.innerHTML=`<div>${o.i}</div><h3>${o.n}</h3><span class="badge ${o.g?'gold':o.free?'free':'out'}">${o.g?'PLAY INSIDE':o.free?'FREE':o.b||'YT'}</span>`;g.appendChild(e);}
+function mk(g,fn,o){const e=document.createElement('div');e.className='card '+(o.g||o.free?'free':'');if(o.g){e.style.borderColor='gold';}e.onclick=fn;e.innerHTML=`<div>${o.i}</div><h3>${o.n}</h3><span class="badge ${o.g?'gold':o.free?'free':'out'}">${o.g?'PLAY INSIDE':o.free?'FREE':o.b||'YT LIVE'}</span>`;g.appendChild(e);}
 const gi=document.getElementById('g-intl'),gg=document.getElementById('g-ghana'),ggl=document.getElementById('g-global'),gf=document.getElementById('g-fifa'),gl=document.getElementById('g-links');
 intl.forEach(s=>mk(gi,()=>p(s.u),{n:s.n,i:s.i,free:true}));
-ghana.forEach(s=>{if(s.g){mk(gg,()=>p(s.u),{n:s.n,i:s.i,g:true});}else{mk(gg,()=>window.open(`https://www.youtube.com/${s.h}/live`,'_blank'),{n:s.n,i:s.i});}});
+ghana.forEach(s=>{
+ if(s.g){mk(gg,()=>p(s.u),{n:s.n,i:s.i,g:true});}
+ else{mk(gg,()=>window.open(`https://www.youtube.com/${s.h}/live`,'_blank'),{n:s.n,i:s.i});}
+});
 globalFree.forEach(s=>mk(ggl,()=>window.open(s.u,'_blank'),{n:s.n,i:s.i,free:true}));
 fifa.forEach(s=>mk(gf,()=>window.open(s.u,'_blank'),{n:s.n,i:s.i,b:'FIFA+'}));
 paid.forEach(s=>mk(gl,()=>window.open(s.u,'_blank'),{n:s.n,i:s.i,b:'PAID'}));
 function st(t){['intl','ghana','global','fifa','links'].forEach(id=>{document.getElementById('g-'+id).classList.toggle('hidden',t!==id);document.getElementById('t-'+id).classList.toggle('active',t===id);});}
-p("https://live-hls-web-aje.getaj.net/AJE/01.m3u8");
+p("https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8");
 </script>
 </body>
 </html>
