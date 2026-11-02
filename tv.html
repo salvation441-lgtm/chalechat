@@ -1,27 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Salvation TV - Fixed</title>
+<title>Salvation TV - Fixed Local</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#060a06;color:#fff;font-family:system-ui;max-width:480px;margin:0 auto;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
-.header{padding:12px 16px;background:#0a140a;border-bottom:1px solid #222;font-weight:900;letter-spacing:0.5px}
+body{background:#060a06;color:#fff;font-family:system-ui;max-width:480px;margin:0 auto;height:100dvh;display:flex;flex-direction:column}
+.header{padding:12px;background:#0a140a;border-bottom:1px solid #222;font-weight:900}
 .header span{color:#00ff88}
-.player-box{margin:10px;border-radius:16px;overflow:hidden;background:#000;height:32vh;min-height:220px;border:1px solid #333;position:relative;display:flex;align-items:center;justify-content:center}
+.player-box{margin:10px;border-radius:16px;background:#000;height:32vh;min-height:220px;border:1px solid #333;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .player-box video,.player-box iframe{width:100%;height:100%;border:0;position:absolute;inset:0}
-#status{position:absolute;z-index:3;background:rgba(0,0,0,0.7);padding:8px 12px;border-radius:20px;font-size:10px;font-weight:700}
-.tabs{display:flex;gap:6px;padding:8px 10px;overflow-x:auto;scrollbar-width:none}
+#status{position:absolute;z-index:5;background:rgba(0,0,0,0.8);padding:6px 12px;border-radius:20px;font-size:10px}
+.tabs{display:flex;gap:6px;padding:8px;overflow-x:auto}
 .tab{padding:8px 14px;border-radius:20px;font-size:10px;font-weight:800;border:1px solid #333;background:#111;white-space:nowrap}
-.tab.active{background:#fff;color:#000;border-color:#fff}
-.content{flex:1;overflow-y:auto;padding-bottom:20px}
+.tab.active{background:#fff;color:#000}
+.content{flex:1;overflow-y:auto}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px}
-.card{background:#111;border-radius:14px;padding:14px 6px;text-align:center;border:1px solid #222;cursor:pointer;transition:0.1s}
-.card:active{transform:scale(0.96)}
-.card h3{font-size:8px;margin-top:5px;line-height:1.2}
-.badge{font-size:6px;padding:4px 8px;border-radius:20px;margin-top:6px;display:inline-block;font-weight:900;letter-spacing:0.5px}
+.card{background:#111;border-radius:14px;padding:12px 4px;text-align:center;border:1px solid #222}
+.card h3{font-size:8px;margin-top:4px}
+.badge{font-size:6px;padding:4px 8px;border-radius:10px;margin-top:5px;display:inline-block;font-weight:900}
 .badge.hls{background:#ffcc00;color:#000}
 .badge.inside{background:#00ff88;color:#000}
 .badge.yt{background:#ff0000;color:#fff}
@@ -30,116 +29,57 @@ body{background:#060a06;color:#fff;font-family:system-ui;max-width:480px;margin:
 </head>
 <body>
 <div class="header">Salvation <span>TV</span></div>
-<div class="player-box" id="playerBox">
-<div id="status">LOADING...</div>
-<video id="v" controls autoplay muted playsinline preload="auto" poster="https://i.imgur.com/8Qm4sQz.png"></video>
-<iframe id="yt" class="hidden" allowfullscreen allow="autoplay; encrypted-media; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-</div>
-
-<div class="tabs">
-<div class="tab active" id="t-ghana" onclick="switchTab('ghana')">Ghana</div>
-<div class="tab" id="t-foreign" onclick="switchTab('foreign')">Foreign</div>
-<div class="tab" id="t-sports" onclick="switchTab('sports')">Sports</div>
-<div class="tab" id="t-movies" onclick="switchTab('movies')">Movies</div>
-</div>
-
-<div class="content">
-<div class="grid" id="g-ghana"></div>
-<div class="grid hidden" id="g-foreign"></div>
-<div class="grid hidden" id="g-sports"></div>
-<div class="grid hidden" id="g-movies"></div>
-</div>
-
+<div class="player-box"><div id="status" class="hidden">LOADING...</div><video id="v" controls autoplay muted playsinline></video><iframe id="yt" class="hidden" allowfullscreen allow="autoplay; fullscreen"></iframe></div>
+<div class="tabs"><div class="tab active" id="t-ghana" onclick="st('ghana')">Ghana</div><div class="tab" id="t-foreign" onclick="st('foreign')">Foreign</div><div class="tab" id="t-sports" onclick="st('sports')">Sports</div><div class="tab" id="t-movies" onclick="st('movies')">Movies</div></div>
+<div class="content"><div class="grid" id="g-ghana"></div><div class="grid hidden" id="g-foreign"></div><div class="grid hidden" id="g-sports"></div><div class="grid hidden" id="g-movies"></div></div>
 <script>
-const v=document.getElementById('v'), yt=document.getElementById('yt'), statusEl=document.getElementById('status');
-let hls=null;
-const ORIGIN = "https://on441-lgtm.github.io";
-
-function setStatus(t){statusEl.textContent=t; statusEl.classList.remove('hidden');}
-function hideStatus(){statusEl.classList.add('hidden');}
-
-function playHLS(url){
-  yt.classList.add('hidden'); yt.src='about:blank';
-  v.classList.remove('hidden');
-  if(hls){hls.destroy();hls=null;}
-  setStatus('CONNECTING...');
+const v=document.getElementById('v'), yt=document.getElementById('yt'), stt=document.getElementById('status'); let h=null;
+function show(t){stt.textContent=t; stt.classList.remove('hidden');} function hide(){stt.classList.add('hidden');}
+function playHLS(u){
+  yt.classList.add('hidden'); yt.src=''; v.classList.remove('hidden');
+  if(h){h.destroy();h=null;} show('CONNECTING...');
   if(Hls.isSupported()){
-    hls=new Hls({enableWorker:true, lowLatencyMode:true, backBufferLength:30, maxBufferLength:30});
-    hls.loadSource(url);
-    hls.attachMedia(v);
-    hls.on(Hls.Events.MANIFEST_PARSED,()=>{ v.play().then(hideStatus).catch(()=>hideStatus()); });
-    hls.on(Hls.Events.ERROR,(e,data)=>{
-      if(data.fatal){ setStatus('RETRYING...'); hls.startLoad(); }
-    });
-  } else if(v.canPlayType('application/vnd.apple.mpegurl')){
-    v.src=url; v.addEventListener('loadedmetadata',()=>{v.play(); hideStatus();});
-  }
-  v.addEventListener('playing',hideStatus,{once:true});
+    h=new Hls({enableWorker:true, lowLatencyMode:true}); h.loadSource(u); h.attachMedia(v);
+    h.on(Hls.Events.MANIFEST_PARSED,()=>v.play().then(hide).catch(hide));
+    h.on(Hls.Events.ERROR,(e,d)=>{ if(d.fatal){ show('RETRYING...'); setTimeout(()=>h.startLoad(),1500); } });
+  }else{v.src=u; v.play().then(hide).catch(hide);}
 }
-
-function playYTInside(id){
-  if(hls){hls.destroy();hls=null;}
-  v.pause(); v.classList.add('hidden');
-  yt.classList.remove('hidden');
-  setStatus('LOADING YT...');
-  // youtube-nocookie + origin fixes github.io unavailable error
-  yt.src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&origin=${ORIGIN}`;
-  yt.onload=()=>hideStatus();
-  setTimeout(hideStatus,2500);
-}
-
-function openChannelLive(handle){
-  // Ghana channels block embed - open correct live page, never private
+function playYTInside(id){ if(h){h.destroy();h=null;} v.pause(); v.classList.add('hidden'); yt.classList.remove('hidden'); show('LOADING YT...'); yt.src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&playsinline=1&origin=https://on441-lgtm.github.io`; yt.onload=hide; setTimeout(hide,2500);}
+function openYTChannel(handle){ // FIX: Don't load in player, open YouTube app directly - no spinner
   window.open(`https://www.youtube.com/${handle}/live`, '_blank');
 }
+function openYTSite(url){ window.open(url, '_blank'); }
+function mk(g,fn,name,type){const d=document.createElement('div'); d.className='card'; d.style.borderColor=type==='hls'?'#ffcc00':type==='inside'?'#00ff88':'#ff0000'; d.onclick=fn; d.innerHTML=`<div style="font-weight:900;font-size:16px">${name[0]}</div><h3>${name}</h3><span class="badge ${type}">${type==='hls'?'HLS INSIDE':type==='inside'?'YT INSIDE':'YT APP'}</span>`; g.appendChild(d);}
 
-function makeCard(grid, fn, name, type){
-  const el=document.createElement('div');
-  el.className='card';
-  el.style.borderColor = type==='hls' ? '#ffcc00' : type==='inside' ? '#00ff88' : '#ff0000';
-  el.onclick=fn;
-  el.innerHTML=`<div style="font-size:18px;font-weight:900">${name.charAt(0)}</div><h3>${name}</h3><span class="badge ${type}">${type==='hls'?'INSIDE LIVE':type==='inside'?'INSIDE':'YOUTUBE LIVE'}</span>`;
-  grid.appendChild(el);
-}
-
-// ===== GHANA - FIXED =====
 const gh=document.getElementById('g-ghana');
-makeCard(gh, ()=>playHLS("https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8"), "MAX TV", "hls");
-makeCard(gh, ()=>playHLS("https://admdn2.cdn.mgmlcdn.com/ada/adomtv/tv.m3u8"), "Adom TV HLS", "hls");
-makeCard(gh, ()=>openChannelLive("@myjoyonline"), "JoyNews LIVE", "yt");
-makeCard(gh, ()=>openChannelLive("@Channel1TVGHA"), "Channel One", "yt");
-makeCard(gh, ()=>openChannelLive("@UTVGhanaOfficial"), "UTV Ghana", "yt");
-makeCard(gh, ()=>openChannelLive("@GHOneTV"), "GHOne", "yt");
+// WORKING HLS - from iptv-org confirmed
+mk(gh, ()=>playHLS("https://adesa.tv/live/tv3_AdesaAdb.m3u8"), "TV3", "hls"); // confirmed working
+mk(gh, ()=>playHLS("https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8"), "MAX TV", "hls");
+mk(gh, ()=>openYTSite("https://max.com.gh/live-tv/"), "MAX Site", "yt");
+// GHANA YT - OPEN IN YOUTUBE APP (never spins inside app)
+mk(gh, ()=>openYTChannel("@myjoyonline"), "JoyNews", "yt");
+mk(gh, ()=>openYTChannel("@Channel1TVGHA"), "Channel One", "yt");
+mk(gh, ()=>openYTChannel("@UTVGhanaOfficial"), "UTV Ghana", "yt");
+mk(gh, ()=>openYTChannel("@GHOneTV"), "GHOne TV", "yt");
+mk(gh, ()=>openYTChannel("@adomtvgh"), "Adom TV", "yt");
 
-// ===== FOREIGN - ONLY EMBEDDABLE = NO UNAVAILABLE =====
 const fo=document.getElementById('g-foreign');
-makeCard(fo, ()=>playHLS("https://live-hls-web-aje.getaj.net/AJE/01.m3u8"), "Al Jazeera HLS", "hls");
-makeCard(fo, ()=>playHLS("https://static.france24.com/live/F24_EN_HI_HLS/live_web.m3u8"), "France 24 HLS", "hls");
-makeCard(fo, ()=>playYTInside("gCNeDWCI0vo"), "Al Jazeera YT", "inside"); // guaranteed embeddable
-makeCard(fo, ()=>playYTInside("Ap-oc_QvM3g"), "France 24 YT", "inside");
-makeCard(fo, ()=>playYTInside("21X5lGlDOfg"), "NASA ISS", "inside");
-makeCard(fo, ()=>playYTInside("W3ODvWk0y0g"), "DW News", "inside");
+mk(fo, ()=>playHLS("https://live-hls-web-aje.getaj.net/AJE/01.m3u8"), "Al Jazeera HLS", "hls");
+mk(fo, ()=>playHLS("https://static.france24.com/live/F24_EN_HI_HLS/live_web.m3u8"), "France 24 HLS", "hls");
+mk(fo, ()=>playYTInside("gCNeDWCI0vo"), "Al Jazeera", "inside");
+mk(fo, ()=>playYTInside("Ap-oc_QvM3g"), "France 24", "inside");
+mk(fo, ()=>playYTInside("21X5lGlDOfg"), "NASA", "inside");
+mk(fo, ()=>playYTInside("W3ODvWk0y0g"), "DW", "inside");
 
-// ===== SPORTS - FIXED (Red Bull delay fixed) =====
 const sp=document.getElementById('g-sports');
-// New low-latency Red Bull link - fast load, no 3:30 spinner
-makeCard(sp, ()=>playHLS("https://dms.redbull.tv/v5/destination/streams/linear-borb-linear.m3u8"), "Red Bull TV", "hls");
-makeCard(sp, ()=>playYTInside("j7sP6pU0a6k"), "PL Live", "inside");
-makeCard(sp, ()=>openChannelLive("@SkySports"), "Sky Sports", "yt");
+mk(sp, ()=>playHLS("https://dms.redbull.tv/v5/destination/streams/linear-borb-linear.m3u8"), "Red Bull TV", "hls");
+mk(sp, ()=>playYTInside("j7sP6pU0a6k"), "Premier", "inside");
 
-// ===== MOVIES =====
 const mo=document.getElementById('g-movies');
-makeCard(mo, ()=>{ if(hls){hls.destroy();hls=null;} v.classList.add('hidden'); yt.classList.remove('hidden'); yt.src='https://watch.plex.tv/movies'; hideStatus(); }, "Plex Movies", "inside");
+mk(mo, ()=>{ if(h){h.destroy();h=null;} v.classList.add('hidden'); yt.classList.remove('hidden'); yt.src='https://watch.plex.tv/movies'; }, "Plex", "inside");
 
-function switchTab(t){
-  ['ghana','foreign','sports','movies'].forEach(id=>{
-    document.getElementById('g-'+id).classList.toggle('hidden', id!==t);
-    document.getElementById('t-'+id).classList.toggle('active', id===t);
-  });
-}
-
-// Auto start MAX TV (fast)
-playHLS("https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8");
+function st(t){['ghana','foreign','sports','movies'].forEach(id=>{document.getElementById('g-'+id).classList.toggle('hidden', id!==t); document.getElementById('t-'+id).classList.toggle('active', id===t);});}
+playHLS("https://adesa.tv/live/tv3_AdesaAdb.m3u8");
 </script>
 </body>
 </html>
