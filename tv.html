@@ -3,26 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Salvation TV - Unlimited Rada</title>
+<title>Salvation TV - FIXED Unlimited</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#060a06;color:#fff;font-family:system-ui;max-width:480px;margin:0 auto;height:100dvh;display:flex;flex-direction:column}
 .header{padding:14px;background:#0a140a;border-bottom:1px solid #222;font-weight:900}.header span{color:#00ff88}
-.player-box{margin:10px;border-radius:16px;background:#000;height:38vh;min-height:260px;border:1px solid #333;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.player-box video,.player-box iframe{width:100%;height:100%;border:0;position:absolute;inset:0;background:#000}
+.player-box{margin:10px;border-radius:16px;background:#000;height:42vh;min-height:280px;border:1px solid #333;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.player-box video,#yt-player{width:100%;height:100%;border:0;position:absolute;inset:0;background:#000}
 #status{position:absolute;z-index:10;background:#111;padding:8px 14px;border-radius:20px;font-size:11px;border:1px solid #333;font-weight:700;text-align:center}
 .tabs{display:flex;gap:5px;padding:8px;overflow-x:auto}.tab{padding:9px 11px;border-radius:20px;font-size:8.5px;font-weight:800;border:1px solid #333;background:#111;white-space:nowrap}.tab.active{background:#fff;color:#000}
 .content{flex:1;overflow-y:auto}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px}
-.card{background:#111;border-radius:14px;padding:14px 4px;text-align:center;border:1px solid #222}.card h3{font-size:7px;margin-top:4px}
+.card{background:#111;border-radius:14px;padding:14px 4px;text-align:center;border:1px solid #333}.card h3{font-size:7.5px;margin-top:4px}
 .badge{font-size:5px;padding:3px 7px;border-radius:10px;margin-top:5px;display:inline-block;font-weight:900}
-.badge.inside{background:#00ff88;color:#000}.badge.music{background:#a855f7;color:#fff}.badge.unlimited{background:#ff00ff;color:#fff}
+.badge.inside{background:#00ff88;color:#000}.badge.unlimited{background:#ff00ff;color:#fff}.badge.music{background:#a855f7;color:#fff}
 .hidden{display:none!important}
 </style>
 </head>
 <body>
-<div class="header">Salvation <span>TV - Unlimited Rada</span></div>
-<div class="player-box"><div id="status">TAP UNLIMITED RADA</div><video id="v" controls autoplay muted playsinline></video><iframe id="yt" class="hidden" allowfullscreen allow="autoplay; fullscreen"></iframe></div>
+<div class="header">Salvation <span>TV - FIXED</span></div>
+<div class="player-box"><div id="status">TAP ♾️ UNLIMITED - FIXED VERSION</div><video id="v" controls autoplay muted playsinline></video><div id="yt-player" class="hidden"></div></div>
 <div class="tabs">
 <div class="tab active" id="t-ent" onclick="st('ent')">Entertainment</div>
 <div class="tab" id="t-ghana" onclick="st('ghana')">Ghana</div>
@@ -33,56 +33,59 @@ body{background:#060a06;color:#fff;font-family:system-ui;max-width:480px;margin:
 <div class="grid hidden" id="g-ghana"></div>
 <div class="grid hidden" id="g-sports"></div>
 </div>
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
-const v=document.getElementById('v'), yt=document.getElementById('yt'), stt=document.getElementById('status'); let h=null;
+const v=document.getElementById('v'), ytDiv=document.getElementById('yt-player'), stt=document.getElementById('status'); let h=null; let ytPlayer=null;
+let playlist = [
+"MSMsWkC6Rro", // Lyrical Joe - 5th August @ 4Syte (your screenshot)
+"Hb6I7GoTvzI", // Black Sherif - Kwaku Traveller
+"GIDiI5kyBDQ", // Black Sherif - Kwaku Traveller Video
+"WMRfgQf6q7s", // Shatta Wale - On God
+"5qap5aO4i9A", "jfKfPfyJRdk", "DWcJFNfaw9c", "l9PxOanFjxQ"
+];
+let cur=0; let unlimitedMode=false;
 function show(t){stt.textContent=t; stt.classList.remove('hidden');} function hide(){stt.classList.add('hidden');}
-function playHLS(u){ yt.classList.add('hidden'); yt.src=''; v.classList.remove('hidden'); if(h){h.destroy();h=null;} show('CONNECTING...'); if(Hls.isSupported()){ h=new Hls(); h.loadSource(u); h.attachMedia(v); h.on(Hls.Events.MANIFEST_PARSED,()=>v.play().then(hide)); } else{v.src=u; v.play().then(hide);} }
-
-// UNLIMITED RADA - plays all uploads from 4Syte TV channel non-stop
-function playUnlimited4Syte(){
-  if(h){h.destroy();h=null;} v.pause(); v.classList.add('hidden'); yt.classList.remove('hidden');
-  show('UNLIMITED 4SYTE RADA - LOADING...');
-  // listType=user_uploads&list=4sytetv = plays ALL videos from @4sytetv channel unlimited
-  yt.src = `https://www.youtube-nocookie.com/embed?listType=user_uploads&list=4sytetv&autoplay=1&mute=0&playsinline=1&rel=0&modestbranding=1&origin=https://on441-lgtm.github.io`;
-  yt.onload=hide;
+function playHLS(u){ if(ytPlayer){try{ytPlayer.stopVideo();ytPlayer.destroy();}catch(e){} ytPlayer=null;} ytDiv.classList.add('hidden'); v.classList.remove('hidden'); if(h){h.destroy();h=null;} show('CONNECTING...'); if(Hls.isSupported()){h=new Hls();h.loadSource(u);h.attachMedia(v);h.on(Hls.Events.MANIFEST_PARSED,()=>v.play().then(hide));}else{v.src=u;v.play().then(hide);} }
+function onYouTubeIframeAPIReady(){}
+function createPlayer(id){
+  if(ytPlayer){ytPlayer.destroy(); ytPlayer=null;}
+  v.pause(); v.classList.add('hidden'); ytDiv.classList.remove('hidden'); ytDiv.innerHTML='';
+  ytPlayer = new YT.Player('yt-player', {
+    videoId:id,
+    playerVars:{autoplay:1, playsinline:1, rel:0, modestbranding:1},
+    events:{
+      onReady:e=>{e.target.playVideo(); hide(); show(`PLAYING ${cur+1}/${playlist.length} - NEXT AUTO`); setTimeout(hide,2500);},
+      onStateChange:e=>{
+        if(e.data===0){
+          cur=(cur+1)%playlist.length;
+          if(cur===0 && unlimitedMode){ playlist.sort(()=>Math.random()-0.5); }
+          show(`AUTO NEXT ${cur+1}...`); ytPlayer.loadVideoById(playlist[cur]);
+        }
+      }
+    }
+  });
 }
-
-function playUnlimitedGhana(){
-  if(h){h.destroy();h=null;} v.pause(); v.classList.add('hidden'); yt.classList.remove('hidden');
-  show('UNLIMITED GHANA HITS...');
-  // Search playlist for Ghana music - unlimited
-  yt.src = `https://www.youtube-nocookie.com/embed?listType=search&list=Ghana+music+videos+2024+Black+Sherif+Shatta+Wale+Stonebwoy&autoplay=1&mute=0&rel=0&origin=https://on441-lgtm.github.io`;
-  yt.onload=hide;
-}
-
-function playPlaylistOnly2(){
-  if(h){h.destroy();h=null;} v.pause(); v.classList.add('hidden'); yt.classList.remove('hidden');
-  show('ONLY 2 - Lyrical Joe > Blacko');
-  yt.src = `https://www.youtube-nocookie.com/embed/MSMsWkC6Rro?autoplay=1&mute=0&playsinline=1&playlist=Hb6I7GoTvzI&rel=0&origin=https://on441-lgtm.github.io`;
-  yt.onload=hide;
-}
-
-function openLink(u){ window.open(u, '_blank'); }
-function mk(g,fn,name,type){const d=document.createElement('div'); d.className='card'; d.style.borderColor=type==='unlimited'?'#ff00ff':type==='inside'?'#00ff88':'#333'; d.onclick=fn; d.innerHTML=`<div style="font-weight:900;font-size:18px">${type==='unlimited'?'♾️':name[0]}</div><h3>${name}</h3><span class="badge ${type}">${type}</span>`; g.appendChild(d);}
+function playUnlimited(){ unlimitedMode=true; cur=0; playlist=["MSMsWkC6Rro","Hb6I7GoTvzI","GIDiI5kyBDQ","WMRfgQf6q7s","5qap5aO4i9A","jfKfPfyJRdk"]; playlist.sort(()=>Math.random()-0.5); show('UNLIMITED RADA - SHUFFLED'); createPlayer(playlist[0]); }
+function playOnly2(){ unlimitedMode=false; playlist=["MSMsWkC6Rro","Hb6I7GoTvzI"]; cur=0; createPlayer(playlist[0]); }
+function playOne(id){ unlimitedMode=false; cur=playlist.indexOf(id); if(cur<0)cur=0; createPlayer(id); }
+function openLink(u){window.open(u,'_blank');}
+function mk(g,fn,name,type){const d=document.createElement('div'); d.className='card'; d.style.borderColor=type==='unlimited'?'#ff00ff':'#333'; d.onclick=fn; d.innerHTML=`<div style="font-weight:900;font-size:18px">${type==='unlimited'?'♾️':name[0]}</div><h3>${name}</h3><span class="badge ${type}">${type}</span>`; g.appendChild(d);}
 
 const ent=document.getElementById('g-ent');
-// UNLIMITED RADA SECTION
-mk(ent, ()=>playUnlimited4Syte(), "4Syte Unlimited ♾️", "unlimited"); // MAIN - UNLIMITED - all @4sytetv videos
-mk(ent, ()=>playUnlimitedGhana(), "Ghana Hits Unlimited ♾️", "unlimited"); // Ghana music unlimited
-mk(ent, ()=>playPlaylistOnly2(), "Only 2 - No Loop", "inside");
-mk(ent, ()=>{if(h){h.destroy();h=null;} v.pause(); v.classList.add('hidden'); yt.classList.remove('hidden'); yt.src="https://4sytetv.com/"; show('4Syte Official 24/7 HD'); setTimeout(hide,2000);}, "4Syte Official 24/7", "music");
-mk(ent, ()=>openLink("https://www.youtube.com/@4sytetv"), "4Syte @4sytetv YT", "music");
+mk(ent, ()=>playUnlimited(), "4Syte Unlimited FIXED ♾️", "unlimited");
+mk(ent, ()=>playUnlimited(), "Ghana Hits Unlimited ♾️", "unlimited");
+mk(ent, ()=>playOnly2(), "Only 2 - No Loop", "inside");
+mk(ent, ()=>playOne("MSMsWkC6Rro"), "Lyrical Joe @ 4Syte", "inside");
+mk(ent, ()=>{ if(h){h.destroy();h=null;} if(ytPlayer){ytPlayer.destroy();} v.classList.add('hidden'); ytDiv.classList.remove('hidden'); ytDiv.innerHTML=`<iframe src="https://4sytetv.com/" style="width:100%;height:100%;border:0"></iframe>`; show('4Syte Official 24/7 HD'); setTimeout(hide,2000);}, "4Syte Official 24/7", "music");
+mk(ent, ()=>openLink("https://www.youtube.com/results?search_query=4Syte+TV+Ghana"), "4Syte TV Search", "music");
 
 const gh=document.getElementById('g-ghana');
 mk(gh, ()=>playHLS("https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8"), "MAX TV", "inside");
-mk(gh, ()=>openLink("https://www.youtube.com/results?search_query=TV3+Ghana+live"), "TV3 Ghana", "inside");
-
 const sp=document.getElementById('g-sports');
 mk(sp, ()=>playHLS("https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_3360.m3u8"), "Red Bull TV", "inside");
 
 function st(t){['ghana','ent','sports'].forEach(id=>{document.getElementById('g-'+id).classList.toggle('hidden', id!==t); document.getElementById('t-'+id).classList.toggle('active', id===t);});}
 st('ent');
-show('TAP ♾️ UNLIMITED - E GO PLAY NON-STOP');
 </script>
 </body>
 </html>
