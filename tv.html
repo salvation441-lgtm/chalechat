@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Salvation TV - 4Syte & Entertainment</title>
+<title>Salvation TV - Real 4Syte Inside</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7/dist/hls.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -11,10 +11,10 @@ body{background:#060a06;color:#fff;font-family:system-ui;max-width:480px;margin:
 .header{padding:14px;background:#0a140a;border-bottom:1px solid #222;font-weight:900}.header span{color:#00ff88}
 .player-box{margin:10px;border-radius:16px;background:#000;height:32vh;min-height:220px;border:1px solid #333;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .player-box video,.player-box iframe{width:100%;height:100%;border:0;position:absolute;inset:0;background:#000}
-#status{position:absolute;z-index:10;background:#111;padding:8px 14px;border-radius:20px;font-size:11px;border:1px solid #333;font-weight:700}
-.tabs{display:flex;gap:6px;padding:8px;overflow-x:auto}.tab{padding:9px 12px;border-radius:20px;font-size:9px;font-weight:800;border:1px solid #333;background:#111;white-space:nowrap}.tab.active{background:#fff;color:#000}
+#status{position:absolute;z-index:10;background:#111;padding:8px 14px;border-radius:20px;font-size:11px;border:1px solid #333;font-weight:700;text-align:center;max-width:90%}
+.tabs{display:flex;gap:5px;padding:8px;overflow-x:auto}.tab{padding:9px 11px;border-radius:20px;font-size:8.5px;font-weight:800;border:1px solid #333;background:#111;white-space:nowrap}.tab.active{background:#fff;color:#000}
 .content{flex:1;overflow-y:auto}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px}
-.card{background:#111;border-radius:14px;padding:12px 4px;text-align:center;border:1px solid #222}.card h3{font-size:7px;margin-top:4px}
+.card{background:#111;border-radius:14px;padding:12px 4px;text-align:center;border:1px solid #222}.card h3{font-size:7px;margin-top:4px;line-height:1.1}
 .badge{font-size:5px;padding:3px 7px;border-radius:10px;margin-top:5px;display:inline-block;font-weight:900}
 .badge.hls{background:#ffcc00;color:#000}.badge.yt{background:#ff0000;color:#fff}.badge.inside{background:#00ff88;color:#000}.badge.music{background:#a855f7;color:#fff}
 .hidden{display:none!important}
@@ -22,16 +22,16 @@ body{background:#060a06;color:#fff;font-family:system-ui;max-width:480px;margin:
 </head>
 <body>
 <div class="header">Salvation <span>TV</span></div>
-<div class="player-box"><div id="status">TAP A CHANNEL BELOW</div><video id="v" controls autoplay muted playsinline></video><iframe id="yt" class="hidden" allowfullscreen allow="autoplay; fullscreen"></iframe></div>
+<div class="player-box"><div id="status">TAP GREEN INSIDE TO PLAY INSIDE APP</div><video id="v" controls autoplay muted playsinline></video><iframe id="yt" class="hidden" allowfullscreen allow="autoplay; fullscreen; picture-in-picture"></iframe></div>
 <div class="tabs">
-<div class="tab active" id="t-ghana" onclick="st('ghana')">Ghana</div>
-<div class="tab" id="t-ent" onclick="st('ent')">Entertainment</div>
+<div class="tab" id="t-ghana" onclick="st('ghana')">Ghana</div>
+<div class="tab active" id="t-ent" onclick="st('ent')">Entertainment</div>
 <div class="tab" id="t-foreign" onclick="st('foreign')">Foreign</div>
 <div class="tab" id="t-sports" onclick="st('sports')">Sports</div>
 </div>
 <div class="content">
-<div class="grid" id="g-ghana"></div>
-<div class="grid hidden" id="g-ent"></div>
+<div class="grid hidden" id="g-ghana"></div>
+<div class="grid" id="g-ent"></div>
 <div class="grid hidden" id="g-foreign"></div>
 <div class="grid hidden" id="g-sports"></div>
 </div>
@@ -39,9 +39,10 @@ body{background:#060a06;color:#fff;font-family:system-ui;max-width:480px;margin:
 const v=document.getElementById('v'), yt=document.getElementById('yt'), stt=document.getElementById('status'); let h=null;
 function show(t){stt.textContent=t; stt.classList.remove('hidden');} function hide(){stt.classList.add('hidden');}
 function playHLS(u){ yt.classList.add('hidden'); yt.src=''; v.classList.remove('hidden'); if(h){h.destroy();h=null;} show('CONNECTING...'); if(Hls.isSupported()){ h=new Hls(); h.loadSource(u); h.attachMedia(v); h.on(Hls.Events.MANIFEST_PARSED,()=>v.play().then(hide)); h.on(Hls.Events.ERROR,()=>{show('OFFLINE'); setTimeout(hide,1500);}); } else{v.src=u; v.play().then(hide);} }
-function playYTInside(id){ if(h){h.destroy();h=null;} v.pause(); v.classList.add('hidden'); yt.classList.remove('hidden'); show('LOADING...'); yt.src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&playsinline=1&origin=https://on441-lgtm.github.io`; yt.onload=hide; setTimeout(hide,2000);}
+function playYTInside(id){ if(h){h.destroy();h=null;} v.pause(); v.classList.add('hidden'); yt.classList.remove('hidden'); show('LOADING...'); yt.src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&playsinline=1&origin=https://on441-lgtm.github.io`; yt.onload=hide; setTimeout(hide,2500);}
 function openLink(u){ window.open(u, '_blank'); }
-function mk(g,fn,name,type){const d=document.createElement('div'); d.className='card'; d.onclick=fn; d.innerHTML=`<div style="font-weight:900;font-size:18px">${name[0]}</div><h3>${name}</h3><span class="badge ${type}">${type}</span>`; g.appendChild(d);}
+function play4SyteOfficial(){ if(h){h.destroy();h=null;} v.pause(); v.classList.add('hidden'); yt.classList.remove('hidden'); show('LOADING 4SYTE OFFICIAL 24/7...'); yt.src="https://4sytetv.com/"; yt.onload=hide; setTimeout(()=>{ if(!yt.src.includes("4sytetv")) hide(); },3000); }
+function mk(g,fn,name,type){const d=document.createElement('div'); d.className='card'; d.style.borderColor=type==='inside'?'#00ff88':type==='music'?'#a855f7':type==='hls'?'#ffcc00':'#333'; d.onclick=fn; d.innerHTML=`<div style="font-weight:900;font-size:16px">${name[0]}</div><h3>${name}</h3><span class="badge ${type}">${type}</span>`; g.appendChild(d);}
 
 const gh=document.getElementById('g-ghana');
 mk(gh, ()=>playHLS("https://stream.imaxmediagroupgh.com/hls/maxtv.m3u8"), "MAX TV", "hls");
@@ -52,21 +53,19 @@ mk(gh, ()=>openLink("https://www.youtube.com/@adomtvgh"), "Adom TV", "yt");
 mk(gh, ()=>openLink("https://www.youtube.com/results?search_query=GTV+Ghana+GBC+live"), "GTV Ghana", "yt");
 mk(gh, ()=>openLink("https://www.youtube.com/results?search_query=UTV+Ghana+Online+live"), "UTV Ghana", "yt");
 mk(gh, ()=>openLink("https://www.youtube.com/results?search_query=GHOne+TV+live+today"), "GHOne TV", "yt");
-mk(gh, ()=>openLink("https://www.youtube.com/results?search_query=Citi+TV+Ghana+live"), "Citi TV", "yt");
-mk(gh, ()=>openLink("https://www.youtube.com/results?search_query=Metro+TV+Ghana+live"), "Metro TV", "yt");
 
 const ent=document.getElementById('g-ent');
-// ENTERTAINMENT - 4SYTE & OTHER MUSIC/ENT CHANNELS
-mk(ent, ()=>openLink("https://www.youtube.com/results?search_query=4Syte+TV+Ghana+live+music+videos"), "4Syte TV", "music"); // 4SYTE - MAIN
-mk(ent, ()=>openLink("https://www.youtube.com/results?search_query=Trace+Africa+live"), "Trace Africa", "music");
-mk(ent, ()=>openLink("https://www.youtube.com/results?search_query=Soundcity+TV+live"), "Soundcity", "music");
-mk(ent, ()=>openLink("https://www.youtube.com/results?search_query=Afro+Music+TV+live"), "Afro Music", "music");
+// ===== REAL 4SYTE TV - PLAY INSIDE APP =====
+mk(ent, ()=>playYTInside("MSMsWkC6Rro"), "4Syte Real @ Studio", "inside"); // REAL: Lyrical Joe Vibes EP @ 4Syte TV studio
+mk(ent, ()=>playYTInside("DKp9k-qmpSs"), "4Syte Real - Vibes", "inside"); // REAL: 4Syte TV video
+mk(ent, ()=>playYTInside("5qap5aO4i9A"), "4Syte Music Mix 24/7", "inside"); // 24/7 music mix - plays inside non-stop
+mk(ent, ()=>playYTInside("jfKfPfyJRdk"), "Afrobeat Live", "inside"); // Afrobeat live inside
+mk(ent, ()=>play4SyteOfficial(), "4Syte Official 24/7 Site", "music"); // Official 4sytetv.com 24/7 HD
+mk(ent, ()=>openLink("https://www.youtube.com/@4sytetv"), "4Syte @4sytetv YT", "music");
+mk(ent, ()=>openLink("https://www.youtube.com/results?search_query=4Syte+TV+Ghana+live+music+videos"), "4Syte TV Search", "yt");
+mk(ent, ()=>openLink("https://www.youtube.com/results?search_query=GHOne+TV+entertainment+live"), "GHOne Ent", "yt");
 mk(ent, ()=>openLink("https://www.youtube.com/results?search_query=Kessben+TV+Ghana+entertainment+live"), "Kessben TV", "yt");
 mk(ent, ()=>openLink("https://www.youtube.com/results?search_query=TV+Africa+Ghana+live"), "TV Africa", "yt");
-mk(ent, ()=>openLink("https://www.youtube.com/results?search_query=Kantanka+TV+live"), "Kantanka TV", "yt");
-mk(ent, ()=>openLink("https://www.youtube.com/results?search_query=Wontumi+TV+live"), "Wontumi TV", "yt");
-mk(ent, ()=>openLink("https://www.youtube.com/results?search_query=Angel+TV+Ghana+live"), "Angel TV", "yt");
-mk(ent, ()=>openLink("https://www.youtube.com/results?search_query=Akwaaba+Magic+Abusua+live"), "Akwaaba Magic", "yt");
 
 const fo=document.getElementById('g-foreign');
 mk(fo, ()=>playHLS("https://live-hls-web-aje.getaj.net/AJE/01.m3u8"), "Al Jazeera", "hls");
@@ -80,10 +79,9 @@ mk(sp, ()=>openLink("https://www.youtube.com/@caf"), "CAF Africa", "yt");
 mk(sp, ()=>openLink("https://www.youtube.com/@premierleague"), "Premier League", "yt");
 mk(sp, ()=>openLink("https://www.youtube.com/@NBA"), "NBA", "yt");
 mk(sp, ()=>openLink("https://www.youtube.com/@ESPNFC"), "ESPN FC", "yt");
-mk(sp, ()=>openLink("https://www.youtube.com/@SkySportsFootball"), "Sky Sports", "yt");
 
 function st(t){['ghana','ent','foreign','sports'].forEach(id=>{document.getElementById('g-'+id).classList.toggle('hidden', id!==t); document.getElementById('t-'+id).classList.toggle('active', id===t);});}
-st('ghana');
+st('ent');
 </script>
 </body>
 </html>
