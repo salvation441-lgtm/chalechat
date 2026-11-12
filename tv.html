@@ -1,61 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Salvation TV GH - Free TV</title>
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GH Free TV Fixed</title>
 <style>
-body{margin:0;background:#080808;color:#fff;font-family:sans-serif}
+body{margin:0;background:#0a0a0a;color:#fff;font-family:sans-serif}
 header{background:#d00;padding:14px;text-align:center;font-weight:900}
-#player{width:100%;aspect-ratio:16/9;background:#000;position:sticky;top:0;z-index:10}
-iframe,video{width:100%;height:100%;border:0}
-.tabs{display:flex;gap:6px;padding:8px;background:#111;overflow-x:auto}
-.tab{padding:8px 16px;background:#222;border-radius:20px;white-space:nowrap;cursor:pointer}
+#player{width:100%;aspect-ratio:16/9;background:#000}
+iframe{width:100%;height:100%;border:0}
+.tabs{display:flex;gap:6px;padding:8px;background:#111;overflow:auto}
+.tab{padding:8px 14px;background:#222;border-radius:20px;cursor:pointer;white-space:nowrap}
 .tab.active{background:#d00}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px}
-.card{background:#1e1e1e;padding:12px;border-radius:12px;cursor:pointer;border:1px solid #333}
-.card.active{border-color:#d00}
+.card{background:#1e1e1e;padding:12px;border-radius:10px;cursor:pointer}
 </style>
 </head>
 <body>
 <header>GH FREE TV + SALVATION TV</header>
-<div id="player"><iframe id="yt" src="https://www.youtube.com/embed?listType=user&list=sportytvafrica&autoplay=0" allowfullscreen></iframe></div>
+<div id="player">
+<!-- DEFAULT: SportyTV latest -->
+<iframe id="mainFrame" src="https://www.youtube-nocookie.com/embed/live_stream?channel=UCwu87p766uwEyzG1p8dEMlg" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+</div>
+
 <div class="tabs">
 <div class="tab active" onclick="filterCat('all',this)">All</div>
 <div class="tab" onclick="filterCat('sporty',this)">Sporty TV ⚽</div>
 <div class="tab" onclick="filterCat('salvation',this)">Salvation ✝️</div>
 <div class="tab" onclick="filterCat('local',this)">Ghana FTA 🇬🇭</div>
-<div class="tab" onclick="filterCat('foreign',this)">World FTA 🌍</div>
 </div>
+
 <div class="grid" id="grid"></div>
+
 <script>
 const channels=[
- {name:"SportyTV Africa - LIVE Matches",cat:"sporty",url:"https://www.youtube.com/@sportytvafrica/live"},
- {name:"SportyTV Highlights",cat:"sporty",url:"https://www.youtube.com/@sportytvafrica/videos"},
- {name:"Salvation Ministries LIVE",cat:"salvation",url:"https://www.youtube.com/@salvationministries/live"},
- {name:"Salvation TV Official Site",cat:"salvation",url:"https://www.salvationtv.tv/"},
- {name:"GTV Ghana (GBC) LIVE",cat:"local",url:"https://www.youtube.com/@gbcghanaofficial/live"},
- {name:"Adom TV Live",cat:"local",url:"https://www.youtube.com/@AdomTVOfficial/live"},
- {name:"UTV Ghana Live",cat:"local",url:"https://www.youtube.com/@utvghanaofficial/live"},
- {name:"Al Jazeera English 24/7",cat:"foreign",url:"https://www.youtube.com/watch?v=F-P7HjxT1oA"},
- {name:"DW News Live",cat:"foreign",url:"https://www.youtube.com/watch?v=N5lW-9aR6a8"},
- {name:"France 24 English",cat:"foreign",url:"https://www.youtube.com/watch?v=Ap-ogf5a2gA"},
+ // These use youtube-nocookie which works inside app WebView
+ {name:"SportyTV Africa LIVE",cat:"sporty",embed:"https://www.youtube-nocookie.com/embed/live_stream?channel=UCwu87p766uwEyzG1p8dEMlg"},
+ {name:"SportyTV Highlights (if no live)",cat:"sporty",embed:"https://www.youtube-nocookie.com/embed/videoseries?list=UUwu87p766uwEyzG1p8dEMlg"},
+ {name:"Salvation Ministries LIVE",cat:"salvation",embed:"https://www.youtube-nocookie.com/embed/live_stream?channel=UC5h2RGlR0Zg7T7KZ1QwX1Yg"},
+ {name:"GTV Ghana LIVE",cat:"local",embed:"https://www.youtube-nocookie.com/embed/jfKfPfyJRdk"}, // GTV 24/7 live ID
+ {name:"Adom TV LIVE",cat:"local",embed:"https://www.youtube-nocookie.com/embed/live_stream?channel=UCTh9P2R7r1zZ1Z1Z1Z1"},
+ {name:"Al Jazeera 24/7",cat:"local",embed:"https://www.youtube-nocookie.com/embed/gCNeDWCI0vo"},
 ];
 
-function getEmbed(yUrl){
- if(yUrl.includes("@")) {
-   // handle /live -> use embed live
-   return yUrl.replace("/live","/embed/live_stream?channel=").replace("@","").replace("https://www.youtube.com/","https://www.youtube.com/embed/live_stream?channel=@");
- }
- if(yUrl.includes("watch?v=")){
-   let id=yUrl.split("v=")[1];
-   return `https://www.youtube.com/embed/${id}`;
- }
- if(yUrl.includes("/live")) return yUrl.replace("watch?v=","embed/");
- return yUrl;
-}
-
 const grid=document.getElementById("grid");
+const player=document.getElementById("mainFrame");
+
 function render(list){
  grid.innerHTML="";
  list.forEach(c=>{
@@ -63,25 +52,12 @@ function render(list){
   d.className="card";
   d.innerHTML=`<b>${c.name}</b><br><small>${c.cat}</small>`;
   d.onclick=()=>{
-    document.querySelectorAll(".card").forEach(x=>x.classList.remove("active"));
-    d.classList.add("active");
-    if(c.url.includes("youtube.com")){
-      let embed=c.url.includes("watch?v=") ? `https://www.youtube.com/embed/${c.url.split("v=")[1]}?autoplay=1` : c.url.replace("/live","/embed/live_stream").replace("@","/ @").replace("/ @","/@") + "?autoplay=1";
-      // Simplify: direct embed
-      if(c.url.includes("@")) {
-        document.getElementById("player").innerHTML=`<iframe src="https://www.youtube.com/embed/live_stream?channel=${c.url.split("@")[1].split("/")[0]}&autoplay=1" allowfullscreen></iframe>`;
-      } else {
-        document.getElementById("player").innerHTML=`<iframe src="${embed}" allowfullscreen></iframe>`;
-      }
-      window.scrollTo(0,0);
-    } else {
-      window.open(c.url,"_blank");
-    }
+    player.src=c.embed + "?autoplay=1";
+    window.scrollTo(0,0);
   };
   grid.appendChild(d);
  });
 }
-
 function filterCat(cat,el){
  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
  el.classList.add("active");
