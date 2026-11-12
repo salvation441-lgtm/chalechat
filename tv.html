@@ -2,69 +2,52 @@
 <html>
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GH Free TV Fixed</title>
+<title>GH Free TV - Final</title>
 <style>
 body{margin:0;background:#0a0a0a;color:#fff;font-family:sans-serif}
-header{background:#d00;padding:14px;text-align:center;font-weight:900}
-#player{width:100%;aspect-ratio:16/9;background:#000}
+header{background:#d00;padding:14px;text-align:center;font-weight:900;font-size:18px}
+#player{width:100%;aspect-ratio:16/9;background:#000;position:sticky;top:0;z-index:10}
 iframe{width:100%;height:100%;border:0}
-.tabs{display:flex;gap:6px;padding:8px;background:#111;overflow:auto}
-.tab{padding:8px 14px;background:#222;border-radius:20px;cursor:pointer;white-space:nowrap}
-.tab.active{background:#d00}
+.section{padding:10px 10px 0 10px;font-weight:bold;color:#ffaaaa;margin-top:10px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px}
-.card{background:#1e1e1e;padding:12px;border-radius:10px;cursor:pointer}
+.card{background:#1e1e1e;padding:12px;border-radius:10px;cursor:pointer;border:1px solid #333}
+.card small{color:#aaa;font-size:11px}
+.card.play-inside{border-color:#0f0}
+.card.open-yt{border-color:#f00}
 </style>
 </head>
 <body>
 <header>GH FREE TV + SALVATION TV</header>
+
 <div id="player">
-<!-- DEFAULT: SportyTV latest -->
-<iframe id="mainFrame" src="https://www.youtube-nocookie.com/embed/live_stream?channel=UCwu87p766uwEyzG1p8dEMlg" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+<iframe id="main" src="https://www.youtube-nocookie.com/embed/gCNeDWCI0vo?autoplay=1" allowfullscreen></iframe>
 </div>
 
-<div class="tabs">
-<div class="tab active" onclick="filterCat('all',this)">All</div>
-<div class="tab" onclick="filterCat('sporty',this)">Sporty TV ⚽</div>
-<div class="tab" onclick="filterCat('salvation',this)">Salvation ✝️</div>
-<div class="tab" onclick="filterCat('local',this)">Ghana FTA 🇬🇭</div>
+<div class="section">✅ PLAY INSIDE APP (Foreign FTA - Always Works)</div>
+<div class="grid">
+<div class="card play-inside" onclick="playInside('https://www.youtube-nocookie.com/embed/gCNeDWCI0vo')"><b>🌍 Al Jazeera English</b><br><small>PLAY INSIDE</small></div>
+<div class="card play-inside" onclick="playInside('https://www.youtube-nocookie.com/embed/9Auq9mYxFEE')"><b>🇩🇪 DW News Live</b><br><small>PLAY INSIDE</small></div>
+<div class="card play-inside" onclick="playInside('https://www.youtube-nocookie.com/embed/Ap-ogf5a2gA')"><b>🇫🇷 France 24 English</b><br><small>PLAY INSIDE</small></div>
+<div class="card play-inside" onclick="playInside('https://www.youtube-nocookie.com/embed/N5lW-9aR6a8')"><b>🌍 Sky News Live</b><br><small>PLAY INSIDE</small></div>
 </div>
 
-<div class="grid" id="grid"></div>
+<div class="section">🔴 OPEN IN YOUTUBE (Local Ghana + SportyTV + Salvation)</div>
+<div class="grid">
+<div class="card open-yt"><a href="https://www.youtube.com/@sportytvafrica/live" target="_blank" style="color:#fff;text-decoration:none"><b>⚽ SportyTV Africa LIVE</b><br><small>OPEN YOUTUBE → LIVE MATCHES</small></a></div>
+<div class="card open-yt"><a href="https://www.youtube.com/@salvationministries/live" target="_blank" style="color:#fff;text-decoration:none"><b>✝️ Salvation TV LIVE</b><br><small>OPEN YOUTUBE</small></a></div>
+<div class="card open-yt"><a href="https://www.youtube.com/@GBCGhanaOfficial/live" target="_blank" style="color:#fff;text-decoration:none"><b>🇬🇭 GTV Ghana LIVE</b><br><small>OPEN YOUTUBE</small></a></div>
+<div class="card open-yt"><a href="https://www.youtube.com/@AdomTVOfficial/live" target="_blank" style="color:#fff;text-decoration:none"><b>📺 Adom TV LIVE</b><br><small>OPEN YOUTUBE</small></a></div>
+<div class="card open-yt"><a href="https://www.youtube.com/@utvghanaofficial/live" target="_blank" style="color:#fff;text-decoration:none"><b>📺 UTV Ghana LIVE</b><br><small>OPEN YOUTUBE</small></a></div>
+<div class="card open-yt"><a href="https://www.youtube.com/@tv3ghanaofficial/live" target="_blank" style="color:#fff;text-decoration:none"><b>📺 TV3 Ghana LIVE</b><br><small>OPEN YOUTUBE</small></a></div>
+<div class="card open-yt"><a href="https://www.youtube.com/@GHOneTV/live" target="_blank" style="color:#fff;text-decoration:none"><b>📺 GHOne TV LIVE</b><br><small>OPEN YOUTUBE</small></a></div>
+<div class="card open-yt"><a href="https://www.youtube.com/@JoyPrimeOfficial/live" target="_blank" style="color:#fff;text-decoration:none"><b>📺 Joy Prime LIVE</b><br><small>OPEN YOUTUBE</small></a></div>
+</div>
 
 <script>
-const channels=[
- // These use youtube-nocookie which works inside app WebView
- {name:"SportyTV Africa LIVE",cat:"sporty",embed:"https://www.youtube-nocookie.com/embed/live_stream?channel=UCwu87p766uwEyzG1p8dEMlg"},
- {name:"SportyTV Highlights (if no live)",cat:"sporty",embed:"https://www.youtube-nocookie.com/embed/videoseries?list=UUwu87p766uwEyzG1p8dEMlg"},
- {name:"Salvation Ministries LIVE",cat:"salvation",embed:"https://www.youtube-nocookie.com/embed/live_stream?channel=UC5h2RGlR0Zg7T7KZ1QwX1Yg"},
- {name:"GTV Ghana LIVE",cat:"local",embed:"https://www.youtube-nocookie.com/embed/jfKfPfyJRdk"}, // GTV 24/7 live ID
- {name:"Adom TV LIVE",cat:"local",embed:"https://www.youtube-nocookie.com/embed/live_stream?channel=UCTh9P2R7r1zZ1Z1Z1Z1"},
- {name:"Al Jazeera 24/7",cat:"local",embed:"https://www.youtube-nocookie.com/embed/gCNeDWCI0vo"},
-];
-
-const grid=document.getElementById("grid");
-const player=document.getElementById("mainFrame");
-
-function render(list){
- grid.innerHTML="";
- list.forEach(c=>{
-  let d=document.createElement("div");
-  d.className="card";
-  d.innerHTML=`<b>${c.name}</b><br><small>${c.cat}</small>`;
-  d.onclick=()=>{
-    player.src=c.embed + "?autoplay=1";
-    window.scrollTo(0,0);
-  };
-  grid.appendChild(d);
- });
+function playInside(url){
+ document.getElementById('main').src = url + "?autoplay=1";
+ window.scrollTo(0,0);
 }
-function filterCat(cat,el){
- document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
- el.classList.add("active");
- if(cat==="all") render(channels);
- else render(channels.filter(c=>c.cat===cat));
-}
-render(channels);
 </script>
 </body>
 </html>
