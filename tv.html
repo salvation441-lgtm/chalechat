@@ -2,49 +2,47 @@
 <html>
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GH Free TV - Final</title>
+<title>SALVATION TV</title>
 <style>
 body{margin:0;background:#0a0a0a;color:#fff;font-family:sans-serif}
-header{background:#d00;padding:14px;text-align:center;font-weight:900;font-size:18px}
+header{background:linear-gradient(90deg,#d00,#900);padding:16px;text-align:center;font-weight:900;font-size:20px;letter-spacing:1px}
 #player{width:100%;aspect-ratio:16/9;background:#000;position:sticky;top:0;z-index:10}
 iframe{width:100%;height:100%;border:0}
-.section{padding:10px 10px 0 10px;font-weight:bold;color:#ffaaaa;margin-top:10px}
+.section{padding:12px 10px 0 10px;font-weight:bold}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px}
-.card{background:#1e1e1e;padding:12px;border-radius:10px;cursor:pointer;border:1px solid #333}
-.card small{color:#aaa;font-size:11px}
-.card.play-inside{border-color:#0f0}
-.card.open-yt{border-color:#f00}
+.card{background:#1e1e1e;padding:12px;border-radius:12px;cursor:pointer;border:1px solid #333}
+.card small{color:#aaa}
+.play{border-color:#0f0} .yt{border-color:#f00}
 </style>
 </head>
 <body>
-<header>GH FREE TV + SALVATION TV</header>
+<header>✝️ SALVATION TV</header>
+<div style="text-align:center;padding:6px;background:#111;font-size:12px">GH Free TV + Foreign + SportyTV</div>
 
 <div id="player">
-<iframe id="main" src="https://www.youtube-nocookie.com/embed/gCNeDWCI0vo?autoplay=1" allowfullscreen></iframe>
+<iframe id="main" src="https://www.smhos.org/livestream" allowfullscreen></iframe>
 </div>
 
-<div class="section">✅ PLAY INSIDE APP (Foreign FTA - Always Works)</div>
+<div class="section">✅ PLAY INSIDE APP</div>
 <div class="grid">
-<div class="card play-inside" onclick="playInside('https://www.youtube-nocookie.com/embed/gCNeDWCI0vo')"><b>🌍 Al Jazeera English</b><br><small>PLAY INSIDE</small></div>
-<div class="card play-inside" onclick="playInside('https://www.youtube-nocookie.com/embed/9Auq9mYxFEE')"><b>🇩🇪 DW News Live</b><br><small>PLAY INSIDE</small></div>
-<div class="card play-inside" onclick="playInside('https://www.youtube-nocookie.com/embed/Ap-ogf5a2gA')"><b>🇫🇷 France 24 English</b><br><small>PLAY INSIDE</small></div>
-<div class="card play-inside" onclick="playInside('https://www.youtube-nocookie.com/embed/N5lW-9aR6a8')"><b>🌍 Sky News Live</b><br><small>PLAY INSIDE</small></div>
+<div class="card play" onclick="play('https://www.smhos.org/livestream')"><b>✝️ SALVATION TV Official</b><br><small>PLAY INSIDE</small></div>
+<div class="card play" onclick="play('https://www.youtube-nocookie.com/embed/gCNeDWCI0vo')"><b>🌍 Al Jazeera</b><br><small>PLAY INSIDE</small></div>
+<div class="card play" onclick="play('https://www.youtube-nocookie.com/embed/9Auq9mYxFEE')"><b>🇩🇪 DW News</b><br><small>PLAY INSIDE</small></div>
+<div class="card play" onclick="play('https://www.youtube-nocookie.com/embed/Ap-ogf5a2gA')"><b>🇫🇷 France 24</b><br><small>PLAY INSIDE</small></div>
 </div>
 
-<div class="section">🔴 OPEN IN YOUTUBE (Local Ghana + SportyTV + Salvation)</div>
+<div class="section">🔴 OPEN IN YOUTUBE APP</div>
 <div class="grid">
-<div class="card open-yt"><a href="https://www.youtube.com/@sportytvafrica/live" target="_blank" style="color:#fff;text-decoration:none"><b>⚽ SportyTV Africa LIVE</b><br><small>OPEN YOUTUBE → LIVE MATCHES</small></a></div>
-<div class="card open-yt"><a href="https://www.youtube.com/@salvationministries/live" target="_blank" style="color:#fff;text-decoration:none"><b>✝️ Salvation TV LIVE</b><br><small>OPEN YOUTUBE</small></a></div>
-<div class="card open-yt"><a href="https://www.youtube.com/@GBCGhanaOfficial/live" target="_blank" style="color:#fff;text-decoration:none"><b>🇬🇭 GTV Ghana LIVE</b><br><small>OPEN YOUTUBE</small></a></div>
-<div class="card open-yt"><a href="https://www.youtube.com/@AdomTVOfficial/live" target="_blank" style="color:#fff;text-decoration:none"><b>📺 Adom TV LIVE</b><br><small>OPEN YOUTUBE</small></a></div>
-<div class="card open-yt"><a href="https://www.youtube.com/@utvghanaofficial/live" target="_blank" style="color:#fff;text-decoration:none"><b>📺 UTV Ghana LIVE</b><br><small>OPEN YOUTUBE</small></a></div>
-<div class="card open-yt"><a href="https://www.youtube.com/@tv3ghanaofficial/live" target="_blank" style="color:#fff;text-decoration:none"><b>📺 TV3 Ghana LIVE</b><br><small>OPEN YOUTUBE</small></a></div>
-<div class="card open-yt"><a href="https://www.youtube.com/@GHOneTV/live" target="_blank" style="color:#fff;text-decoration:none"><b>📺 GHOne TV LIVE</b><br><small>OPEN YOUTUBE</small></a></div>
-<div class="card open-yt"><a href="https://www.youtube.com/@JoyPrimeOfficial/live" target="_blank" style="color:#fff;text-decoration:none"><b>📺 Joy Prime LIVE</b><br><small>OPEN YOUTUBE</small></a></div>
+<div class="card yt"><a href="https://www.youtube.com/@sportytvafrica/live" target="_blank" style="color:#fff;text-decoration:none"><b>⚽ SportyTV Africa</b><br><small>OPEN YOUTUBE - LIVE</small></a></div>
+<div class="card yt"><a href="https://www.youtube.com/@GBCGhanaOfficial/live" target="_blank" style="color:#fff;text-decoration:none"><b>🇬🇭 GTV Ghana</b><br><small>OPEN YOUTUBE</small></a></div>
+<div class="card yt"><a href="https://www.youtube.com/@AdomTVOfficial/live" target="_blank" style="color:#fff;text-decoration:none"><b>📺 Adom TV</b><br><small>OPEN YOUTUBE</small></a></div>
+<div class="card yt"><a href="https://www.youtube.com/@utvghanaofficial/live" target="_blank" style="color:#fff;text-decoration:none"><b>📺 UTV Ghana</b><br><small>OPEN YOUTUBE</small></a></div>
+<div class="card yt"><a href="https://www.youtube.com/@tv3ghanaofficial/live" target="_blank" style="color:#fff;text-decoration:none"><b>📺 TV3 Ghana</b><br><small>OPEN YOUTUBE</small></a></div>
+<div class="card yt"><a href="https://www.youtube.com/@GHOneTV/live" target="_blank" style="color:#fff;text-decoration:none"><b>📺 GHOne TV</b><br><small>OPEN YOUTUBE</small></a></div>
 </div>
 
 <script>
-function playInside(url){
+function play(url){
  document.getElementById('main').src = url + "?autoplay=1";
  window.scrollTo(0,0);
 }
